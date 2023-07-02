@@ -1,6 +1,7 @@
 List<String> stopWords = [
   "about",
   "above",
+  "added",
   "after",
   "again",
   "against",
@@ -97,6 +98,7 @@ List<String> stopWords = [
   "who",
   "will",
   "with",
+  "without",
   "you",
   "your"
 ];

@@ -6,7 +6,7 @@ void main() {
     test('should return a sorted map of words to a list of indexes', () {
       final db = {
         "167512": {
-          "description": "Pillsbury Golden , refrigerated, 99",
+          "description": "Pillsbury Golden to (with) refrigerated, 99#",
           "Protein": 5.88,
           "Dietary Fiber": 1.2,
           "Saturated Fat": 2.94,
@@ -16,7 +16,7 @@ void main() {
           "Total Sugars": 5.88
         },
         "167513": {
-          "description": "Pillsbury, Cinnamon, refrigerated",
+          "description": "Pillsbury, Cinnamon, refrigerated-to a",
           "Protein": 4.34,
           "Dietary Fiber": 1.4,
           "Saturated Fat": 3.25,
@@ -48,23 +48,7 @@ void main() {
 
       expect(indexMap[0], equals(expectedOrderOfKeys[0]));
       expect(indexMap.contains(""), isFalse);
+      expect(indexMap, orderedEquals(expectedOrderOfKeys));
     });
   });
-
-  // group('writeIndexMapToFile', () {
-  //   test('should write the index map to a json file', () async {
-  //     final db = {
-  //       1: {'description': 'This is a description of food.'},
-  //       2: {'description': 'This is another description of food.'},
-  //     };
-
-  //     const filePath = 'test/data/index_map.json';
-
-  //     await writeIndexMapToFile();
-
-  //     final actualIndexMap = await readJsonFile(filePath);
-
-  //     expect(actualIndexMap, equals(db));
-  //   });
-  // });
 }
