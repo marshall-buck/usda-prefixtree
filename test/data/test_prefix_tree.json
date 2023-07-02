@@ -1,0 +1,93 @@
+{
+    "root": {
+        "key": "a",
+        "isEnd": false,
+        "left": null,
+        "middle": {
+            "key": "l",
+            "isEnd": false,
+            "left": null,
+            "middle": {
+                "key": "i",
+                "isEnd": true,
+                "left": null,
+                "middle": {
+                    "key": "c",
+                    "isEnd": false,
+                    "left": null,
+                    "middle": {
+                        "key": "e",
+                        "isEnd": true,
+                        "left": null,
+                        "middle": null,
+                        "right": null
+                    },
+                    "right": null
+                },
+                "right": null
+            },
+            "right": {
+                "key": "n",
+                "isEnd": false,
+                "left": null,
+                "middle": {
+                    "key": "n",
+                    "isEnd": false,
+                    "left": null,
+                    "middle": {
+                        "key": "a",
+                        "isEnd": true,
+                        "left": null,
+                        "middle": null,
+                        "right": null
+                    },
+                    "right": null
+                },
+                "right": null
+            }
+        },
+        "right": {
+            "key": "e",
+            "isEnd": false,
+            "left": null,
+            "middle": {
+                "key": "l",
+                "isEnd": false,
+                "left": null,
+                "middle": {
+                    "key": "i",
+                    "isEnd": false,
+                    "left": null,
+                    "middle": {
+                        "key": "a",
+                        "isEnd": false,
+                        "left": null,
+                        "middle": {
+                            "key": "s",
+                            "isEnd": true,
+                            "left": null,
+                            "middle": null,
+                            "right": null
+                        },
+                        "right": {
+                            "key": "z",
+                            "isEnd": false,
+                            "left": null,
+                            "middle": {
+                                "key": "a",
+                                "isEnd": true,
+                                "left": null,
+                                "middle": null,
+                                "right": null
+                            },
+                            "right": null
+                        }
+                    },
+                    "right": null
+                },
+                "right": null
+            },
+            "right": null
+        }
+    }
+}
