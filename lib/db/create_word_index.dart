@@ -39,7 +39,7 @@ SplayTreeMap<String, List<String>> populateIndexMap(db) {
     final sanitizedList = cleanSentence(description);
     if (sanitizedList.isNotEmpty) {
       for (var word in sanitizedList) {
-        if (!isStopWord(word) && word.length > 1) {
+        if (!isStopWord(word) && word.length > 2) {
           indexMap.containsKey(word)
               ? indexMap[word]!.add(index)
               : indexMap[word] = [index];
