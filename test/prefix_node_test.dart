@@ -7,7 +7,6 @@ void main() {
       final node = PTNode(
         key: 'a',
         isEnd: true,
-        data: 'apple',
         left: PTNode(key: 'b'),
         middle: PTNode(key: 'c'),
         right: PTNode(key: 'd'),
@@ -17,7 +16,6 @@ void main() {
 
       expect(json['key'], equals('a'));
       expect(json['isEnd'], equals(true));
-      expect(json['data'], equals('apple'));
       expect(json['left'], isA<Map>());
       expect(json['middle'], isA<Map>());
       expect(json['right'], isA<Map>());
@@ -27,7 +25,6 @@ void main() {
       final json = {
         'key': 'a',
         'isEnd': true,
-        'data': 'apple',
         'left': {'key': 'b'},
         'middle': {'key': 'c'},
         'right': {'key': 'd'},
@@ -37,7 +34,6 @@ void main() {
 
       expect(node.key, equals('a'));
       expect(node.isEnd, equals(true));
-      expect(node.data, equals('apple'));
       expect(node.left, isA<PTNode>());
       expect(node.middle, isA<PTNode>());
       expect(node.right, isA<PTNode>());
@@ -46,7 +42,6 @@ void main() {
     test('toString should return a string representation of PTNode', () {
       final node = PTNode(
         key: 'a',
-        data: 'apple',
         left: PTNode(key: 'b'),
         middle: PTNode(key: 'c'),
         right: PTNode(key: 'd'),
@@ -57,7 +52,7 @@ void main() {
       expect(
           result,
           equals(
-              'Node(key: a,data: apple, left: Node(key: b,data: null, left: null, right: null, middle: null, isEnd: false), right: Node(key: d,data: null, left: null, right: null, middle: null, isEnd: false), middle: Node(key: c,data: null, left: null, right: null, middle: null, isEnd: false), isEnd: false)'));
+              'Node(key: a, left: Node(key: b, left: null, right: null, middle: null, isEnd: false), right: Node(key: d, left: null, right: null, middle: null, isEnd: false), middle: Node(key: c, left: null, right: null, middle: null, isEnd: false), isEnd: false)'));
     });
   });
 }

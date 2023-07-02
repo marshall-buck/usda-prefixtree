@@ -5,20 +5,25 @@ import 'package:usda_db_creation/helpers/file_helpers.dart';
 
 import 'prefix_node.dart';
 
+const wordIndexPath = './lib/db/word_index_db.json';
+
 void main() async {
-  final x = PrefixTree();
-  // final indexDb = await readJsonFile("lib/index_db.json");
-  // final wordList = indexDb.keys.toList() as List<String>;
+  // final x = PrefixTree();
+  final indexDb = await readJsonFile(wordIndexPath);
+  final wordList = indexDb.keys.toList() as List<String>;
 
-  final wordList = ['ali', 'alice', 'anna', 'elias', 'eliza'];
+  int middleIndex = (wordList.length / 2).round();
+  String removedElement = wordList.removeAt(middleIndex);
+  wordList.insert(0, removedElement);
+
   // final wordList = ['ali', 'alice', 'anna', 'elias', 'eliza'];
-  print(wordList);
+  // // final wordList = ['ali', 'alice', 'anna', 'elias', 'eliza'];
 
-  x.insertWordList(wordList);
+  // x.insertWordList(wordList);
 
-  print(x);
+  // print(x);
 
-  writeJsonFile('lib/db/prefix_tree.json', x.toJson());
+  // writeJsonFile('lib/db/prefix_tree.json', x.toJson());
 //   print(x.search('app'));
 }
 
