@@ -1,70 +1,55 @@
-/// Regex to find non-chars
-final stringSanitizerRegEx = RegExp(r'[\s\W\d]');
+import 'package:usda_db_creation/helpers/stop_words.dart';
 
-const stopWords = [
-  'a',
-  'an',
-  'and',
-  'are',
-  'as',
-  'at',
-  'be',
-  'but',
-  'by',
-  'for',
-  'if',
-  'in',
-  'into',
-  'is',
-  'it',
-  'no',
-  'not',
-  'of',
-  'on',
-  'or',
-  'such',
-  'that',
-  'the',
-  'their',
-  'then',
-  'there',
-  'these',
-  'they',
-  'this',
-  'to',
-  'was',
-  'will',
-  'with'
-];
+/// Regex to find non-chars,and spaces,  EXCEPT for a dashes
+final stringSanitizerRegEx = RegExp(r'[^a-zA-Z\-]');
 
-/// Given a [word], convert to lowercase and strip it of punctuation. Return a
-/// sanitized string [trimmed] its possible to return an empty string.
-String stripUnwantedCharacters(String word) {
-  final String trimmed = word.trim().toLowerCase();
-
-  if (trimmed.contains(stringSanitizerRegEx)) {
-    return trimmed.replaceAll(stringSanitizerRegEx, '');
-  }
-
-  return trimmed;
+/// Keeps only chars and dashes in a string.
+///
+/// Parameters:
+/// [word]
+///
+/// Returns word with only alpha chars and dashes or empty string.
+String keepCharAndDash(String word) {
+  return word.contains(stringSanitizerRegEx)
+      ? word.replaceAll(stringSanitizerRegEx, '')
+      : word;
 }
 
-/// Givin a Food description [str], return a list [sanitizedList] of sanitized strings for
-/// the autocomplete search or [] if [str] is empty.
-/// Check if [sanitized] is in the stop word list or is an empty string.
-List<String> stripUnwantedWords(String str) {
-  if (str == '') return [];
-  final List<String> list = str.split(' ');
-  final List<String> sanitizedList = [];
+/// Separates dashed words
+///
+/// Parameters:
+/// [word]
+///
+/// Returns a list of a word or words that may be empty,
+///  or an empty list if [word.isEmpty].
+List<String> stripDashedWord(String word) {
+  // final words = word.split('-');
 
-  for (var word in list) {
-    final sanitized = stripUnwantedCharacters(word);
-    if (!stopWords.contains(sanitized) &&
-        sanitized.isNotEmpty &&
-        sanitized.length > 2) {
-      sanitizedList.add(sanitized);
+  return word.isNotEmpty ? word.split('-') : [];
+}
+
+/// Cleans up a sentence, removing all non alpha characters
+///
+/// Parameters: [sentence]
+///
+/// Returns a set of lowercased words with only alpha chars.
+///
+Set<String> cleanSentence(String sentence) {
+  List<List<String>> words = [];
+
+  for (var word in sentence.split(' ')) {
+    final String charDash = keepCharAndDash(word).toLowerCase();
+    final List<String> splitWords = stripDashedWord(charDash);
+
+    if (splitWords.isNotEmpty) {
+      words.add(splitWords);
     }
   }
+  final set = words.expand((list) => list).toSet();
+  set.remove('');
+  return set;
+}
 
-  return sanitizedList;
+bool isStopWord(word) {
+  return stopWords.contains(word);
 }
