@@ -12,24 +12,15 @@ void main() async {
 }
 
 /// Populates a [SplayTreeMap] where the key is a [word] and the
-/// value is a list of id's from the [db]
+/// value is a list of id's from the [db].
 ///
 /// Parameters:
-/// [db] - the [Map] from the json file
+/// [db] - the [Map] from the json file.
 ///
 /// Returns - [indexMap]
-///  {..."abiyuch": [
-///         "167782"
-///     ],
-///     "acai": [
-///         "173175",
-///         "174170"
-///     ],
-///     "acerola": [
-///         "171686",
-///         "171687"
-///     ], ...}
-///
+///  {..."apple": ["167782",..],
+///      "apples": [ "173175", "174170",...],
+///      "orange": [ "171686", "171687",...], ...}.
 SplayTreeMap<String, List<String>> populateIndexMap(db) {
   final indexMap = SplayTreeMap<String, List<String>>((a, b) => a.compareTo(b));
 

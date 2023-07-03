@@ -2,7 +2,7 @@ import 'package:test/test.dart';
 import 'package:usda_db_creation/prefix_node.dart';
 
 void main() {
-  group('PTNode', () {
+  group('toJson', () {
     test('toJson should convert PTNode to a map', () {
       final node = PTNode(
         key: 'a',
@@ -20,7 +20,8 @@ void main() {
       expect(json['middle'], isA<Map>());
       expect(json['right'], isA<Map>());
     });
-
+  });
+  group('fromJson', () {
     test('fromJson should create PTNode from a map', () {
       final json = {
         'key': 'a',
@@ -38,7 +39,8 @@ void main() {
       expect(node.middle, isA<PTNode>());
       expect(node.right, isA<PTNode>());
     });
-
+  });
+  group('toString', () {
     test('toString should return a string representation of PTNode', () {
       final node = PTNode(
         key: 'a',

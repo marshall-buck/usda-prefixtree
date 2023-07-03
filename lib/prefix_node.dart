@@ -1,8 +1,10 @@
-/// PTNode class
-/// [left], [right], [middle] are pointers to the next node
-/// [key] is the character the node represents
-/// [data] indicates an end of word with the word being a key and the list is a
-/// list of indexes
+/// Class representing a [PrefixTree] node.
+///
+/// Properties:
+///
+/// [left], [right], [middle] -  are pointers to the next node.
+/// [key] is the character the node represents.
+/// [isEnd] will be true if it represents the end of a word.
 
 class PTNode {
   String? key;
@@ -13,7 +15,7 @@ class PTNode {
 
   PTNode({this.key, this.left, this.right, this.middle, this.isEnd = false});
 
-  // Convert PTNode to a Map
+  // Convert node to a JSON representation.
   Map<String, dynamic> toJson() {
     return {
       'key': key,
@@ -24,7 +26,7 @@ class PTNode {
     };
   }
 
-  // Create PTNode from a Map
+  // Create PTNode from a JSON representation.
   factory PTNode.fromJson(Map<String, dynamic> json) {
     return PTNode(
       key: json['key'],

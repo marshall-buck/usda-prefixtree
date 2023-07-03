@@ -6,7 +6,7 @@ import 'dart:io';
 import 'package:usda_db_creation/prefix_tree.dart';
 
 void main() {
-  group('PrefixTree', () {
+  group('insertWordList', () {
     test('Inserts words correctly', () {
       PrefixTree prefixTree = PrefixTree();
       prefixTree.insertWordList(['ali', 'alice', 'anna', 'elias', 'eliza']);
@@ -38,7 +38,9 @@ void main() {
           prefixTree.root!.right!.middle!.middle!.middle!.right!.middle!.isEnd,
           true);
     });
+  });
 
+  group('toJson', () {
     test('Converts to JSON correctly', () {
       PrefixTree prefixTree = PrefixTree();
       prefixTree.insertWordList(['ali', 'alice', 'anna', 'elias', 'eliza']);
@@ -49,7 +51,8 @@ void main() {
       expect(jsonString,
           '{"root":{"key":"a","isEnd":false,"left":null,"middle":{"key":"l","isEnd":false,"left":null,"middle":{"key":"i","isEnd":true,"left":null,"middle":{"key":"c","isEnd":false,"left":null,"middle":{"key":"e","isEnd":true,"left":null,"middle":null,"right":null},"right":null},"right":null},"right":{"key":"n","isEnd":false,"left":null,"middle":{"key":"n","isEnd":false,"left":null,"middle":{"key":"a","isEnd":true,"left":null,"middle":null,"right":null},"right":null},"right":null}},"right":{"key":"e","isEnd":false,"left":null,"middle":{"key":"l","isEnd":false,"left":null,"middle":{"key":"i","isEnd":false,"left":null,"middle":{"key":"a","isEnd":false,"left":null,"middle":{"key":"s","isEnd":true,"left":null,"middle":null,"right":null},"right":{"key":"z","isEnd":false,"left":null,"middle":{"key":"a","isEnd":true,"left":null,"middle":null,"right":null},"right":null}},"right":null},"right":null},"right":null}}}');
     });
-
+  });
+  group('fromJsonFile', () {
     test('Creates PrefixTree object from JSON file', () async {
       File jsonFile = File('./test/data/test_prefix_tree.json');
 
@@ -82,7 +85,9 @@ void main() {
           prefixTree.root!.right!.middle!.middle!.middle!.right!.middle!.isEnd,
           true);
     });
+  });
 
+  group('searchByPrefix', () {
     test('Searches words by prefix correctly', () {
       PrefixTree prefixTree = PrefixTree();
       prefixTree.insertWordList(['ali', 'alice', 'anna', 'elias', 'eliza']);
@@ -93,7 +98,9 @@ void main() {
       expect(prefixTree.searchByPrefix('anna'), ['anna']);
       expect(prefixTree.searchByPrefix('z'), []);
     });
+  });
 
+  group('findNode', () {
     test('Finds node for prefix correctly', () {
       File jsonFile = File('./test/data/test_prefix_tree.json');
 

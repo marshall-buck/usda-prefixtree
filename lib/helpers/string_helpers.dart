@@ -8,23 +8,20 @@ final stringSanitizerRegEx = RegExp(r'[^a-zA-Z\-]');
 /// Parameters:
 /// [word]
 ///
-/// Returns word with only alpha chars and dashes or empty string.
+/// Returns [word] with only alpha chars and dashes or empty string.
 String keepCharAndDash(String word) {
   return word.contains(stringSanitizerRegEx)
       ? word.replaceAll(stringSanitizerRegEx, '')
       : word;
 }
 
-/// Separates dashed words
+/// Separates dashed words.
 ///
 /// Parameters:
 /// [word]
 ///
-/// Returns a list of a word or words that may be empty,
-///  or an empty list if [word.isEmpty].
+/// Returns a list of a word(s), list may be empty.
 List<String> stripDashedWord(String word) {
-  // final words = word.split('-');
-
   return word.isNotEmpty ? word.split('-') : [];
 }
 
@@ -33,7 +30,7 @@ List<String> stripDashedWord(String word) {
 /// Parameters: [sentence]
 ///
 /// Returns a set of lowercased words with only alpha chars.
-///
+
 Set<String> cleanSentence(String sentence) {
   List<List<String>> words = [];
 
@@ -45,9 +42,9 @@ Set<String> cleanSentence(String sentence) {
       words.add(splitWords);
     }
   }
-  final set = words.expand((list) => list).toSet();
-  set.remove('');
-  return set;
+  final wordsSet = words.expand((list) => list).toSet();
+  wordsSet.remove('');
+  return wordsSet;
 }
 
 bool isStopWord(word) {

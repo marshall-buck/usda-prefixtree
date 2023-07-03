@@ -11,7 +11,7 @@ void main() {
   createInternalDb();
 }
 
-/// Iterates through a food items nutrient list
+/// Iterates through a food items nutrient list.
 ///
 /// Parameters:
 /// - [list] - a list of  all nutrients for a food item
@@ -28,7 +28,7 @@ void main() {
 ///      "foodNutrientDerivation": {...} },
 ///      "amount": 5.88 }, ...]
 ///
-///  Returns [nutrients] [{ name: Protein, amount: 5.88 },
+///  Returns [nutrients] - [{ name: Protein, amount: 5.88 },
 ///                         { name: Calories, amount: 100 } ...],
 ///  unitName is optional.
 ///
@@ -54,12 +54,12 @@ List getFoodNutrients(List list) {
   return nutrients;
 }
 
-/// Checks if nutrient is in [keepTheseNutrients]
+/// Checks if nutrient is in [keepTheseNutrients].
 ///
 /// Parameters:
 /// [nutrientId] - the id of the nutrient to be included.
 ///
-/// Returns [bool]
+/// Returns [bool].
 bool findNutrient(int nutrientId) {
   return keepTheseNutrients.contains(nutrientId);
 }
@@ -122,11 +122,11 @@ void createInternalDb() async {
   await writeJsonFile('$saveFolder/$internalDbName', db);
 }
 
-/// Creates the database
+/// Creates the database.
 ///
 /// Parameters [data] - the original database of information.
 ///
-/// Returns a map
+/// Returns a map [db]
 /// {"167512": {
 ///         "description": "Pillsbury Golden Layer...",
 ///         "descriptionLen": 81,
@@ -137,7 +137,7 @@ void createInternalDb() async {
 ///         "Total Carbs": 41.2,
 ///         "Calories": 307,
 ///         "Total Sugars": 5.88
-///     },...}
+///     },...}.
 Map<String, Map> createDb(Map data) {
   final List originalDb = data['SRLegacyFoods'];
   final Map<String, Map> db = {};
@@ -162,7 +162,7 @@ Map<String, Map> createDb(Map data) {
 /// [db] - the map that the entries will be added.
 /// [foodId] - the key in the map
 /// [foodNutrients] - the list of nutrients [{ name: Protein, amount: 5.88 },
-///                                         { name: Calories, amount: 100 }, ...]
+///                                         { name: Calories, amount: 100 }, ...].
 void createNutrientEntry(db, foodId, foodNutrients) {
   for (var j = 0; j < foodNutrients.length; j++) {
     final name = foodNutrients[j]['name'];

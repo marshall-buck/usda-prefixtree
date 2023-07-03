@@ -43,12 +43,15 @@ void main() {
         'pillsbury',
         'refrigerated'
       ];
+      final indexMap = populateIndexMap(db);
+      final indexMapKeyList = populateIndexMap(db).keys.toList();
 
-      final indexMap = populateIndexMap(db).keys.toList();
+      expect(indexMap.length, equals(4));
+      expect(indexMap['pillsbury'], equals(['167512', '167513']));
+      expect(indexMap[''], equals(null));
+      expect(indexMapKeyList[0], equals(expectedOrderOfKeys[0]));
 
-      expect(indexMap[0], equals(expectedOrderOfKeys[0]));
-      expect(indexMap.contains(""), isFalse);
-      expect(indexMap, orderedEquals(expectedOrderOfKeys));
+      expect(indexMapKeyList, orderedEquals(expectedOrderOfKeys));
     });
   });
 }

@@ -25,7 +25,7 @@ void main() {
     });
   });
   group('cleanSentence', () {
-    test('a dashed string should be split into a list', () {
+    test('Sentence should be stripped of all non alpha chars', () {
       expect(cleanSentence('Doughnuts, yeast-Leavened, with jelly filling'),
           {'doughnuts', 'yeast', 'leavened', 'with', 'jelly', 'filling'});
 
