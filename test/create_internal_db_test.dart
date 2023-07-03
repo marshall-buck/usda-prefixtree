@@ -2,8 +2,7 @@ import 'package:test/test.dart';
 import 'package:usda_db_creation/db/create_internal_db.dart';
 
 void main() {
-  group('YourClassName', () {
-    // Test getFoodNutrients() method
+  group('getFoodNutrients', () {
     test('getFoodNutrients should return a list of nutrients', () {
       final inputList = [
         {
@@ -57,7 +56,9 @@ void main() {
       expect(result[1]['unitName'], isNull);
       expect(result[1]['amount'], equals(377));
     });
+  });
 
+  group('findNutrient', () {
     // Test findNutrient() method
     test('findNutrient should return true if nutrientId is found in ids', () {
       final nutrientId = 1003;
@@ -66,7 +67,6 @@ void main() {
 
       expect(result, equals(true));
     });
-
     test('findNutrient should return false if nutrientId is not found in ids',
         () {
       final nutrientId = 9999;
@@ -75,8 +75,17 @@ void main() {
 
       expect(result, equals(false));
     });
+  });
 
-    // Test switchNutrientName() method
+  group('switchNutrientName', () {
+    test('switchNutrientName should return "Unknown" for unknown nutrientId',
+        () {
+      final nutrientId = 9999;
+
+      final result = switchNutrientName(nutrientId);
+
+      expect(result, equals('Unknown'));
+    });
     test('switchNutrientName should return the correct nutrient name', () {
       final fat = 1004;
 
@@ -120,17 +129,9 @@ void main() {
 
       expect(sugarsResult, equals('Total Sugars'));
     });
+  });
 
-    test('switchNutrientName should return "Unknown" for unknown nutrientId',
-        () {
-      final nutrientId = 9999;
-
-      final result = switchNutrientName(nutrientId);
-
-      expect(result, equals('Unknown'));
-    });
-
-    // Test createDb() method
+  group('createDb', () {
     test('createDb should return a map of food items with nutrients', () {
       final originalDb = {
         "SRLegacyFoods": [
@@ -704,8 +705,24 @@ void main() {
       expect(result.containsKey('167512'), isTrue);
       expect(result['167514'], isA<Map>());
 
-      expect(result['167514']?['descriptionLen'], equals(64));
+      expect(result['167514']?['descriptionLength'], equals(64));
       expect(result['167514']?.containsKey('Protein'), isTrue);
+    });
+  });
+
+  group('createNutrientEntry ', () {
+    test('createNutrientEntry should add nutrients as key:value pairs', () {
+      final nutrientList = [
+        {'name': 'Protein', 'amount': 5.88},
+        {'name': 'Calories', 'amount': 100}
+      ];
+
+      final foodId = '123456';
+      final db = {'123456': {}};
+      createNutrientEntry(db, foodId, nutrientList);
+      expect(db['123456']!.length, equals(2));
+      expect(db['123456']!['Protein'], 5.88);
+      expect(db['123456']!['Calories'], 100);
     });
   });
 }

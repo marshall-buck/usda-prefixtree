@@ -5,12 +5,16 @@ const originalFile = 'lib/db/original_usda.json';
 const saveFolder = 'lib';
 
 const internalDbName = 'db.json';
+const keepTheseNutrients = [1003, 1004, 1005, 1008, 1079, 1258, 2000];
 
 void main() {
   createInternalDb();
 }
 
-/// Iterates through a food items nutrient list [list],
+/// Iterates through a food items nutrient list
+///
+/// Parameters:
+/// - [list] - a list of  all nutrients for a food item
 /// [{"type": "FoodNutrient",
 ///      "id": 1283674,
 ///      "nutrient": {
@@ -24,39 +28,49 @@ void main() {
 ///      "foodNutrientDerivation": {...} },
 ///      "amount": 5.88 }, ...]
 ///
-///  Returns a new list of [nutrient]s to be used in the db.json
-/// [{name": Protein,  amount: 5.88}, ...], unitName is optional/
+///  Returns [nutrients] [{ name: Protein, amount: 5.88 },
+///                         { name: Calories, amount: 100 } ...],
+///  unitName is optional.
+///
+///
 List getFoodNutrients(List list) {
-  final List out = [];
+  final List nutrients = [];
 
   for (var i = 0; i < list.length; i++) {
-    final map = list[i];
-    var name = map['nutrient']['name'];
-    final nutrientId = map['nutrient']['id'];
+    final originalNutrient = list[i];
+    var name = originalNutrient['nutrient']['name'];
+    final nutrientId = originalNutrient['nutrient']['id'];
     if (!findNutrient(nutrientId)) continue;
     name = switchNutrientName(nutrientId);
-    final unitName = map['nutrient']['unitName'];
+    final unitName = originalNutrient['nutrient']['unitName'];
 
-    final amount = map['amount'];
+    final amount = originalNutrient['amount'];
     final nutrient = {'name': name, 'unitName': unitName, 'amount': amount};
     if (unitName == 'g' || unitName == 'kcal') {
       nutrient.remove('unitName');
     }
-    out.add(nutrient);
+    nutrients.add(nutrient);
   }
-  return out;
+  return nutrients;
 }
 
-/// Returns [bool]:  checks if the [nutrientId] is in [ids].
+/// Checks if nutrient is in [keepTheseNutrients]
+///
+/// Parameters:
+/// [nutrientId] - the id of the nutrient to be included.
+///
+/// Returns [bool]
 bool findNutrient(int nutrientId) {
-  const ids = [1003, 1004, 1005, 1008, 1079, 1258, 2000];
-
-  return ids.contains(nutrientId);
+  return keepTheseNutrients.contains(nutrientId);
 }
 
-/// Returns user friendly name [String] from nutrient [id].
-String switchNutrientName(id) {
-  switch (id) {
+/// Switches nutrient name.
+///
+/// Parameters [nutrientId]
+///
+/// Returns [String] of user friendly name.
+String switchNutrientName(nutrientId) {
+  switch (nutrientId) {
     case 1004:
       {
         return 'Total Fat';
@@ -99,46 +113,61 @@ String switchNutrientName(id) {
   }
 }
 
-///Writes internal database as a json files and saves to disk.
+/// Writes internal database as a json files and saves to disk.
 void createInternalDb() async {
   final data = await readJsonFile(originalFile);
-
-  // final List originalDb = data['SRLegacyFoods'];
 
   final Map<String, Map> db = createDb(data);
 
   await writeJsonFile('$saveFolder/$internalDbName', db);
 }
 
-/// Returns a Map [db] from List of the  [originalDb],
+/// Creates the database
+///
+/// Parameters [data] - the original database of information.
+///
+/// Returns a map
+/// {"167512": {
+///         "description": "Pillsbury Golden Layer...",
+///         "descriptionLen": 81,
+///         "Protein": 5.88,
+///         "Dietary Fiber": 1.2,
+///         "Saturated Fat": 2.94,
+///         "Total Fat": 13.2,
+///         "Total Carbs": 41.2,
+///         "Calories": 307,
+///         "Total Sugars": 5.88
+///     },...}
 Map<String, Map> createDb(Map data) {
   final List originalDb = data['SRLegacyFoods'];
   final Map<String, Map> db = {};
   for (var i = 0; i < originalDb.length; i++) {
-    final id = originalDb[i]["fdcId"] ??= originalDb[i]["ndbNumber"];
+    final foodId = originalDb[i]["fdcId"] ??= originalDb[i]["ndbNumber"];
     final String description = originalDb[i]["description"];
     final int descriptionLength = originalDb[i]["description"].length;
-    db['$id'] = {
+    db['$foodId'] = {
       'description': description,
-      "descriptionLen": descriptionLength
+      "descriptionLength": descriptionLength
     };
     final foodNutrients = getFoodNutrients(originalDb[i]["foodNutrients"]);
-    createNutrientEntry(db, id, foodNutrients);
-    if (i == originalDb.length - 1) {
-      assert(originalDb.length == i + 1);
-    }
+    createNutrientEntry(db, foodId, foodNutrients);
   }
 
   return db;
 }
 
-/// Creates the {name: amount} pair for a nutrient  in the [db] with the [id]
-///  of a foodItem, from the List of [foodNutrients]
-void createNutrientEntry(db, id, foodNutrients) {
+/// Adds nutrients as {key: value} to a [foodId] in the db.
+///
+/// Parameters:
+/// [db] - the map that the entries will be added.
+/// [foodId] - the key in the map
+/// [foodNutrients] - the list of nutrients [{ name: Protein, amount: 5.88 },
+///                                         { name: Calories, amount: 100 }, ...]
+void createNutrientEntry(db, foodId, foodNutrients) {
   for (var j = 0; j < foodNutrients.length; j++) {
     final name = foodNutrients[j]['name'];
     final amount = foodNutrients[j]['amount'];
-    db['$id']![name] = amount;
+    db['$foodId']![name] = amount;
   }
 }
 
