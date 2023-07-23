@@ -7,8 +7,9 @@ const filePath = 'lib/db/word_index_db.json';
 
 void main() async {
   final db = await readJsonFile('lib/db/db.json');
-  final indexMap = populateIndexMap(db);
-  await writeJsonFile(filePath, indexMap);
+  final unsortedIndexes = populateIndexMap(db);
+  final sorted = sortByDescription(unsortedIndexes, db);
+  await writeJsonFile(filePath, sorted);
 }
 
 /// Populates a [SplayTreeMap] where the key is a [word] and the
@@ -21,12 +22,14 @@ void main() async {
 ///  {..."apple": ["167782",..],
 ///      "apples": [ "173175", "174170",...],
 ///      "orange": [ "171686", "171687",...], ...}.
-SplayTreeMap<String, List<String>> populateIndexMap(db) {
+SplayTreeMap<String, List<String>> populateIndexMap(Map<dynamic, dynamic> db) {
   final indexMap = SplayTreeMap<String, List<String>>((a, b) => a.compareTo(b));
 
   for (var food in db.entries) {
     final index = food.key;
+
     final description = food.value['description'];
+
     final sanitizedList = cleanSentence(description);
     if (sanitizedList.isNotEmpty) {
       for (var word in sanitizedList) {
@@ -40,4 +43,24 @@ SplayTreeMap<String, List<String>> populateIndexMap(db) {
   }
 
   return indexMap;
+}
+
+SplayTreeMap<String, List<String>> sortByDescription(
+    SplayTreeMap<String, List<String>> unsortedMap, Map<dynamic, dynamic> db) {
+  final SplayTreeMap<String, List<String>> sorted = unsortedMap;
+  for (var list in sorted.values) {
+    sortListByDescriptionLength(list, db);
+  }
+  return sorted;
+}
+
+List<String> sortListByDescriptionLength(
+    List<String> itemList, Map<dynamic, dynamic> db) {
+  itemList.sort((a, b) {
+    int lengthA = db[a]['descriptionLength'];
+    int lengthB = db[b]['descriptionLength'];
+    return lengthA.compareTo(lengthB);
+  });
+
+  return itemList;
 }

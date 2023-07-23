@@ -9,9 +9,9 @@ const wordIndexPath = './lib/db/word_index_db.json';
 const testWordList = ['ali', 'alice', 'anna', 'elias', 'eliza'];
 
 void main() async {
-  // await createMainPrefixTree();
-  final tree = await createTestingPrefixTree();
-  print(tree.searchByPrefix('elia'));
+  await createMainPrefixTree();
+  // final tree = await createTestingPrefixTree();
+  // print(tree.searchByPrefix('elia'));
 }
 
 class PrefixTree {

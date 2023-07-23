@@ -2,7 +2,7 @@ import '../helpers/file_helpers.dart';
 
 const originalFile = 'lib/db/original_usda.json';
 
-const saveFolder = 'lib';
+const saveFolder = 'lib/db';
 
 const internalDbName = 'db.json';
 const keepTheseNutrients = [1003, 1004, 1005, 1008, 1079, 1258, 2000];
