@@ -4,12 +4,19 @@ import '../helpers/file_helpers.dart';
 import '../helpers/string_helpers.dart';
 
 const filePath = 'lib/db/word_index_db.json';
+const testFilePath = 'lib/db/test_ word_index_db.json';
 
 void main() async {
-  final db = await readJsonFile('lib/db/db.json');
+  // TESTING
+  final db = await readJsonFile('lib/db/test_db.json');
+  // ACTUAL
+  // final db = await readJsonFile('lib/db/db.json');
   final unsortedIndexes = populateIndexMap(db);
   final sorted = sortByDescription(unsortedIndexes, db);
-  await writeJsonFile(filePath, sorted);
+  //TESTING
+  await writeJsonFile(testFilePath, sorted);
+  //Actual
+  // await writeJsonFile(filePath, sorted);
 }
 
 /// Populates a [SplayTreeMap] where the key is a [word] and the

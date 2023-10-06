@@ -6,11 +6,12 @@ import 'package:usda_db_creation/helpers/file_helpers.dart';
 import 'prefix_node.dart';
 
 const wordIndexPath = './lib/db/word_index_db.json';
+const testWordIndexPath = 'lib/db/test_ word_index_db.json';
 const testWordList = ['ali', 'alice', 'anna', 'elias', 'eliza'];
 
 void main() async {
-  await createMainPrefixTree();
-  // final tree = await createTestingPrefixTree();
+  // await createMainPrefixTree();
+  await createTestingPrefixTree();
   // print(tree.searchByPrefix('elia'));
 }
 
@@ -184,16 +185,13 @@ Future<void> createMainPrefixTree() async {
 
 Future<PrefixTree> createTestingPrefixTree() async {
   final x = PrefixTree();
-  // final indexDb = await readJsonFile(wordIndexPath);
-  // final wordList = indexDb.keys.toList() as List<String>;
+  final indexDb = await readJsonFile(testWordIndexPath);
+  final wordList = indexDb.keys.toList() as List<String>;
 
-  // int middleIndex = (wordList.length / 2).round();
-  // String removedElement = wordList.removeAt(middleIndex);
-  // wordList.insert(0, removedElement);
-
-  // final wordList = ['ali', 'alice', 'anna', 'elias', 'eliza'];
-
-  x.insertWordList(testWordList);
+  int middleIndex = (wordList.length / 2).round();
+  String removedElement = wordList.removeAt(middleIndex);
+  wordList.insert(0, removedElement);
+  x.insertWordList(wordList);
 
   writeJsonFile('lib/db/test_prefix_tree.json', x.toJson());
   return x;

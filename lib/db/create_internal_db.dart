@@ -5,10 +5,12 @@ const originalFile = 'lib/db/original_usda.json';
 const saveFolder = 'lib/db';
 
 const internalDbName = 'db.json';
+const internalTestingDbName = 'test_db.json';
 const keepTheseNutrients = [1003, 1004, 1005, 1008, 1079, 1258, 2000];
 
 void main() {
-  createInternalDb();
+  // createInternalDb();
+  createInternalTestingDb();
 }
 
 /// Iterates through a food items nutrient list.
@@ -122,6 +124,14 @@ void createInternalDb() async {
   await writeJsonFile('$saveFolder/$internalDbName', db);
 }
 
+void createInternalTestingDb() async {
+  final data = await readJsonFile(originalFile);
+
+  final Map<String, Map> db = createTestingDb(data);
+
+  await writeJsonFile('$saveFolder/$internalTestingDbName', db);
+}
+
 /// Creates the database.
 ///
 /// Parameters [data] - the original database of information.
@@ -142,6 +152,24 @@ Map<String, Map> createDb(Map data) {
   final List originalDb = data['SRLegacyFoods'];
   final Map<String, Map> db = {};
   for (var i = 0; i < originalDb.length; i++) {
+    final foodId = originalDb[i]["fdcId"] ??= originalDb[i]["ndbNumber"];
+    final String description = originalDb[i]["description"];
+    final int descriptionLength = originalDb[i]["description"].length;
+    db['$foodId'] = {
+      'description': description,
+      "descriptionLength": descriptionLength
+    };
+    final foodNutrients = getFoodNutrients(originalDb[i]["foodNutrients"]);
+    createNutrientEntry(db, foodId, foodNutrients);
+  }
+
+  return db;
+}
+
+Map<String, Map> createTestingDb(Map data) {
+  final List originalDb = data['SRLegacyFoods'];
+  final Map<String, Map> db = {};
+  for (var i = 0; i < 6; i++) {
     final foodId = originalDb[i]["fdcId"] ??= originalDb[i]["ndbNumber"];
     final String description = originalDb[i]["description"];
     final int descriptionLength = originalDb[i]["description"].length;
