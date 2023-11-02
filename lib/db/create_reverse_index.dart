@@ -6,12 +6,14 @@ import 'package:usda_db_creation/helpers/file_helpers.dart';
 void main() async {
   final wordIndex = await readJsonFile('lib/db/word_index_db.json');
   final indexMap = createSubstrings(wordIndex);
-  // final x = {1, 2}.toList()..sort();
-  // final y = {2, 1}.toList()..sort();
-  // final e = Equality();
-  // print(e.equals(x, y));
-  // print(indexMap.entries.length);
-  // await writeJsonFile('lib/db/reverse_index.json', indexMap);
+  final index = createHashTable(indexMap);
+  final hashTable = index['hashTable'];
+  final newWordIndex = index['newWordIndex'];
+
+  await writeJsonFile('lib/db/substring_index.json', newWordIndex);
+  var stringKeyMap =
+      hashTable.map((key, value) => MapEntry(key.toString(), value));
+  await writeJsonFile('lib/db/hash_index.json', stringKeyMap);
 }
 
 const window = 3;
@@ -40,7 +42,7 @@ Map<String, List<String>> createSubstrings(Map<dynamic, dynamic> sortedMap) {
   return indexMap.map((key, value) => MapEntry(key, value.toList()..sort()));
 }
 
-createHashTable(Map<String, List<String>> originalMap) {
+Map<String, dynamic> createHashTable(Map<String, List<String>> originalMap) {
   Map<String, int> newWordIndex = {};
   Map<int, List<String>> hashTable = {};
   int count = 0;

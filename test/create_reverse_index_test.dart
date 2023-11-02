@@ -7,7 +7,7 @@ import 'package:usda_db_creation/helpers/file_helpers.dart';
 void main() {
   group('create reverse index tests', () {
     group('createSubstrings() - ', () {
-      test('substrings popultes correctly', () async {
+      test('substrings populates correctly', () async {
         final file = await readJsonFile('test/data/test_word_index.json');
         final res = createSubstrings(file);
         final deep = DeepCollectionEquality();
