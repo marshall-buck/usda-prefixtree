@@ -7,13 +7,13 @@ void main() async {
   final wordIndex = await readJsonFile('lib/db/word_index_db.json');
   final indexMap = createSubstrings(wordIndex);
   final index = createHashTable(indexMap);
-  final hashTable = index['hashTable'];
-  final newWordIndex = index['newWordIndex'];
+  // final hashTable = index['hashTable'];
+  // final newWordIndex = index['newWordIndex'];
 
-  await writeJsonFile('lib/db/substring_index.json', newWordIndex);
-  var stringKeyMap =
-      hashTable.map((key, value) => MapEntry(key.toString(), value));
-  await writeJsonFile('lib/db/hash_index.json', stringKeyMap);
+  // await writeJsonFile('lib/db/substring_index.json', newWordIndex);
+  // var stringKeyMap =
+  //     hashTable.map((key, value) => MapEntry(key.toString(), value));
+  await writeJsonFile('lib/db/substring_hash.json', index);
 }
 
 const window = 3;
@@ -62,7 +62,11 @@ Map<String, dynamic> createHashTable(Map<String, List<String>> originalMap) {
       newWordIndex[element.key] = hashKey;
     }
   }
-  return {'newWordIndex': newWordIndex, 'hashTable': hashTable};
+
+  Map<String, List<String>> stringKeyMap =
+      hashTable.map((key, value) => MapEntry(key.toString(), value));
+
+  return {"newWordIndex": newWordIndex, "hashTable": stringKeyMap};
 }
 
 int findHashKey(
