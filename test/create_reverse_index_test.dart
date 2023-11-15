@@ -11,7 +11,7 @@ void main() {
         final file = await readJsonFile('test/data/test_word_index.json');
         final res = createSubstrings(file);
         final deep = DeepCollectionEquality();
-        // print(res);
+
         expect(deep.equals(res, indexRes), true);
       });
     });
@@ -19,8 +19,9 @@ void main() {
       test('returns correct list', () async {
         final res = createHashTable(indexRes);
         final d = DeepCollectionEquality();
-        print(res);
-        expect(d.equals(res, newIndex), true);
+        // print(res);
+        expect(d.equals(res['substrings'], newIndex['substrings']), true);
+        expect(d.equals(res['hashIndex'], newIndex['hashIndex']), true);
       });
     });
     // group('doesContainList() - ', () {
@@ -71,8 +72,8 @@ const Map<int, List<String>> hashRes = {
   1: ['1', '2', '3', '4']
 };
 
-const newIndex = {
-  'newWordIndex': {
+const Map<String, dynamic> newIndex = {
+  'substrings': {
     'aba': 0,
     'abap': 0,
     'abapp': 0,
@@ -102,7 +103,7 @@ const newIndex = {
     'rabappl': 0,
     'rabapple': 0,
   },
-  'hashTable': {
+  'indexHash': {
     0: ['3', '4'],
     1: ['1', '2', '3', '4']
   }

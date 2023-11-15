@@ -66,7 +66,7 @@ Map<String, dynamic> createHashTable(Map<String, List<String>> originalMap) {
   Map<String, List<String>> stringKeyMap =
       hashTable.map((key, value) => MapEntry(key.toString(), value));
 
-  return {"newWordIndex": newWordIndex, "hashTable": stringKeyMap};
+  return {"substrings": newWordIndex, "indexHash": stringKeyMap};
 }
 
 int findHashKey(
