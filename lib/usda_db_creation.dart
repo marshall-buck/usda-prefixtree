@@ -1,3 +1,3 @@
 calculate() {
-  return 1 * 3;
+  return 456 * 3;
 }

@@ -50,3 +50,8 @@ Set<String> cleanSentence(String sentence) {
 bool isStopWord(word) {
   return stopWords.contains(word);
 }
+
+// bool containsOnlyAlpha(String str) {
+//   final RegExp alphaRegex = RegExp(r'^[a-zA-Z]+$');
+//   return alphaRegex.hasMatch(str);
+// }

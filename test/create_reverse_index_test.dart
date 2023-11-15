@@ -24,15 +24,6 @@ void main() {
         expect(d.equals(res['hashIndex'], newIndex['hashIndex']), true);
       });
     });
-    // group('doesContainList() - ', () {
-    //   test('returns true for included list', () async {
-    //     expect(doesContainList(hashRes, ['3', '4']), true);
-    //     expect(doesContainList(hashRes, ['1', '2', '3', '4']), true);
-    //   });
-    //   test('returns false for no list', () async {
-    //     expect(doesContainList(hashRes, ['3', '4', '1']), false);
-    //   });
-    // });
   });
 }
 
