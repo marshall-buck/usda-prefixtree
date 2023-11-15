@@ -9,6 +9,7 @@ environment:
 # Add regular dependencies here.
 dependencies:
   collection: ^1.18.0
+  mocktail: ^1.0.1
 
 dev_dependencies:
   lints: ^2.0.0
