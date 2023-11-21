@@ -139,7 +139,7 @@ void createInternalTestingDb() async {
 /// Returns a map [db]
 /// {"167512": {
 ///         "description": "Pillsbury Golden Layer...",
-///         "descriptionLen": 81,
+///         "descriptionLength": 81,
 ///         "Protein": 5.88,
 ///         "Dietary Fiber": 1.2,
 ///         "Saturated Fat": 2.94,

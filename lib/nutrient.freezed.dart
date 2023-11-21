@@ -128,12 +128,13 @@ class __$$NutrientImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$NutrientImpl implements _Nutrient {
+class _$NutrientImpl extends _Nutrient {
   const _$NutrientImpl(
       {required this.id,
       required this.displayName,
       required this.amount,
-      required this.unit});
+      required this.unit})
+      : super._();
 
   factory _$NutrientImpl.fromJson(Map<String, dynamic> json) =>
       _$$NutrientImplFromJson(json);
@@ -182,12 +183,13 @@ class _$NutrientImpl implements _Nutrient {
   }
 }
 
-abstract class _Nutrient implements Nutrient {
+abstract class _Nutrient extends Nutrient {
   const factory _Nutrient(
       {required final String id,
       required final String displayName,
       required final num amount,
       required final String unit}) = _$NutrientImpl;
+  const _Nutrient._() : super._();
 
   factory _Nutrient.fromJson(Map<String, dynamic> json) =
       _$NutrientImpl.fromJson;

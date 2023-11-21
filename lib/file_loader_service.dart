@@ -6,7 +6,7 @@ import 'dart:io';
 /// but I did this to make testing easier.
 /// May add some type of init method later
 class FileLoaderService {
-  Future<String> loadData(String path) async => await File(path).readAsString();
+  String loadData(String path) => File(path).readAsStringSync();
 
   Future<void> writeJsonFile(String filePath, Map contents) async {
     try {
