@@ -2,8 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-/// Class to load json file.  It only has one method,
-/// but I did this to make testing easier.
+/// Class to handle reading and writing json files.
 /// May add some type of init method later
 class FileLoaderService {
   String loadData(String path) => File(path).readAsStringSync();
