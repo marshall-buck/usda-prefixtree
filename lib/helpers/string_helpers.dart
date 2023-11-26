@@ -55,6 +55,31 @@ bool isStopWord(word) {
   return stopWords.contains(word);
 }
 
+List<String> findRepeatedPhrases(List<String> strings, int phraseLength) {
+  Map<String, int> phraseCounts = {};
+
+  for (String sentence in strings) {
+    if (sentence.length >= phraseLength) {
+      for (int i = 0; i <= sentence.length - phraseLength; i++) {
+        String phrase = sentence.substring(i, i + phraseLength);
+        if (!(phrase.startsWith(' ') || phrase.endsWith(' '))) {
+          phraseCounts[phrase] = (phraseCounts[phrase] ?? 0) + 1;
+        }
+      }
+    }
+  }
+
+  List<String> result = [];
+  phraseCounts.forEach((phrase, count) {
+    if (count > 1) {
+      result.add(phrase);
+    }
+  });
+
+  return result;
+}
+
+
 
 
 
