@@ -1,5 +1,6 @@
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
+
 import 'package:usda_db_creation/db_parser.dart';
 import 'package:usda_db_creation/description_parser.dart';
 
@@ -17,7 +18,7 @@ void main() {
   group('DescriptionParser class tests', () {
     group('populateOriginalDescriptions', () {
       test('populates the correct records', () {
-        const expectedOriginalDescriptions = [
+        const List<(int, String)> expectedOriginalDescriptions = [
           (
             167512,
             "Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough"
@@ -33,10 +34,10 @@ void main() {
         final dbParser = DBParser(fileLoader: mockFileLoaderService);
         dbParser.init('fake');
 
-        final desParser = DescriptionParser(dbParser.foodsDBMap);
+        final res =
+            DescriptionParser.populateOriginalDescriptions(dbParser.foodsDBMap);
 
-        desParser.populateOriginalDescriptions();
-        expect(desParser.originalDescriptions, expectedOriginalDescriptions);
+        expect(res, expectedOriginalDescriptions);
       });
     });
   });

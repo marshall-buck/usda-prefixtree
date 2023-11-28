@@ -73,6 +73,7 @@ void main() {
       final res = findRepeatedPhrases(sentences, 28);
       print(res);
       expect(res.length, 1);
+      expect(res, ['this is a repeated phrase 28']);
     });
   });
 }

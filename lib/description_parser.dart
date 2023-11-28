@@ -1,50 +1,31 @@
+import 'package:usda_db_creation/helpers/string_helpers.dart';
+
 class DescriptionParser {
-  DescriptionParser(this.foodsDBMap);
-  final List<dynamic> foodsDBMap;
-  List<Record> originalDescriptions = [];
-  // List<Record> originalDescriptions = [];
+  // DescriptionParser(this.foodsDBMap);
+  // final List<dynamic> foodsDBMap;
+  // List<(int, String)> originalDescriptions = [];
+  // List<String> cleanedFirstRunDescriptions = [];
 
-  void populateOriginalDescriptions() {
-    originalDescriptions = foodsDBMap
-        .map((food) =>
-            (food["fdcId"] ??= food["ndbNumber"], food["description"]))
-        .toList();
+  static List<(int, String)> populateOriginalDescriptions(
+      List<dynamic> foodsDBMap) {
+    return foodsDBMap.map((food) {
+      int id;
+      if (food["fdcId"] == null) {
+        id = food["ndbNumber"];
+      } else {
+        id = food["fdcId"];
+      }
+
+      // Return a tuple containing the fdcId and description
+      return (id, food["description"] as String);
+    }).toList();
   }
+
+  // static List<(int, String)> createDuplicatePhraseFile(
+  //     List<dynamic> foodsDBMap) {
+  //   final originalDescriptions = populateOriginalDescriptions(foodsDBMap);
+  //   final descriptions = originalDescriptions.map((e) => e.$2).toList();
+  //   final repeats = findRepeatedPhrases(descriptions, 40);
+  //   print(repeats);
+  // }
 }
-
-
-// List<String> findStrings(List<String> strings, int minLength) {
-//   List<String> result = [];
-
-//   for (String input in strings) {
-//     String lowerInput = input.toLowerCase(); // Convert to lowercase for case-insensitive comparison
-//     for (int i = 0; i < input.length; i++) {
-//       for (int j = i + minLength; j <= input.length; j++) {
-//         String subString = input.substring(i, j);
-//         String lowerSubString = subString.toLowerCase();
-//         if (lowerInput.indexOf(lowerSubString, i + 1) != -1) {
-//           result.add(input);
-//           break;
-//         }
-//       }
-//     }
-//   }
-
-//   return result.toSet().toList(); // Remove duplicates and convert back to a list
-// }
-
-// void main() {
-//   List<String> inputList = [
-//     "Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough",
-//     "Pillsbury, Cinnamon Rolls with Icing, refrigerated dough",
-//     "George Weston Bakeries, Thomas English Muffins",
-//   ];
-
-//   int minLength = 17;
-
-//   List<String> result = findStrings(inputList, minLength);
-
-//   for (String str in result) {
-//     print(str);
-//   }
-// }
