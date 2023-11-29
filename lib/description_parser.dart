@@ -1,12 +1,12 @@
+import 'package:usda_db_creation/db/create_word_index.dart';
 import 'package:usda_db_creation/helpers/string_helpers.dart';
 
-class DescriptionParser {
-  // DescriptionParser(this.foodsDBMap);
-  // final List<dynamic> foodsDBMap;
-  // List<(int, String)> originalDescriptions = [];
-  // List<String> cleanedFirstRunDescriptions = [];
+const listOfPhrasesToDelete = [
+  "(Includes foods for USDA's Food Distribution Program)"
+];
 
-  static List<(int, String)> populateOriginalDescriptions(
+class DescriptionParser {
+  static List<(int, String)> populateOriginalDescriptionRecords(
       List<dynamic> foodsDBMap) {
     return foodsDBMap.map((food) {
       int id;
@@ -21,11 +21,22 @@ class DescriptionParser {
     }).toList();
   }
 
-  // static List<(int, String)> createDuplicatePhraseFile(
-  //     List<dynamic> foodsDBMap) {
-  //   final originalDescriptions = populateOriginalDescriptions(foodsDBMap);
-  //   final descriptions = originalDescriptions.map((e) => e.$2).toList();
-  //   final repeats = findRepeatedPhrases(descriptions, 40);
-  //   print(repeats);
+  static int getLongestDescription(
+      {required List<(int, String)> descriptions}) {
+    return descriptions.fold(
+        0,
+        (maxLength, record) =>
+            maxLength > record.$2.length ? maxLength : record.$2.length);
+  }
+
+  // static List<String> createDuplicatePhraseFile(
+  //     List<(int, String)> descriptionRecords,
+  //     int minPhraseLength,
+  //     int maxPhraseLength) {
+  //   final descriptions = descriptionRecords.map((e) => e.$2).toList();
+
+  //   return findRepeatedPhrases(descriptions, minPhraseLength, maxPhraseLength);
   // }
+
+  // static List<(int, String)> deletePhrases(List<(int, String)> phrases) {}
 }

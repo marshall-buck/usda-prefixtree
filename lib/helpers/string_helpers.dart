@@ -55,29 +55,124 @@ bool isStopWord(word) {
   return stopWords.contains(word);
 }
 
-List<String> findRepeatedPhrases(List<String> strings, int phraseLength) {
-  Map<String, int> phraseCounts = {};
+// List<String> findRepeatedPhrases(List<String> strings, int phraseLength) {
+//   Map<String, int> phraseCounts = {};
 
-  for (String sentence in strings) {
-    if (sentence.length >= phraseLength) {
-      for (int i = 0; i <= sentence.length - phraseLength; i++) {
-        String phrase = sentence.substring(i, i + phraseLength);
-        if (!(phrase.startsWith(' ') || phrase.endsWith(' '))) {
-          phraseCounts[phrase] = (phraseCounts[phrase] ?? 0) + 1;
-        }
-      }
-    }
-  }
+//   for (String sentence in strings) {
+//     if (sentence.length >= phraseLength) {
+//       for (int i = 0; i <= sentence.length - phraseLength; i++) {
+//         String phrase = sentence.substring(i, i + phraseLength);
+//         if (!(phrase.startsWith(' ') || phrase.endsWith(' '))) {
+//           phraseCounts[phrase] = (phraseCounts[phrase] ?? 0) + 1;
+//         }
+//       }
+//     }
+//   }
 
-  List<String> result = [];
-  phraseCounts.forEach((phrase, count) {
-    if (count > 1) {
-      result.add(phrase);
-    }
-  });
+//   List<String> result = [];
+//   phraseCounts.forEach((phrase, count) {
+//     if (count > 1) {
+//       result.add(phrase);
+//     }
+//   });
 
-  return result;
+//   return result;
+// }
+
+// List<String> findRepeatedPhrases(
+//     List<String> strings, int minPhraseLength, int maxPhraseLength) {
+//   Map<String, int> phraseCounts = {};
+
+//   for (String sentence in strings) {
+//     for (int phraseLength = minPhraseLength;
+//         phraseLength <= maxPhraseLength;
+//         phraseLength++) {
+//       if (sentence.length >= phraseLength) {
+//         for (int i = 0; i <= sentence.length - phraseLength; i++) {
+//           String phrase = sentence.substring(i, i + phraseLength);
+//           if (!(phrase.startsWith(' ') || phrase.endsWith(' '))) {
+//             phraseCounts[phrase] = (phraseCounts[phrase] ?? 0) + 1;
+//           }
+//         }
+//       }
+//     }
+//   }
+
+//   List<String> result = [];
+//   phraseCounts.forEach((phrase, count) {
+//     if (count > 1) {
+//       result.add(phrase);
+//     }
+//   });
+
+//   return result;
+// }
+
+// List<String> findRepeatedPhrases(
+//     List<String> strings, int minPhraseLength, int maxPhraseLength) {
+//   Map<String, int> phraseCounts = {};
+
+//   for (String sentence in strings) {
+//     for (int phraseLength = minPhraseLength;
+//         phraseLength <= maxPhraseLength;
+//         phraseLength++) {
+//       if (sentence.length >= phraseLength) {
+//         for (int i = 0; i <= sentence.length - phraseLength; i++) {
+//           String phrase = sentence.substring(i, i + phraseLength);
+//           if (!(phrase.startsWith(' ') || phrase.endsWith(' '))) {
+//             phraseCounts[phrase] = (phraseCounts[phrase] ?? 0) + 1;
+//           }
+//         }
+//       }
+//     }
+//   }
+
+//   List<String> allPhrases = [];
+//   phraseCounts.forEach((phrase, count) {
+//     if (count > 1) {
+//       allPhrases.add(phrase);
+//     }
+//   });
+
+//   return filterSubPhrases(allPhrases);
+// }
+
+// List<String> filterSubPhrases(List<String> phrases) {
+//   List<String> result = [];
+
+//   for (String phrase in phrases) {
+//     bool isSubPhrase = false;
+//     for (String otherPhrase in phrases) {
+//       if (otherPhrase != phrase && otherPhrase.contains(phrase)) {
+//         isSubPhrase = true;
+//         break;
+//       }
+//     }
+//     if (!isSubPhrase) {
+//       result.add(phrase);
+//     }
+//   }
+
+//   return result;
+// }
+
+// Map<String, int> findCommonPhrases(
+//     {required List<String> sentences, int minLength = 50}) {
+//   final Map<String, int> freauency = {};
+
+// }
+
+List<String> separateIntoPhrases({
+  required String string,
+  required int minLength,
+}) {
+  if (string.length <= minLength) return [''];
+
+  return [];
 }
+
+
+
 
 
 

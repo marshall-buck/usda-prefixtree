@@ -68,16 +68,34 @@ void main() {
           {'puff', 'pastry', 'frozen', 'ready', 'to', 'bake'});
     });
   });
-  group('findRepeatedPhrases', () {
-    test('should return repeated phrase 28 chars', () {
-      final res = findRepeatedPhrases(sentences, 28);
-      print(res);
-      expect(res.length, 1);
-      expect(res, ['this is a repeated phrase 28']);
+  // group('findRepeatedPhrases', () {
+  //   test('should return repeated phrase 28 chars', () {
+  //     final res = findRepeatedPhrases(sentences, 15, 28);
+  //     // print(res);
+  //     expect(res, [
+  //       'the ancient forest.',
+  //       'ed across the s',
+  //       'this is a repeated phrase 28'
+  //     ]);
+  //   });
+  // });
+  group('separateIntoPhrases', () {
+    test(
+        'String with length less than or equal to minLength should return List with empty string',
+        () {
+      final res1 = separateIntoPhrases(string: sentence49, minLength: 49);
+      // print(res);
+      expect(res1, ['']);
+      final res2 = separateIntoPhrases(string: sentence49, minLength: 50);
+      // print(res);
+      expect(res2, ['']);
     });
   });
 }
 
+const sentence132 =
+    "Under the shimmering moonlight, an old oak, rooted deeply, stood majestically as the silent guardian of the ancient, mystical woods.";
+const sentence49 = "Quietly, an old oak stood, surrounded by natures.";
 const sentences = [
   'The quick brown fox jumps over the lazy dog.',
   'In a distant galaxy, stars shimmered like diamonds.',
