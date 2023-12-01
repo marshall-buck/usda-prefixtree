@@ -37,7 +37,7 @@ SplayTreeMap<String, List<String>> populateIndexMap(Map<dynamic, dynamic> db) {
 
     final description = food.value['description'];
 
-    final sanitizedList = cleanSentence(description);
+    final sanitizedList = getWordsToIndex(description);
     if (sanitizedList.isNotEmpty) {
       for (var word in sanitizedList) {
         if (!isStopWord(word) && word.length > 2) {

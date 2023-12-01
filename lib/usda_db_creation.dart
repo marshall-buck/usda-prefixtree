@@ -1,6 +1,5 @@
 import 'package:usda_db_creation/db_parser.dart';
 import 'package:usda_db_creation/description_parser.dart';
-import 'package:usda_db_creation/file_loader_service.dart';
 
 const relativeOriginalDBPath = 'lib/db/original_usda.json';
 const relativeRepeatFile = 'lib/db/repeats.txt';

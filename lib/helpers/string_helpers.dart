@@ -35,7 +35,7 @@ List<String> stripDashedAndParenthesisWord(String word) {
 ///
 /// Returns a set of lowercased words with only alpha chars.
 
-Set<String> cleanSentence(String sentence) {
+Set<String> getWordsToIndex(String sentence) {
   List<List<String>> words = [];
 
   for (var word in sentence.split(' ')) {
@@ -158,18 +158,45 @@ bool isStopWord(word) {
 
 // Map<String, int> findCommonPhrases(
 //     {required List<String> sentences, int minLength = 50}) {
-//   final Map<String, int> freauency = {};
+//   final Map<String, int> frequency = {};
 
 // }
 
-List<String> separateIntoPhrases({
-  required String string,
-  required int minLength,
-}) {
-  if (string.length <= minLength) return [''];
-
-  return [];
+List<int> findAllSpacesInString(String sentence) {
+  List<int> indexesOfSpaces = [0];
+  if (sentence.isEmpty) return [];
+  for (var i = 0; i < sentence.length; i++) {
+    if (sentence[i] == " ") indexesOfSpaces.add(i);
+  }
+  return indexesOfSpaces;
 }
+
+List<String> separateIntoPhrases({
+  required String sentence,
+  required int minPhraseLength,
+}) {
+  final spacesList = findAllSpacesInString(sentence);
+  final int sentenceLength = sentence.length;
+  if (sentenceLength < minPhraseLength) return [''];
+  final List<String> listOfPhrases = [];
+
+  for (int num in spacesList) {
+    if (num == 0) {
+      if (sentenceLength < minPhraseLength) {
+        return [""];
+      } else {
+        listOfPhrases.add(sentence.substring(0, minPhraseLength));
+      }
+    } else {
+      if (num + 1 + minPhraseLength > sentenceLength) break;
+      listOfPhrases.add(sentence.substring(num + 1, num + 1 + minPhraseLength));
+    }
+  }
+
+  return listOfPhrases;
+}
+
+
 
 
 

@@ -1,3 +1,7 @@
+const listOfPhrasesToDelete = [
+  "(Includes foods for USDA's Food Distribution Program)"
+];
+
 List<String> stopWords = [
   "about",
   "above",

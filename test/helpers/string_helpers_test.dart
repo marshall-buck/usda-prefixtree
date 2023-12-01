@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:test/test.dart';
 import 'package:usda_db_creation/helpers/string_helpers.dart';
 
@@ -44,11 +45,11 @@ void main() {
   });
   group('cleanSentence()', () {
     test('Sentence should be stripped of all non alpha chars', () {
-      expect(cleanSentence('Doughnuts, yeast-Leavened, with jelly filling'),
+      expect(getWordsToIndex('Doughnuts, yeast-Leavened, with jelly filling'),
           {'doughnuts', 'yeast', 'leavened', 'with', 'jelly', 'filling'});
 
       expect(
-          cleanSentence(
+          getWordsToIndex(
               'Muffins, plain, prepared from recipe, made with low fat (2%) milk'),
           {
             'muffins',
@@ -64,7 +65,7 @@ void main() {
             'milk'
           });
 
-      expect(cleanSentence('Puff pastry, frozen, ready- -to-bake '),
+      expect(getWordsToIndex('Puff pastry, frozen, ready- -to-bake '),
           {'puff', 'pastry', 'frozen', 'ready', 'to', 'bake'});
     });
   });
@@ -80,21 +81,100 @@ void main() {
   //   });
   // });
   group('separateIntoPhrases', () {
-    test(
-        'String with length less than or equal to minLength should return List with empty string',
+    test('String greater than twice minLength returns correctly', () {
+      // "Quietly, an old oak stood, surrounded by natures."
+      /* cSpell:disable */
+      const expectation = [
+        "Quietly, an old oak ",
+        "an old oak stood, su",
+        "old oak stood, surro",
+        "oak stood, surrounde",
+        "stood, surrounded by",
+        "surrounded by nature"
+      ];
+      /* cSpell:enable */
+      final res = separateIntoPhrases(
+        sentence: sentence49,
+        minPhraseLength: 20,
+      );
+      final listEquals = ListEquality();
+      expect(listEquals.equals(expectation, res), true);
+    });
+    test('String of equal length to minLength returns correctly', () {
+      // "Quietly, an old oak stood, surrounded by natures."
+
+      const expectation = [
+        "Quietly, an old oak ",
+      ];
+
+      final res = separateIntoPhrases(
+        sentence: "Quietly, an old oak ",
+        minPhraseLength: 20,
+      );
+      final listEquals = ListEquality();
+      expect(listEquals.equals(expectation, res), true);
+    });
+    test('String of equal length + 1 to minLength returns correctly', () {
+      // "Quietly, an old oak stood, surrounded by natures."
+
+      const expectation = [
+        "Quietly, an old oak ",
+      ];
+
+      final res = separateIntoPhrases(
+        sentence: "Quietly, an old oak T",
+        minPhraseLength: 20,
+      );
+      final listEquals = ListEquality();
+      expect(listEquals.equals(expectation, res), true);
+    });
+    test('String of equal length - 1 to minLength returns correctly', () {
+      // "Quietly, an old oak stood, surrounded by natures."
+
+      final res = separateIntoPhrases(
+        sentence: "Quietly, an old oak",
+        minPhraseLength: 20,
+      );
+      final listEquals = ListEquality();
+      expect(listEquals.equals([''], res), true);
+    });
+  });
+  group('findAllSpaces', () {
+    test('Returns list of indexes, no spaces at beginning or end of sentence',
         () {
-      final res1 = separateIntoPhrases(string: sentence49, minLength: 49);
-      // print(res);
-      expect(res1, ['']);
-      final res2 = separateIntoPhrases(string: sentence49, minLength: 50);
-      // print(res);
-      expect(res2, ['']);
+      final res = findAllSpacesInString(sentence134);
+      expect(res, [
+        0,
+        5,
+        9,
+        22,
+        33,
+        36,
+        40,
+        45,
+        52,
+        60,
+        66,
+        79,
+        82,
+        86,
+        93,
+        102,
+        105,
+        109,
+        118,
+        127
+      ]);
+    });
+    test('Returns empty list empty string', () {
+      final res = findAllSpacesInString('');
+      expect(res, []);
     });
   });
 }
 
-const sentence132 =
-    "Under the shimmering moonlight, an old oak, rooted deeply, stood majestically as the silent guardian of the ancient, mystical woods.";
+const sentence134 =
+    "Under the (shimmering) moonlight, an old oak, rooted deeply, stood majestically as the silent guardian of the ancient, mystical woods.";
 const sentence49 = "Quietly, an old oak stood, surrounded by natures.";
 const sentences = [
   'The quick brown fox jumps over the lazy dog.',

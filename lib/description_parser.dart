@@ -1,10 +1,3 @@
-import 'package:usda_db_creation/db/create_word_index.dart';
-import 'package:usda_db_creation/helpers/string_helpers.dart';
-
-const listOfPhrasesToDelete = [
-  "(Includes foods for USDA's Food Distribution Program)"
-];
-
 class DescriptionParser {
   static List<(int, String)> populateOriginalDescriptionRecords(
       List<dynamic> foodsDBMap) {
