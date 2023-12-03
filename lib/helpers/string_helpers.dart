@@ -64,7 +64,7 @@ List<int> findAllSpacesInString(String sentence) {
   return indexesOfSpaces;
 }
 
-List<String?> separateIntoPhrases({
+List<String?> separateIntoPhrasesWithMinimumLength({
   required String sentence,
   required int minPhraseLength,
 }) {
@@ -73,12 +73,19 @@ List<String?> separateIntoPhrases({
   final int sentenceLength = sentence.length;
 
   if (sentenceLength < minPhraseLength) return [];
+  if (sentenceLength == minPhraseLength) {
+    return [sentence];
+  }
 
+  listOfPhrases.add(sentence.substring(0, sentenceLength));
   listOfPhrases.add(sentence.substring(0, minPhraseLength));
   if (spacesList.isEmpty) return listOfPhrases;
   for (int num in spacesList) {
     if (num + 1 + minPhraseLength > sentenceLength) break;
-    listOfPhrases.add(sentence.substring(num + 1, num + 1 + minPhraseLength));
+    listOfPhrases.add(sentence.substring(num + 1, sentenceLength));
+    if (sentenceLength != minPhraseLength) {
+      listOfPhrases.add(sentence.substring(num + 1, minPhraseLength + num + 1));
+    }
   }
 
   return listOfPhrases;

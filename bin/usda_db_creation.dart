@@ -9,5 +9,5 @@ void main() async {
   final fileLoader = FileLoaderService();
   final dbParser = DBParser(fileLoader: fileLoader);
   dbParser.init(relativeOriginalDBPath);
-  print(usda_db_creation.getLongestDescriptionLength(dbParser));
+  usda_db_creation.createDuplicatePhrases();
 }

@@ -1,4 +1,7 @@
+import 'helpers/string_helpers.dart';
+
 class DescriptionParser {
+  // Returns List of [(index, description).]
   static List<(int, String)> populateOriginalDescriptionRecords(
       List<dynamic> foodsDBMap) {
     return foodsDBMap.map((food) {
@@ -22,14 +25,30 @@ class DescriptionParser {
             maxLength > record.$2.length ? maxLength : record.$2.length);
   }
 
-  // static List<String> createDuplicatePhraseFile(
-  //     List<(int, String)> descriptionRecords,
-  //     int minPhraseLength,
-  //     int maxPhraseLength) {
-  //   final descriptions = descriptionRecords.map((e) => e.$2).toList();
+  static Map<String, int> getRepeatedPhrases(
+      {required List<(int, String)> listOfRecords,
+      required int minPhraseLength,
+      required showResultsLongerThan}) {
+    final Map<String, int> freqMap = {};
 
-  //   return findRepeatedPhrases(descriptions, minPhraseLength, maxPhraseLength);
-  // }
+    for (final record in listOfRecords) {
+      final String description = record.$2;
+      final phrases = separateIntoPhrasesWithMinimumLength(
+          sentence: description, minPhraseLength: minPhraseLength);
 
-  // static List<(int, String)> deletePhrases(List<(int, String)> phrases) {}
+      for (final phrase in phrases) {
+        if (phrase!.isNotEmpty) {
+          if (freqMap.containsKey(phrase)) {
+            freqMap[phrase] = freqMap[phrase]! + 1;
+          } else {
+            freqMap[phrase] = 1;
+          }
+        }
+      }
+    }
+
+    freqMap.removeWhere((key, value) => value < showResultsLongerThan);
+
+    return freqMap;
+  }
 }

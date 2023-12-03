@@ -70,34 +70,32 @@ void main() {
     });
   });
   // group('findRepeatedPhrases', () {
-  //   test('should return repeated phrase 28 chars', () {
-  //     final res = findRepeatedPhrases(sentences, 15, 28);
-  //     // print(res);
-  //     expect(res, [
-  //       'the ancient forest.',
-  //       'ed across the s',
-  //       'this is a repeated phrase 28'
-  //     ]);
-  //   });
-  // });
+
   group('separateIntoPhrases', () {
     test('String greater than twice minLength returns correctly', () {
       // "Quietly, an old oak stood, surrounded by natures."
       /* cSpell:disable */
       const expectation = [
+        "Quietly, an old oak stood, surrounded by natures.",
         "Quietly, an old oak ",
+        "an old oak stood, surrounded by natures.",
         "an old oak stood, su",
+        "old oak stood, surrounded by natures.",
         "old oak stood, surro",
+        "oak stood, surrounded by natures.",
         "oak stood, surrounde",
+        "stood, surrounded by natures.",
         "stood, surrounded by",
+        "surrounded by natures.",
         "surrounded by nature"
       ];
       /* cSpell:enable */
-      final res = separateIntoPhrases(
+      final res = separateIntoPhrasesWithMinimumLength(
         sentence: sentence49,
         minPhraseLength: 20,
       );
       final listEquals = ListEquality();
+
       expect(listEquals.equals(expectation, res), true);
     });
     test('String of equal length to minLength returns correctly', () {
@@ -107,31 +105,31 @@ void main() {
         "Quietly, an old oak ",
       ];
 
-      final res = separateIntoPhrases(
+      final res = separateIntoPhrasesWithMinimumLength(
         sentence: "Quietly, an old oak ",
         minPhraseLength: 20,
       );
+
       final listEquals = ListEquality();
       expect(listEquals.equals(expectation, res), true);
     });
     test('String of equal length + 1 to minLength returns correctly', () {
       // "Quietly, an old oak stood, surrounded by natures."
 
-      const expectation = [
-        "Quietly, an old oak ",
-      ];
+      const expectation = ["Quietly, an old oak T", "Quietly, an old oak "];
 
-      final res = separateIntoPhrases(
+      final res = separateIntoPhrasesWithMinimumLength(
         sentence: "Quietly, an old oak T",
         minPhraseLength: 20,
       );
+
       final listEquals = ListEquality();
       expect(listEquals.equals(expectation, res), true);
     });
     test('String of equal length - 1 to minLength returns correctly', () {
       // "Quietly, an old oak stood, surrounded by natures."
 
-      final res = separateIntoPhrases(
+      final res = separateIntoPhrasesWithMinimumLength(
         sentence: "Quietly, an old oak",
         minPhraseLength: 20,
       );
@@ -142,7 +140,7 @@ void main() {
     test('Empty string returns empty list', () {
       // "Quietly, an old oak stood, surrounded by natures."
 
-      final res = separateIntoPhrases(
+      final res = separateIntoPhrasesWithMinimumLength(
         sentence: '',
         minPhraseLength: 20,
       );

@@ -44,21 +44,25 @@ void main() {
       test('returns length of longest string', () {
         final res = DescriptionParser.getLongestDescription(
             descriptions: descriptionRecords);
-        expect(res, 83);
+        expect(res, 78);
       });
     });
-    // group('createDuplicatePhraseFile', () {
-    //   test('returns duplicates', () {
-    //     final res = DescriptionParser.createDuplicatePhraseFile(
-    //         descriptionRecords, 15, 28);
+    group('getRepeatedPhrases', () {
+      test('returns duplicates from anywhere in sentence', () {
+        final Map<String, int> res = DescriptionParser.getRepeatedPhrases(
+            listOfRecords: descriptionRecords,
+            minPhraseLength: 10,
+            showResultsLongerThan: 4);
+        final bool doesContainValue1 = res.containsKey('Map<String, int>');
+        expect(doesContainValue1, true);
 
-    //     expect(res, [
-    //       'the ancient forest.',
-    //       'ed across the s',
-    //       'this is a repeated phrase 28'
-    //     ]);
-    //   });
-    // });
+        // expect(res, [
+        //   'the ancient forest.',
+        //   'ed across the s',
+        //   'this is a repeated phrase 28'
+        // ]);
+      });
+    });
   });
 }
 
@@ -83,7 +87,7 @@ const descriptionRecords = [
   ),
   (
     162341,
-    'Majestic mountains towered over the serene valley this is the longest phrase at 83.'
+    'Majestic mountains towered over the serene valley this is a repeated phrase 28'
   ),
   (172342, 'The old clock tower chimed, marking the hour.'),
   (182343, 'Raindrops danced on the windowpane during the storm.'),
