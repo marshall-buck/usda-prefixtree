@@ -55,115 +55,8 @@ bool isStopWord(word) {
   return stopWords.contains(word);
 }
 
-// List<String> findRepeatedPhrases(List<String> strings, int phraseLength) {
-//   Map<String, int> phraseCounts = {};
-
-//   for (String sentence in strings) {
-//     if (sentence.length >= phraseLength) {
-//       for (int i = 0; i <= sentence.length - phraseLength; i++) {
-//         String phrase = sentence.substring(i, i + phraseLength);
-//         if (!(phrase.startsWith(' ') || phrase.endsWith(' '))) {
-//           phraseCounts[phrase] = (phraseCounts[phrase] ?? 0) + 1;
-//         }
-//       }
-//     }
-//   }
-
-//   List<String> result = [];
-//   phraseCounts.forEach((phrase, count) {
-//     if (count > 1) {
-//       result.add(phrase);
-//     }
-//   });
-
-//   return result;
-// }
-
-// List<String> findRepeatedPhrases(
-//     List<String> strings, int minPhraseLength, int maxPhraseLength) {
-//   Map<String, int> phraseCounts = {};
-
-//   for (String sentence in strings) {
-//     for (int phraseLength = minPhraseLength;
-//         phraseLength <= maxPhraseLength;
-//         phraseLength++) {
-//       if (sentence.length >= phraseLength) {
-//         for (int i = 0; i <= sentence.length - phraseLength; i++) {
-//           String phrase = sentence.substring(i, i + phraseLength);
-//           if (!(phrase.startsWith(' ') || phrase.endsWith(' '))) {
-//             phraseCounts[phrase] = (phraseCounts[phrase] ?? 0) + 1;
-//           }
-//         }
-//       }
-//     }
-//   }
-
-//   List<String> result = [];
-//   phraseCounts.forEach((phrase, count) {
-//     if (count > 1) {
-//       result.add(phrase);
-//     }
-//   });
-
-//   return result;
-// }
-
-// List<String> findRepeatedPhrases(
-//     List<String> strings, int minPhraseLength, int maxPhraseLength) {
-//   Map<String, int> phraseCounts = {};
-
-//   for (String sentence in strings) {
-//     for (int phraseLength = minPhraseLength;
-//         phraseLength <= maxPhraseLength;
-//         phraseLength++) {
-//       if (sentence.length >= phraseLength) {
-//         for (int i = 0; i <= sentence.length - phraseLength; i++) {
-//           String phrase = sentence.substring(i, i + phraseLength);
-//           if (!(phrase.startsWith(' ') || phrase.endsWith(' '))) {
-//             phraseCounts[phrase] = (phraseCounts[phrase] ?? 0) + 1;
-//           }
-//         }
-//       }
-//     }
-//   }
-
-//   List<String> allPhrases = [];
-//   phraseCounts.forEach((phrase, count) {
-//     if (count > 1) {
-//       allPhrases.add(phrase);
-//     }
-//   });
-
-//   return filterSubPhrases(allPhrases);
-// }
-
-// List<String> filterSubPhrases(List<String> phrases) {
-//   List<String> result = [];
-
-//   for (String phrase in phrases) {
-//     bool isSubPhrase = false;
-//     for (String otherPhrase in phrases) {
-//       if (otherPhrase != phrase && otherPhrase.contains(phrase)) {
-//         isSubPhrase = true;
-//         break;
-//       }
-//     }
-//     if (!isSubPhrase) {
-//       result.add(phrase);
-//     }
-//   }
-
-//   return result;
-// }
-
-// Map<String, int> findCommonPhrases(
-//     {required List<String> sentences, int minLength = 50}) {
-//   final Map<String, int> frequency = {};
-
-// }
-
 List<int> findAllSpacesInString(String sentence) {
-  List<int> indexesOfSpaces = [0];
+  List<int> indexesOfSpaces = [];
   if (sentence.isEmpty) return [];
   for (var i = 0; i < sentence.length; i++) {
     if (sentence[i] == " ") indexesOfSpaces.add(i);
@@ -171,32 +64,25 @@ List<int> findAllSpacesInString(String sentence) {
   return indexesOfSpaces;
 }
 
-List<String> separateIntoPhrases({
+List<String?> separateIntoPhrases({
   required String sentence,
   required int minPhraseLength,
 }) {
+  final List<String> listOfPhrases = [];
   final spacesList = findAllSpacesInString(sentence);
   final int sentenceLength = sentence.length;
-  if (sentenceLength < minPhraseLength) return [''];
-  final List<String> listOfPhrases = [];
 
+  if (sentenceLength < minPhraseLength) return [];
+
+  listOfPhrases.add(sentence.substring(0, minPhraseLength));
+  if (spacesList.isEmpty) return listOfPhrases;
   for (int num in spacesList) {
-    if (num == 0) {
-      if (sentenceLength < minPhraseLength) {
-        return [""];
-      } else {
-        listOfPhrases.add(sentence.substring(0, minPhraseLength));
-      }
-    } else {
-      if (num + 1 + minPhraseLength > sentenceLength) break;
-      listOfPhrases.add(sentence.substring(num + 1, num + 1 + minPhraseLength));
-    }
+    if (num + 1 + minPhraseLength > sentenceLength) break;
+    listOfPhrases.add(sentence.substring(num + 1, num + 1 + minPhraseLength));
   }
 
   return listOfPhrases;
 }
-
-
 
 
 

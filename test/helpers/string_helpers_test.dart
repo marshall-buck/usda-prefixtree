@@ -136,7 +136,18 @@ void main() {
         minPhraseLength: 20,
       );
       final listEquals = ListEquality();
-      expect(listEquals.equals([''], res), true);
+      expect(listEquals.equals([], res), true);
+      expect(res.isEmpty, true);
+    });
+    test('Empty string returns empty list', () {
+      // "Quietly, an old oak stood, surrounded by natures."
+
+      final res = separateIntoPhrases(
+        sentence: '',
+        minPhraseLength: 20,
+      );
+      final listEquals = ListEquality();
+      expect(listEquals.equals([], res), true);
     });
   });
   group('findAllSpaces', () {
@@ -144,7 +155,6 @@ void main() {
         () {
       final res = findAllSpacesInString(sentence134);
       expect(res, [
-        0,
         5,
         9,
         22,
