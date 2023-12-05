@@ -59,7 +59,9 @@ List<int> findAllSpacesInString(String sentence) {
   List<int> indexesOfSpaces = [];
   if (sentence.isEmpty) return [];
   for (var i = 0; i < sentence.length; i++) {
-    if (sentence[i] == " ") indexesOfSpaces.add(i);
+    if (sentence[i] == " ") {
+      if (i != sentence.length - 1) indexesOfSpaces.add(i);
+    }
   }
   return indexesOfSpaces;
 }
@@ -71,21 +73,26 @@ List<String?> separateIntoPhrasesWithMinimumLength({
   final List<String> listOfPhrases = [];
   final spacesList = findAllSpacesInString(sentence);
   final int sentenceLength = sentence.length;
-
   if (sentenceLength < minPhraseLength) return [];
   if (sentenceLength == minPhraseLength) {
     return [sentence];
   }
-
-  listOfPhrases.add(sentence.substring(0, sentenceLength));
-  listOfPhrases.add(sentence.substring(0, minPhraseLength));
+  print(spacesList);
   if (spacesList.isEmpty) return listOfPhrases;
-  for (int num in spacesList) {
-    if (num + 1 + minPhraseLength > sentenceLength) break;
-    listOfPhrases.add(sentence.substring(num + 1, sentenceLength));
-    if (sentenceLength != minPhraseLength) {
-      listOfPhrases.add(sentence.substring(num + 1, minPhraseLength + num + 1));
-    }
+  for (int i = -1; i < spacesList.length; i++) {
+    int currentSpace = i < 0 ? -1 : spacesList[i];
+    int nextSpace = spacesList.firstWhere(
+        (element) => element >= currentSpace + minPhraseLength,
+        orElse: () => sentenceLength);
+
+    print('next space:  $nextSpace');
+
+    if (currentSpace + minPhraseLength >= sentenceLength) break;
+
+    listOfPhrases.add(sentence.substring(
+        currentSpace + 1, currentSpace == -1 ? nextSpace + 1 : nextSpace));
+
+    // listOfPhrases.add(sentence.substring(num + 1, minPhraseLength + num + 1));
   }
 
   return listOfPhrases;

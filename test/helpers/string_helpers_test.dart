@@ -71,29 +71,25 @@ void main() {
   });
   // group('findRepeatedPhrases', () {
 
-  group('separateIntoPhrases', () {
+  group('separateIntoPhrasesWithMinimumLength', () {
     test('String greater than twice minLength returns correctly', () {
       // "Quietly, an old oak stood, surrounded by natures."
+      // [8, 11, 15, 19, 26, 37, 40]
       /* cSpell:disable */
       const expectation = [
-        "Quietly, an old oak stood, surrounded by natures.",
-        "Quietly, an old oak ",
-        "an old oak stood, surrounded by natures.",
-        "an old oak stood, su",
-        "old oak stood, surrounded by natures.",
-        "old oak stood, surro",
-        "oak stood, surrounded by natures.",
-        "oak stood, surrounde",
-        "stood, surrounded by natures.",
-        "stood, surrounded by",
-        "surrounded by natures.",
-        "surrounded by nature"
+        "Quietly, an old oak ", // 0, 19
+        "an old oak stood, surrounded", // 9, 36
+        "old oak stood, surrounded", // 12, 36
+        "oak stood, surrounded", // 16, 36
+        "stood, surrounded by", // 20 , 39
+        "surrounded by natures." // 27 , 48
       ];
       /* cSpell:enable */
       final res = separateIntoPhrasesWithMinimumLength(
         sentence: sentence49,
         minPhraseLength: 20,
       );
+      // print(res);
       final listEquals = ListEquality();
 
       expect(listEquals.equals(expectation, res), true);
@@ -116,13 +112,13 @@ void main() {
     test('String of equal length + 1 to minLength returns correctly', () {
       // "Quietly, an old oak stood, surrounded by natures."
 
-      const expectation = ["Quietly, an old oak T", "Quietly, an old oak "];
+      const expectation = ["Quietly, an old oaK T"];
 
       final res = separateIntoPhrasesWithMinimumLength(
-        sentence: "Quietly, an old oak T",
+        sentence: "Quietly, an old oaK T",
         minPhraseLength: 20,
       );
-
+      print(res);
       final listEquals = ListEquality();
       expect(listEquals.equals(expectation, res), true);
     });
@@ -148,7 +144,7 @@ void main() {
       expect(listEquals.equals([], res), true);
     });
   });
-  group('findAllSpaces', () {
+  group('findAllSpacesInString', () {
     test('Returns list of indexes, no spaces at beginning or end of sentence',
         () {
       final res = findAllSpacesInString(sentence134);
@@ -177,6 +173,10 @@ void main() {
     test('Returns empty list empty string', () {
       final res = findAllSpacesInString('');
       expect(res, []);
+    });
+    test('Returns correctly when string ends in a space', () {
+      final res = findAllSpacesInString('an old oak stood ');
+      expect(res, [2, 6, 10]);
     });
   });
 }
