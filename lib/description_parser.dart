@@ -28,12 +28,12 @@ class DescriptionParser {
   static Map<String, int> getRepeatedPhrases(
       {required List<(int, String)> listOfRecords,
       required int minPhraseLength,
-      required showResultsLongerThan}) {
+      required howManyTimesRepeated}) {
     final Map<String, int> freqMap = {};
 
     for (final record in listOfRecords) {
       final String description = record.$2;
-      final phrases = separateIntoPhrasesWithMinimumLength(
+      final List<String?> phrases = separateIntoPhrasesWithMinimumLength(
           sentence: description, minPhraseLength: minPhraseLength);
 
       for (final phrase in phrases) {
@@ -47,8 +47,8 @@ class DescriptionParser {
       }
     }
 
-    freqMap.removeWhere((key, value) => value < showResultsLongerThan);
-
+    freqMap.removeWhere((key, value) => value < howManyTimesRepeated);
+    print(freqMap);
     return freqMap;
   }
 }

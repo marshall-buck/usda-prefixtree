@@ -84,7 +84,7 @@ List<String?> separateIntoPhrasesWithMinimumLength({
   if (sentenceLength == minPhraseLength) {
     return [sentence];
   }
-  print(spacesList);
+  // print(spacesList);
 
   for (int i = 0; i < spacesList.length; i++) {
     int currentSpace = spacesList[i];

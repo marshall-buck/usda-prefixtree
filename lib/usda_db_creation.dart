@@ -11,16 +11,19 @@ void createFiles() {
 }
 
 Future<void> createDuplicatePhrases(
-    {int minPhraseLength = 45, showResultsLongerThan = 10}) async {
-  final fileLoader = FileLoaderService();
-  final dbParser = DBParser(fileLoader: fileLoader);
-  dbParser.init(relativeOriginalDBPath);
+    {int minPhraseLength = 45,
+    showResultsLongerThan = 10,
+    required FileLoaderService fileLoader,
+    required DBParser dbParser}) async {
+  // final fileLoader = FileLoaderService();
+  // final dbParser = DBParser(fileLoader: fileLoader);
+  // dbParser.init(relativeOriginalDBPath);
   final descriptionRecords =
       DescriptionParser.populateOriginalDescriptionRecords(dbParser.foodsDBMap);
   final repeats = DescriptionParser.getRepeatedPhrases(
       listOfRecords: descriptionRecords,
       minPhraseLength: minPhraseLength,
-      showResultsLongerThan: showResultsLongerThan);
+      howManyTimesRepeated: showResultsLongerThan);
   await fileLoader.writeJsonFile(relativeRepeatFile, repeats);
   print('Complete: ${repeats.length}');
 }

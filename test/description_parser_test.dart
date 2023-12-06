@@ -51,9 +51,11 @@ void main() {
       test('returns duplicates from anywhere in sentence', () {
         final Map<String, int> res = DescriptionParser.getRepeatedPhrases(
             listOfRecords: descriptionRecords,
-            minPhraseLength: 10,
-            showResultsLongerThan: 4);
-        final bool doesContainValue1 = res.containsKey('Map<String, int>');
+            minPhraseLength: 28,
+            howManyTimesRepeated: 3);
+        // print(res);
+        final bool doesContainValue1 =
+            res.containsKey('this is a repeated phrase 28');
         expect(doesContainValue1, true);
 
         // expect(res, [
