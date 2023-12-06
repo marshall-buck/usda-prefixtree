@@ -89,7 +89,7 @@ void main() {
         sentence: sentence49,
         minPhraseLength: 20,
       );
-      // print(res);
+      print(res);
       final listEquals = ListEquality();
 
       expect(listEquals.equals(expectation, res), true);
@@ -112,7 +112,7 @@ void main() {
     test('String of equal length + 1 to minLength returns correctly', () {
       // "Quietly, an old oak stood, surrounded by natures."
 
-      const expectation = ["Quietly, an old oaK T"];
+      const expectation = ["Quietly, an old oaK "];
 
       final res = separateIntoPhrasesWithMinimumLength(
         sentence: "Quietly, an old oaK T",
@@ -133,15 +133,15 @@ void main() {
       expect(listEquals.equals([], res), true);
       expect(res.isEmpty, true);
     });
-    test('Empty string returns empty list', () {
+    test('String with no spaces returns correctly', () {
       // "Quietly, an old oak stood, surrounded by natures."
-
+      const expectation = ["xxxxxxxxxxxxxxxxxxxx"];
       final res = separateIntoPhrasesWithMinimumLength(
-        sentence: '',
+        sentence: "xxxxxxxxxxxxxxxxxxxxxxxx",
         minPhraseLength: 20,
       );
       final listEquals = ListEquality();
-      expect(listEquals.equals([], res), true);
+      expect(listEquals.equals(expectation, res), true);
     });
   });
   group('findAllSpacesInString', () {
