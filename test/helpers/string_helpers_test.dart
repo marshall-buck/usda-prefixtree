@@ -89,7 +89,7 @@ void main() {
         sentence: sentence49,
         minPhraseLength: 20,
       );
-      print(res);
+      // print(res);
       final listEquals = ListEquality();
 
       expect(listEquals.equals(expectation, res), true);
@@ -118,7 +118,7 @@ void main() {
         sentence: "Quietly, an old oaK T",
         minPhraseLength: 20,
       );
-      print(res);
+      // print(res);
       final listEquals = ListEquality();
       expect(listEquals.equals(expectation, res), true);
     });
@@ -133,6 +133,17 @@ void main() {
       expect(listEquals.equals([], res), true);
       expect(res.isEmpty, true);
     });
+    test('String of less than to minLength returns correctly', () {
+      // "Quietly, an old oak stood, surrounded by natures."
+
+      final res = separateIntoPhrasesWithMinimumLength(
+        sentence: "George Weston Bakeries, Thomas English Muffins",
+        minPhraseLength: 48,
+      );
+      final listEquals = ListEquality();
+      expect(listEquals.equals([], res), true);
+      expect(res.isEmpty, true);
+    });
     test('String with no spaces returns correctly', () {
       // "Quietly, an old oak stood, surrounded by natures."
       const expectation = ["xxxxxxxxxxxxxxxxxxxx"];
@@ -140,6 +151,21 @@ void main() {
         sentence: "xxxxxxxxxxxxxxxxxxxxxxxx",
         minPhraseLength: 20,
       );
+      final listEquals = ListEquality();
+      expect(listEquals.equals(expectation, res), true);
+    });
+    test('When the next space is always the last space', () {
+      // "Quietly, an old oak stood, surrounded by natures."
+      const expectation = [
+        "In a distant galaxy, stars shimmered like diamonds.",
+        "a distant galaxy, stars shimmered like diamonds.",
+        "distant galaxy, stars shimmered like diamonds."
+      ];
+      final res = separateIntoPhrasesWithMinimumLength(
+        sentence: "In a distant galaxy, stars shimmered like diamonds.", //51
+        minPhraseLength: 45,
+      );
+      // print(res);
       final listEquals = ListEquality();
       expect(listEquals.equals(expectation, res), true);
     });

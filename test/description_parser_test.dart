@@ -57,19 +57,14 @@ void main() {
         final bool doesContainValue1 =
             res.containsKey('this is a repeated phrase 28');
         expect(doesContainValue1, true);
-
-        // expect(res, [
-        //   'the ancient forest.',
-        //   'ed across the s',
-        //   'this is a repeated phrase 28'
-        // ]);
       });
     });
   });
 }
 
 const descriptionRecords = [
-  (123456, 'The quick brown fox jumps over the lazy dog.'),
+  (111111, "George Weston Bakeries, Thomas English Muffins"),
+  (123456, 'The quick brown fox jumps over the lazy dog. '),
   (234567, 'In a distant galaxy, stars shimmered like diamonds.'),
   (345678, 'A mysterious melody echoed through the ancient forest.'),
   (456789, 'Sunsets paint the sky in hues of orange and pink.'),

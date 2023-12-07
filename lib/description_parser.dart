@@ -48,7 +48,9 @@ class DescriptionParser {
     }
 
     freqMap.removeWhere((key, value) => value < howManyTimesRepeated);
-    print(freqMap);
-    return freqMap;
+    var sortedList = freqMap.entries.toList()
+      ..sort((a, b) => b.value.compareTo(a.value));
+
+    return Map.fromEntries(sortedList);
   }
 }

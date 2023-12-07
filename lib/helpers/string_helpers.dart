@@ -74,11 +74,10 @@ List<String?> separateIntoPhrasesWithMinimumLength({
 
   List<int> spacesList = findAllSpacesInString(sentence);
 
-  if (spacesList.isEmpty) return [sentence.substring(0, minPhraseLength)];
   spacesList.insert(0, -1);
 
   final int sentenceLength = sentence.length;
-
+  if (spacesList.isEmpty) return [sentence.substring(0, sentenceLength)];
   if (sentenceLength < minPhraseLength) return listOfPhrases;
 
   if (sentenceLength == minPhraseLength) {
@@ -87,20 +86,23 @@ List<String?> separateIntoPhrasesWithMinimumLength({
   // print(spacesList);
 
   for (int i = 0; i < spacesList.length; i++) {
+    // print(spacesList);
     int currentSpace = spacesList[i];
     if (currentSpace + minPhraseLength > sentenceLength) break;
     int nextSpace = spacesList.firstWhere(
         (element) => element >= currentSpace + minPhraseLength,
         orElse: () => sentenceLength);
-    final int subStringEndExclusive = i == 0 ? nextSpace + 1 : nextSpace;
-    // print('currentSpace:  $currentSpace');
-    // print('next space:  $nextSpace');
+    // int subStringEndExclusive;
+    int subStringEndExclusive = i == 0 ? nextSpace + 1 : nextSpace;
 
-    // print(' substring(${currentSpace + 1}, $subStringEndExclusive)');
-
+    if (i == 0 && nextSpace != sentenceLength) {
+      subStringEndExclusive = nextSpace + 1;
+    } else {
+      subStringEndExclusive = nextSpace;
+    }
     // print(
-    //     ' currentSpace + minPhraseLength:  ${currentSpace + minPhraseLength}');
-
+    //     '$sentence currentSpace: $currentSpace, minPhraseLength: $minPhraseLength, nextSpace: $nextSpace, sentenceLength: $sentenceLength, subStringEndExclusive: $subStringEndExclusive');
+    assert(subStringEndExclusive <= sentenceLength);
     listOfPhrases
         .add(sentence.substring(currentSpace + 1, subStringEndExclusive));
   }
