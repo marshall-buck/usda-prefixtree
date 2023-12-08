@@ -7,19 +7,19 @@ import 'dart:io';
 /// [filePath]
 ///
 /// Returns [map]
-Future<Map> readJsonFile(String filePath) async {
+Future<Map> readJsonFile(final String filePath) async {
   var input = await File(filePath).readAsString();
   var map = jsonDecode(input);
 
   return map;
 }
 
-/// Write a json file form a Ma
+/// Write a json file form a Map
 ///
 /// Parameters:
 /// [filePath]
 /// [contents] - type [Map]
-Future<void> writeJsonFile(String filePath, Map contents) async {
+Future<void> writeJsonFile(final String filePath, final Map contents) async {
   try {
     await File(filePath).writeAsString(jsonEncode(contents));
   } catch (e) {

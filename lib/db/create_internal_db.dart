@@ -35,7 +35,7 @@ void main() {
 ///  unitName is optional.
 ///
 ///
-List getFoodNutrients(List list) {
+List getFoodNutrients(final List list) {
   final List nutrients = [];
 
   for (var i = 0; i < list.length; i++) {
@@ -62,7 +62,7 @@ List getFoodNutrients(List list) {
 /// [nutrientId] - the id of the nutrient to be included.
 ///
 /// Returns [bool].
-bool findNutrient(int nutrientId) {
+bool findNutrient(final int nutrientId) {
   return keepTheseNutrients.contains(nutrientId);
 }
 
@@ -71,7 +71,7 @@ bool findNutrient(int nutrientId) {
 /// Parameters [nutrientId]
 ///
 /// Returns [String] of user friendly name.
-String switchNutrientName(nutrientId) {
+String switchNutrientName(final nutrientId) {
   switch (nutrientId) {
     case 1004:
       {
@@ -148,7 +148,7 @@ void createInternalTestingDb() async {
 ///         "Calories": 307,
 ///         "Total Sugars": 5.88
 ///     },...}.
-Map<String, Map> createDb(Map data) {
+Map<String, Map> createDb(final Map data) {
   final List originalDb = data['SRLegacyFoods'];
   final Map<String, Map> db = {};
   for (var i = 0; i < originalDb.length; i++) {
@@ -166,7 +166,7 @@ Map<String, Map> createDb(Map data) {
   return db;
 }
 
-Map<String, Map> createTestingDb(Map data) {
+Map<String, Map> createTestingDb(final Map data) {
   final List originalDb = data['SRLegacyFoods'];
   final Map<String, Map> db = {};
   for (var i = 0; i < 6; i++) {
@@ -191,15 +191,13 @@ Map<String, Map> createTestingDb(Map data) {
 /// [foodId] - the key in the map
 /// [foodNutrients] - the list of nutrients [{ name: Protein, amount: 5.88 },
 ///                                         { name: Calories, amount: 100 }, ...].
-void createNutrientEntry(db, foodId, foodNutrients) {
+void createNutrientEntry(final db, final foodId, final foodNutrients) {
   for (var j = 0; j < foodNutrients.length; j++) {
     final name = foodNutrients[j]['name'];
     final amount = foodNutrients[j]['amount'];
     db['$foodId']![name] = amount;
   }
 }
-
-
 
 // Total Fat =  Total lipid (fat)  1004
 // carbs = Carbohydrate, by difference  1005

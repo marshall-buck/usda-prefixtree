@@ -2,13 +2,13 @@ import 'package:usda_db_creation/helpers/stop_words.dart';
 
 // Removes all non-alpha except dashes and parentheses,
 //and numbers followed by a % See notes at bottom a file
-String removeUnwantedChars(String word) {
+String removeUnwantedChars(final String word) {
   // Regex to remove unwanted characters
 
   final stringSanitizerRegEx = RegExp(r"[^\w()%\-]|(\d+%)");
 
   return word.replaceAllMapped(
-      stringSanitizerRegEx, (match) => match.group(1) ?? '');
+      stringSanitizerRegEx, (final match) => match.group(1) ?? '');
 }
 
 /// Separates dashed words.
@@ -17,7 +17,7 @@ String removeUnwantedChars(String word) {
 /// [word]
 ///
 /// Returns a list of a word(s), list may be empty and may contain empty strings.
-List<String> stripDashedAndParenthesisWord(String word) {
+List<String> stripDashedAndParenthesisWord(final String word) {
   if (word.contains('-')) return word.split('-');
   if (word.startsWith('(') && word.endsWith(')')) {
     final trimmed = word.substring(1, word.length - 1);
@@ -35,7 +35,7 @@ List<String> stripDashedAndParenthesisWord(String word) {
 ///
 /// Returns a set of lowercased words with only alpha chars.
 
-Set<String> getWordsToIndex(String sentence) {
+Set<String> getWordsToIndex(final String sentence) {
   List<List<String>> words = [];
 
   for (var word in sentence.split(' ')) {
@@ -46,16 +46,16 @@ Set<String> getWordsToIndex(String sentence) {
       words.add(splitWords);
     }
   }
-  final wordsSet = words.expand((list) => list).toSet();
+  final wordsSet = words.expand((final list) => list).toSet();
   wordsSet.remove('');
   return wordsSet;
 }
 
-bool isStopWord(word) {
+bool isStopWord(final word) {
   return stopWords.contains(word);
 }
 
-List<int> findAllSpacesInString(String sentence) {
+List<int> findAllSpacesInString(final String sentence) {
   List<int> indexesOfSpaces = [];
   if (sentence.isEmpty) return [];
   for (var i = 0; i < sentence.length; i++) {
@@ -67,8 +67,8 @@ List<int> findAllSpacesInString(String sentence) {
 }
 
 List<String?> separateIntoPhrasesWithMinimumLength({
-  required String sentence,
-  required int minPhraseLength,
+  required final String sentence,
+  required final int minPhraseLength,
 }) {
   final List<String> listOfPhrases = [];
 
@@ -90,7 +90,7 @@ List<String?> separateIntoPhrasesWithMinimumLength({
     int currentSpace = spacesList[i];
     if (currentSpace + minPhraseLength > sentenceLength) break;
     int nextSpace = spacesList.firstWhere(
-        (element) => element >= currentSpace + minPhraseLength,
+        (final element) => element >= currentSpace + minPhraseLength,
         orElse: () => sentenceLength);
     // int subStringEndExclusive;
     int subStringEndExclusive = i == 0 ? nextSpace + 1 : nextSpace;
@@ -109,13 +109,6 @@ List<String?> separateIntoPhrasesWithMinimumLength({
 
   return listOfPhrases;
 }
-
-
-
-
-
-
-
 
 // Here's the breakdown of the components in this regular expression:
 

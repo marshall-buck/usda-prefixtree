@@ -11,10 +11,10 @@ void createFiles() {
 }
 
 Future<void> createDuplicatePhrases(
-    {int minPhraseLength = 45,
-    showResultsLongerThan = 10,
-    required FileLoaderService fileLoader,
-    required DBParser dbParser}) async {
+    {final int minPhraseLength = 45,
+    final showResultsLongerThan = 10,
+    required final FileLoaderService fileLoader,
+    required final DBParser dbParser}) async {
   final descriptionRecords =
       DescriptionParser.populateOriginalDescriptionRecords(dbParser.foodsDBMap);
 
@@ -28,7 +28,7 @@ Future<void> createDuplicatePhrases(
 }
 
 // The answer is 134 for the original descriptions.
-int getLongestDescriptionLength(DBParser dbParser) {
+int getLongestDescriptionLength(final DBParser dbParser) {
   final descriptions =
       DescriptionParser.populateOriginalDescriptionRecords(dbParser.foodsDBMap);
   return DescriptionParser.getLongestDescription(descriptions: descriptions);

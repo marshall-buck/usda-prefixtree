@@ -3,11 +3,14 @@ import 'dart:developer';
 import 'dart:io';
 
 /// Class to handle reading and writing json files.
-/// May add some type of init method later
-class FileLoaderService {
-  String loadData(String path) => File(path).readAsStringSync();
 
-  Future<void> writeJsonFile(String filePath, Map contents) async {
+class FileLoaderService {
+  /// Using this method to open a file to a string
+  /// will help with testing.
+  String loadData(final String path) => File(path).readAsStringSync();
+
+  /// Writes a json file from a [contents].
+  Future<void> writeJsonFile(final String filePath, final Map contents) async {
     try {
       await File(filePath).writeAsString(jsonEncode(contents));
     } catch (e, st) {
@@ -15,18 +18,20 @@ class FileLoaderService {
     }
   }
 
-  Future<void> writeTextFile(List<String> list, String path) async {
+  /// Takes a [List], and writes a file to given [path], creating a new
+  ///  line for each list item
+  Future<void> writeTextFile(final List<String> list, final String path) async {
     // Sort the list
     list.sort();
 
     // Create a new file, overwriting any existing file
-    var file = File(path);
+    File file = File(path);
 
     // Open the file in write mode
-    var sink = file.openWrite();
+    IOSink sink = file.openWrite();
 
     // Write each line to the file
-    for (var line in list) {
+    for (final line in list) {
       sink.writeln(line);
     }
 

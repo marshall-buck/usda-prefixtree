@@ -7,17 +7,17 @@ part 'food_model.g.dart';
 @freezed
 class FoodModel with _$FoodModel {
   const factory FoodModel(
-      {required String id,
-      required String description,
-      required num descriptionLength,
-      num? protein,
-      num? dietaryFiber,
-      num? satFat,
-      num? totCarb,
-      num? calories,
-      num? totFat,
-      num? totSugars}) = _FoodModel;
+      {required final String id,
+      required final String description,
+      required final num descriptionLength,
+      final num? protein,
+      final num? dietaryFiber,
+      final num? satFat,
+      final num? totCarb,
+      final num? calories,
+      final num? totFat,
+      final num? totSugars}) = _FoodModel;
 
-  factory FoodModel.fromJson(Map<String, Object?> json) =>
+  factory FoodModel.fromJson(final Map<String, Object?> json) =>
       _$FoodModelFromJson(json);
 }

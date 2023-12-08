@@ -6,7 +6,7 @@ part of 'food_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$FoodModelImpl _$$FoodModelImplFromJson(Map<String, dynamic> json) =>
+_$FoodModelImpl _$$FoodModelImplFromJson(final Map<String, dynamic> json) =>
     _$FoodModelImpl(
       id: json['id'] as String,
       description: json['description'] as String,
@@ -20,7 +20,7 @@ _$FoodModelImpl _$$FoodModelImplFromJson(Map<String, dynamic> json) =>
       totSugars: json['totSugars'] as num?,
     );
 
-Map<String, dynamic> _$$FoodModelImplToJson(_$FoodModelImpl instance) =>
+Map<String, dynamic> _$$FoodModelImplToJson(final _$FoodModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'description': instance.description,

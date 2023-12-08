@@ -6,7 +6,7 @@ part of 'nutrient.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$NutrientImpl _$$NutrientImplFromJson(Map<String, dynamic> json) =>
+_$NutrientImpl _$$NutrientImplFromJson(final Map<String, dynamic> json) =>
     _$NutrientImpl(
       id: json['id'] as String,
       displayName: json['displayName'] as String,
@@ -14,7 +14,7 @@ _$NutrientImpl _$$NutrientImplFromJson(Map<String, dynamic> json) =>
       unit: json['unit'] as String,
     );
 
-Map<String, dynamic> _$$NutrientImplToJson(_$NutrientImpl instance) =>
+Map<String, dynamic> _$$NutrientImplToJson(final _$NutrientImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'displayName': instance.displayName,

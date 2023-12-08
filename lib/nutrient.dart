@@ -7,13 +7,13 @@ part 'nutrient.g.dart';
 @freezed
 class Nutrient with _$Nutrient {
   const factory Nutrient({
-    required String id,
-    required String displayName,
-    required num amount,
-    required String unit,
+    required final String id,
+    required final String displayName,
+    required final num amount,
+    required final String unit,
   }) = _Nutrient;
 
-  factory Nutrient.fromJson(Map<String, Object?> json) =>
+  factory Nutrient.fromJson(final Map<String, Object?> json) =>
       _$NutrientFromJson(json);
 
   const Nutrient._();
@@ -23,7 +23,7 @@ class Nutrient with _$Nutrient {
   /// Parameters [nutrientId]
   ///
   /// Returns [String] of user friendly name.
-  String switchNutrientName(nutrientId) {
+  String switchNutrientName(final nutrientId) {
     switch (nutrientId) {
       case 1004:
         {

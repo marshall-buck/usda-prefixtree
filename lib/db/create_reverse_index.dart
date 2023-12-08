@@ -18,8 +18,8 @@ void main() async {
 
 const window = 3;
 
-Map<String, List<String>> createSubstrings(Map<dynamic, dynamic> sortedMap) {
-  final indexMap = SplayTreeMap<String, Set<String>>((a, b) => a.compareTo(b));
+Map<String, List<String>> createSubstrings(final Map<dynamic, dynamic> sortedMap) {
+  final indexMap = SplayTreeMap<String, Set<String>>((final a, final b) => a.compareTo(b));
 
   for (var item in sortedMap.entries) {
     String word = item.key;
@@ -39,10 +39,10 @@ Map<String, List<String>> createSubstrings(Map<dynamic, dynamic> sortedMap) {
     }
   }
 
-  return indexMap.map((key, value) => MapEntry(key, value.toList()..sort()));
+  return indexMap.map((final key, final value) => MapEntry(key, value.toList()..sort()));
 }
 
-Map<String, dynamic> createHashTable(Map<String, List<String>> originalMap) {
+Map<String, dynamic> createHashTable(final Map<String, List<String>> originalMap) {
   Map<String, int> newWordIndex = {};
   Map<int, List<String>> hashTable = {};
   int count = 0;
@@ -64,14 +64,14 @@ Map<String, dynamic> createHashTable(Map<String, List<String>> originalMap) {
   }
 
   Map<String, List<String>> stringKeyMap =
-      hashTable.map((key, value) => MapEntry(key.toString(), value));
+      hashTable.map((final key, final value) => MapEntry(key.toString(), value));
 
   return {"substrings": newWordIndex, "indexHash": stringKeyMap};
 }
 
 int findHashKey(
-    {required List<String> indexListFromSubstring,
-    required Map<int, List<String>> hashTable}) {
+    {required final List<String> indexListFromSubstring,
+    required final Map<int, List<String>> hashTable}) {
   for (var element in hashTable.entries) {
     int hashKey = element.key;
 

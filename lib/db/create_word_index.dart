@@ -29,8 +29,8 @@ void main() async {
 ///  {..."apple": ["167782",..],
 ///      "apples": [ "173175", "174170",...],
 ///      "orange": [ "171686", "171687",...], ...}.
-SplayTreeMap<String, List<String>> populateIndexMap(Map<dynamic, dynamic> db) {
-  final indexMap = SplayTreeMap<String, List<String>>((a, b) => a.compareTo(b));
+SplayTreeMap<String, List<String>> populateIndexMap(final Map<dynamic, dynamic> db) {
+  final indexMap = SplayTreeMap<String, List<String>>((final a, final b) => a.compareTo(b));
 
   for (var food in db.entries) {
     final index = food.key;
@@ -53,7 +53,7 @@ SplayTreeMap<String, List<String>> populateIndexMap(Map<dynamic, dynamic> db) {
 }
 
 SplayTreeMap<String, List<String>> sortByDescription(
-    SplayTreeMap<String, List<String>> unsortedMap, Map<dynamic, dynamic> db) {
+    final SplayTreeMap<String, List<String>> unsortedMap, final Map<dynamic, dynamic> db) {
   final SplayTreeMap<String, List<String>> sorted = unsortedMap;
   for (var list in sorted.values) {
     sortListByDescriptionLength(list, db);
@@ -62,8 +62,8 @@ SplayTreeMap<String, List<String>> sortByDescription(
 }
 
 List<String> sortListByDescriptionLength(
-    List<String> itemList, Map<dynamic, dynamic> db) {
-  itemList.sort((a, b) {
+    final List<String> itemList, final Map<dynamic, dynamic> db) {
+  itemList.sort((final a, final b) {
     int lengthA = db[a]['descriptionLength'];
     int lengthB = db[b]['descriptionLength'];
     return lengthA.compareTo(lengthB);
