@@ -6,13 +6,13 @@ class DBParser {
   FileLoaderService fileLoader;
   Map<dynamic, dynamic>? _dbMap;
 
-// This is a list of food items from the database.
+  /// [List] of foods from the database.
   List<dynamic> get foodsDBMap => _dbMap?['SRLegacyFoods'];
 
   DBParser({final FileLoaderService? fileLoader})
       : fileLoader = fileLoader ?? FileLoaderService();
-// Opens the main usda database json file, and creates the map to
-// use when parsing the database.
+
+  /// Populates the the
   void init(final String path) {
     final file = fileLoader.loadData(path);
     _dbMap = jsonDecode(file);

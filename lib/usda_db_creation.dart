@@ -10,13 +10,15 @@ void createFiles() {
   print("createFiles from barrel file");
 }
 
+/// Creates the duplicate phrases file and writes to [path].
 Future<void> createDuplicatePhrases(
     {final int minPhraseLength = 45,
     final showResultsLongerThan = 10,
     required final FileLoaderService fileLoader,
     required final DBParser dbParser}) async {
   final descriptionRecords =
-      DescriptionParser.populateOriginalDescriptionRecords(dbParser.foodsDBMap);
+      DescriptionParser.populateOriginalDescriptionRecords(
+          foodsDBMap: dbParser.foodsDBMap);
 
   final repeats = DescriptionParser.getRepeatedPhrases(
       listOfRecords: descriptionRecords,
@@ -29,7 +31,7 @@ Future<void> createDuplicatePhrases(
 
 // The answer is 134 for the original descriptions.
 int getLongestDescriptionLength(final DBParser dbParser) {
-  final descriptions =
-      DescriptionParser.populateOriginalDescriptionRecords(dbParser.foodsDBMap);
+  final descriptions = DescriptionParser.populateOriginalDescriptionRecords(
+      foodsDBMap: dbParser.foodsDBMap);
   return DescriptionParser.getLongestDescription(descriptions: descriptions);
 }

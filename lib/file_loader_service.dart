@@ -2,11 +2,10 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-/// Class to handle reading and writing json files.
+/// Class to handle reading and writing  files.
 
 class FileLoaderService {
-  /// Using this method to open a file to a string
-  /// will help with testing.
+  /// Synchronously opens a file from [path].
   String loadData(final String path) => File(path).readAsStringSync();
 
   /// Writes a json file from a [contents].
@@ -19,7 +18,7 @@ class FileLoaderService {
   }
 
   /// Takes a [List], and writes a file to given [path], creating a new
-  ///  line for each list item
+  ///  line for each list item.
   Future<void> writeTextFile(final List<String> list, final String path) async {
     // Sort the list
     list.sort();

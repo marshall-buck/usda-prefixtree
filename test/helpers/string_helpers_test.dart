@@ -148,7 +148,7 @@ void main() {
       // "Quietly, an old oak stood, surrounded by natures."
       const expectation = ["xxxxxxxxxxxxxxxxxxxx"];
       final res = separateIntoPhrasesWithMinimumLength(
-        sentence: "xxxxxxxxxxxxxxxxxxxxxxxx",
+        sentence: "xxxxxxxxxxxxxxxxxxxx",
         minPhraseLength: 20,
       );
       final listEquals = ListEquality();

@@ -35,7 +35,7 @@ void main() {
         dbParser.init('fake');
 
         final res = DescriptionParser.populateOriginalDescriptionRecords(
-            dbParser.foodsDBMap);
+            foodsDBMap: dbParser.foodsDBMap);
 
         expect(res, expectedOriginalDescriptions);
       });

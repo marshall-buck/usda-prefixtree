@@ -1,12 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-/// Reads a JSON file from a path.
+/// Reads a JSON file from a [filePath].
 ///
-/// Parameters:
-/// [filePath]
-///
-/// Returns [map]
+/// Returns a [Map]
 Future<Map> readJsonFile(final String filePath) async {
   var input = await File(filePath).readAsString();
   var map = jsonDecode(input);
@@ -14,11 +11,8 @@ Future<Map> readJsonFile(final String filePath) async {
   return map;
 }
 
-/// Write a json file form a Map
-///
-/// Parameters:
-/// [filePath]
-/// [contents] - type [Map]
+/// Write a json file from a [Map].
+
 Future<void> writeJsonFile(final String filePath, final Map contents) async {
   try {
     await File(filePath).writeAsString(jsonEncode(contents));

@@ -1,10 +1,14 @@
 import 'helpers/string_helpers.dart';
 
-/// Class to help with parsing the description strings.
+/// A class for parsing description strings from a data map.
 class DescriptionParser {
-  // Returns [List<int, String>] of [( index,  description), ...].
+  /// Parses [foodsDBMap] to create a list of description records.
+  ///
+  /// Each record is a tuple containing an integer and a string, representing the ID
+  /// and the description respectively. The function iterates over [foodsDBMap] to extract
+  /// these values and create the list.
   static List<(int, String)> populateOriginalDescriptionRecords(
-      final List<dynamic> foodsDBMap) {
+      {required final List<dynamic> foodsDBMap}) {
     return foodsDBMap.map((final food) {
       int id;
       if (food["fdcId"] == null) {
@@ -18,6 +22,10 @@ class DescriptionParser {
     }).toList();
   }
 
+  /// Finds the longest description in a list of description records.
+  ///
+  /// Iterates through [descriptions] to find the record with the longest description
+  /// string. Returns the length of the longest description.
   static int getLongestDescription(
       {required final List<(int, String)> descriptions}) {
     return descriptions.fold(
@@ -26,6 +34,11 @@ class DescriptionParser {
             maxLength > record.$2.length ? maxLength : record.$2.length);
   }
 
+  /// Identifies and counts repeated phrases in the description records.
+  ///
+  /// Takes a list of [listOfRecords], a minimum phrase length [minPhraseLength], and
+  /// a threshold [howManyTimesRepeated] to identify frequently occurring phrases.
+  /// Returns a map of phrases to their frequency count.
   static Map<String, int> getRepeatedPhrases(
       {required final List<(int, String)> listOfRecords,
       required final int minPhraseLength,
