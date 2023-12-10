@@ -19,9 +19,10 @@ class FileLoaderService {
 
   /// Takes a [List], and writes a file to given [path], creating a new
   ///  line for each list item.
-  Future<void> writeTextFile(final List<String> list, final String path) async {
+  Future<void> writeTextFile(
+      final List<dynamic> list, final String path) async {
     // Sort the list
-    list.sort();
+    // list.sort();
 
     // Create a new file, overwriting any existing file
     File file = File(path);

@@ -11,6 +11,8 @@ void main() async {
   final fileLoader = FileLoaderService();
   final dbParser = DBParser(fileLoader: fileLoader);
   dbParser.init(relativeOriginalDBPath);
-  usda_db_creation.createDuplicatePhrases(
-      fileLoader: fileLoader, dbParser: dbParser);
+  usda_db_creation.writeOriginalDescriptionsToFile(
+      dbParser: dbParser, fileLoaderService: fileLoader);
+  // usda_db_creation.writeDuplicatePhrasesToFile(
+  //     fileLoader: fileLoader, dbParser: dbParser);
 }

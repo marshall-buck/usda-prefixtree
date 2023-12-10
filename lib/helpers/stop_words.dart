@@ -1,5 +1,7 @@
 const listOfPhrasesToDelete = [
-  "(Includes foods for USDA's Food Distribution Program)"
+  "(Includes foods for USDA's Food Distribution Program)",
+  "separable lean and fat, ",
+  "separable lean only, "
 ];
 
 List<String> stopWords = [
@@ -87,6 +89,7 @@ List<String> stopWords = [
   "through",
   "to",
   "too",
+  "trimmed",
   "under",
   "until",
   "up",

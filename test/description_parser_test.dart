@@ -34,26 +34,26 @@ void main() {
         final dbParser = DBParser(fileLoader: mockFileLoaderService);
         dbParser.init('fake');
 
-        final res = DescriptionParser.populateOriginalDescriptionRecords(
+        final res = DescriptionParser.createOriginalDescriptionRecords(
             foodsDBMap: dbParser.foodsDBMap);
 
         expect(res, expectedOriginalDescriptions);
       });
     });
-    group('getLongestDescription', () {
+    group('getLongestDescription()--', () {
       test('returns length of longest string', () {
         final res = DescriptionParser.getLongestDescription(
             descriptions: descriptionRecords);
-        expect(res, 78);
+        expect(res, 91);
       });
     });
-    group('getRepeatedPhrases', () {
+    group('getRepeatedPhrases()', () {
       test('returns duplicates from anywhere in sentence', () {
         final Map<String, int> res = DescriptionParser.getRepeatedPhrases(
             listOfRecords: descriptionRecords,
             minPhraseLength: 28,
-            howManyTimesRepeated: 3);
-        // print(res);
+            minNumberOfDuplicatesToShow: 3);
+        print(res);
         final bool doesContainValue1 =
             res.containsKey('this is a repeated phrase 28');
         expect(doesContainValue1, true);
@@ -64,6 +64,18 @@ void main() {
 
 const descriptionRecords = [
   (111111, "George Weston Bakeries, Thomas English Muffins"),
+  (
+    111112,
+    "Pears, raw, green anjou (Includes foods for USDA's Food Distribution Program)"
+  ),
+  (
+    111113,
+    "Apples, raw, fuji, with skin (Includes foods for USDA's Food Distribution Program)"
+  ),
+  (
+    111114,
+    "Apples, raw, red delicious, with skin (Includes foods for USDA's Food Distribution Program)"
+  ),
   (123456, 'The quick brown fox jumps over the lazy dog. '),
   (234567, 'In a distant galaxy, stars shimmered like diamonds.'),
   (345678, 'A mysterious melody echoed through the ancient forest.'),
@@ -125,3 +137,6 @@ const descriptionRecords = [
   (502345, 'The sun rose, casting a golden light on the new day.'),
   (512346, 'Enchanted whispers echoed in the forgotten ruins.')
 ];
+  // "Pears, raw, green anjou (Includes foods for USDA's Food Distribution Program)"
+  // "Apples, raw, fuji, with skin (Includes foods for USDA's Food Distribution Program)"
+  // "Apples, raw, red delicious, with skin (Includes foods for USDA's Food Distribution Program)"

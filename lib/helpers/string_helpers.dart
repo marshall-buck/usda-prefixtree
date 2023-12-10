@@ -1,21 +1,15 @@
 import 'package:usda_db_creation/helpers/stop_words.dart';
 
-// Removes all non-alpha except dashes and parentheses,
-//and numbers followed by a % See notes at bottom a file
+/// Removes all non-alpha except dashes and parentheses,
+/// and numbers followed by a % See notes at bottom a file
 String removeUnwantedChars(final String word) {
-  // Regex to remove unwanted characters
-
   final stringSanitizerRegEx = RegExp(r"[^\w()%\-]|(\d+%)");
 
   return word.replaceAllMapped(
       stringSanitizerRegEx, (final match) => match.group(1) ?? '');
 }
 
-/// Separates dashed words.
-///
-/// Parameters:
-/// [word]
-///
+/// Separates words with dashes or parentheses.
 /// Returns a list of a word(s), list may be empty and may contain empty strings.
 List<String> stripDashedAndParenthesisWord(final String word) {
   if (word.contains('-')) return word.split('-');
@@ -29,11 +23,9 @@ List<String> stripDashedAndParenthesisWord(final String word) {
   return word.isNotEmpty ? [word] : [];
 }
 
-/// Cleans up a sentence, removing all non alpha characters
-///
-/// Parameters: [sentence]
-///
-/// Returns a set of lowercased words with only alpha chars.
+/// Cleans up a sentence, removing all unwanted characters
+
+/// Returns a set of lowercased words to be indexed.
 
 Set<String> getWordsToIndex(final String sentence) {
   List<List<String>> words = [];
@@ -55,6 +47,7 @@ bool isStopWord(final word) {
   return stopWords.contains(word);
 }
 
+/// Returns list of indexes where spaces are located in a string.
 List<int> findAllSpacesInString(final String sentence) {
   List<int> indexesOfSpaces = [];
   if (sentence.isEmpty) return [];
@@ -70,7 +63,7 @@ List<String?> separateIntoPhrasesWithMinimumLength({
   required final String sentence,
   required final int minPhraseLength,
 }) {
-  final List<String> listOfPhrases = [];
+  final Set<String> listOfPhrases = {};
 
   List<int> spacesList = findAllSpacesInString(sentence);
 
@@ -78,21 +71,19 @@ List<String?> separateIntoPhrasesWithMinimumLength({
 
   final int sentenceLength = sentence.length;
   if (spacesList.isEmpty) return [sentence.substring(0, sentenceLength)];
-  if (sentenceLength < minPhraseLength) return listOfPhrases;
+  if (sentenceLength < minPhraseLength) return listOfPhrases.toList();
 
   if (sentenceLength == minPhraseLength) {
     return [sentence];
   }
-  // print(spacesList);
 
   for (int i = 0; i < spacesList.length; i++) {
-    // print(spacesList);
     int currentSpace = spacesList[i];
     if (currentSpace + minPhraseLength > sentenceLength) break;
     int nextSpace = spacesList.firstWhere(
         (final element) => element >= currentSpace + minPhraseLength,
         orElse: () => sentenceLength);
-    // int subStringEndExclusive;
+
     int subStringEndExclusive = i == 0 ? nextSpace + 1 : nextSpace;
 
     if (i == 0 && nextSpace != sentenceLength) {
@@ -100,47 +91,12 @@ List<String?> separateIntoPhrasesWithMinimumLength({
     } else {
       subStringEndExclusive = nextSpace;
     }
-    // print(
-    //     '$sentence currentSpace: $currentSpace, minPhraseLength: $minPhraseLength, nextSpace: $nextSpace, sentenceLength: $sentenceLength, subStringEndExclusive: $subStringEndExclusive');
+
     assert(subStringEndExclusive <= sentenceLength);
     listOfPhrases
         .add(sentence.substring(currentSpace + 1, subStringEndExclusive));
+    listOfPhrases.add(sentence.substring(currentSpace + 1, sentenceLength));
   }
 
-  return listOfPhrases;
+  return listOfPhrases.toList();
 }
-
-// Here's the breakdown of the components in this regular expression:
-
-// 1.  [^...]: This is a character class negation. It matches any character that
-//      is not contained within the square brackets.
-
-// 2.  \w: This is a shorthand character class for word characters.
-//        It matches any alphabetic character (a-z, A-Z), digit (0-9), or underscore (_).
-
-// 3.  (): These parentheses are treated as literal characters and match themselves.
-
-// 4.  %: This is also treated as a literal character and matches itself.
-
-// 5.  \-: This is a hyphen inside a character class, and it's also treated as
-//      a literal character to match a hyphen.
-
-// 6.  |: This is an alternation operator, which means "or." It allows the regex
-//        to match either the pattern on its left or the pattern on its right.
-
-// 7.  \d+%): This is a capturing group that matches one or more digits followed
-//        by a '%' sign. It captures this sequence of digits and '%'
-//        so that it can be preserved in the replacement.
-
-// Putting it all together, this regex pattern matches:
-//
-// Any character that is not a word character (letters, digits, underscore),
-//  a parenthesis (either '(', ')'), a percent symbol (%), or a hyphen (-).
-
-// Or, it matches a sequence of one or more digits followed by a '%'
-//    ign and captures it in a group.
-
-// In the replaceAllMapped function, we use this regex pattern to find and
-//replace the unwanted characters with an empty string ('') while preserving
-//  the captured digits and '%' sign, effectively keeping numbers followed by
-//  '%' while removing other unwanted characters.

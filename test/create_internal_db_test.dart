@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:usda_db_creation/db/create_internal_db.dart';
+import 'package:usda_db_creation/create_internal_db.dart';
 
 void main() {
   group('getFoodNutrients', () {

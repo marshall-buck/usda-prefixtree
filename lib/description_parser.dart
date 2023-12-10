@@ -7,7 +7,7 @@ class DescriptionParser {
   /// Each record is a tuple containing an integer and a string, representing the ID
   /// and the description respectively. The function iterates over [foodsDBMap] to extract
   /// these values and create the list.
-  static List<(int, String)> populateOriginalDescriptionRecords(
+  static List<(int, String)> createOriginalDescriptionRecords(
       {required final List<dynamic> foodsDBMap}) {
     return foodsDBMap.map((final food) {
       int id;
@@ -37,12 +37,12 @@ class DescriptionParser {
   /// Identifies and counts repeated phrases in the description records.
   ///
   /// Takes a list of [listOfRecords], a minimum phrase length [minPhraseLength], and
-  /// a threshold [howManyTimesRepeated] to identify frequently occurring phrases.
+  /// a threshold [minNumberOfDuplicatesToShow] to identify frequently occurring phrases.
   /// Returns a map of phrases to their frequency count.
   static Map<String, int> getRepeatedPhrases(
       {required final List<(int, String)> listOfRecords,
       required final int minPhraseLength,
-      required final howManyTimesRepeated}) {
+      required final minNumberOfDuplicatesToShow}) {
     final Map<String, int> freqMap = {};
 
     for (final record in listOfRecords) {
@@ -61,8 +61,8 @@ class DescriptionParser {
       }
     }
 
-    freqMap
-        .removeWhere((final key, final value) => value < howManyTimesRepeated);
+    freqMap.removeWhere(
+        (final key, final value) => value < minNumberOfDuplicatesToShow);
     var sortedList = freqMap.entries.toList()
       ..sort((final a, final b) => b.value.compareTo(a.value));
 

@@ -3,7 +3,7 @@ import 'package:test/test.dart';
 import 'package:usda_db_creation/helpers/string_helpers.dart';
 
 void main() {
-  group('keepCharAndDash', () {
+  group('removeUnwantedChars()', () {
     test('string should only keep chars and dashes and ()', () {
       expect(removeUnwantedChars("he  llo!#!#"), 'hello');
       expect(removeUnwantedChars('  hello-bob '), 'hello-bob');
@@ -18,7 +18,7 @@ void main() {
       expect(removeUnwantedChars('2%'), '2%');
     });
   });
-  group('stripDashedAndParenthesisWord', () {
+  group('stripDashedAndParenthesisWord()', () {
     test('a dashed string should be split into a list', () {
       expect(stripDashedAndParenthesisWord('hello-there'), ['hello', 'there']);
       expect(stripDashedAndParenthesisWord('hello'), ['hello']);
@@ -43,7 +43,7 @@ void main() {
       expect(stripDashedAndParenthesisWord('hello)'), ['hello', '']);
     });
   });
-  group('cleanSentence()', () {
+  group('getWordsToIndex()', () {
     test('Sentence should be stripped of all non alpha chars', () {
       expect(getWordsToIndex('Doughnuts, yeast-Leavened, with jelly filling'),
           {'doughnuts', 'yeast', 'leavened', 'with', 'jelly', 'filling'});
@@ -69,19 +69,23 @@ void main() {
           {'puff', 'pastry', 'frozen', 'ready', 'to', 'bake'});
     });
   });
-  // group('findRepeatedPhrases', () {
 
-  group('separateIntoPhrasesWithMinimumLength', () {
+  group('separateIntoPhrasesWithMinimumLength()', () {
     test('String greater than twice minLength returns correctly', () {
       // "Quietly, an old oak stood, surrounded by natures."
       // [8, 11, 15, 19, 26, 37, 40]
       /* cSpell:disable */
       const expectation = [
         "Quietly, an old oak ", // 0, 19
+        "Quietly, an old oak stood, surrounded by natures.",
         "an old oak stood, surrounded", // 9, 36
+        "an old oak stood, surrounded by natures.",
         "old oak stood, surrounded", // 12, 36
+        "old oak stood, surrounded by natures.",
         "oak stood, surrounded", // 16, 36
+        "oak stood, surrounded by natures.",
         "stood, surrounded by", // 20 , 39
+        "stood, surrounded by natures.",
         "surrounded by natures." // 27 , 48
       ];
       /* cSpell:enable */
@@ -112,7 +116,7 @@ void main() {
     test('String of equal length + 1 to minLength returns correctly', () {
       // "Quietly, an old oak stood, surrounded by natures."
 
-      const expectation = ["Quietly, an old oaK "];
+      const expectation = ["Quietly, an old oaK ", "Quietly, an old oaK T"];
 
       final res = separateIntoPhrasesWithMinimumLength(
         sentence: "Quietly, an old oaK T",

@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:usda_db_creation/db/create_word_index.dart';
+import 'package:usda_db_creation/create_word_index.dart';
 
 const db = {
   "167512": {
