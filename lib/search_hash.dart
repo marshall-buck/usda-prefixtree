@@ -10,14 +10,14 @@ class SearchHash {
     final indexMap =
         SplayTreeMap<String, Set<String>>((final a, final b) => a.compareTo(b));
 
-    for (var item in sortedMap.entries) {
-      String word = item.key;
+    for (final item in sortedMap.entries) {
+      final String word = item.key;
 
-      List<String> indexList = List<String>.from(item.value);
+      final List<String> indexList = List<String>.from(item.value);
 
       for (int i = 0; i < word.length; i++) {
         for (int j = i + window; j <= word.length; j++) {
-          String substring = word.substring(i, j);
+          final String substring = word.substring(i, j);
 
           if (!indexMap.containsKey(substring)) {
             indexMap[substring] = <String>{};
@@ -34,13 +34,13 @@ class SearchHash {
 
   static Map<String, dynamic> createHashTable(
       final Map<String, List<String>> originalMap) {
-    Map<String, int> newWordIndex = {};
-    Map<int, List<String>> hashTable = {};
+    final Map<String, int> newWordIndex = {};
+    final Map<int, List<String>> hashTable = {};
     int count = 0;
 
-    for (var element in originalMap.entries) {
-      List<String> indexListValue = element.value;
-      int hashKey = findHashKey(
+    for (final element in originalMap.entries) {
+      final List<String> indexListValue = element.value;
+      final int hashKey = findHashKey(
           indexListFromSubstring: indexListValue, hashTable: hashTable);
 
       if (hashKey == -1) {
@@ -54,7 +54,7 @@ class SearchHash {
       }
     }
 
-    Map<String, List<String>> stringKeyMap = hashTable
+    final Map<String, List<String>> stringKeyMap = hashTable
         .map((final key, final value) => MapEntry(key.toString(), value));
 
     return {"substrings": newWordIndex, "indexHash": stringKeyMap};
@@ -63,8 +63,8 @@ class SearchHash {
   static int findHashKey(
       {required final List<String> indexListFromSubstring,
       required final Map<int, List<String>> hashTable}) {
-    for (var element in hashTable.entries) {
-      int hashKey = element.key;
+    for (final element in hashTable.entries) {
+      final int hashKey = element.key;
 
       final listEquals = ListEquality();
       if (listEquals.equals(element.value, indexListFromSubstring)) {

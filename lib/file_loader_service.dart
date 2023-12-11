@@ -21,21 +21,14 @@ class FileLoaderService {
   ///  line for each list item.
   Future<void> writeTextFile(
       final List<dynamic> list, final String path) async {
-    // Sort the list
-    // list.sort();
+    final File file = File(path);
 
-    // Create a new file, overwriting any existing file
-    File file = File(path);
+    final IOSink sink = file.openWrite();
 
-    // Open the file in write mode
-    IOSink sink = file.openWrite();
-
-    // Write each line to the file
     for (final line in list) {
       sink.writeln(line);
     }
 
-    // Close the file
     await sink.flush();
     await sink.close();
   }

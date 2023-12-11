@@ -32,14 +32,14 @@ void main() async {
 SplayTreeMap<String, List<String>> populateIndexMap(final Map<dynamic, dynamic> db) {
   final indexMap = SplayTreeMap<String, List<String>>((final a, final b) => a.compareTo(b));
 
-  for (var food in db.entries) {
+  for (final food in db.entries) {
     final index = food.key;
 
     final description = food.value['description'];
 
     final sanitizedList = getWordsToIndex(description);
     if (sanitizedList.isNotEmpty) {
-      for (var word in sanitizedList) {
+      for (final word in sanitizedList) {
         if (!isStopWord(word) && word.length > 2) {
           indexMap.containsKey(word)
               ? indexMap[word]!.add(index)
@@ -55,7 +55,7 @@ SplayTreeMap<String, List<String>> populateIndexMap(final Map<dynamic, dynamic> 
 SplayTreeMap<String, List<String>> sortByDescription(
     final SplayTreeMap<String, List<String>> unsortedMap, final Map<dynamic, dynamic> db) {
   final SplayTreeMap<String, List<String>> sorted = unsortedMap;
-  for (var list in sorted.values) {
+  for (final list in sorted.values) {
     sortListByDescriptionLength(list, db);
   }
   return sorted;
@@ -64,8 +64,8 @@ SplayTreeMap<String, List<String>> sortByDescription(
 List<String> sortListByDescriptionLength(
     final List<String> itemList, final Map<dynamic, dynamic> db) {
   itemList.sort((final a, final b) {
-    int lengthA = db[a]['descriptionLength'];
-    int lengthB = db[b]['descriptionLength'];
+    final int lengthA = db[a]['descriptionLength'];
+    final int lengthB = db[b]['descriptionLength'];
     return lengthA.compareTo(lengthB);
   });
 

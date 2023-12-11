@@ -33,7 +33,7 @@ Future<void> writeDuplicatePhrasesToFile(
 
 Future<void> writeOriginalDescriptionsToFile(
     {required final DBParser dbParser,
-    required FileLoaderService fileLoaderService}) async {
+    required final FileLoaderService fileLoaderService}) async {
   final res = DescriptionParser.createOriginalDescriptionRecords(
       foodsDBMap: dbParser.foodsDBMap);
   // print(res);

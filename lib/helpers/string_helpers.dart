@@ -28,9 +28,9 @@ List<String> stripDashedAndParenthesisWord(final String word) {
 /// Returns a set of lowercased words to be indexed.
 
 Set<String> getWordsToIndex(final String sentence) {
-  List<List<String>> words = [];
+  final List<List<String>> words = [];
 
-  for (var word in sentence.split(' ')) {
+  for (final word in sentence.split(' ')) {
     final String charDash = removeUnwantedChars(word).toLowerCase();
     final List<String> splitWords = stripDashedAndParenthesisWord(charDash);
 
@@ -45,58 +45,4 @@ Set<String> getWordsToIndex(final String sentence) {
 
 bool isStopWord(final word) {
   return stopWords.contains(word);
-}
-
-/// Returns list of indexes where spaces are located in a string.
-List<int> findAllSpacesInString(final String sentence) {
-  List<int> indexesOfSpaces = [];
-  if (sentence.isEmpty) return [];
-  for (var i = 0; i < sentence.length; i++) {
-    if (sentence[i] == " ") {
-      if (i != sentence.length - 1) indexesOfSpaces.add(i);
-    }
-  }
-  return indexesOfSpaces;
-}
-
-List<String?> separateIntoPhrasesWithMinimumLength({
-  required final String sentence,
-  required final int minPhraseLength,
-}) {
-  final Set<String> listOfPhrases = {};
-
-  List<int> spacesList = findAllSpacesInString(sentence);
-
-  spacesList.insert(0, -1);
-
-  final int sentenceLength = sentence.length;
-  if (spacesList.isEmpty) return [sentence.substring(0, sentenceLength)];
-  if (sentenceLength < minPhraseLength) return listOfPhrases.toList();
-
-  if (sentenceLength == minPhraseLength) {
-    return [sentence];
-  }
-
-  for (int i = 0; i < spacesList.length; i++) {
-    int currentSpace = spacesList[i];
-    if (currentSpace + minPhraseLength > sentenceLength) break;
-    int nextSpace = spacesList.firstWhere(
-        (final element) => element >= currentSpace + minPhraseLength,
-        orElse: () => sentenceLength);
-
-    int subStringEndExclusive = i == 0 ? nextSpace + 1 : nextSpace;
-
-    if (i == 0 && nextSpace != sentenceLength) {
-      subStringEndExclusive = nextSpace + 1;
-    } else {
-      subStringEndExclusive = nextSpace;
-    }
-
-    assert(subStringEndExclusive <= sentenceLength);
-    listOfPhrases
-        .add(sentence.substring(currentSpace + 1, subStringEndExclusive));
-    listOfPhrases.add(sentence.substring(currentSpace + 1, sentenceLength));
-  }
-
-  return listOfPhrases.toList();
 }

@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
@@ -57,6 +58,146 @@ void main() {
         final bool doesContainValue1 =
             res.containsKey('this is a repeated phrase 28');
         expect(doesContainValue1, true);
+      });
+    });
+    group('separateIntoPhrasesWithMinimumLength()', () {
+      test('String greater than twice minLength returns correctly', () {
+        // "Quietly, an old oak stood, surrounded by natures."
+        // [8, 11, 15, 19, 26, 37, 40]
+        /* cSpell:disable */
+        const expectation = [
+          "Quietly, an old oak ", // 0, 19
+          "Quietly, an old oak stood, surrounded by natures.",
+          "an old oak stood, surrounded", // 9, 36
+          "an old oak stood, surrounded by natures.",
+          "old oak stood, surrounded", // 12, 36
+          "old oak stood, surrounded by natures.",
+          "oak stood, surrounded", // 16, 36
+          "oak stood, surrounded by natures.",
+          "stood, surrounded by", // 20 , 39
+          "stood, surrounded by natures.",
+          "surrounded by natures." // 27 , 48
+        ];
+        /* cSpell:enable */
+        final res = DescriptionParser.separateIntoPhrasesWithMinimumLength(
+          sentence: sentence49,
+          minPhraseLength: 20,
+        );
+        // print(res);
+        final listEquals = ListEquality();
+
+        expect(listEquals.equals(expectation, res), true);
+      });
+      test('String of equal length to minLength returns correctly', () {
+        // "Quietly, an old oak stood, surrounded by natures."
+
+        const expectation = [
+          "Quietly, an old oak ",
+        ];
+
+        final res = DescriptionParser.separateIntoPhrasesWithMinimumLength(
+          sentence: "Quietly, an old oak ",
+          minPhraseLength: 20,
+        );
+
+        final listEquals = ListEquality();
+        expect(listEquals.equals(expectation, res), true);
+      });
+      test('String of equal length + 1 to minLength returns correctly', () {
+        // "Quietly, an old oak stood, surrounded by natures."
+
+        const expectation = ["Quietly, an old oaK ", "Quietly, an old oaK T"];
+
+        final res = DescriptionParser.separateIntoPhrasesWithMinimumLength(
+          sentence: "Quietly, an old oaK T",
+          minPhraseLength: 20,
+        );
+        // print(res);
+        final listEquals = ListEquality();
+        expect(listEquals.equals(expectation, res), true);
+      });
+      test('String of equal length - 1 to minLength returns correctly', () {
+        // "Quietly, an old oak stood, surrounded by natures."
+
+        final res = DescriptionParser.separateIntoPhrasesWithMinimumLength(
+          sentence: "Quietly, an old oak",
+          minPhraseLength: 20,
+        );
+        final listEquals = ListEquality();
+        expect(listEquals.equals([], res), true);
+        expect(res.isEmpty, true);
+      });
+      test('String of less than to minLength returns correctly', () {
+        // "Quietly, an old oak stood, surrounded by natures."
+
+        final res = DescriptionParser.separateIntoPhrasesWithMinimumLength(
+          sentence: "George Weston Bakeries, Thomas English Muffins",
+          minPhraseLength: 48,
+        );
+        final listEquals = ListEquality();
+        expect(listEquals.equals([], res), true);
+        expect(res.isEmpty, true);
+      });
+      test('String with no spaces returns correctly', () {
+        // "Quietly, an old oak stood, surrounded by natures."
+        const expectation = ["xxxxxxxxxxxxxxxxxxxx"];
+        final res = DescriptionParser.separateIntoPhrasesWithMinimumLength(
+          sentence: "xxxxxxxxxxxxxxxxxxxx",
+          minPhraseLength: 20,
+        );
+        final listEquals = ListEquality();
+        expect(listEquals.equals(expectation, res), true);
+      });
+      test('When the next space is always the last space', () {
+        // "Quietly, an old oak stood, surrounded by natures."
+        const expectation = [
+          "In a distant galaxy, stars shimmered like diamonds.",
+          "a distant galaxy, stars shimmered like diamonds.",
+          "distant galaxy, stars shimmered like diamonds."
+        ];
+        final res = DescriptionParser.separateIntoPhrasesWithMinimumLength(
+          sentence: "In a distant galaxy, stars shimmered like diamonds.", //51
+          minPhraseLength: 45,
+        );
+        // print(res);
+        final listEquals = ListEquality();
+        expect(listEquals.equals(expectation, res), true);
+      });
+    });
+    group('findAllSpacesInString', () {
+      test('Returns list of indexes, no spaces at beginning or end of sentence',
+          () {
+        final res = DescriptionParser.findAllSpacesInString(sentence134);
+        expect(res, [
+          5,
+          9,
+          22,
+          33,
+          36,
+          40,
+          45,
+          52,
+          60,
+          66,
+          79,
+          82,
+          86,
+          93,
+          102,
+          105,
+          109,
+          118,
+          127
+        ]);
+      });
+      test('Returns empty list empty string', () {
+        final res = DescriptionParser.findAllSpacesInString('');
+        expect(res, []);
+      });
+      test('Returns correctly when string ends in a space', () {
+        final res =
+            DescriptionParser.findAllSpacesInString('an old oak stood ');
+        expect(res, [2, 6, 10]);
       });
     });
   });
@@ -137,6 +278,6 @@ const descriptionRecords = [
   (502345, 'The sun rose, casting a golden light on the new day.'),
   (512346, 'Enchanted whispers echoed in the forgotten ruins.')
 ];
-  // "Pears, raw, green anjou (Includes foods for USDA's Food Distribution Program)"
-  // "Apples, raw, fuji, with skin (Includes foods for USDA's Food Distribution Program)"
-  // "Apples, raw, red delicious, with skin (Includes foods for USDA's Food Distribution Program)"
+const sentence134 =
+    "Under the (shimmering) moonlight, an old oak, rooted deeply, stood majestically as the silent guardian of the ancient, mystical woods.";
+const sentence49 = "Quietly, an old oak stood, surrounded by natures.";

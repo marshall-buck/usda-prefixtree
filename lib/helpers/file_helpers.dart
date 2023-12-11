@@ -5,8 +5,8 @@ import 'dart:io';
 ///
 /// Returns a [Map]
 Future<Map> readJsonFile(final String filePath) async {
-  var input = await File(filePath).readAsString();
-  var map = jsonDecode(input);
+  final input = await File(filePath).readAsString();
+  final map = jsonDecode(input);
 
   return map;
 }

@@ -1,5 +1,3 @@
-import 'helpers/string_helpers.dart';
-
 /// A class for parsing description strings from a data map.
 class DescriptionParser {
   /// Parses [foodsDBMap] to create a list of description records.
@@ -63,9 +61,63 @@ class DescriptionParser {
 
     freqMap.removeWhere(
         (final key, final value) => value < minNumberOfDuplicatesToShow);
-    var sortedList = freqMap.entries.toList()
+    final sortedList = freqMap.entries.toList()
       ..sort((final a, final b) => b.value.compareTo(a.value));
 
     return Map.fromEntries(sortedList);
+  }
+
+  /// Returns list of indexes where spaces are located in a string.
+  static List<int> findAllSpacesInString(final String sentence) {
+    final List<int> indexesOfSpaces = [];
+    if (sentence.isEmpty) return [];
+    for (var i = 0; i < sentence.length; i++) {
+      if (sentence[i] == " ") {
+        if (i != sentence.length - 1) indexesOfSpaces.add(i);
+      }
+    }
+    return indexesOfSpaces;
+  }
+
+  static List<String?> separateIntoPhrasesWithMinimumLength({
+    required final String sentence,
+    required final int minPhraseLength,
+  }) {
+    final Set<String> listOfPhrases = {};
+
+    final List<int> spacesList = findAllSpacesInString(sentence);
+
+    spacesList.insert(0, -1);
+
+    final int sentenceLength = sentence.length;
+    if (spacesList.isEmpty) return [sentence.substring(0, sentenceLength)];
+    if (sentenceLength < minPhraseLength) return listOfPhrases.toList();
+
+    if (sentenceLength == minPhraseLength) {
+      return [sentence];
+    }
+
+    for (int i = 0; i < spacesList.length; i++) {
+      final int currentSpace = spacesList[i];
+      if (currentSpace + minPhraseLength > sentenceLength) break;
+      final int nextSpace = spacesList.firstWhere(
+          (final element) => element >= currentSpace + minPhraseLength,
+          orElse: () => sentenceLength);
+
+      int subStringEndExclusive = i == 0 ? nextSpace + 1 : nextSpace;
+
+      if (i == 0 && nextSpace != sentenceLength) {
+        subStringEndExclusive = nextSpace + 1;
+      } else {
+        subStringEndExclusive = nextSpace;
+      }
+
+      assert(subStringEndExclusive <= sentenceLength);
+      listOfPhrases
+          .add(sentence.substring(currentSpace + 1, subStringEndExclusive));
+      listOfPhrases.add(sentence.substring(currentSpace + 1, sentenceLength));
+    }
+
+    return listOfPhrases.toList();
   }
 }
