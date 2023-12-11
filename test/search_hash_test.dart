@@ -1,8 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:test/test.dart';
-import 'package:usda_db_creation/create_reverse_index.dart';
 
 import 'package:usda_db_creation/helpers/file_helpers.dart';
+import 'package:usda_db_creation/search_hash.dart';
 
 //  cSpell: disable
 void main() {
@@ -10,7 +10,7 @@ void main() {
     group('createSubstrings() - ', () {
       test('substrings populates correctly', () async {
         final file = await readJsonFile('test/data/test_word_index.json');
-        final res = createSubstrings(file);
+        final res = SearchHash.createSubstrings(file);
         final deep = DeepCollectionEquality();
 
         expect(deep.equals(res, indexRes), true);
@@ -18,7 +18,7 @@ void main() {
     });
     group('createHashTable() - ', () {
       test('returns correct list', () async {
-        final res = createHashTable(indexRes);
+        final res = SearchHash.createHashTable(indexRes);
         final d = DeepCollectionEquality();
         // print(res);
         expect(d.equals(res['substrings'], newIndex['substrings']), true);
