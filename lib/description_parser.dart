@@ -1,10 +1,7 @@
-/// A class for parsing description strings from a data map.
+/// A class for parsing description strings from the [foodsDBMap].
 class DescriptionParser {
+  //
   /// Parses [foodsDBMap] to create a list of description records.
-  ///
-  /// Each record is a tuple containing an integer and a string, representing the ID
-  /// and the description respectively. The function iterates over [foodsDBMap] to extract
-  /// these values and create the list.
   static List<(int, String)> createOriginalDescriptionRecords(
       {required final List<dynamic> foodsDBMap}) {
     return foodsDBMap.map((final food) {
@@ -15,29 +12,15 @@ class DescriptionParser {
         id = food["fdcId"];
       }
 
-      // Return a tuple containing the fdcId and description
       return (id, food["description"] as String);
     }).toList();
   }
 
-  /// Finds the longest description in a list of description records.
+  /// Creates a frequency map of repeated phrases in the description records.
   ///
-  /// Iterates through [descriptions] to find the record with the longest description
-  /// string. Returns the length of the longest description.
-  static int getLongestDescription(
-      {required final List<(int, String)> descriptions}) {
-    return descriptions.fold(
-        0,
-        (final maxLength, final record) =>
-            maxLength > record.$2.length ? maxLength : record.$2.length);
-  }
+  ///  Will only include phrases that repeat more than [minNumberOfDuplicatesToShow].
 
-  /// Identifies and counts repeated phrases in the description records.
-  ///
-  /// Takes a list of [listOfRecords], a minimum phrase length [minPhraseLength], and
-  /// a threshold [minNumberOfDuplicatesToShow] to identify frequently occurring phrases.
-  /// Returns a map of phrases to their frequency count.
-  static Map<String, int> getRepeatedPhrases(
+  static Map<String, int> createRepeatedPhraseFrequencyMap(
       {required final List<(int, String)> listOfRecords,
       required final int minPhraseLength,
       required final minNumberOfDuplicatesToShow}) {
@@ -79,6 +62,30 @@ class DescriptionParser {
     return indexesOfSpaces;
   }
 
+// TODO:Add functionality to stop at EACH word withing minPhrase length
+  /// Creates a list of  phrase's from a [sentence].
+  ///
+  /// It does this from the start of the sentence, and repeats at each space.
+  /// the phrase will include the first word and the last word whose character's
+  /// index is at least [minPhraseLength] form the start of that phrase.
+  /// The list will also include phrases from each whose to the enc of the sentence,
+  /// if greater than [minPhraseLength].
+  ///
+  /// separateIntoPhrasesWithMinimumLength(
+  ///           "Quietly, an old oak stood, surrounded by natures.", 20) =>
+  ///   [
+  ///        "Quietly, an old oak ",
+  ///        "Quietly, an old oak stood, surrounded by natures.",
+  ///        "an old oak stood, surrounded",
+  ///        "an old oak stood, surrounded by natures.",
+  ///        "old oak stood, surrounded",
+  ///        "old oak stood, surrounded by natures.",
+  ///        "oak stood, surrounded",
+  ///        "oak stood, surrounded by natures.",
+  ///        "stood, surrounded by",
+  ///        "stood, surrounded by natures.",
+  ///        "surrounded by natures."
+  ///      ];
   static List<String?> separateIntoPhrasesWithMinimumLength({
     required final String sentence,
     required final int minPhraseLength,
@@ -119,5 +126,14 @@ class DescriptionParser {
     }
 
     return listOfPhrases.toList();
+  }
+
+  /// Finds the longest description in a list of description records.
+  static int getLongestDescription(
+      {required final List<(int, String)> descriptions}) {
+    return descriptions.fold(
+        0,
+        (final maxLength, final record) =>
+            maxLength > record.$2.length ? maxLength : record.$2.length);
   }
 }

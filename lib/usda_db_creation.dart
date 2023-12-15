@@ -22,7 +22,7 @@ Future<void> writeDuplicatePhrasesToFile(
   final descriptionRecords = DescriptionParser.createOriginalDescriptionRecords(
       foodsDBMap: dbParser.foodsDBMap);
 
-  final repeats = DescriptionParser.getRepeatedPhrases(
+  final repeats = DescriptionParser.createRepeatedPhraseFrequencyMap(
       listOfRecords: descriptionRecords,
       minPhraseLength: minPhraseLength,
       minNumberOfDuplicatesToShow: minNumberOfDuplicatesToShow);
@@ -49,4 +49,8 @@ int getLongestDescriptionLength(final DBParser dbParser) {
   final descriptions = DescriptionParser.createOriginalDescriptionRecords(
       foodsDBMap: dbParser.foodsDBMap);
   return DescriptionParser.getLongestDescription(descriptions: descriptions);
+}
+
+(Map<String, int>, int) getFoodCategories({required final DBParser db}) {
+  return db.getFoodCategories();
 }

@@ -50,10 +50,11 @@ void main() {
     });
     group('getRepeatedPhrases()', () {
       test('returns duplicates from anywhere in sentence', () {
-        final Map<String, int> res = DescriptionParser.getRepeatedPhrases(
-            listOfRecords: descriptionRecords,
-            minPhraseLength: 28,
-            minNumberOfDuplicatesToShow: 3);
+        final Map<String, int> res =
+            DescriptionParser.createRepeatedPhraseFrequencyMap(
+                listOfRecords: descriptionRecords,
+                minPhraseLength: 28,
+                minNumberOfDuplicatesToShow: 3);
         print(res);
         final bool doesContainValue1 =
             res.containsKey('this is a repeated phrase 28');
@@ -281,3 +282,23 @@ const descriptionRecords = [
 const sentence134 =
     "Under the (shimmering) moonlight, an old oak, rooted deeply, stood majestically as the silent guardian of the ancient, mystical woods.";
 const sentence49 = "Quietly, an old oak stood, surrounded by natures.";
+
+const expectation = [
+  "Quietly, an old oak ",
+  "Quietly, an old oak stood,",
+  "Quietly, an old oak stood, surrounded",
+  "Quietly, an old oak stood, surrounded by",
+  "Quietly, an old oak stood, surrounded by natures.",
+  "an old oak stood, surrounded",
+  "an old oak stood, surrounded by",
+  "an old oak stood, surrounded by natures.",
+  "old oak stood, surrounded",
+  "old oak stood, surrounded by",
+  "old oak stood, surrounded by natures.",
+  "oak stood, surrounded",
+  "oak stood, surrounded by",
+  "oak stood, surrounded by natures.",
+  "stood, surrounded by",
+  "stood, surrounded by natures.",
+  "surrounded by natures."
+];
