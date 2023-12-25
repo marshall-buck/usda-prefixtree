@@ -1,10 +1,10 @@
-/// A class for parsing description strings from the [foodsDBMap].
+/// A class for parsing description strings from the [originalFoodsList].
 class DescriptionParser {
   //
-  /// Parses [foodsDBMap] to create a list of description records.
+  /// Parses [originalFoodsList] to create a list of description records.
   static List<(int, String)> createOriginalDescriptionRecords(
-      {required final List<dynamic> foodsDBMap}) {
-    return foodsDBMap.map((final food) {
+      {required final List<dynamic> originalFoodsList}) {
+    return originalFoodsList.map((final food) {
       int id;
       if (food["fdcId"] == null) {
         id = food["ndbNumber"];
