@@ -20,7 +20,7 @@ Future<void> writeDuplicatePhrasesToFile(
     required final FileLoaderService fileLoader,
     required final DBParser dbParser}) async {
   final descriptionRecords = DescriptionParser.createOriginalDescriptionRecords(
-      foodsDBMap: dbParser.foodsDBMap);
+      originalFoodsList: dbParser.originalFoodsList);
 
   final repeats = DescriptionParser.createRepeatedPhraseFrequencyMap(
       listOfRecords: descriptionRecords,
@@ -35,7 +35,7 @@ Future<void> writeOriginalDescriptionsToFile(
     {required final DBParser dbParser,
     required final FileLoaderService fileLoaderService}) async {
   final res = DescriptionParser.createOriginalDescriptionRecords(
-      foodsDBMap: dbParser.foodsDBMap);
+      originalFoodsList: dbParser.originalFoodsList);
   // print(res);
   try {
     await fileLoaderService.writeTextFile(res, originalDescriptions);
@@ -47,7 +47,7 @@ Future<void> writeOriginalDescriptionsToFile(
 // The answer is 134 for the original descriptions.
 int getLongestDescriptionLength(final DBParser dbParser) {
   final descriptions = DescriptionParser.createOriginalDescriptionRecords(
-      foodsDBMap: dbParser.foodsDBMap);
+      originalFoodsList: dbParser.originalFoodsList);
   return DescriptionParser.getLongestDescription(descriptions: descriptions);
 }
 
