@@ -50,14 +50,9 @@ class DescriptionParser {
     return Map.fromEntries(sortedList);
   }
 
-// TODO:Add functionality to stop at EACH word withing minPhrase length
   /// Creates a list of  phrase's from a [sentence].
   ///
-  /// It does this from the start of the sentence, and repeats at each space.
-  /// the phrase will include the first word and the last word whose character's
-  /// index is at least [minPhraseLength] form the start of that phrase.
-  /// The list will also include phrases from each whose to the enc of the sentence,
-  /// if greater than [minPhraseLength].
+  /// The phrase will be at least [minPhraseLength] long.
   ///
   /// separateIntoPhrasesWithMinimumLength(
   ///           "Quietly, an old oak stood, surrounded by natures.", 20) =>
