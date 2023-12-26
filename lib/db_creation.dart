@@ -31,19 +31,6 @@ Future<void> writeDuplicatePhrasesToFile(
   print('Complete: ${repeats.length}');
 }
 
-Future<void> writeOriginalDescriptionsToTxtFile(
-    {required final DBParser dbParser,
-    required final FileLoaderService fileLoaderService}) async {
-  final res = DescriptionParser.createOriginalDescriptionRecords(
-      originalFoodsList: dbParser.originalFoodsList);
-  // print(res);
-  try {
-    await fileLoaderService.writeTextFile(res, originalDescriptions);
-  } catch (e, st) {
-    dev.log(e.toString(), error: st);
-  }
-}
-
 // The answer is 134 for the original descriptions.
 int getLongestDescriptionLength(final DBParser dbParser) {
   final descriptions = DescriptionParser.createOriginalDescriptionRecords(
@@ -55,13 +42,3 @@ int getLongestDescriptionLength(final DBParser dbParser) {
 (Map<String, int>, int) getFoodCategories({required final DBParser db}) {
   return db.getFoodCategories();
 }
-
-// List<DescriptionRecord> removeUnwantedDescriptions({
-//   required final List<DescriptionRecord> descriptions,
-//   required final List<String> excludedCategories,
-// }) {
-//   return DescriptionParser.removeUnwantedDescriptions(
-//     descriptions: descriptions,
-//     excludedCategories: excludedCategories,
-//   );
-// }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:usda_db_creation/description_parser.dart';
 import 'package:usda_db_creation/file_loader_service.dart';
 
 class DBParser {
@@ -9,14 +10,18 @@ class DBParser {
   /// [List] of foods from the database.
   List<dynamic> get originalFoodsList => _originalDBMap?['SRLegacyFoods'];
 
-  DBParser({final FileLoaderService? fileLoader})
-      : fileLoader = fileLoader ?? FileLoaderService();
+  // DBParser({final FileLoaderService? fileLoader})
+  //     : fileLoader = fileLoader ?? FileLoaderService();
 
   /// Populates the _dbMap
-  void init(final String path) {
+  DBParser.init({required final String path})
+      : fileLoader = FileLoaderService() {
     final file = fileLoader.loadData(path);
     _originalDBMap = jsonDecode(file);
   }
+
+  get descriptionRecords => DescriptionParser.createOriginalDescriptionRecords(
+      originalFoodsList: originalFoodsList);
 
   (Map<String, int>, int) getFoodCategories() {
     final Map<String, int> categories = {};

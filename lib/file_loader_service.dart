@@ -19,8 +19,8 @@ class FileLoaderService {
 
   /// Takes a [List], and writes a file to given [path], creating a new
   ///  line for each list item.
-  Future<void> writeTextFile(
-      final List<dynamic> list, final String path) async {
+  Future<void> writeListToTxtFile(
+      {required final List<dynamic> list, required final String path}) async {
     final File file = File(path);
 
     final IOSink sink = file.openWrite();

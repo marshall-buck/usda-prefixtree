@@ -9,15 +9,14 @@ const relativeOriginalDBPath = 'lib/db/original_usda.json';
 const relativeRepeatFile = 'lib/db/repeats.txt';
 
 void main() async {
-  final fileLoader = FileLoaderService();
-  final dbParser = DBParser(fileLoader: fileLoader);
-  dbParser.init(relativeOriginalDBPath);
-  final list = DescriptionParser.createOriginalDescriptionRecords(
-      originalFoodsList: dbParser.originalFoodsList);
-  print(list.length);
+  final fileLoaderService = FileLoaderService();
+  final dbParser = DBParser.init(path: relativeOriginalDBPath);
 
-  // usda_db_creation.writeOriginalDescriptionsToFile(
-  //     dbParser: dbParser, fileLoaderService: fileLoader);
+  final descriptionRecords = dbParser.descriptionRecords;
+  assert(descriptionRecords.length == 7006);
+
+  await fileLoaderService.writeListToTxtFile(
+      list: descriptionRecords, path: 'lib/db/descriptions.txt');
   // usda_db_creation.writeDuplicatePhrasesToFile(
   //     fileLoader: fileLoader, dbParser: dbParser);
   // print(usda_db_creation.getFoodCategories(db: dbParser));

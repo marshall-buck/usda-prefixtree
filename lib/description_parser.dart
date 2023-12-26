@@ -6,6 +6,7 @@ typedef DescriptionRecord = (int, String);
 class DescriptionParser {
   //
   /// Parses [originalFoodsList] to create a list of description records.
+  /// Removes unwanted categories from the list.
   static List<(int, String)> createOriginalDescriptionRecords(
       {required final List<dynamic> originalFoodsList}) {
     return originalFoodsList
