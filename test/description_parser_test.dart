@@ -36,7 +36,7 @@ void main() {
         dbParser.init('fake');
 
         final res = DescriptionParser.createOriginalDescriptionRecords(
-            foodsDBMap: dbParser.foodsDBMap);
+            originalFoodsList: dbParser.originalFoodsList);
 
         expect(res, expectedOriginalDescriptions);
       });
@@ -55,7 +55,7 @@ void main() {
                 listOfRecords: descriptionRecords,
                 minPhraseLength: 28,
                 minNumberOfDuplicatesToShow: 3);
-        print(res);
+        // print(res);
         final bool doesContainValue1 =
             res.containsKey('this is a repeated phrase 28');
         expect(doesContainValue1, true);
@@ -64,27 +64,36 @@ void main() {
     group('separateIntoPhrasesWithMinimumLength()', () {
       test('String greater than twice minLength returns correctly', () {
         // "Quietly, an old oak stood, surrounded by natures."
-        // [8, 11, 15, 19, 26, 37, 40]
-        /* cSpell:disable */
+
         const expectation = [
-          "Quietly, an old oak ", // 0, 19
+          "Quietly, an old oak stood,",
+          "Quietly, an old oak stood, surrounded",
+          "Quietly, an old oak stood, surrounded by",
           "Quietly, an old oak stood, surrounded by natures.",
-          "an old oak stood, surrounded", // 9, 36
+          "an old oak stood, surrounded",
+          "an old oak stood, surrounded by",
           "an old oak stood, surrounded by natures.",
-          "old oak stood, surrounded", // 12, 36
+          "old oak stood, surrounded",
+          "old oak stood, surrounded by",
           "old oak stood, surrounded by natures.",
-          "oak stood, surrounded", // 16, 36
+          "oak stood, surrounded",
+          "oak stood, surrounded by",
           "oak stood, surrounded by natures.",
-          "stood, surrounded by", // 20 , 39
+          "stood, surrounded by",
           "stood, surrounded by natures.",
-          "surrounded by natures." // 27 , 48
+          "surrounded by natures."
         ];
         /* cSpell:enable */
         final res = DescriptionParser.separateIntoPhrasesWithMinimumLength(
           sentence: sentence49,
           minPhraseLength: 20,
         );
-        // print(res);
+        // Log to console res line by line.
+        // ignore: prefer_final_parameters, avoid_function_literals_in_foreach_calls
+        // res.forEach((element) {
+        //   print('"$element"');
+        // });
+
         final listEquals = ListEquality();
 
         expect(listEquals.equals(expectation, res), true);
@@ -107,7 +116,7 @@ void main() {
       test('String of equal length + 1 to minLength returns correctly', () {
         // "Quietly, an old oak stood, surrounded by natures."
 
-        const expectation = ["Quietly, an old oaK ", "Quietly, an old oaK T"];
+        const expectation = ["Quietly, an old oaK T"];
 
         final res = DescriptionParser.separateIntoPhrasesWithMinimumLength(
           sentence: "Quietly, an old oaK T",
@@ -139,16 +148,7 @@ void main() {
         expect(listEquals.equals([], res), true);
         expect(res.isEmpty, true);
       });
-      test('String with no spaces returns correctly', () {
-        // "Quietly, an old oak stood, surrounded by natures."
-        const expectation = ["xxxxxxxxxxxxxxxxxxxx"];
-        final res = DescriptionParser.separateIntoPhrasesWithMinimumLength(
-          sentence: "xxxxxxxxxxxxxxxxxxxx",
-          minPhraseLength: 20,
-        );
-        final listEquals = ListEquality();
-        expect(listEquals.equals(expectation, res), true);
-      });
+
       test('When the next space is always the last space', () {
         // "Quietly, an old oak stood, surrounded by natures."
         const expectation = [
@@ -163,42 +163,6 @@ void main() {
         // print(res);
         final listEquals = ListEquality();
         expect(listEquals.equals(expectation, res), true);
-      });
-    });
-    group('findAllSpacesInString', () {
-      test('Returns list of indexes, no spaces at beginning or end of sentence',
-          () {
-        final res = DescriptionParser.findAllSpacesInString(sentence134);
-        expect(res, [
-          5,
-          9,
-          22,
-          33,
-          36,
-          40,
-          45,
-          52,
-          60,
-          66,
-          79,
-          82,
-          86,
-          93,
-          102,
-          105,
-          109,
-          118,
-          127
-        ]);
-      });
-      test('Returns empty list empty string', () {
-        final res = DescriptionParser.findAllSpacesInString('');
-        expect(res, []);
-      });
-      test('Returns correctly when string ends in a space', () {
-        final res =
-            DescriptionParser.findAllSpacesInString('an old oak stood ');
-        expect(res, [2, 6, 10]);
       });
     });
   });

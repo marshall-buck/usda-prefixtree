@@ -50,18 +50,6 @@ class DescriptionParser {
     return Map.fromEntries(sortedList);
   }
 
-  /// Returns list of indexes where spaces are located in a string.
-  static List<int> findAllSpacesInString(final String sentence) {
-    final List<int> indexesOfSpaces = [];
-    if (sentence.isEmpty) return [];
-    for (var i = 0; i < sentence.length; i++) {
-      if (sentence[i] == " ") {
-        if (i != sentence.length - 1) indexesOfSpaces.add(i);
-      }
-    }
-    return indexesOfSpaces;
-  }
-
 // TODO:Add functionality to stop at EACH word withing minPhrase length
   /// Creates a list of  phrase's from a [sentence].
   ///
@@ -73,56 +61,45 @@ class DescriptionParser {
   ///
   /// separateIntoPhrasesWithMinimumLength(
   ///           "Quietly, an old oak stood, surrounded by natures.", 20) =>
-  ///   [
-  ///        "Quietly, an old oak ",
+  /// [
+  ///        "Quietly, an old oak stood,",
+  ///        "Quietly, an old oak stood, surrounded",
+  ///        "Quietly, an old oak stood, surrounded by",
   ///        "Quietly, an old oak stood, surrounded by natures.",
   ///        "an old oak stood, surrounded",
+  ///        "an old oak stood, surrounded by",
   ///        "an old oak stood, surrounded by natures.",
   ///        "old oak stood, surrounded",
+  ///        "old oak stood, surrounded by",
   ///        "old oak stood, surrounded by natures.",
   ///        "oak stood, surrounded",
+  ///        "oak stood, surrounded by",
   ///        "oak stood, surrounded by natures.",
   ///        "stood, surrounded by",
   ///        "stood, surrounded by natures.",
   ///        "surrounded by natures."
   ///      ];
+
   static List<String?> separateIntoPhrasesWithMinimumLength({
     required final String sentence,
     required final int minPhraseLength,
   }) {
     final Set<String> listOfPhrases = {};
 
-    final List<int> spacesList = findAllSpacesInString(sentence);
+    final List<String> wordList = sentence.split(' ');
 
-    spacesList.insert(0, -1);
+    int length = wordList.join(' ').length;
 
-    final int sentenceLength = sentence.length;
-    if (spacesList.isEmpty) return [sentence.substring(0, sentenceLength)];
-    if (sentenceLength < minPhraseLength) return listOfPhrases.toList();
+    while (length >= minPhraseLength) {
+      String phrase = wordList.removeAt(0);
 
-    if (sentenceLength == minPhraseLength) {
-      return [sentence];
-    }
-
-    for (int i = 0; i < spacesList.length; i++) {
-      final int currentSpace = spacesList[i];
-      if (currentSpace + minPhraseLength > sentenceLength) break;
-      final int nextSpace = spacesList.firstWhere(
-          (final element) => element >= currentSpace + minPhraseLength,
-          orElse: () => sentenceLength);
-
-      int subStringEndExclusive = i == 0 ? nextSpace + 1 : nextSpace;
-
-      if (i == 0 && nextSpace != sentenceLength) {
-        subStringEndExclusive = nextSpace + 1;
-      } else {
-        subStringEndExclusive = nextSpace;
+      for (final word in wordList) {
+        phrase = '$phrase $word';
+        if (phrase.length >= minPhraseLength) {
+          listOfPhrases.add(phrase);
+        }
       }
-
-      assert(subStringEndExclusive <= sentenceLength);
-      listOfPhrases
-          .add(sentence.substring(currentSpace + 1, subStringEndExclusive));
-      listOfPhrases.add(sentence.substring(currentSpace + 1, sentenceLength));
+      length = wordList.join(' ').length;
     }
 
     return listOfPhrases.toList();
