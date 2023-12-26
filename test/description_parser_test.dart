@@ -32,8 +32,9 @@ void main() {
         ];
         when(() => mockFileLoaderService.loadData('fake'))
             .thenReturn(mockUsdaFile);
-        final dbParser = DBParser(fileLoader: mockFileLoaderService);
-        dbParser.init('fake');
+        final dbParser =
+            DBParser.init(path: 'fake', fileLoader: mockFileLoaderService);
+        // dbParser.init('fake');
 
         final res = DescriptionParser.createOriginalDescriptionRecords(
             originalFoodsList: dbParser.originalFoodsList);

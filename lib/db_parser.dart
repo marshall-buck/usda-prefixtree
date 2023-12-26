@@ -14,10 +14,11 @@ class DBParser {
   //     : fileLoader = fileLoader ?? FileLoaderService();
 
   /// Populates the _dbMap
-  DBParser.init({required final String path})
-      : fileLoader = FileLoaderService() {
-    final file = fileLoader.loadData(path);
-    _originalDBMap = jsonDecode(file);
+  DBParser.init(
+      {final FileLoaderService? fileLoader, required final String path})
+      : fileLoader = fileLoader ?? FileLoaderService() {
+    final file = fileLoader?.loadData(path);
+    _originalDBMap = jsonDecode(file!);
   }
 
   get descriptionRecords => DescriptionParser.createOriginalDescriptionRecords(
