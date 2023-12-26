@@ -22,13 +22,14 @@ class DBParser {
     final Map<String, int> categories = {};
     int count = 0;
     for (final food in originalFoodsList) {
-      final obj = food['foodCategory'];
-      final cat = obj['description'];
-      if (categories.containsKey(cat)) {
-        categories[cat] = categories[cat]! + 1;
+      final foodCategory = food['foodCategory'];
+      final foodCategoryDescription = foodCategory['description'];
+      if (categories.containsKey(foodCategoryDescription)) {
+        categories[foodCategoryDescription] =
+            categories[foodCategoryDescription]! + 1;
         count++;
       } else {
-        categories[cat] = 1;
+        categories[foodCategoryDescription] = 1;
         count++;
       }
     }
