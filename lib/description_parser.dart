@@ -1,21 +1,27 @@
+import 'package:usda_db_creation/helpers/stop_words.dart';
+
 typedef DescriptionRecord = (int, String);
 
 /// A class for parsing description strings from the [originalFoodsList].
 class DescriptionParser {
   //
   /// Parses [originalFoodsList] to create a list of description records.
-  static List<DescriptionRecord> createOriginalDescriptionRecords(
+  static List<(int, String)> createOriginalDescriptionRecords(
       {required final List<dynamic> originalFoodsList}) {
-    return originalFoodsList.map((final food) {
-      int id;
-      if (food["fdcId"] == null) {
-        id = food["ndbNumber"];
-      } else {
-        id = food["fdcId"];
-      }
+    return originalFoodsList
+        .map((final food) {
+          final int id = food["fdcId"];
+          assert(food["fdcId"] != null);
 
-      return (id, food["description"] as String);
-    }).toList();
+          final foodCategory = food['foodCategory'];
+          final foodCategoryDescription = foodCategory['description'];
+          if (!excludedCategories.contains(foodCategoryDescription)) {
+            return (id, food["description"] as String);
+          }
+          return null; // Add this line to handle the case where the return value may be null.
+        })
+        .whereType<(int, String)>()
+        .toList(); // Add this line to convert the nullable values to non-null values.
   }
 
   /// Creates a frequency map of repeated phrases in the description records.
@@ -125,4 +131,8 @@ class DescriptionParser {
       return (record.$1, description);
     }).toList();
   }
+
+//   static List<DescriptionRecord> removeUnwantedDescriptions(
+//       {required List<DescriptionRecord> descriptions,
+//       required List<String> excludedCategories}) {}
 }

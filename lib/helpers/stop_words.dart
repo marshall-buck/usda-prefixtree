@@ -4,7 +4,9 @@ const listOfPhrasesToDelete = [
   "separable lean only, "
 ];
 
-List<String> stopWords = [
+const excludedCategories = ["Restaurant Foods", "Fast Foods"];
+
+const List<String> stopWords = [
   "about",
   "above",
   "added",
