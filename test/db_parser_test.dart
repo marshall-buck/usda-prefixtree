@@ -20,7 +20,7 @@ void main() {
             .thenReturn(mockUsdaFile);
         final dbParser = DBParser(fileLoader: mockFileLoaderService);
         dbParser.init('fake');
-        final res = dbParser.foodsDBMap;
+        final res = dbParser.originalFoodsList;
 
         expect(res.length, 3);
       });
