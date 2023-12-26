@@ -19,7 +19,7 @@ void main() {
   group('DescriptionParser class tests', () {
     group('populateOriginalDescriptions', () {
       test('populates the correct records', () {
-        const List<(int, String)> expectedOriginalDescriptions = [
+        const List<DescriptionRecord> expectedOriginalDescriptions = [
           (
             167512,
             "Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough"

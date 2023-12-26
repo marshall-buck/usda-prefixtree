@@ -1,8 +1,10 @@
+typedef DescriptionRecord = (int, String);
+
 /// A class for parsing description strings from the [originalFoodsList].
 class DescriptionParser {
   //
   /// Parses [originalFoodsList] to create a list of description records.
-  static List<(int, String)> createOriginalDescriptionRecords(
+  static List<DescriptionRecord> createOriginalDescriptionRecords(
       {required final List<dynamic> originalFoodsList}) {
     return originalFoodsList.map((final food) {
       int id;
@@ -21,7 +23,7 @@ class DescriptionParser {
   ///  Will only include phrases that repeat more than [minNumberOfDuplicatesToShow].
 
   static Map<String, int> createRepeatedPhraseFrequencyMap(
-      {required final List<(int, String)> listOfRecords,
+      {required final List<DescriptionRecord> listOfRecords,
       required final int minPhraseLength,
       required final minNumberOfDuplicatesToShow}) {
     final Map<String, int> freqMap = {};
@@ -102,7 +104,7 @@ class DescriptionParser {
 
   /// Finds the longest description in a list of description records.
   static int getLongestDescription(
-      {required final List<(int, String)> descriptions}) {
+      {required final List<DescriptionRecord> descriptions}) {
     return descriptions.fold(
         0,
         (final maxLength, final record) =>
