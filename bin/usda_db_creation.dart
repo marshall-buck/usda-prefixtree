@@ -16,5 +16,4 @@ void main() async {
   // usda_db_creation.writeDuplicatePhrasesToFile(
   //     fileLoader: fileLoader, dbParser: dbParser);
   print(usda_db_creation.getFoodCategories(db: dbParser));
-  ;
 }
