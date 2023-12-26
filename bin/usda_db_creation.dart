@@ -11,9 +11,9 @@ void main() async {
   final fileLoader = FileLoaderService();
   final dbParser = DBParser(fileLoader: fileLoader);
   dbParser.init(relativeOriginalDBPath);
-  usda_db_creation.writeOriginalDescriptionsToFile(
-      dbParser: dbParser, fileLoaderService: fileLoader);
+  // usda_db_creation.writeOriginalDescriptionsToFile(
+  //     dbParser: dbParser, fileLoaderService: fileLoader);
   // usda_db_creation.writeDuplicatePhrasesToFile(
   //     fileLoader: fileLoader, dbParser: dbParser);
-  print(usda_db_creation.getFoodCategories(db: dbParser));
+  // print(usda_db_creation.getFoodCategories(db: dbParser));
 }

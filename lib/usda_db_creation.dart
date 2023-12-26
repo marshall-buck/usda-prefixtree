@@ -31,7 +31,7 @@ Future<void> writeDuplicatePhrasesToFile(
   print('Complete: ${repeats.length}');
 }
 
-Future<void> writeOriginalDescriptionsToFile(
+Future<void> writeOriginalDescriptionsToTxtFile(
     {required final DBParser dbParser,
     required final FileLoaderService fileLoaderService}) async {
   final res = DescriptionParser.createOriginalDescriptionRecords(
@@ -51,6 +51,7 @@ int getLongestDescriptionLength(final DBParser dbParser) {
   return DescriptionParser.getLongestDescription(descriptions: descriptions);
 }
 
+/// Retrieves the food categories from the specified [db]
 (Map<String, int>, int) getFoodCategories({required final DBParser db}) {
   return db.getFoodCategories();
 }

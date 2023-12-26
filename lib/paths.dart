@@ -8,3 +8,5 @@
 const relativeOriginalDBPath = 'lib/db/original_usda.json';
 const relativeRepeatFile = 'lib/db/repeats.json';
 const originalDescriptions = 'lib/db/original_des.txt';
+
+const pathToFiles = 'lib/db/';
