@@ -110,4 +110,19 @@ class DescriptionParser {
         (final maxLength, final record) =>
             maxLength > record.$2.length ? maxLength : record.$2.length);
   }
+
+  static List<DescriptionRecord> removeUnwantedPhrasesFromDescriptions({
+    required final List<DescriptionRecord> descriptions,
+    required final List<String> unwantedPhrases,
+  }) {
+    return descriptions.map((final record) {
+      String description = record.$2;
+      for (final phrase in unwantedPhrases) {
+        if (description.contains(phrase)) {
+          description = description.replaceAll(phrase, '');
+        }
+      }
+      return (record.$1, description);
+    }).toList();
+  }
 }
