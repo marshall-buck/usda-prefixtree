@@ -2,9 +2,10 @@ import 'dart:convert';
 
 import 'package:usda_db_creation/description_parser.dart';
 import 'package:usda_db_creation/file_loader_service.dart';
+import 'package:usda_db_creation/helpers/stop_words.dart';
 
 class DBParser {
-  FileLoaderService fileLoader;
+  FileLoaderService? fileLoader;
   Map<dynamic, dynamic>? _originalDBMap;
 
   /// [List] of foods from the database.
@@ -15,14 +16,20 @@ class DBParser {
 
   /// Populates the _dbMap
   DBParser.init(
-      {final FileLoaderService? fileLoader, required final String path})
-      : fileLoader = fileLoader ?? FileLoaderService() {
+      {required FileLoaderService this.fileLoader,
+      required final String path}) {
     final file = fileLoader?.loadData(path);
     _originalDBMap = jsonDecode(file!);
   }
 
-  get descriptionRecords => DescriptionParser.createOriginalDescriptionRecords(
-      originalFoodsList: originalFoodsList);
+  // get descriptionRecords => DescriptionParser.createOriginalDescriptionRecords(
+  //     originalFoodsList: originalFoodsList);
+
+  List<DescriptionRecord> get finalDescriptionRecords =>
+      DescriptionParser.removeUnwantedPhrasesFromDescriptions(
+          descriptions: DescriptionParser.createOriginalDescriptionRecords(
+              originalFoodsList: originalFoodsList),
+          unwantedPhrases: unwantedPhrases);
 
   (Map<String, int>, int) getFoodCategories() {
     final Map<String, int> categories = {};

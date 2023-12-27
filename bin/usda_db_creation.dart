@@ -10,9 +10,10 @@ const relativeRepeatFile = 'lib/db/repeats.txt';
 
 void main() async {
   final fileLoaderService = FileLoaderService();
-  final dbParser = DBParser.init(path: relativeOriginalDBPath);
+  final dbParser = DBParser.init(
+      path: relativeOriginalDBPath, fileLoader: fileLoaderService);
 
-  final descriptionRecords = dbParser.descriptionRecords;
+  final descriptionRecords = dbParser.finalDescriptionRecords;
   assert(descriptionRecords.length == 7006);
 
   await fileLoaderService.writeListToTxtFile(

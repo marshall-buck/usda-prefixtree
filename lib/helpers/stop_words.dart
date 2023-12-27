@@ -1,4 +1,4 @@
-const listOfPhrasesToDelete = [
+const unwantedPhrases = [
   "(Includes foods for USDA's Food Distribution Program)",
   "separable lean and fat, ",
   "separable lean only, "

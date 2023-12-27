@@ -1,17 +1,17 @@
+// This file is where the methods live that will be used in the
+// bin/usda_db_creation.dart  file.
+// The bin/usda_db_creation.dart is called when the user runs the command
+// 'dart run'. Not all methods in this file are used in the bin/usda_db_creation.dart
+// at the same time.
+
 import 'package:usda_db_creation/db_parser.dart';
 import 'package:usda_db_creation/description_parser.dart';
 import 'package:usda_db_creation/file_loader_service.dart';
+import 'package:usda_db_creation/helpers/stop_words.dart';
 
 import 'dart:developer' as dev;
 
 import 'package:usda_db_creation/paths.dart';
-
-void createFiles() {
-  // final foods = FoodsDB();
-  // foods.createDB();
-  print("createFiles from barrel file");
-}
-//****** Methods to handle Descriptions ***************/
 
 /// Creates the duplicate phrases file and writes to [path].
 Future<void> writeDuplicatePhrasesToFile(
