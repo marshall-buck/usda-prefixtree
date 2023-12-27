@@ -1,4 +1,4 @@
-import 'package:usda_db_creation/helpers/stop_words.dart';
+import 'package:usda_db_creation/global_const.dart';
 
 typedef DescriptionRecord = (int, String);
 

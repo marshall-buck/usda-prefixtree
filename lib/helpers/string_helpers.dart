@@ -1,4 +1,4 @@
-import 'package:usda_db_creation/helpers/stop_words.dart';
+import 'package:usda_db_creation/global_const.dart';
 
 /// Removes all non-alpha except dashes and parentheses,
 /// and numbers followed by a % See notes at bottom a file

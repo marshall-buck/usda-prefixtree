@@ -1,7 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:test/test.dart';
+import 'package:usda_db_creation/file_loader_service.dart';
 
-import 'package:usda_db_creation/helpers/file_helpers.dart';
+import 'package:usda_db_creation/global_const.dart';
 import 'package:usda_db_creation/search_hash.dart';
 
 //  cSpell: disable
@@ -9,7 +10,9 @@ void main() {
   group('create reverse index tests', () {
     group('createSubstrings() - ', () {
       test('substrings populates correctly', () async {
-        final file = await readJsonFile('test/data/test_word_index.json');
+        final FileLoaderService fileLoader = FileLoaderService();
+        final file =
+            await fileLoader.readJsonFile('test/data/test_word_index.json');
         final res = SearchHash.createSubstrings(file);
         final deep = DeepCollectionEquality();
 

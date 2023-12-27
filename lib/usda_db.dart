@@ -7,7 +7,6 @@
 import 'package:usda_db_creation/db_parser.dart';
 import 'package:usda_db_creation/description_parser.dart';
 import 'package:usda_db_creation/file_loader_service.dart';
-import 'package:usda_db_creation/helpers/stop_words.dart';
 
 import 'dart:developer' as dev;
 

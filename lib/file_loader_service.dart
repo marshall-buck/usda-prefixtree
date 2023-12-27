@@ -17,6 +17,16 @@ class FileLoaderService {
     }
   }
 
+  /// Reads a JSON file from a [filePath].
+  ///
+  /// Returns a [Map]
+  Future<Map> readJsonFile(final String filePath) async {
+    final input = await File(filePath).readAsString();
+    final map = jsonDecode(input);
+
+    return map;
+  }
+
   /// Takes a [List], and writes a file to given [path], creating a new
   ///  line for each list item.
   Future<void> writeListToTxtFile(
