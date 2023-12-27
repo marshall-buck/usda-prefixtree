@@ -1,3 +1,4 @@
+import 'package:usda_db_creation/file_loader_service.dart';
 import 'package:usda_db_creation/global_const.dart';
 
 typedef DescriptionRecord = (int, String);
@@ -133,7 +134,16 @@ class DescriptionParser {
     }).toList();
   }
 
-//   static List<DescriptionRecord> removeUnwantedDescriptions(
-//       {required List<DescriptionRecord> descriptions,
-//       required List<String> excludedCategories}) {}
+  static Future<List<DescriptionRecord>> openFinalDescriptionsFile(
+          {required final FileLoaderService fileLoader,
+          final String path = '$pathToFiles/$fileNameFinalDescriptions'}) =>
+      fileLoader.readListFromTxtFile<DescriptionRecord>(path);
+
+  static Map<int, String> createFinalDescriptionMap(
+      {required final List<DescriptionRecord> descriptions}) {
+    return descriptions.fold(
+        {},
+        (final Map<int, String> map, final record) =>
+            map..[record.$1] = record.$2);
+  }
 }

@@ -10,7 +10,7 @@ import 'package:usda_db_creation/file_loader_service.dart';
 
 import 'dart:developer' as dev;
 
-import 'package:usda_db_creation/paths.dart';
+import 'package:usda_db_creation/global_const.dart';
 
 /// Creates the duplicate phrases file and writes to [path].
 Future<void> writeDuplicatePhrasesToFile(
@@ -26,7 +26,8 @@ Future<void> writeDuplicatePhrasesToFile(
       minPhraseLength: minPhraseLength,
       minNumberOfDuplicatesToShow: minNumberOfDuplicatesToShow);
 
-  await fileLoader.writeJsonFile(relativeRepeatFile, repeats);
+  await fileLoader.writeJsonFile(
+      '$pathToFiles/$fileNameDuplicatePhrases', repeats);
   print('Complete: ${repeats.length}');
 }
 
@@ -40,4 +41,17 @@ int getLongestDescriptionLength(final DBParser dbParser) {
 /// Retrieves the food categories from the specified [db]
 (Map<String, int>, int) getFoodCategories({required final DBParser db}) {
   return db.getFoodCategories();
+}
+
+Future<void> writeDescriptionsToFile(
+    {required final FileLoaderService fileLoader,
+    required final DBParser dbParser}) async {
+  final descriptions = DescriptionParser.createOriginalDescriptionRecords(
+      originalFoodsList: dbParser.originalFoodsList);
+  assert(descriptions.length == 7006);
+  final descriptionsFinal =
+      DescriptionParser.removeUnwantedPhrasesFromDescriptions(
+          descriptions: descriptions, unwantedPhrases: unwantedPhrases);
+  await fileLoader.writeListToTxtFile(
+      list: descriptionsFinal, path: '$pathToFiles/$fileNameFinalDescriptions');
 }

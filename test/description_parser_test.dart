@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:collection/collection.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
@@ -244,6 +246,15 @@ void main() {
       });
     });
   });
+  group('createFinalDescriptionMap()', () {
+    test('coverts list of descriptions records to map', () {
+      final res = DescriptionParser.createFinalDescriptionMap(
+          descriptions: descriptionRecords);
+      expect(res, isA<Map>());
+      expect(res.length, 55);
+      expect(res[111111], 'George Weston Bakeries, Thomas English Muffins');
+    });
+  });
 }
 
 const descriptionRecords = [
@@ -320,7 +331,7 @@ const descriptionRecords = [
   (492344, 'Old legends spoke of dragons and mythical creatures.'),
   (502345, 'The sun rose, casting a golden light on the new day.'),
   (512346, 'Enchanted whispers echoed in the forgotten ruins.')
-];
+]; //length 55
 const sentence134 =
     'Under the (shimmering) moonlight, an old oak, rooted deeply, stood majestically as the silent guardian of the ancient, mystical woods.';
 const sentence49 = 'Quietly, an old oak stood, surrounded by natures.';

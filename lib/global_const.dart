@@ -1,3 +1,12 @@
+const keepTheseNutrients = [1003, 1004, 1005, 1008, 1079, 1258, 2000];
+//TODO: change paths and names
+const internalDbName = 'db.json';
+const pathToFiles = 'lib/db';
+const fileNameOriginalDBFile = 'original_usda.json';
+const fileNameDuplicatePhrases = 'duplicate_phrases.json';
+const fileNameOriginalDescriptions = 'original_descriprions.txt';
+const fileNameFinalDescriptions = 'final_descriprions.txt';
+
 const unwantedPhrases = [
   "(Includes foods for USDA's Food Distribution Program)",
   "separable lean and fat, ",

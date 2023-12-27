@@ -13,11 +13,9 @@ void main() async {
   final dbParser = DBParser.init(
       path: relativeOriginalDBPath, fileLoader: fileLoaderService);
 
-  final descriptionRecords = dbParser.finalDescriptionRecords;
-  assert(descriptionRecords.length == 7006);
+  await db.writeDescriptionsToFile(
+      fileLoader: fileLoaderService, dbParser: dbParser);
 
-  await fileLoaderService.writeListToTxtFile(
-      list: descriptionRecords, path: 'lib/db/descriptions.txt');
   // usda_db_creation.writeDuplicatePhrasesToFile(
   //     fileLoader: fileLoader, dbParser: dbParser);
   // print(usda_db_creation.getFoodCategories(db: dbParser));
