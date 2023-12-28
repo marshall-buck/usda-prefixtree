@@ -8,7 +8,7 @@ import 'package:usda_db_creation/db_parser.dart';
 import 'package:usda_db_creation/description_parser.dart';
 import 'package:usda_db_creation/file_loader_service.dart';
 
-import 'dart:developer' as dev;
+// import 'dart:developer' as dev;
 
 import 'package:usda_db_creation/global_const.dart';
 

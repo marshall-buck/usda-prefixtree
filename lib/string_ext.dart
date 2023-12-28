@@ -1,5 +1,3 @@
-import 'package:usda_db_creation/global_const.dart';
-
 extension StringExtensions on String {
   /// Removes all non-alpha except dashes and parentheses,
   /// and numbers followed by a %.

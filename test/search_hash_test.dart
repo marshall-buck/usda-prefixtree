@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:test/test.dart';
-import 'package:usda_db_creation/file_loader_service.dart';
 
 import 'package:usda_db_creation/search_hash.dart';
 
