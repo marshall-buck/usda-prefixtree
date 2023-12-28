@@ -7,6 +7,7 @@ const fileNameDuplicatePhrases = 'duplicate_phrases.json';
 const fileNameOriginalDescriptions = 'original_descriprions.txt';
 const fileNameFinalDescriptions = 'final_descriprions.txt';
 const fileNameAutocompleteWordIndex = 'autocomplete_word_index.json';
+const fileNameAutocompleteWordIndexKeys = 'autocomplete_word_index_keys.txt';
 
 const unwantedPhrases = [
   "(Includes foods for USDA's Food Distribution Program)",

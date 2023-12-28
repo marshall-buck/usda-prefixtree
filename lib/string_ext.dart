@@ -10,7 +10,7 @@ extension StringExtensions on String {
   /// not in the set defined by [^\w()%\-] or a string that contains one or more
   /// digits followed by a percent sign.
   String removeUnwantedChars() {
-    final stringSanitizerRegEx = RegExp(r"[^\w()%\-]|(\d+%)");
+    final stringSanitizerRegEx = RegExp(r"[^\w()%\-\/]|(\d+%)");
 
     return replaceAllMapped(
         stringSanitizerRegEx, (final match) => match.group(1) ?? '');
@@ -20,6 +20,7 @@ extension StringExtensions on String {
   /// Returns a list of a word(s), list may be empty and may contain empty strings.
   List<String> stripDashedAndParenthesisWord() {
     if (contains('-')) return split('-');
+    if (contains('/')) return split('/');
     if (startsWith('(') && endsWith(')')) {
       final trimmed = substring(1, length - 1);
       return [trimmed];
@@ -54,5 +55,18 @@ extension StringExtensions on String {
 
   bool isNumber() {
     return double.tryParse(this) != null;
+  }
+
+  bool isLowerCaseOrNumberWithPercent() {
+    final lowerCaseRegex = RegExp(r"^[a-z]+$");
+    final numberWithPercentRegex = RegExp(r"^\d+%$");
+
+    return lowerCaseRegex.hasMatch(this) ||
+        numberWithPercentRegex.hasMatch(this);
+  }
+
+  bool isNumberWithPercent() {
+    final numberWithPercentRegex = RegExp(r"^\d+%$");
+    return numberWithPercentRegex.hasMatch(this);
   }
 }

@@ -68,4 +68,7 @@ Future<void> writeAutocompleteWordIndexToFile({
       descriptionMap: descriptionMap);
   await fileLoaderService.writeJsonFile(
       '$pathToFiles/$fileNameAutocompleteWordIndex', indexMap);
+  final indexKeys = indexMap.keys.toList();
+  await fileLoaderService.writeListToTxtFile(
+      list: indexKeys, path: '$pathToFiles/$fileNameAutocompleteWordIndexKeys');
 }

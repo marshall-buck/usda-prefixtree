@@ -48,9 +48,10 @@ void main() {
 
         final indexMap = AutocompleteWordIndex.createAutocompleteIndexMap(
             descriptionMap: mockDescriptionMap);
+
+        // print(indexMap);
         final deepEquals = const DeepCollectionEquality();
         expect(deepEquals.equals(expectation, indexMap), true);
-        // print(indexMap);
       });
     });
 
@@ -84,17 +85,19 @@ void main() {
       expect(indexMap['are'], isNull);
       expect(indexMap['being'], isNull);
     });
-    test('populateIndexMap should strip remaining parenthese and numbers', () {
+    test(
+        'populateIndexMap should strip remaining parenthese and numbers and /es',
+        () {
       final descriptionMap = {
-        167782: 'apple is a (fruit',
-        173175: 'apples are delicious) 200',
-        171686: 'orange being is a citrus fruit 100%',
+        167782: 'apple 18fat is a (fruit 1/8',
+        173175: 'apples are delicious) 200 aa 11g',
+        171686: 'orange being is a citrus/fruit 100%',
       };
 
       final indexMap = AutocompleteWordIndex.createAutocompleteIndexMap(
         descriptionMap: descriptionMap,
       );
-      // print(indexMap);
+      print(indexMap);
       expect(indexMap, isA<SplayTreeMap<String, List<String>>>());
       expect(indexMap.length, 7);
       expect(indexMap['apple'], containsAll(['167782']));

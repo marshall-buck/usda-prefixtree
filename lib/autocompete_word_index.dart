@@ -1,11 +1,11 @@
-// Class to handle the map of sords to index ands thier locations in the database.
-// The words and locations are created for the DecsriptionRecords method
-// - createFinalDescriptionMapFromFile
 import 'dart:collection';
 
 import 'package:usda_db_creation/global_const.dart';
 import 'package:usda_db_creation/string_ext.dart';
 
+/// Class to handle the map of sords to index ands thier locations in the database.
+/// The words and locations are created for the DecsriptionRecords method
+/// - createFinalDescriptionMapFromFile
 class AutocompleteWordIndex {
   /// Populates a [SplayTreeMap] where the key is a [word] and the
   /// value is a list of id's from the [db].
@@ -32,10 +32,12 @@ class AutocompleteWordIndex {
           if (word.endsWith(')')) {
             word = word.substring(0, word.length - 1);
           }
-          assert(word.contains(RegExp(r'^[a-z0-9%]+$')));
-          if (!word.isStopWord(stopWords) &&
-              word.length > 1 &&
-              !word.isNumber()) {
+          if (word.isStopWord(stopWords) ||
+              !word.isLowerCaseOrNumberWithPercent()) {
+            continue;
+          } else if (!word.isNumberWithPercent() && word.length < 3) {
+            continue;
+          } else {
             indexMap.containsKey(word)
                 ? indexMap[word]!.add(entry.key.toString())
                 : indexMap[word] = [entry.key.toString()];

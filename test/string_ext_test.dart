@@ -16,6 +16,7 @@ void main() {
         expect(''.removeUnwantedChars(), '');
         expect(' '.removeUnwantedChars(), '');
         expect('2%'.removeUnwantedChars(), '2%');
+        expect('syrup/caramel'.removeUnwantedChars(), 'syrup/caramel');
       });
     });
 
@@ -29,6 +30,8 @@ void main() {
         expect('-to-bake'.stripDashedAndParenthesisWord(), ['', 'to', 'bake']);
         expect('-to-bake-'.stripDashedAndParenthesisWord(),
             ['', 'to', 'bake', '']);
+        expect('syrup/caramel'.stripDashedAndParenthesisWord(),
+            ['syrup', 'caramel']);
       });
     });
 
@@ -86,6 +89,25 @@ void main() {
         expect(notNumber.isNumber(), false);
         expect(notNumber1.isNumber(), false);
         expect(notNumber2.isNumber(), false);
+      });
+    });
+    group('isNumberWithPercent()', () {
+      test('returns true is number followed by percent', () {
+        final number = '2';
+        final number1 = '20';
+        final number2 = '200';
+        final percent = '2%';
+        final percent1 = '20%';
+        final percent2 = '200%';
+        final notNumber = '2%b';
+
+        expect(number.isNumberWithPercent(), false);
+        expect(number1.isNumberWithPercent(), false);
+        expect(number2.isNumberWithPercent(), false);
+        expect(percent.isNumberWithPercent(), true);
+        expect(percent1.isNumberWithPercent(), true);
+        expect(percent2.isNumberWithPercent(), true);
+        expect(notNumber.isNumberWithPercent(), false);
       });
     });
   });
