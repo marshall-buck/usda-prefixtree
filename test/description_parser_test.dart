@@ -267,10 +267,10 @@ void main() {
 
       const expected = {
         167512:
-            'Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough',
-        167513: 'Pillsbury, Cinnamon Rolls with Icing, refrigerated dough',
+            'Pillsbury Golden Layer Buttermilk Biscuits, (Artificial Flavor,) refrigerated dough',
+        167513: 'Pillsbury, Cinnamon Rolls with Icing, 100% refrigerated dough',
         167514:
-            'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry',
+            'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry, 2% milk',
       };
 
       final res = DescriptionParser.createFinalDescriptionMapFromFile(

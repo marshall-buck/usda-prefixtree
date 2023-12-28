@@ -1,8 +1,16 @@
 const mockDescriptionFile = '''
-(167512, Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough)
-(167513, Pillsbury, Cinnamon Rolls with Icing, refrigerated dough)
-(167514, Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry)
+(167512, Pillsbury Golden Layer Buttermilk Biscuits, (Artificial Flavor,) refrigerated dough)
+(167513, Pillsbury, Cinnamon Rolls with Icing, 100% refrigerated dough)
+(167514, Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry, 2% milk)
 ''';
+
+const mockDescriptionMap = {
+  167512:
+      'Pillsbury Golden Layer Buttermilk Biscuits, (Artificial Flavor,) refrigerated dough',
+  167513: 'Pillsbury, Cinnamon Rolls with Icing, 100% refrigerated dough',
+  167514:
+      'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry, 2% milk',
+};
 
 const mockWordIndex = {
   "apple": ['1', '2'],
