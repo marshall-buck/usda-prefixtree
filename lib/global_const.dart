@@ -1,5 +1,5 @@
 const keepTheseNutrients = [1003, 1004, 1005, 1008, 1079, 1258, 2000];
-//TODO: change paths and names
+
 const internalDbName = 'db.json';
 const pathToFiles = 'lib/db';
 const fileNameOriginalDBFile = 'original_usda.json';
@@ -8,6 +8,7 @@ const fileNameOriginalDescriptions = 'original_descriprions.txt';
 const fileNameFinalDescriptions = 'final_descriprions.txt';
 const fileNameAutocompleteWordIndex = 'autocomplete_word_index.json';
 const fileNameAutocompleteWordIndexKeys = 'autocomplete_word_index_keys.txt';
+const fileNameAutocompleteHash = 'autocomplete_hash.json';
 
 const unwantedPhrases = [
   "(Includes foods for USDA's Food Distribution Program)",

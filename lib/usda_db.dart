@@ -64,11 +64,36 @@ Future<void> writeAutocompleteWordIndexToFile({
       path: '$pathToFiles/$fileNameFinalDescriptions',
       fileLoaderService: fileLoaderService);
 
-  final indexMap =
-      Autocomplete.createAutocompleteIndexMap(descriptionMap: descriptionMap);
+  final indexMap = Autocomplete.createAutocompleteWordIndexMap(
+      descriptionMap: descriptionMap);
   await fileLoaderService.writeJsonFile(
       '$pathToFiles/$fileNameAutocompleteWordIndex', indexMap);
   final indexKeys = indexMap.keys.toList();
   await fileLoaderService.writeListToTxtFile(
       list: indexKeys, path: '$pathToFiles/$fileNameAutocompleteWordIndexKeys');
+}
+
+/// Creates the autocomplete hash table and writes to [path].
+Future<void> writeAutocompleteHashToFile({
+  required final FileLoaderService fileLoaderService,
+}) async {
+  // Create the description map from file.
+  final descriptionMap = DescriptionParser.createFinalDescriptionMapFromFile(
+      path: '$pathToFiles/$fileNameFinalDescriptions',
+      fileLoaderService: fileLoaderService);
+
+  // Create the autocomplete index map from the description map.
+  final autoCompleteWordIndex = Autocomplete.createAutocompleteWordIndexMap(
+      descriptionMap: descriptionMap);
+
+  // Create the substrings from the autocomplete index map.
+  final substrings =
+      Autocomplete.createSubstrings(autoCompleteMap: autoCompleteWordIndex);
+
+  // Create the hash table from the substrings.
+  final hash = Autocomplete.createAutocompleteHashTable(
+      originalSubStringMap: substrings);
+
+  await fileLoaderService.writeJsonFile(
+      '$pathToFiles/$fileNameAutocompleteHash', hash);
 }

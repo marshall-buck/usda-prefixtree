@@ -13,6 +13,8 @@ void main() async {
   final dbParser = DBParser.init(
       path: relativeOriginalDBPath, fileLoaderService: fileLoaderService);
 
+  await db.writeAutocompleteHashToFile(fileLoaderService: fileLoaderService);
+
   // await db.writeDescriptionsToFile(
   //     fileLoaderService: fileLoaderService, dbParser: dbParser);
   // await db.writeAutocompleteWordIndexToFile(

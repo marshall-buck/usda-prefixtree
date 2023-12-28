@@ -47,7 +47,7 @@ void main() {
           'shake': ['167514']
         };
 
-        final indexMap = Autocomplete.createAutocompleteIndexMap(
+        final indexMap = Autocomplete.createAutocompleteWordIndexMap(
             descriptionMap: mockDescriptionMap);
 
         // print(indexMap);
@@ -58,7 +58,7 @@ void main() {
           () {
         final Map<int, String> descriptionMap = {};
 
-        final indexMap = Autocomplete.createAutocompleteIndexMap(
+        final indexMap = Autocomplete.createAutocompleteWordIndexMap(
           descriptionMap: descriptionMap,
         );
 
@@ -75,7 +75,7 @@ void main() {
           171686: 'orange being is a citrus fruit',
         };
 
-        final indexMap = Autocomplete.createAutocompleteIndexMap(
+        final indexMap = Autocomplete.createAutocompleteWordIndexMap(
           descriptionMap: descriptionMap,
         );
         // print(indexMap);
@@ -96,7 +96,7 @@ void main() {
           171686: 'orange being is a citrus/fruit 100%',
         };
 
-        final indexMap = Autocomplete.createAutocompleteIndexMap(
+        final indexMap = Autocomplete.createAutocompleteWordIndexMap(
           descriptionMap: descriptionMap,
         );
         // print(indexMap);
@@ -115,16 +115,29 @@ void main() {
       test('substrings populates correctly', () async {
         final res = Autocomplete.createSubstrings(
             autoCompleteMap: mockAutocompleteIndex);
-        print(res);
+        // print(res);
         final deep = DeepCollectionEquality();
 
-        expect(deep.equals(res, indexRes), true);
+        expect(deep.equals(res, originalSubStringMap), true);
+      });
+      group('createAutocompleteHashTable() - ', () {
+        test('returns correct list', () async {
+          final res = Autocomplete.createAutocompleteHashTable(
+              originalSubStringMap: originalSubStringMap);
+          final d = DeepCollectionEquality();
+          // print(res);
+          expect(
+              d.equals(res['substrings'], autoCompleteHashTable['substrings']),
+              true);
+          expect(d.equals(res['hashIndex'], autoCompleteHashTable['hashIndex']),
+              true);
+        });
       });
     });
   });
 }
 
-const Map<String, List<String>> indexRes = {
+const Map<String, List<String>> originalSubStringMap = {
   'aba': ['3', '4'],
   'abap': ['3', '4'],
   'abapp': ['3', '4'],
@@ -153,4 +166,41 @@ const Map<String, List<String>> indexRes = {
   'rabapp': ['3', '4'],
   'rabappl': ['3', '4'],
   'rabapple': ['3', '4'],
+};
+
+const Map<String, dynamic> autoCompleteHashTable = {
+  'substrings': {
+    'aba': 0,
+    'abap': 0,
+    'abapp': 0,
+    'abappl': 0,
+    'abapple': 0,
+    'app': 1,
+    'appl': 1,
+    'apple': 1,
+    'bap': 0,
+    'bapp': 0,
+    'bappl': 0,
+    'bapple': 0,
+    'cra': 0,
+    'crab': 0,
+    'craba': 0,
+    'crabap': 0,
+    'crabapp': 0,
+    'crabappl': 0,
+    'crabapple': 0,
+    'ple': 1,
+    'ppl': 1,
+    'pple': 1,
+    'rab': 0,
+    'raba': 0,
+    'rabap': 0,
+    'rabapp': 0,
+    'rabappl': 0,
+    'rabapple': 0,
+  },
+  'indexHash': {
+    0: ['3', '4'],
+    1: ['1', '2', '3', '4']
+  }
 };
