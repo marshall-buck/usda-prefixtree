@@ -4,7 +4,7 @@
 // 'dart run'. Not all methods in this file are used in the bin/usda_db_creation.dart
 // at the same time.
 
-import 'package:usda_db_creation/autocompete_word_index.dart';
+import 'package:usda_db_creation/autocompete.dart';
 import 'package:usda_db_creation/db_parser.dart';
 import 'package:usda_db_creation/description_parser.dart';
 import 'package:usda_db_creation/file_loader_service.dart';
@@ -64,8 +64,8 @@ Future<void> writeAutocompleteWordIndexToFile({
       path: '$pathToFiles/$fileNameFinalDescriptions',
       fileLoaderService: fileLoaderService);
 
-  final indexMap = AutocompleteWordIndex.createAutocompleteIndexMap(
-      descriptionMap: descriptionMap);
+  final indexMap =
+      Autocomplete.createAutocompleteIndexMap(descriptionMap: descriptionMap);
   await fileLoaderService.writeJsonFile(
       '$pathToFiles/$fileNameAutocompleteWordIndex', indexMap);
   final indexKeys = indexMap.keys.toList();

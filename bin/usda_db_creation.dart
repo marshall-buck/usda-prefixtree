@@ -15,8 +15,8 @@ void main() async {
 
   // await db.writeDescriptionsToFile(
   //     fileLoaderService: fileLoaderService, dbParser: dbParser);
-  await db.writeAutocompleteWordIndexToFile(
-      fileLoaderService: fileLoaderService);
+  // await db.writeAutocompleteWordIndexToFile(
+  //     fileLoaderService: fileLoaderService);
 
   // usda_db_creation.writeDuplicatePhrasesToFile(
   //     fileLoaderService: fileLoaderService, dbParser: dbParser);

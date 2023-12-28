@@ -12,7 +12,7 @@ const mockDescriptionMap = {
       'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry, 2% milk',
 };
 
-const mockWordIndex = {
+const Map<String, List<String>> mockAutocompleteIndex = {
   "apple": ['1', '2'],
   "crabapple": ['3', '4']
 };

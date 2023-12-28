@@ -13,7 +13,7 @@ void main() {
         // final FileLoaderService fileLoaderService = FileLoaderService();
         // final file = await fileLoaderService
         //     .readJsonFile('test/data/test_word_index.json');
-        final res = SearchHash.createSubstrings(mockWordIndex);
+        final res = SearchHash.createSubstrings(mockAutocompleteIndex);
         final deep = DeepCollectionEquality();
 
         expect(deep.equals(res, indexRes), true);
