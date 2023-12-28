@@ -11,12 +11,12 @@ const relativeRepeatFile = 'lib/db/repeats.txt';
 void main() async {
   final fileLoaderService = FileLoaderService();
   final dbParser = DBParser.init(
-      path: relativeOriginalDBPath, fileLoader: fileLoaderService);
+      path: relativeOriginalDBPath, fileLoaderService: fileLoaderService);
 
   await db.writeDescriptionsToFile(
-      fileLoader: fileLoaderService, dbParser: dbParser);
+      fileLoaderService: fileLoaderService, dbParser: dbParser);
 
   // usda_db_creation.writeDuplicatePhrasesToFile(
-  //     fileLoader: fileLoader, dbParser: dbParser);
+  //     fileLoaderService: fileLoaderService, dbParser: dbParser);
   // print(usda_db_creation.getFoodCategories(db: dbParser));
 }

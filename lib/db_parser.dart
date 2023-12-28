@@ -5,20 +5,20 @@ import 'package:usda_db_creation/file_loader_service.dart';
 import 'package:usda_db_creation/global_const.dart';
 
 class DBParser {
-  FileLoaderService? fileLoader;
+  FileLoaderService? fileLoaderService;
   Map<dynamic, dynamic>? _originalDBMap;
 
   /// [List] of foods from the database.
   List<dynamic> get originalFoodsList => _originalDBMap?['SRLegacyFoods'];
 
-  // DBParser({final FileLoaderService? fileLoader})
-  //     : fileLoader = fileLoader ?? FileLoaderService();
+  // DBParser({final FileLoaderService? fileLoaderService})
+  //     : fileLoaderService = fileLoaderService ?? FileLoaderService();
 
   /// Populates the _dbMap
   DBParser.init(
-      {required FileLoaderService this.fileLoader,
+      {required FileLoaderService this.fileLoaderService,
       required final String path}) {
-    final file = fileLoader?.loadData(path);
+    final file = fileLoaderService?.loadData(path);
     _originalDBMap = jsonDecode(file!);
   }
 

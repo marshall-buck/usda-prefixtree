@@ -134,16 +134,31 @@ class DescriptionParser {
     }).toList();
   }
 
-  static Future<List<DescriptionRecord>> openFinalDescriptionsFile(
-          {required final FileLoaderService fileLoader,
-          final String path = '$pathToFiles/$fileNameFinalDescriptions'}) =>
-      fileLoader.readListFromTxtFile<DescriptionRecord>(path);
+  /// Creates the final description map from a text file. Use this map when creating
+  /// the autpocomplete list, and the food models.
+  static Map<int, String> createFinalDescriptionMapFromFile(
+      {required final String path,
+      required final FileLoaderService fileLoader}) {
+    final String fileContents = fileLoader.loadData(path);
+    final List<String> lines = fileContents.split('\n');
 
-  static Map<int, String> createFinalDescriptionMap(
-      {required final List<DescriptionRecord> descriptions}) {
-    return descriptions.fold(
-        {},
-        (final Map<int, String> map, final record) =>
-            map..[record.$1] = record.$2);
+    lines.removeWhere(
+        (final line) => line.isEmpty); // Add this line to remove empty lines.
+    final Map<int, String> descriptionMap = {};
+    for (final line in lines) {
+      final MapEntry<int, String> entry =
+          parseDescriptionRecordFromString(line);
+
+      descriptionMap[entry.key] = entry.value;
+    }
+    return descriptionMap;
+  }
+
+  static MapEntry<int, String> parseDescriptionRecordFromString(
+      final String line) {
+    final int id = int.parse(line.substring(1, 7));
+    final String description = line.substring(9, line.length - 1);
+
+    return MapEntry(id, description);
   }
 }

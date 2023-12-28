@@ -2,18 +2,19 @@ import 'package:collection/collection.dart';
 import 'package:test/test.dart';
 import 'package:usda_db_creation/file_loader_service.dart';
 
-import 'package:usda_db_creation/global_const.dart';
 import 'package:usda_db_creation/search_hash.dart';
+
+import 'setup/mock_data.dart';
 
 //  cSpell: disable
 void main() {
   group('create reverse index tests', () {
     group('createSubstrings() - ', () {
       test('substrings populates correctly', () async {
-        final FileLoaderService fileLoader = FileLoaderService();
-        final file =
-            await fileLoader.readJsonFile('test/data/test_word_index.json');
-        final res = SearchHash.createSubstrings(file);
+        // final FileLoaderService fileLoaderService = FileLoaderService();
+        // final file = await fileLoaderService
+        //     .readJsonFile('test/data/test_word_index.json');
+        final res = SearchHash.createSubstrings(mockWordIndex);
         final deep = DeepCollectionEquality();
 
         expect(deep.equals(res, indexRes), true);

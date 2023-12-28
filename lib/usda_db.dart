@@ -16,7 +16,7 @@ import 'package:usda_db_creation/global_const.dart';
 Future<void> writeDuplicatePhrasesToFile(
     {final int minPhraseLength = 20,
     final minNumberOfDuplicatesToShow = 25,
-    required final FileLoaderService fileLoader,
+    required final FileLoaderService fileLoaderService,
     required final DBParser dbParser}) async {
   final descriptionRecords = DescriptionParser.createOriginalDescriptionRecords(
       originalFoodsList: dbParser.originalFoodsList);
@@ -26,7 +26,7 @@ Future<void> writeDuplicatePhrasesToFile(
       minPhraseLength: minPhraseLength,
       minNumberOfDuplicatesToShow: minNumberOfDuplicatesToShow);
 
-  await fileLoader.writeJsonFile(
+  await fileLoaderService.writeJsonFile(
       '$pathToFiles/$fileNameDuplicatePhrases', repeats);
   print('Complete: ${repeats.length}');
 }
@@ -44,7 +44,7 @@ int getLongestDescriptionLength(final DBParser dbParser) {
 }
 
 Future<void> writeDescriptionsToFile(
-    {required final FileLoaderService fileLoader,
+    {required final FileLoaderService fileLoaderService,
     required final DBParser dbParser}) async {
   final descriptions = DescriptionParser.createOriginalDescriptionRecords(
       originalFoodsList: dbParser.originalFoodsList);
@@ -52,6 +52,6 @@ Future<void> writeDescriptionsToFile(
   final descriptionsFinal =
       DescriptionParser.removeUnwantedPhrasesFromDescriptions(
           descriptions: descriptions, unwantedPhrases: unwantedPhrases);
-  await fileLoader.writeListToTxtFile(
+  await fileLoaderService.writeListToTxtFile(
       list: descriptionsFinal, path: '$pathToFiles/$fileNameFinalDescriptions');
 }

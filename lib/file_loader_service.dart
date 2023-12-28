@@ -42,13 +42,4 @@ class FileLoaderService {
     await sink.flush();
     await sink.close();
   }
-
-  /// Takes a [List], and opens a file from given [path], creating a new
-  /// line for each list item and returns the list.
-  Future<List<T>> readListFromTxtFile<T>(final String path) async {
-    final File file = File(path);
-    final List<String> lines = await file.readAsLines();
-    final List<T> result = lines.map((final line) => line as T).toList();
-    return result;
-  }
 }

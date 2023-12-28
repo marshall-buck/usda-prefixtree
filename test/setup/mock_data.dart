@@ -1,3 +1,14 @@
+const mockDescriptionFile = '''
+(167512, Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough)
+(167513, Pillsbury, Cinnamon Rolls with Icing, refrigerated dough)
+(167514, Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry)
+''';
+
+const mockWordIndex = {
+  "apple": ['1', '2'],
+  "crabapple": ['3', '4']
+};
+
 const mockUsdaFile = '''
 {
     "SRLegacyFoods": [

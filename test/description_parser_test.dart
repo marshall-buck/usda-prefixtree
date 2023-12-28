@@ -7,7 +7,7 @@ import 'package:test/test.dart';
 import 'package:usda_db_creation/db_parser.dart';
 import 'package:usda_db_creation/description_parser.dart';
 
-import 'setup/mock_strings.dart';
+import 'setup/mock_data.dart';
 import 'setup/setup.dart';
 
 void main() {
@@ -34,8 +34,8 @@ void main() {
         ];
         when(() => mockFileLoaderService.loadData('fake'))
             .thenReturn(mockUsdaFile);
-        final dbParser =
-            DBParser.init(path: 'fake', fileLoader: mockFileLoaderService);
+        final dbParser = DBParser.init(
+            path: 'fake', fileLoaderService: mockFileLoaderService);
         // dbParser.init('fake');
 
         final res = DescriptionParser.createOriginalDescriptionRecords(
@@ -246,13 +246,39 @@ void main() {
       });
     });
   });
-  group('createFinalDescriptionMap()', () {
+  group('parseDescriptionRecordFromString()', () {
+    test('parses description record correctly', () {
+      // Input string
+      final String input =
+          '(111111, George Weston Bakeries, Thomas English Muffins)';
+
+      // Expected result
+      final expectedOutput =
+          MapEntry(111111, 'George Weston Bakeries, Thomas English Muffins');
+
+      // Execute the function
+      final result = DescriptionParser.parseDescriptionRecordFromString(input);
+      expect(result.key, equals(expectedOutput.key));
+      expect(result.value, equals(expectedOutput.value));
+    });
+  });
+  group('createFinalDescriptionMapFromFile()', () {
     test('coverts list of descriptions records to map', () {
-      final res = DescriptionParser.createFinalDescriptionMap(
-          descriptions: descriptionRecords);
-      expect(res, isA<Map>());
-      expect(res.length, 55);
-      expect(res[111111], 'George Weston Bakeries, Thomas English Muffins');
+      when(() => mockFileLoaderService.loadData('fake'))
+          .thenReturn(mockDescriptionFile);
+
+      const expected = {
+        167512:
+            'Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough',
+        167513: 'Pillsbury, Cinnamon Rolls with Icing, refrigerated dough',
+        167514:
+            'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry',
+      };
+
+      final res = DescriptionParser.createFinalDescriptionMapFromFile(
+          path: 'fake', fileLoader: mockFileLoaderService);
+      final mapEquals = MapEquality();
+      expect(mapEquals.equals(expected, res), true);
     });
   });
 }
@@ -336,22 +362,22 @@ const sentence134 =
     'Under the (shimmering) moonlight, an old oak, rooted deeply, stood majestically as the silent guardian of the ancient, mystical woods.';
 const sentence49 = 'Quietly, an old oak stood, surrounded by natures.';
 
-const expectation = [
-  'Quietly, an old oak ',
-  'Quietly, an old oak stood,',
-  'Quietly, an old oak stood, surrounded',
-  'Quietly, an old oak stood, surrounded by',
-  'Quietly, an old oak stood, surrounded by natures.',
-  'an old oak stood, surrounded',
-  'an old oak stood, surrounded by',
-  'an old oak stood, surrounded by natures.',
-  'old oak stood, surrounded',
-  'old oak stood, surrounded by',
-  'old oak stood, surrounded by natures.',
-  'oak stood, surrounded',
-  'oak stood, surrounded by',
-  'oak stood, surrounded by natures.',
-  'stood, surrounded by',
-  'stood, surrounded by natures.',
-  'surrounded by natures.'
-];
+// const expectation = [
+//   'Quietly, an old oak ',
+//   'Quietly, an old oak stood,',
+//   'Quietly, an old oak stood, surrounded',
+//   'Quietly, an old oak stood, surrounded by',
+//   'Quietly, an old oak stood, surrounded by natures.',
+//   'an old oak stood, surrounded',
+//   'an old oak stood, surrounded by',
+//   'an old oak stood, surrounded by natures.',
+//   'old oak stood, surrounded',
+//   'old oak stood, surrounded by',
+//   'old oak stood, surrounded by natures.',
+//   'oak stood, surrounded',
+//   'oak stood, surrounded by',
+//   'oak stood, surrounded by natures.',
+//   'stood, surrounded by',
+//   'stood, surrounded by natures.',
+//   'surrounded by natures.'
+// ];
