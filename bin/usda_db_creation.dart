@@ -13,8 +13,10 @@ void main() async {
   final dbParser = DBParser.init(
       path: relativeOriginalDBPath, fileLoaderService: fileLoaderService);
 
-  await db.writeDescriptionsToFile(
-      fileLoaderService: fileLoaderService, dbParser: dbParser);
+  // await db.writeDescriptionsToFile(
+  //     fileLoaderService: fileLoaderService, dbParser: dbParser);
+  await db.writeAutocompleteWordIndexToFile(
+      fileLoaderService: fileLoaderService);
 
   // usda_db_creation.writeDuplicatePhrasesToFile(
   //     fileLoaderService: fileLoaderService, dbParser: dbParser);

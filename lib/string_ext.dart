@@ -51,4 +51,8 @@ extension StringExtensions on String {
   bool isStopWord(final List<String> stopWords) {
     return stopWords.contains(this);
   }
+
+  bool isNumber() {
+    return double.tryParse(this) != null;
+  }
 }

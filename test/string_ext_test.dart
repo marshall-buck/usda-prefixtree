@@ -71,5 +71,22 @@ void main() {
         expect(input2.isStopWord(stopWords), isFalse);
       });
     });
+    group('isNumber()', () {
+      test('returns false if the word is a number', () {
+        final number = '2';
+        final number1 = '20';
+        final number2 = '200';
+        final notNumber = '2%';
+        final notNumber1 = '20%';
+        final notNumber2 = '200%';
+
+        expect(number.isNumber(), true);
+        expect(number1.isNumber(), true);
+        expect(number2.isNumber(), true);
+        expect(notNumber.isNumber(), false);
+        expect(notNumber1.isNumber(), false);
+        expect(notNumber2.isNumber(), false);
+      });
+    });
   });
 }

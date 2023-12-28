@@ -274,7 +274,7 @@ void main() {
       };
 
       final res = DescriptionParser.createFinalDescriptionMapFromFile(
-          path: 'fake', fileLoader: mockFileLoaderService);
+          path: 'fake', fileLoaderService: mockFileLoaderService);
       final mapEquals = MapEquality();
       expect(mapEquals.equals(expected, res), true);
     });

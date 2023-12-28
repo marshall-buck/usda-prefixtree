@@ -138,8 +138,8 @@ class DescriptionParser {
   /// the autpocomplete list, and the food models.
   static Map<int, String> createFinalDescriptionMapFromFile(
       {required final String path,
-      required final FileLoaderService fileLoader}) {
-    final String fileContents = fileLoader.loadData(path);
+      required final FileLoaderService fileLoaderService}) {
+    final String fileContents = fileLoaderService.loadData(path);
     final List<String> lines = fileContents.split('\n');
 
     lines.removeWhere(

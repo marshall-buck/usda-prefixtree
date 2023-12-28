@@ -1,5 +1,4 @@
 import 'dart:collection';
-import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:test/test.dart';
@@ -47,18 +46,18 @@ void main() {
           'shake': ['167514']
         };
 
-        final indexMap = AutocompleteWordIndex.populateIndexMap(
+        final indexMap = AutocompleteWordIndex.createAutocompleteIndexMap(
             descriptionMap: mockDescriptionMap);
         final deepEquals = const DeepCollectionEquality();
         expect(deepEquals.equals(expectation, indexMap), true);
-        print(indexMap);
+        // print(indexMap);
       });
     });
 
     test('populateIndexMap should handle empty description map', () {
       final Map<int, String> descriptionMap = {};
 
-      final indexMap = AutocompleteWordIndex.populateIndexMap(
+      final indexMap = AutocompleteWordIndex.createAutocompleteIndexMap(
         descriptionMap: descriptionMap,
       );
 
@@ -73,17 +72,38 @@ void main() {
         171686: 'orange being is a citrus fruit',
       };
 
-      final indexMap = AutocompleteWordIndex.populateIndexMap(
+      final indexMap = AutocompleteWordIndex.createAutocompleteIndexMap(
         descriptionMap: descriptionMap,
       );
-
+      // print(indexMap);
       expect(indexMap, isA<SplayTreeMap<String, List<String>>>());
-      expect(indexMap.length, 3);
+      expect(indexMap.length, 6);
       expect(indexMap['apple'], containsAll(['167782']));
       expect(indexMap['apples'], containsAll(['173175']));
       expect(indexMap['orange'], containsAll(['171686']));
       expect(indexMap['are'], isNull);
       expect(indexMap['being'], isNull);
+    });
+    test('populateIndexMap should strip remaining parenthese and numbers', () {
+      final descriptionMap = {
+        167782: 'apple is a (fruit',
+        173175: 'apples are delicious) 200',
+        171686: 'orange being is a citrus fruit 100%',
+      };
+
+      final indexMap = AutocompleteWordIndex.createAutocompleteIndexMap(
+        descriptionMap: descriptionMap,
+      );
+      // print(indexMap);
+      expect(indexMap, isA<SplayTreeMap<String, List<String>>>());
+      expect(indexMap.length, 7);
+      expect(indexMap['apple'], containsAll(['167782']));
+      expect(indexMap['apples'], containsAll(['173175']));
+      expect(indexMap['orange'], containsAll(['171686']));
+      expect(indexMap['100%'], containsAll(['171686']));
+      expect(indexMap['200'], isNull);
+      expect(indexMap['(fruit'], isNull);
+      expect(indexMap['delicious)'], isNull);
     });
   });
 }
