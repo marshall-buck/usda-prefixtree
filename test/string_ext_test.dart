@@ -22,15 +22,17 @@ void main() {
 
     group('stripDashedAndParenthesisWord()', () {
       test(' separates words with dashes or parentheses', () {
+        expect('hello-there'.stripDashedAndParenthesisAndorwardSlashesWord(),
+            ['hello', 'there']);
         expect(
-            'hello-there'.stripDashedAndParenthesisWord(), ['hello', 'there']);
-        expect('hello'.stripDashedAndParenthesisWord(), ['hello']);
-        expect('ready-to-bake'.stripDashedAndParenthesisWord(),
+            'hello'.stripDashedAndParenthesisAndorwardSlashesWord(), ['hello']);
+        expect('ready-to-bake'.stripDashedAndParenthesisAndorwardSlashesWord(),
             ['ready', 'to', 'bake']);
-        expect('-to-bake'.stripDashedAndParenthesisWord(), ['', 'to', 'bake']);
-        expect('-to-bake-'.stripDashedAndParenthesisWord(),
+        expect('-to-bake'.stripDashedAndParenthesisAndorwardSlashesWord(),
+            ['', 'to', 'bake']);
+        expect('-to-bake-'.stripDashedAndParenthesisAndorwardSlashesWord(),
             ['', 'to', 'bake', '']);
-        expect('syrup/caramel'.stripDashedAndParenthesisWord(),
+        expect('syrup/caramel'.stripDashedAndParenthesisAndorwardSlashesWord(),
             ['syrup', 'caramel']);
       });
     });
@@ -74,21 +76,15 @@ void main() {
         expect(input2.isStopWord(stopWords), isFalse);
       });
     });
-    group('isNumber()', () {
-      test('returns false if the word is a number', () {
-        final number = '2';
-        final number1 = '20';
-        final number2 = '200';
-        final notNumber = '2%';
-        final notNumber1 = '20%';
-        final notNumber2 = '200%';
-
-        expect(number.isNumber(), true);
-        expect(number1.isNumber(), true);
-        expect(number2.isNumber(), true);
-        expect(notNumber.isNumber(), false);
-        expect(notNumber1.isNumber(), false);
-        expect(notNumber2.isNumber(), false);
+    group('isLowerCaseOrNumberWithPercent()', () {
+      test(
+          'returns true if the string is lowercase caracther or a number followed by percent',
+          () {
+        expect('a'.isLowerCaseOrNumberWithPercent(), true);
+        expect('b'.isLowerCaseOrNumberWithPercent(), true);
+        expect('1'.isLowerCaseOrNumberWithPercent(), false);
+        expect('18g'.isLowerCaseOrNumberWithPercent(), false);
+        expect('18%'.isLowerCaseOrNumberWithPercent(), true);
       });
     });
     group('isNumberWithPercent()', () {
@@ -112,3 +108,35 @@ void main() {
     });
   });
 }
+// group('isLowerCaseOrNumberWithPercent()', () {
+//   test('returns true if the string is lowercase or a number followed by percent', () {
+//     expect('a'.isLowerCaseOrNumberWithPercent(), isTrue);
+//     expect('b'.isLowerCaseOrNumberWithPercent(), isTrue);
+//     expect('1'.isLowerCaseOrNumberWithPercent(), isTrue);
+//     expect('2'.isLowerCaseOrNumberWithPercent(), isTrue);
+//     expect('3'.isLowerCaseOrNumberWithPercent(), isTrue);
+//     expect('4'.isLowerCaseOrNumberWithPercent(), isTrue);
+//     expect('5'.isLowerCaseOrNumberWithPercent(), isTrue);
+//     expect('6'.isLowerCaseOrNumberWithPercent(), isTrue);
+//     expect('7'.isLowerCaseOrNumberWithPercent(), isTrue);
+//     expect('8'.isLowerCaseOrNumberWithPercent(), isTrue);
+//     expect('9'.isLowerCaseOrNumberWithPercent(), isTrue);
+//     expect('0'.isLowerCaseOrNumberWithPercent(), isTrue);
+//     expect('2%'.isLowerCaseOrNumberWithPercent(), isTrue);
+//     expect('20%'.isLowerCaseOrNumberWithPercent(), isTrue);
+//     expect('200%'.isLowerCaseOrNumberWithPercent(), isTrue);
+//     expect('2%b'.isLowerCaseOrNumberWithPercent(), isFalse);
+//     expect('A'.isLowerCaseOrNumberWithPercent(), isFalse);
+//     expect('B'.isLowerCaseOrNumberWithPercent(), isFalse);
+//     expect('!'.isLowerCaseOrNumberWithPercent(), isFalse);
+//     expect('@'.isLowerCaseOrNumberWithPercent(), isFalse);
+//     expect('#'.isLowerCaseOrNumberWithPercent(), isFalse);
+//     expect('$'.isLowerCaseOrNumberWithPercent(), isFalse);
+//     expect('%'.isLowerCaseOrNumberWithPercent(), isFalse);
+//     expect('^'.isLowerCaseOrNumberWithPercent(), isFalse);
+//     expect('&'.isLowerCaseOrNumberWithPercent(), isFalse);
+//     expect('*'.isLowerCaseOrNumberWithPercent(), isFalse);
+//     expect('()'.isLowerCaseOrNumberWithPercent(), isFalse);
+//     expect(''.isLowerCaseOrNumberWithPercent(), isFalse);
+//   });
+// });

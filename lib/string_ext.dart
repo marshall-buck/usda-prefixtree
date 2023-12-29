@@ -16,9 +16,9 @@ extension StringExtensions on String {
         stringSanitizerRegEx, (final match) => match.group(1) ?? '');
   }
 
-  /// Separates words with dashes or parentheses.
+  /// Separates words with dashes or parentheses and forward slashes.
   /// Returns a list of a word(s), list may be empty and may contain empty strings.
-  List<String> stripDashedAndParenthesisWord() {
+  List<String> stripDashedAndParenthesisAndorwardSlashesWord() {
     if (contains('-')) return split('-');
     if (contains('/')) return split('/');
     if (startsWith('(') && endsWith(')')) {
@@ -38,7 +38,8 @@ extension StringExtensions on String {
 
     for (final word in split(' ')) {
       final String charDash = word.removeUnwantedChars().toLowerCase();
-      final List<String> splitWords = charDash.stripDashedAndParenthesisWord();
+      final List<String> splitWords =
+          charDash.stripDashedAndParenthesisAndorwardSlashesWord();
 
       if (splitWords.isNotEmpty) {
         words.add(splitWords);
@@ -53,10 +54,8 @@ extension StringExtensions on String {
     return stopWords.contains(this);
   }
 
-  bool isNumber() {
-    return double.tryParse(this) != null;
-  }
-
+  /// Checks if a string contains either digits followed by a %,
+  /// 'or' a string of lowercase characters.
   bool isLowerCaseOrNumberWithPercent() {
     final lowerCaseRegex = RegExp(r"^[a-z]+$");
     final numberWithPercentRegex = RegExp(r"^\d+%$");

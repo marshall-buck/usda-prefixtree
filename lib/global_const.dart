@@ -1,6 +1,7 @@
 const keepTheseNutrients = [1003, 1004, 1005, 1008, 1079, 1258, 2000];
 
-const internalDbName = 'db.json';
+/// DO NOT DELTE these variables, altjough they might not ne used
+/// now, they can be used at any time in the future.
 const pathToFiles = 'lib/db';
 const fileNameOriginalDBFile = 'original_usda.json';
 const fileNameDuplicatePhrases = 'duplicate_phrases.json';
