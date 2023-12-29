@@ -14,24 +14,22 @@ class Nutrient with _$Nutrient {
 
   Map<String, dynamic> toJson() {
     return {
-      id: {
-        'displayName': displayName,
-        'amount': amount,
-        'unit': unit,
-      }
+      'id': id,
+      'displayName': displayName,
+      'amount': amount,
+      'unit': unit,
     };
   }
 
-  // @override
-  // Map<String, dynamic> toJson() {
-  //   return {
-  //     id: {
-  //       'displayName': displayName,
-  //       'amount': amount,
-  //       'unit': unit,
-  //     }
-  //   };
-  // }
+  /// Maps JSON to Nutrient object.
+  factory Nutrient.fromJson(final Map<String, dynamic> json) {
+    return Nutrient(
+      id: json['id'],
+      displayName: json['displayName'],
+      amount: json['amount'],
+      unit: json['unit'],
+    );
+  }
 
   /// Switches nutrient name.
   ///

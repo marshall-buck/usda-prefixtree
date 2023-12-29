@@ -131,13 +131,14 @@ class __$$FoodModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$FoodModelImpl implements _FoodModel {
+class _$FoodModelImpl extends _FoodModel {
   const _$FoodModelImpl(
       {required this.id,
       required this.description,
       required this.descriptionLength,
       required final List<Nutrient> nutrients})
-      : _nutrients = nutrients;
+      : _nutrients = nutrients,
+        super._();
 
   @override
   final String id;
@@ -183,12 +184,13 @@ class _$FoodModelImpl implements _FoodModel {
       __$$FoodModelImplCopyWithImpl<_$FoodModelImpl>(this, _$identity);
 }
 
-abstract class _FoodModel implements FoodModel {
+abstract class _FoodModel extends FoodModel {
   const factory _FoodModel(
       {required final String id,
       required final String description,
       required final num descriptionLength,
       required final List<Nutrient> nutrients}) = _$FoodModelImpl;
+  const _FoodModel._() : super._();
 
   @override
   String get id;

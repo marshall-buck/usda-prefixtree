@@ -7,38 +7,77 @@ void main() {
     group('toJson()', () {
       test('convertToJson works correctly', () {
         final nutrient =
-            Nutrient(id: '1004', displayName: 'bob', amount: 10, unit: 'g');
+            Nutrient(id: '1004', displayName: 'Protien', amount: 10, unit: 'g');
 
         final json = nutrient.toJson();
         print(json);
         final expectation = {
-          '1004': {'displayName': 'bob', 'amount': 10, 'unit': 'g'}
+          'id': '1004',
+          'displayName': 'Protien',
+          'amount': 10,
+          'unit': 'g'
         };
+
         final d = DeepCollectionEquality();
         expect(d.equals(json, expectation), true);
       });
     });
-    // group('fromJson()', () {
-    //   test('fromJson works correctly', () {
-    //     final expectation = {
-    //       '1004': {'displayName': 'bob', 'amount': 10, 'unit': 'g'}
-    //     };
+    group('fromJson()', () {
+      test('fromJson works correctly', () {
+        final json = {
+          'id': '1004',
+          'displayName': 'Protien',
+          'amount': 10,
+          'unit': 'g'
+        };
 
-    //     final nutrient =
-    //         Nutrient(id: '1004', displayName: 'bob', amount: 10, unit: 'g');
-    //     final res = nutrient.();
-    //     final d = DeepCollectionEquality();
-    //     expect(d.equals(res, expectation), true);
-    //   });
-    // });
-    // group('switchNutrientName()', () {
-    //   test('switched nutrient name works for 1004', () {
-    //     final nutrient =
-    //         Nutrient(id: '1004', displayName: 'bob', amount: 10, unit: 'g');
-    //     final newNu = nutrient.copyWith(
-    //         displayName: Nutrient.switchNutrientName(nutrient.id));
-    //     expect(newNu.displayName, 'Total Fat');
-    //   });
-    // });
+        final res = Nutrient.fromJson(json);
+        expect(res.id, '1004');
+        expect(res.displayName, 'Protien');
+        expect(res.amount, 10);
+        expect(res.unit, 'g');
+      });
+    });
+    group('switchNutrientName()', () {
+      test('switched nutrient name works for 1004', () {
+        final res = Nutrient.switchNutrientName('1004');
+        expect(res, 'Total Fat');
+      });
+
+      test('switched nutrient name works for 1005', () {
+        final res = Nutrient.switchNutrientName('1005');
+        expect(res, 'Total Carbs');
+      });
+
+      test('switched nutrient name works for 1008', () {
+        final res = Nutrient.switchNutrientName('1008');
+        expect(res, 'Calories');
+      });
+
+      test('switched nutrient name works for 1003', () {
+        final res = Nutrient.switchNutrientName('1003');
+        expect(res, 'Protein');
+      });
+
+      test('switched nutrient name works for 1258', () {
+        final res = Nutrient.switchNutrientName('1258');
+        expect(res, 'Saturated Fat');
+      });
+
+      test('switched nutrient name works for 1079', () {
+        final res = Nutrient.switchNutrientName('1079');
+        expect(res, 'Dietary Fiber');
+      });
+
+      test('switched nutrient name works for 2000', () {
+        final res = Nutrient.switchNutrientName('2000');
+        expect(res, 'Total Sugars');
+      });
+
+      test('switched nutrient name works for unknown id', () {
+        final res = Nutrient.switchNutrientName('9999');
+        expect(res, 'Unknown');
+      });
+    });
   });
 }

@@ -1,106 +1,51 @@
-// import 'package:test/test.dart';
-// import 'package:usda_db_creation/food_model.dart';
+import 'package:collection/collection.dart';
+import 'package:test/test.dart';
+import 'package:usda_db_creation/food_model.dart';
 
-// void main() {
-//   group('Food Model class tests', () {
-//     group('Constructor tests - ', () {
-//       test('creates Food with default values', () {
-//         final food = FoodModel(
-//             id: 'id', description: 'description', descriptionLength: 0);
-//         expect(food.id, 'id');
-//         expect(food.description, 'description');
-//         expect(food.descriptionLength, 0);
-//         expect(food.protein, isNull);
-//         expect(food.dietaryFiber, isNull);
-//         expect(food.satFat, isNull);
-//         expect(food.totCarb, isNull);
-//         expect(food.totFat, isNull);
-//         expect(food.totSugars, isNull);
-//         expect(food.calories, isNull);
-//       });
+import 'setup/mock_data.dart';
 
-//       test('creates PTNode with specified values creates correctly', () {
-//         final food = FoodModel(
-//             id: 'id',
-//             description: 'description',
-//             descriptionLength: 10,
-//             protein: 1,
-//             dietaryFiber: 1,
-//             satFat: 1,
-//             totCarb: 1,
-//             calories: 1,
-//             totFat: 1,
-//             totSugars: 1);
-//         expect(food.id, 'id');
-//         expect(food.description, 'description');
-//         expect(food.descriptionLength, 10);
-//         expect(food.protein, 1);
-//         expect(food.dietaryFiber, 1);
-//         expect(food.satFat, 1);
-//         expect(food.totCarb, 1);
-//         expect(food.totFat, 1);
-//         expect(food.totSugars, 1);
-//         expect(food.calories, 1);
-//       });
-//     });
+void main() {
+  group('Food Model class tests', () {
+    group('toJson()', () {
+      test('convertToJson works correctly', () {
+        final json = mockFoodItem.toJson();
+        // print(json);
+        final expectation = {
+          '111111': {
+            'description':
+                'Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough',
+            'descriptionLength': 89,
+            'nutrients': {
+              '1004': {'displayName': 'Protien', 'amount': 10, 'unit': 'g'},
+              '1003': {'displayName': 'Total Fat', 'amount': 5, 'unit': 'mg'},
+              '1005': {'displayName': 'Total Carbs', 'amount': 10, 'unit': 'g'},
+              '1008': {'displayName': 'Calories', 'amount': 80, 'unit': 'g'},
+              '1258': {
+                'displayName': 'Saturated Fat',
+                'amount': 10,
+                'unit': 'g'
+              }
+            },
+          }
+        };
 
-//     group('fromJson() - ', () {
-//       test('deserializes from valid JSON has correct node values', () {
-//         final json = {
-//           "id": "167513",
-//           "description":
-//               "Pillsbury, Cinnamon Rolls with Icing, refrigerated dough",
-//           "descriptionLength": 56,
-//           "protein": 4.34,
-//           "dietaryFiber": 1.4,
-//           "satFat": 3.25,
-//           "totFat": 11.3,
-//           "totCarb": 53.4,
-//           "calories": 330,
-//           "totSugars": 21.3
-//         };
-
-//         final food = FoodModel.fromJson(json);
-//         expect(food.id, "167513");
-//         expect(food.description,
-//             "Pillsbury, Cinnamon Rolls with Icing, refrigerated dough");
-//         expect(food.descriptionLength, 56);
-//         expect(food.protein, 4.34);
-//         expect(food.dietaryFiber, 1.4);
-//         expect(food.satFat, 3.25);
-//         expect(food.totFat, 11.3);
-//         expect(food.totCarb, 53.4);
-//         expect(food.calories, 330);
-//         expect(food.totSugars, 21.3);
-//       });
-
-//       test('serializes toJson ', () {
-//         final food = FoodModel(
-//             id: 'id',
-//             description: 'description',
-//             descriptionLength: 10,
-//             protein: 1,
-//             dietaryFiber: 1,
-//             satFat: 1,
-//             totCarb: 1,
-//             calories: 1,
-//             totFat: 1,
-//             totSugars: 1);
-
-//         final json = {
-//           "id": "id",
-//           "description": "description",
-//           "descriptionLength": 10,
-//           "protein": 1,
-//           "dietaryFiber": 1,
-//           "satFat": 1,
-//           "totFat": 1,
-//           "totCarb": 1,
-//           "calories": 1,
-//           "totSugars": 1
-//         };
-//         expect(food.toJson(), json);
-//       });
-//     });
-//   });
-// }
+        final d = DeepCollectionEquality();
+        expect(d.equals(json, expectation), true);
+      });
+    });
+    group('fromJson()', () {
+      test('fromJson works correctly', () {
+        final res = FoodModel.fromJson(mockFoodJson);
+        expect(res.id, '111111');
+        expect(res.description,
+            'Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough');
+        expect(res.descriptionLength, 89);
+        // expect(res.nutrients.length, 5);
+        // expect(res.nutrients[0].id, '1004');
+        // expect(res.nutrients[0].displayName, 'Protien');
+        // expect(res.nutrients[0].amount, 10);
+        // expect(res.nutrients[0].unit, 'g');
+      });
+    });
+  });
+}

@@ -2,7 +2,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 import 'package:usda_db_creation/db_parser.dart';
 
-import 'setup/mock_data.dart';
+import 'setup/mock_db.dart';
 import 'setup/setup.dart';
 
 void main() {

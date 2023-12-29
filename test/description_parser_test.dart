@@ -6,6 +6,7 @@ import 'package:usda_db_creation/db_parser.dart';
 import 'package:usda_db_creation/description_parser.dart';
 
 import 'setup/mock_data.dart';
+import 'setup/mock_db.dart';
 import 'setup/setup.dart';
 
 void main() {
