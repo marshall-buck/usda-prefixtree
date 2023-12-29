@@ -13,35 +13,31 @@ class FoodModel with _$FoodModel {
 
   const FoodModel._();
 
-  /// Maps object to custom JSON.
-  ///
-
   Map<String, dynamic> toJson() {
     final nutrientList = nutrients.map((e) => e.toJson()).toList();
-    final nutrientMap = Map.fromEntries(
-        nutrientList.map((e) => MapEntry(e.keys.first, e.values.first)));
+
     return {
       id: {
         'description': description,
         'descriptionLength': descriptionLength,
-        'nutrients': nutrientMap,
+        'nutrients': nutrientList,
       }
     };
   }
 
-  /// Maps JSON to FoodModel object.
   factory FoodModel.fromJson(final Map<String, dynamic> json) {
-    final key = json.keys.first;
-    final value = json[key];
-    final nutrientMap = value['nutrients'];
-    final nutrientList = nutrientMap.entries
-        .map((e) => Nutrient.fromJson({e.key: e.value}))
+    final foodJson = json.values.first;
+    final nutrientsJson = foodJson['nutrients'] as List<dynamic>;
+
+    final nutrients = nutrientsJson
+        .map((e) => Nutrient.fromJson(e as Map<String, dynamic>))
         .toList();
+
     return FoodModel(
-      id: key,
-      description: value['description'],
-      descriptionLength: value['descriptionLength'],
-      nutrients: nutrientList,
+      id: json.keys.first,
+      description: foodJson['description'],
+      descriptionLength: foodJson['descriptionLength'],
+      nutrients: nutrients,
     );
   }
 }
