@@ -1,5 +1,3 @@
-
-
 // const originalFile = 'lib/db/original_usda.json';
 
 // const saveFolder = 'lib/db';

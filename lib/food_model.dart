@@ -1,8 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:usda_db_creation/nutrient.dart';
 
 part 'food_model.freezed.dart';
-
-part 'food_model.g.dart';
 
 @freezed
 class FoodModel with _$FoodModel {
@@ -10,14 +9,5 @@ class FoodModel with _$FoodModel {
       {required final String id,
       required final String description,
       required final num descriptionLength,
-      final num? protein,
-      final num? dietaryFiber,
-      final num? satFat,
-      final num? totCarb,
-      final num? calories,
-      final num? totFat,
-      final num? totSugars}) = _FoodModel;
-
-  factory FoodModel.fromJson(final Map<String, Object?> json) =>
-      _$FoodModelFromJson(json);
+      required final List<Nutrient> nutrients}) = _FoodModel;
 }

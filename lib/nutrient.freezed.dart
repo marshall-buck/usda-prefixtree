@@ -14,10 +14,6 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-Nutrient _$NutrientFromJson(Map<String, dynamic> json) {
-  return _Nutrient.fromJson(json);
-}
-
 /// @nodoc
 mixin _$Nutrient {
   String get id => throw _privateConstructorUsedError;
@@ -25,7 +21,6 @@ mixin _$Nutrient {
   num get amount => throw _privateConstructorUsedError;
   String get unit => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $NutrientCopyWith<Nutrient> get copyWith =>
       throw _privateConstructorUsedError;
@@ -127,7 +122,7 @@ class __$$NutrientImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$NutrientImpl extends _Nutrient {
   const _$NutrientImpl(
       {required this.id,
@@ -135,9 +130,6 @@ class _$NutrientImpl extends _Nutrient {
       required this.amount,
       required this.unit})
       : super._();
-
-  factory _$NutrientImpl.fromJson(Map<String, dynamic> json) =>
-      _$$NutrientImplFromJson(json);
 
   @override
   final String id;
@@ -165,7 +157,6 @@ class _$NutrientImpl extends _Nutrient {
             (identical(other.unit, unit) || other.unit == unit));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, displayName, amount, unit);
 
@@ -174,13 +165,6 @@ class _$NutrientImpl extends _Nutrient {
   @pragma('vm:prefer-inline')
   _$$NutrientImplCopyWith<_$NutrientImpl> get copyWith =>
       __$$NutrientImplCopyWithImpl<_$NutrientImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$NutrientImplToJson(
-      this,
-    );
-  }
 }
 
 abstract class _Nutrient extends Nutrient {
@@ -190,9 +174,6 @@ abstract class _Nutrient extends Nutrient {
       required final num amount,
       required final String unit}) = _$NutrientImpl;
   const _Nutrient._() : super._();
-
-  factory _Nutrient.fromJson(Map<String, dynamic> json) =
-      _$NutrientImpl.fromJson;
 
   @override
   String get id;
