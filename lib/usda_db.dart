@@ -64,7 +64,7 @@ Future<void> writeAutocompleteWordIndexToFile({
       fileLoaderService: fileLoaderService);
 
   final indexMap = Autocomplete.createAutocompleteWordIndexMap(
-      descriptionMap: descriptionMap);
+      finalDescriptionMap: descriptionMap);
   await fileLoaderService.writeJsonFile(
       '$pathToFiles/$fileNameAutocompleteWordIndex', indexMap);
   final indexKeys = indexMap.keys.toList();
@@ -83,11 +83,11 @@ Future<void> writeAutocompleteHashToFile({
 
   // Create the autocomplete index map from the description map.
   final autoCompleteWordIndex = Autocomplete.createAutocompleteWordIndexMap(
-      descriptionMap: descriptionMap);
+      finalDescriptionMap: descriptionMap);
 
   // Create the substrings from the autocomplete index map.
-  final substrings =
-      Autocomplete.createSubstrings(autoCompleteMap: autoCompleteWordIndex);
+  final substrings = Autocomplete.createOriginalSubstringMap(
+      autoCompleteMap: autoCompleteWordIndex);
 
   // Create the hash table from the substrings.
   final hash = Autocomplete.createAutocompleteHashTable(

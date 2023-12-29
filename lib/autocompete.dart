@@ -6,23 +6,24 @@ import 'package:usda_db_creation/string_ext.dart';
 
 /// Class to handle the word index for the autocomplete search.
 class Autocomplete {
+  /// Minimum number of characters to use for the substring.
   static int window = 3;
 
-  /// Creates the autocomplete word index from the given [descriptionMap].
+  /// Creates a word index from the given [finalDescriptionMap].
   ///
   /// Parameters:
-  /// [descriptionMap] - the [DescriptionRecords] from a text file.
+  /// [finalDescriptionMap] - the [DescriptionRecords] from a text file.
   ///
   /// Returns - [Map]
   ///  {..."apple": ["167782",..],
   ///      "apples": [ "173175", "174170",...],
   ///      "orange": [ "171686", "171687",...], ...}.
   static Map<String, List<String>> createAutocompleteWordIndexMap(
-      {required final Map<int, String> descriptionMap}) {
+      {required final Map<int, String> finalDescriptionMap}) {
     final indexMap = SplayTreeMap<String, List<String>>(
         (final a, final b) => a.compareTo(b));
 
-    for (final entry in descriptionMap.entries) {
+    for (final entry in finalDescriptionMap.entries) {
       final sanitizedList = entry.value.getWordsToIndex();
       if (sanitizedList.isNotEmpty) {
         for (String word in sanitizedList) {
@@ -50,7 +51,7 @@ class Autocomplete {
   }
 
   /// Creates substrings from the given [autoCompleteMap] and returns a map of
-  /// substrings to a list of corresponding index's.
+  /// substrings with a minumum of [window] length to a list of corresponding index's.
   ///
   /// Example usage:
   /// ```dart
@@ -68,7 +69,7 @@ class Autocomplete {
   ///   'abapple': ['3', '4'], ...
   /// }
   /// ```
-  static Map<String, List<String>> createSubstrings(
+  static Map<String, List<String>> createOriginalSubstringMap(
       {required final Map<String, List<String>> autoCompleteMap}) {
     final indexMap =
         SplayTreeMap<String, Set<String>>((final a, final b) => a.compareTo(b));
@@ -95,8 +96,8 @@ class Autocomplete {
         .map((final key, final value) => MapEntry(key, value.toList()..sort()));
   }
 
-  /// Creates substrings from the given [autoCompleteMap] and returns a map of
-  /// substrings to a list of corresponding index's.
+  /// Creates an indexHash table from the given [originalSubStringMap]  and
+  /// rewrites the substring map with the new index values.
   ///
   /// Example usage:
   /// ```dart
@@ -110,17 +111,19 @@ class Autocomplete {
   /// final table = createAutocompleteHashTable(originalSubStringMap: originalSubStringMap);
   /// ```
   ///
-  /// 'substrings': {
+  /// Returns -  {
+  ///   'substrings': {
   ///   'aba': 0,
   ///   'abap': 0,
   ///   'abapp': 0,
   ///   'abappl': 0,
   ///   'abapple': 0, ...
-  /// },
-  /// 'indexHash': {
-  ///   0: ['3', '4'],
-  ///   1: ['1', '2', '3', '4']
-  /// }
+  ///    },
+  ///   'indexHash': {
+  ///     0: ['3', '4'],
+  ///     1: ['1', '2', '3', '4']
+  ///    }
+  ///   }
   /// ```
   static Map<String, dynamic> createAutocompleteHashTable(
       {required final Map<String, List<String>> originalSubStringMap}) {
