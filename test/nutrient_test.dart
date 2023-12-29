@@ -10,7 +10,7 @@ void main() {
             Nutrient(id: '1004', displayName: 'Protien', amount: 10, unit: 'g');
 
         final json = nutrient.toJson();
-        print(json);
+
         final expectation = {
           'id': '1004',
           'displayName': 'Protien',

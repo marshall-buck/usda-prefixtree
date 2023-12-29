@@ -9,6 +9,7 @@ const fileNameFinalDescriptions = 'final_descriprions.txt';
 const fileNameAutocompleteWordIndex = 'autocomplete_word_index.json';
 const fileNameAutocompleteWordIndexKeys = 'autocomplete_word_index_keys.txt';
 const fileNameAutocompleteHash = 'autocomplete_hash.json';
+const fileNameFoodsDatabase = 'foods_database.json';
 
 const unwantedPhrases = [
   "(Includes foods for USDA's Food Distribution Program)",

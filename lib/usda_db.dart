@@ -97,3 +97,20 @@ Future<void> writeAutocompleteHashToFile({
   await fileLoaderService.writeJsonFile(
       '$pathToFiles/$fileNameAutocompleteHash', hash);
 }
+
+/// Method to create the foods database.
+Future<void> createFoodsDatabase({
+  required final FileLoaderService fileLoaderService,
+  required final DBParser dbParser,
+}) async {
+  final descriptionMap = DescriptionParser.createFinalDescriptionMapFromFile(
+      path: '$pathToFiles/$fileNameFinalDescriptions',
+      fileLoaderService: fileLoaderService);
+
+  final foodsMap = dbParser.createFoodsMap(
+      getFoodsList: dbParser.originalFoodsList,
+      finalDescriptionRecordsMap: descriptionMap);
+
+  await fileLoaderService.writeJsonFile(
+      '$pathToFiles/$fileNameFoodsDatabase', foodsMap);
+}

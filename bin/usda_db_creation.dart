@@ -12,8 +12,10 @@ void main() async {
   final fileLoaderService = FileLoaderService();
   final dbParser = DBParser.init(
       path: relativeOriginalDBPath, fileLoaderService: fileLoaderService);
+  // await db.createFoodsDatabase(
+  //     fileLoaderService: fileLoaderService, dbParser: dbParser);
 
-  await db.writeAutocompleteHashToFile(fileLoaderService: fileLoaderService);
+  // await db.writeAutocompleteHashToFile(fileLoaderService: fileLoaderService);
 
   // await db.writeDescriptionsToFile(
   //     fileLoaderService: fileLoaderService, dbParser: dbParser);
