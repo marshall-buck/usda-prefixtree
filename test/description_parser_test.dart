@@ -49,7 +49,7 @@ void main() {
         expect(res, 91);
       });
     });
-    group('getRepeatedPhrases()', () {
+    group('createRepeatedPhraseFrequencyMap()', () {
       test('returns duplicates from anywhere in sentence', () {
         final Map<String, int> res =
             DescriptionParser.createRepeatedPhraseFrequencyMap(

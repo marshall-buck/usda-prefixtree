@@ -5,9 +5,18 @@ typedef DescriptionRecord = (int, String);
 
 /// A class for parsing description strings from the [originalFoodsList].
 class DescriptionParser {
-  //
   /// Parses [originalFoodsList] to create a list of description records.
-  /// Removes unwanted categories from the list.
+  /// Of type [DescriptionRecord].
+  ///
+  /// Parameters:
+  /// [originalFoodsList] - a list of food items from the USDA database.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// createOriginalDescriptionRecords(originalFoodsList: originalFoodsList);
+  /// Returns:
+  ///  [(1, "Apple"), (2, "Carrot"), (3, "Milk")]
+  /// ```
   static List<(int, String)> createOriginalDescriptionRecords(
       {required final List<dynamic> originalFoodsList}) {
     return originalFoodsList
@@ -26,9 +35,25 @@ class DescriptionParser {
         .toList(); // Add this line to convert the nullable values to non-null values.
   }
 
-  /// Creates a frequency map of repeated phrases in the description records.
-  ///
-  ///  Will only include phrases that repeat more than [minNumberOfDuplicatesToShow].
+  /// Creates a frequency map of repeated phrases in the given text.
+
+  /// Example usage:
+  /// ```dart
+  /// listOfRecords= ['Lorem ipsum dolor sit amet',
+  ///                'Lorem ipsum dolor.',
+  ///                'Lorem ipsum dolor sit amet',
+  ///                'Hi there!'].
+  /// createRepeatedPhraseFrequencyMap(listOfRecords: listOfRecords,
+  ///                                   minPhraseLength: 10,
+  ///                                   minNumberOfDuplicatesToShow: 2);
+  /// Returns:
+  ///   {Lorem ipsum: 3,
+  ///     Lorem ipsum dolor: 3,
+  ///     Lorem ipsum dolor sit: 2,
+  ///     Lorem ipsum dolor sit amet: 2,
+  ///     ipsum dolor: 3,
+  ///     ipsum dolor sit: 2, ...}
+  /// ```
 
   static Map<String, int> createRepeatedPhraseFrequencyMap(
       {required final List<DescriptionRecord> listOfRecords,
@@ -119,6 +144,8 @@ class DescriptionParser {
             maxLength > record.$2.length ? maxLength : record.$2.length);
   }
 
+  /// Removes unwanted phrases from the descriptions.  This will
+  /// mutate the description and retun a new list of description records.
   static List<DescriptionRecord> removeUnwantedPhrasesFromDescriptions({
     required final List<DescriptionRecord> descriptions,
     required final List<String> unwantedPhrases,
@@ -134,8 +161,13 @@ class DescriptionParser {
     }).toList();
   }
 
-  /// Creates the final description map from a text file. Use this map when creating
-  /// the autpocomplete list, and the food models.
+  /// Creates the final description map from a  at [path]
+  ///
+  /// Returns:
+  ///
+  /// { 167512: 'Pillsbury Golden Layer Buttermilk Biscuits, (Artificial Flavor,) refrigerated dough' ,
+  ///   167513: 'Pillsbury, Cinnamon Rolls with Icing, 100% refrigerated dough',
+  ///   167514: 'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry, 2% milk', ...}
   static createFinalDescriptionMapFromFile(
       {required final String path,
       required final FileLoaderService fileLoaderService}) {
@@ -154,6 +186,7 @@ class DescriptionParser {
     return descriptionMap;
   }
 
+  /// Parses a string from a text file into a description record.
   static MapEntry<int, String> parseDescriptionRecordFromString(
       final String line) {
     final int id = int.parse(line.substring(1, 7));
