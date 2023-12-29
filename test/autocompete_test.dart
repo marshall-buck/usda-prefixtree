@@ -50,7 +50,6 @@ void main() {
         final indexMap = Autocomplete.createAutocompleteWordIndexMap(
             descriptionMap: mockDescriptionMap);
 
-        // print(indexMap);
         final deepEquals = const DeepCollectionEquality();
         expect(deepEquals.equals(expectation, indexMap), true);
       });
@@ -78,7 +77,7 @@ void main() {
         final indexMap = Autocomplete.createAutocompleteWordIndexMap(
           descriptionMap: descriptionMap,
         );
-        // print(indexMap);
+
         expect(indexMap, isA<SplayTreeMap<String, List<String>>>());
         expect(indexMap.length, 6);
         expect(indexMap['apple'], containsAll(['167782']));
@@ -99,7 +98,7 @@ void main() {
         final indexMap = Autocomplete.createAutocompleteWordIndexMap(
           descriptionMap: descriptionMap,
         );
-        // print(indexMap);
+
         expect(indexMap, isA<SplayTreeMap<String, List<String>>>());
         expect(indexMap.length, 7);
         expect(indexMap['apple'], containsAll(['167782']));
@@ -115,7 +114,7 @@ void main() {
       test('substrings populates correctly', () async {
         final res = Autocomplete.createSubstrings(
             autoCompleteMap: mockAutocompleteIndex);
-        // print(res);
+
         final deep = DeepCollectionEquality();
 
         expect(deep.equals(res, originalSubStringMap), true);
@@ -125,7 +124,7 @@ void main() {
           final res = Autocomplete.createAutocompleteHashTable(
               originalSubStringMap: originalSubStringMap);
           final d = DeepCollectionEquality();
-          // print(res);
+
           expect(
               d.equals(res['substrings'], autoCompleteHashTable['substrings']),
               true);

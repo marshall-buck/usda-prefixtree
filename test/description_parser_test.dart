@@ -35,7 +35,6 @@ void main() {
             .thenReturn(mockUsdaFile);
         final dbParser = DBParser.init(
             path: 'fake', fileLoaderService: mockFileLoaderService);
-        // dbParser.init('fake');
 
         final res = DescriptionParser.createOriginalDescriptionRecords(
             originalFoodsList: dbParser.originalFoodsList);
@@ -57,7 +56,7 @@ void main() {
                 listOfRecords: descriptionRecords,
                 minPhraseLength: 28,
                 minNumberOfDuplicatesToShow: 3);
-        // print(res);
+
         final bool doesContainValue1 =
             res.containsKey('this is a repeated phrase 28');
         expect(doesContainValue1, true);
@@ -90,11 +89,6 @@ void main() {
           sentence: sentence49,
           minPhraseLength: 20,
         );
-        // Log to console res line by line.
-        // ignore: prefer_final_parameters, avoid_function_literals_in_foreach_calls
-        // res.forEach((element) {
-        //   print(''$element'');
-        // });
 
         final listEquals = ListEquality();
 
@@ -124,7 +118,7 @@ void main() {
           sentence: 'Quietly, an old oaK T',
           minPhraseLength: 20,
         );
-        // print(res);
+
         final listEquals = ListEquality();
         expect(listEquals.equals(expectation, res), true);
       });
@@ -162,7 +156,7 @@ void main() {
           sentence: 'In a distant galaxy, stars shimmered like diamonds.', //51
           minPhraseLength: 45,
         );
-        // print(res);
+
         final listEquals = ListEquality();
         expect(listEquals.equals(expectation, res), true);
       });

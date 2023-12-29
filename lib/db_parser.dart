@@ -77,7 +77,7 @@ class DBParser {
           nutrients: nutrientsList);
 
       final foodModelJson = foodModel.toJson();
-      // print(foodModelJson);
+
       foodsMap.addAll(foodModelJson);
     }
 
@@ -93,11 +93,11 @@ class DBParser {
     for (int i = 0; i < listOfNutrients.length; i++) {
       final Map<String, dynamic> originalNutrient = listOfNutrients[i];
       String name = originalNutrient['nutrient']['name'] ?? 'unknown';
-      // print('Name: $name');
+
       final int nutrientId = originalNutrient['nutrient']['id'] ?? 9999;
       if (!findNutrient(nutrientId)) continue;
       name = Nutrient.switchNutrientName(nutrientId.toString());
-      // print('Name: $name');
+
       final unitName = originalNutrient['nutrient']['unitName'] ?? 'unknown';
 
       final num amount = originalNutrient['amount'] ?? 0.0;
@@ -107,10 +107,10 @@ class DBParser {
         amount: amount,
         unit: unitName,
       );
-      // print(nutrient);
+
       nutrients.add(nutrient);
     }
-    // print('Creaetd nutrients list: $nutrients');
+
     return nutrients;
   }
 

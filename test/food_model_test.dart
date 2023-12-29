@@ -10,7 +10,7 @@ void main() {
     group('toJson()', () {
       test('toJson works correctly', () {
         final json = mockFoodItem.toJson();
-        // print(json);
+
         final expectation = {
           '111111': {
             'description':

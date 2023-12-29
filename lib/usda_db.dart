@@ -29,7 +29,6 @@ Future<void> writeDuplicatePhrasesToFile(
 
   await fileLoaderService.writeJsonFile(
       '$pathToFiles/$fileNameDuplicatePhrases', repeats);
-  print('Complete: ${repeats.length}');
 }
 
 // The answer is 134 for the original descriptions.
