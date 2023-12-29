@@ -36,7 +36,7 @@ class Nutrient with _$Nutrient {
   /// Parameters [nutrientId]
   ///
   /// Returns [String] of user friendly name.
-  static String switchNutrientName(final id) {
+  static String switchNutrientName(final String id) {
     switch (id) {
       case '1004':
         {

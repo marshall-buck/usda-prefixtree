@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:usda_db_creation/description_parser.dart';
 import 'package:usda_db_creation/file_loader_service.dart';
+import 'package:usda_db_creation/food_model.dart';
 import 'package:usda_db_creation/global_const.dart';
+import 'package:usda_db_creation/nutrient.dart';
 
 class DBParser {
   FileLoaderService? fileLoaderService;
@@ -21,9 +23,6 @@ class DBParser {
     final file = fileLoaderService?.loadData(path);
     _originalDBMap = jsonDecode(file!);
   }
-
-  // get descriptionRecords => DescriptionParser.createOriginalDescriptionRecords(
-  //     originalFoodsList: originalFoodsList);
 
   List<DescriptionRecord> get finalDescriptionRecords =>
       DescriptionParser.removeUnwantedPhrasesFromDescriptions(
@@ -49,30 +48,79 @@ class DBParser {
 
     return (categories, count);
   }
+
+  /// Method to creawte the map that wil be used fior the foods database.
+  /// The map will be of the form:
+  /// { id: { description, descritionLength,  nutrients }, ... }
+  ///
+  Map<String, dynamic> createFoodsMap(
+      {required final List<dynamic> getFoodsList,
+      required final Map<int, String> finalDescriptionRecordsMap}) {
+    final Map<String, dynamic> foodsMap = {};
+
+    for (final food in getFoodsList) {
+      final int foodId = food['fdcId'];
+      if (!finalDescriptionRecordsMap.containsKey(foodId)) {
+        continue;
+      }
+
+      final String foodDescription = finalDescriptionRecordsMap[foodId]!;
+
+      final foodNutrients = food['foodNutrients'];
+
+      final nutrientsList = createNutrientsList(listOfNutrients: foodNutrients);
+
+      final foodModel = FoodModel(
+          id: foodId.toString(),
+          description: foodDescription,
+          descriptionLength: foodDescription.length,
+          nutrients: nutrientsList);
+
+      final foodModelJson = foodModel.toJson();
+      // print(foodModelJson);
+      foodsMap.addAll(foodModelJson);
+    }
+
+    return foodsMap;
+  }
+
+  /// Method to create the nutrients list that will be used for the foods database.
+  List<Nutrient> createNutrientsList({
+    required final List<dynamic> listOfNutrients,
+  }) {
+    final List<Nutrient> nutrients = [];
+
+    for (int i = 0; i < listOfNutrients.length; i++) {
+      final Map<String, dynamic> originalNutrient = listOfNutrients[i];
+      String name = originalNutrient['nutrient']['name'] ?? 'unknown';
+      // print('Name: $name');
+      final int nutrientId = originalNutrient['nutrient']['id'] ?? 9999;
+      if (!findNutrient(nutrientId)) continue;
+      name = Nutrient.switchNutrientName(nutrientId.toString());
+      // print('Name: $name');
+      final unitName = originalNutrient['nutrient']['unitName'] ?? 'unknown';
+
+      final num amount = originalNutrient['amount'] ?? 0.0;
+      final nutrient = Nutrient(
+        id: nutrientId.toString(),
+        displayName: name,
+        amount: amount,
+        unit: unitName,
+      );
+      // print(nutrient);
+      nutrients.add(nutrient);
+    }
+    // print('Creaetd nutrients list: $nutrients');
+    return nutrients;
+  }
+
+  /// Checks if nutrient is in [keepTheseNutrients].
+  ///
+  /// Parameters:
+  /// [nutrientId] - the id of the nutrient to be included.
+  ///
+  /// Returns [bool].
+  bool findNutrient(final int nutrientId) {
+    return keepTheseNutrients.contains(nutrientId);
+  }
 }
-// ({Baked Products: 517,
-//Snacks: 176,
-//Sweets: 358,
-//Vegetables and Vegetable Products: 814,
-//American Indian/Alaska Native Foods: 165,
-//Restaurant Foods: 109,
-//Beverages: 366,
-//Fats and Oils: 216,
-//Sausages and Luncheon Meats: 167,
-//Dairy and Egg Products: 291,
-//Baby Foods: 345,
-//Poultry Products: 383,
-//Pork Products: 336,
-//Breakfast Cereals: 195,
-//Legumes and Legume Products: 290,
-//Finfish and Shellfish Products: 264,
-//Fruits and Fruit Juices: 355,
-//Cereal Grains and Pasta: 181,
-//Nut and Seed Products: 137,
-//Beef Products: 954,
-//Meals, Entrees, and Side Dishes: 81,
-//Fast Foods: 312,
-//Spices and Herbs: 63,
-//Soups, Sauces, and Gravies: 254,
-//Lamb, Veal, and Game Products: 464},
-// 7793)

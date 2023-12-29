@@ -136,7 +136,7 @@ class DescriptionParser {
 
   /// Creates the final description map from a text file. Use this map when creating
   /// the autpocomplete list, and the food models.
-  static Map<int, String> createFinalDescriptionMapFromFile(
+  static createFinalDescriptionMapFromFile(
       {required final String path,
       required final FileLoaderService fileLoaderService}) {
     final String fileContents = fileLoaderService.loadData(path);
