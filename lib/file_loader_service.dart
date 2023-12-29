@@ -5,26 +5,17 @@ import 'dart:io';
 /// Class to handle reading and writing  files.
 
 class FileLoaderService {
-  /// Synchronously opens a file from [path].
+  /// Synchronously opens a file from [path]. and returns the contents as a
+  /// [String].
   String loadData(final String path) => File(path).readAsStringSync();
 
-  /// Writes a json file from a [contents].
+  /// Writes a json file from a [Map].
   Future<void> writeJsonFile(final String filePath, final Map contents) async {
     try {
       await File(filePath).writeAsString(jsonEncode(contents));
     } catch (e, st) {
       log(e.toString(), stackTrace: st, name: 'writeJsonFile');
     }
-  }
-
-  /// Reads a JSON file from a [filePath].
-  ///
-  /// Returns a [Map]
-  Future<Map> readJsonFile(final String filePath) async {
-    final input = await File(filePath).readAsString();
-    final map = jsonDecode(input);
-
-    return map;
   }
 
   /// Takes a [List], and writes a file to given [path], creating a new
