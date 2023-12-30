@@ -71,10 +71,7 @@ class DBParser {
       final nutrientsList = createNutrientsList(listOfNutrients: foodNutrients);
 
       final foodModel = FoodModel(
-          id: foodId,
-          description: foodDescription,
-          descriptionLength: foodDescription.length,
-          nutrients: nutrientsList);
+          id: foodId, description: foodDescription, nutrients: nutrientsList);
 
       final Map<String, dynamic> foodModelJson = foodModel.toJson();
 

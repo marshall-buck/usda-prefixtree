@@ -18,7 +18,6 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$FoodModel {
   int get id => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
-  num get descriptionLength => throw _privateConstructorUsedError;
   List<Nutrient> get nutrients => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -31,11 +30,7 @@ abstract class $FoodModelCopyWith<$Res> {
   factory $FoodModelCopyWith(FoodModel value, $Res Function(FoodModel) then) =
       _$FoodModelCopyWithImpl<$Res, FoodModel>;
   @useResult
-  $Res call(
-      {int id,
-      String description,
-      num descriptionLength,
-      List<Nutrient> nutrients});
+  $Res call({int id, String description, List<Nutrient> nutrients});
 }
 
 /// @nodoc
@@ -53,7 +48,6 @@ class _$FoodModelCopyWithImpl<$Res, $Val extends FoodModel>
   $Res call({
     Object? id = null,
     Object? description = null,
-    Object? descriptionLength = null,
     Object? nutrients = null,
   }) {
     return _then(_value.copyWith(
@@ -65,10 +59,6 @@ class _$FoodModelCopyWithImpl<$Res, $Val extends FoodModel>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      descriptionLength: null == descriptionLength
-          ? _value.descriptionLength
-          : descriptionLength // ignore: cast_nullable_to_non_nullable
-              as num,
       nutrients: null == nutrients
           ? _value.nutrients
           : nutrients // ignore: cast_nullable_to_non_nullable
@@ -85,11 +75,7 @@ abstract class _$$FoodModelImplCopyWith<$Res>
       __$$FoodModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {int id,
-      String description,
-      num descriptionLength,
-      List<Nutrient> nutrients});
+  $Res call({int id, String description, List<Nutrient> nutrients});
 }
 
 /// @nodoc
@@ -105,7 +91,6 @@ class __$$FoodModelImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? description = null,
-    Object? descriptionLength = null,
     Object? nutrients = null,
   }) {
     return _then(_$FoodModelImpl(
@@ -117,10 +102,6 @@ class __$$FoodModelImplCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      descriptionLength: null == descriptionLength
-          ? _value.descriptionLength
-          : descriptionLength // ignore: cast_nullable_to_non_nullable
-              as num,
       nutrients: null == nutrients
           ? _value._nutrients
           : nutrients // ignore: cast_nullable_to_non_nullable
@@ -135,7 +116,6 @@ class _$FoodModelImpl extends _FoodModel {
   const _$FoodModelImpl(
       {required this.id,
       required this.description,
-      required this.descriptionLength,
       required final List<Nutrient> nutrients})
       : _nutrients = nutrients,
         super._();
@@ -144,8 +124,6 @@ class _$FoodModelImpl extends _FoodModel {
   final int id;
   @override
   final String description;
-  @override
-  final num descriptionLength;
   final List<Nutrient> _nutrients;
   @override
   List<Nutrient> get nutrients {
@@ -156,7 +134,7 @@ class _$FoodModelImpl extends _FoodModel {
 
   @override
   String toString() {
-    return 'FoodModel(id: $id, description: $description, descriptionLength: $descriptionLength, nutrients: $nutrients)';
+    return 'FoodModel(id: $id, description: $description, nutrients: $nutrients)';
   }
 
   @override
@@ -167,15 +145,13 @@ class _$FoodModelImpl extends _FoodModel {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.description, description) ||
                 other.description == description) &&
-            (identical(other.descriptionLength, descriptionLength) ||
-                other.descriptionLength == descriptionLength) &&
             const DeepCollectionEquality()
                 .equals(other._nutrients, _nutrients));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, id, description,
-      descriptionLength, const DeepCollectionEquality().hash(_nutrients));
+      const DeepCollectionEquality().hash(_nutrients));
 
   @JsonKey(ignore: true)
   @override
@@ -188,7 +164,6 @@ abstract class _FoodModel extends FoodModel {
   const factory _FoodModel(
       {required final int id,
       required final String description,
-      required final num descriptionLength,
       required final List<Nutrient> nutrients}) = _$FoodModelImpl;
   const _FoodModel._() : super._();
 
@@ -196,8 +171,6 @@ abstract class _FoodModel extends FoodModel {
   int get id;
   @override
   String get description;
-  @override
-  num get descriptionLength;
   @override
   List<Nutrient> get nutrients;
   @override

@@ -8,7 +8,6 @@ class FoodModel with _$FoodModel {
   const factory FoodModel(
       {required final int id,
       required final String description,
-      required final num descriptionLength,
       required final List<Nutrient> nutrients}) = _FoodModel;
 
   const FoodModel._();
@@ -19,7 +18,6 @@ class FoodModel with _$FoodModel {
     return {
       id.toString(): {
         'description': description,
-        'descriptionLength': descriptionLength,
         'nutrients': nutrientList,
       }
     };
@@ -36,7 +34,6 @@ class FoodModel with _$FoodModel {
     return FoodModel(
       id: json.keys.first,
       description: foodJson['description'],
-      descriptionLength: foodJson['descriptionLength'],
       nutrients: nutrients,
     );
   }

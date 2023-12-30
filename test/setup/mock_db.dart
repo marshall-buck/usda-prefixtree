@@ -983,7 +983,6 @@ const mockFoodsMapResult = {
   '167512': {
     'description':
         "Pillsbury Golden Layer Buttermilk Biscuits, (Artificial Flavor,) refrigerated dough",
-    'descriptionLength': 83,
     'nutrients': [
       {'id': 1003, 'displayName': 'Protein', 'amount': 5.88, 'unit': 'g'},
       {'id': 1079, 'displayName': 'Dietary Fiber', 'amount': 1.2, 'unit': 'g'},
@@ -997,7 +996,6 @@ const mockFoodsMapResult = {
   '167513': {
     'description':
         "Pillsbury, Cinnamon Rolls with Icing, 100% refrigerated dough",
-    'descriptionLength': 61,
     'nutrients': [
       {'id': 1003, 'displayName': 'Protein', 'amount': 4.34, 'unit': 'g'},
       {'id': 1079, 'displayName': 'Dietary Fiber', 'amount': 1.4, 'unit': 'g'},
@@ -1011,7 +1009,6 @@ const mockFoodsMapResult = {
   '167514': {
     'description':
         "Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry, 2% milk",
-    'descriptionLength': 73,
     'nutrients': [
       {'id': 1004, 'displayName': 'Total Fat', 'amount': 3.7, 'unit': 'g'},
       {'id': 1005, 'displayName': 'Total Carbs', 'amount': 79.8, 'unit': 'g'},

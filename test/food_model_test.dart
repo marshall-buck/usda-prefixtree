@@ -15,7 +15,6 @@ void main() {
           '111111': {
             'description':
                 'Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough',
-            'descriptionLength': 89,
             'nutrients': [
               {'id': 1004, 'displayName': 'Protien', 'amount': 10, 'unit': 'g'},
               {
@@ -57,7 +56,7 @@ void main() {
         expect(res.id, 111111);
         expect(res.description,
             'Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough');
-        expect(res.descriptionLength, 89);
+
         expect(res.nutrients.length, 5);
         expect(res.nutrients[0].id, 1004);
         expect(res.nutrients[0].displayName, 'Protien');

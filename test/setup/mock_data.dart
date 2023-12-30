@@ -39,7 +39,6 @@ const mockFoodItem = FoodModel(
     id: 111111,
     description:
         'Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough',
-    descriptionLength: 89,
     nutrients: [
       mockProtien,
       mockTotalFat,
@@ -51,7 +50,6 @@ const Map<int, dynamic> mockFoodJson = {
   111111: {
     'description':
         'Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough',
-    'descriptionLength': 89,
     'nutrients': [
       {'id': 1004, 'displayName': 'Protien', 'amount': 10, 'unit': 'g'},
       {'id': 1003, 'displayName': 'Total Fat', 'amount': 5, 'unit': 'mg'},
