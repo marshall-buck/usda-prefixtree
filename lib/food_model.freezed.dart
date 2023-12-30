@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$FoodModel {
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   num get descriptionLength => throw _privateConstructorUsedError;
   List<Nutrient> get nutrients => throw _privateConstructorUsedError;
@@ -32,7 +32,7 @@ abstract class $FoodModelCopyWith<$Res> {
       _$FoodModelCopyWithImpl<$Res, FoodModel>;
   @useResult
   $Res call(
-      {String id,
+      {int id,
       String description,
       num descriptionLength,
       List<Nutrient> nutrients});
@@ -60,7 +60,7 @@ class _$FoodModelCopyWithImpl<$Res, $Val extends FoodModel>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -86,7 +86,7 @@ abstract class _$$FoodModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
+      {int id,
       String description,
       num descriptionLength,
       List<Nutrient> nutrients});
@@ -112,7 +112,7 @@ class __$$FoodModelImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -141,7 +141,7 @@ class _$FoodModelImpl extends _FoodModel {
         super._();
 
   @override
-  final String id;
+  final int id;
   @override
   final String description;
   @override
@@ -186,14 +186,14 @@ class _$FoodModelImpl extends _FoodModel {
 
 abstract class _FoodModel extends FoodModel {
   const factory _FoodModel(
-      {required final String id,
+      {required final int id,
       required final String description,
       required final num descriptionLength,
       required final List<Nutrient> nutrients}) = _$FoodModelImpl;
   const _FoodModel._() : super._();
 
   @override
-  String get id;
+  int get id;
   @override
   String get description;
   @override

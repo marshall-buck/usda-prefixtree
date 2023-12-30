@@ -36,7 +36,7 @@ const mockSaturatedFat =
     Nutrient(id: '1258', displayName: 'Saturated Fat', amount: 10, unit: 'g');
 
 const mockFoodItem = FoodModel(
-    id: '111111',
+    id: 111111,
     description:
         'Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough',
     descriptionLength: 89,
@@ -47,8 +47,8 @@ const mockFoodItem = FoodModel(
       mockCalories,
       mockSaturatedFat
     ]);
-const Map<String, dynamic> mockFoodJson = {
-  '111111': {
+const Map<int, dynamic> mockFoodJson = {
+  111111: {
     'description':
         'Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough',
     'descriptionLength': 89,

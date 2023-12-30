@@ -9,6 +9,8 @@ https://fdc.nal.usda.gov/download-datasets.html
 #### Link to download
 https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_json_2018-04.zip
 
+dart run build_runner build --delete-conflicting-outputs
+
 
 
 

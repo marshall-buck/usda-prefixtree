@@ -20,7 +20,7 @@ void main() {
   group('DescriptionParser class tests', () {
     group('populateOriginalDescriptions', () {
       test('populates the correct records', () {
-        const List<DescriptionRecord> expectedOriginalDescriptions = [
+        const List<DescriptionRecord> expectedResults = [
           (
             167512,
             'Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough'
@@ -39,7 +39,7 @@ void main() {
         final res = DescriptionParser.createOriginalDescriptionRecords(
             originalFoodsList: dbParser.originalFoodsList);
 
-        expect(res, expectedOriginalDescriptions);
+        expect(res, expectedResults);
       });
     });
     group('getLongestDescription()--', () {

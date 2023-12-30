@@ -6,14 +6,14 @@ part 'food_model.freezed.dart';
 @freezed
 class FoodModel with _$FoodModel {
   const factory FoodModel(
-      {required final String id,
+      {required final int id,
       required final String description,
       required final num descriptionLength,
       required final List<Nutrient> nutrients}) = _FoodModel;
 
   const FoodModel._();
 
-  Map<String, dynamic> toJson() {
+  Map<int, dynamic> toJson() {
     final nutrientList = nutrients.map((e) => e.toJson()).toList();
 
     return {
@@ -25,7 +25,7 @@ class FoodModel with _$FoodModel {
     };
   }
 
-  factory FoodModel.fromJson(final Map<String, dynamic> json) {
+  factory FoodModel.fromJson(final Map<int, dynamic> json) {
     final foodJson = json.values.first;
     final nutrientsJson = foodJson['nutrients'] as List<dynamic>;
 

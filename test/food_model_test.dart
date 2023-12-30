@@ -12,7 +12,7 @@ void main() {
         final json = mockFoodItem.toJson();
 
         final expectation = {
-          '111111': {
+          111111: {
             'description':
                 'Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough',
             'descriptionLength': 89,
@@ -59,7 +59,7 @@ void main() {
       test('fromJson works correctly', () {
         final res = FoodModel.fromJson(mockFoodJson);
 
-        expect(res.id, '111111');
+        expect(res.id, 111111);
         expect(res.description,
             'Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough');
         expect(res.descriptionLength, 89);
