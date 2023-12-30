@@ -6,7 +6,7 @@ part 'nutrient.freezed.dart';
 class Nutrient with _$Nutrient {
   const factory Nutrient({
     required final int id,
-    required final String displayName,
+    required final String name,
     required final num amount,
     required final String unit,
   }) = _Nutrient;
@@ -15,7 +15,7 @@ class Nutrient with _$Nutrient {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'displayName': displayName,
+      'name': name,
       'amount': amount,
       'unit': unit,
     };
@@ -25,7 +25,7 @@ class Nutrient with _$Nutrient {
   factory Nutrient.fromJson(final Map<String, dynamic> json) {
     return Nutrient(
       id: json['id'],
-      displayName: json['displayName'],
+      name: json['name'],
       amount: json['amount'],
       unit: json['unit'],
     );

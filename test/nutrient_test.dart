@@ -7,13 +7,13 @@ void main() {
     group('toJson()', () {
       test('convertToJson works correctly', () {
         final nutrient =
-            Nutrient(id: 1004, displayName: 'Protien', amount: 10, unit: 'g');
+            Nutrient(id: 1004, name: 'Protien', amount: 10, unit: 'g');
 
         final json = nutrient.toJson();
 
         final expectation = {
           'id': 1004,
-          'displayName': 'Protien',
+          'name': 'Protien',
           'amount': 10,
           'unit': 'g'
         };
@@ -24,16 +24,11 @@ void main() {
     });
     group('fromJson()', () {
       test('fromJson works correctly', () {
-        final json = {
-          'id': 1004,
-          'displayName': 'Protien',
-          'amount': 10,
-          'unit': 'g'
-        };
+        final json = {'id': 1004, 'name': 'Protien', 'amount': 10, 'unit': 'g'};
 
         final res = Nutrient.fromJson(json);
         expect(res.id, 1004);
-        expect(res.displayName, 'Protien');
+        expect(res.name, 'Protien');
         expect(res.amount, 10);
         expect(res.unit, 'g');
       });

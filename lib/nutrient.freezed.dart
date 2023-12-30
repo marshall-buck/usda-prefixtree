@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Nutrient {
   int get id => throw _privateConstructorUsedError;
-  String get displayName => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
   num get amount => throw _privateConstructorUsedError;
   String get unit => throw _privateConstructorUsedError;
 
@@ -31,7 +31,7 @@ abstract class $NutrientCopyWith<$Res> {
   factory $NutrientCopyWith(Nutrient value, $Res Function(Nutrient) then) =
       _$NutrientCopyWithImpl<$Res, Nutrient>;
   @useResult
-  $Res call({int id, String displayName, num amount, String unit});
+  $Res call({int id, String name, num amount, String unit});
 }
 
 /// @nodoc
@@ -48,7 +48,7 @@ class _$NutrientCopyWithImpl<$Res, $Val extends Nutrient>
   @override
   $Res call({
     Object? id = null,
-    Object? displayName = null,
+    Object? name = null,
     Object? amount = null,
     Object? unit = null,
   }) {
@@ -57,9 +57,9 @@ class _$NutrientCopyWithImpl<$Res, $Val extends Nutrient>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      displayName: null == displayName
-          ? _value.displayName
-          : displayName // ignore: cast_nullable_to_non_nullable
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
       amount: null == amount
           ? _value.amount
@@ -81,7 +81,7 @@ abstract class _$$NutrientImplCopyWith<$Res>
       __$$NutrientImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String displayName, num amount, String unit});
+  $Res call({int id, String name, num amount, String unit});
 }
 
 /// @nodoc
@@ -96,7 +96,7 @@ class __$$NutrientImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? displayName = null,
+    Object? name = null,
     Object? amount = null,
     Object? unit = null,
   }) {
@@ -105,9 +105,9 @@ class __$$NutrientImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      displayName: null == displayName
-          ? _value.displayName
-          : displayName // ignore: cast_nullable_to_non_nullable
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
       amount: null == amount
           ? _value.amount
@@ -126,7 +126,7 @@ class __$$NutrientImplCopyWithImpl<$Res>
 class _$NutrientImpl extends _Nutrient {
   const _$NutrientImpl(
       {required this.id,
-      required this.displayName,
+      required this.name,
       required this.amount,
       required this.unit})
       : super._();
@@ -134,7 +134,7 @@ class _$NutrientImpl extends _Nutrient {
   @override
   final int id;
   @override
-  final String displayName;
+  final String name;
   @override
   final num amount;
   @override
@@ -142,7 +142,7 @@ class _$NutrientImpl extends _Nutrient {
 
   @override
   String toString() {
-    return 'Nutrient(id: $id, displayName: $displayName, amount: $amount, unit: $unit)';
+    return 'Nutrient(id: $id, name: $name, amount: $amount, unit: $unit)';
   }
 
   @override
@@ -151,14 +151,13 @@ class _$NutrientImpl extends _Nutrient {
         (other.runtimeType == runtimeType &&
             other is _$NutrientImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.displayName, displayName) ||
-                other.displayName == displayName) &&
+            (identical(other.name, name) || other.name == name) &&
             (identical(other.amount, amount) || other.amount == amount) &&
             (identical(other.unit, unit) || other.unit == unit));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, displayName, amount, unit);
+  int get hashCode => Object.hash(runtimeType, id, name, amount, unit);
 
   @JsonKey(ignore: true)
   @override
@@ -170,7 +169,7 @@ class _$NutrientImpl extends _Nutrient {
 abstract class _Nutrient extends Nutrient {
   const factory _Nutrient(
       {required final int id,
-      required final String displayName,
+      required final String name,
       required final num amount,
       required final String unit}) = _$NutrientImpl;
   const _Nutrient._() : super._();
@@ -178,7 +177,7 @@ abstract class _Nutrient extends Nutrient {
   @override
   int get id;
   @override
-  String get displayName;
+  String get name;
   @override
   num get amount;
   @override

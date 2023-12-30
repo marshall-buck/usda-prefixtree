@@ -20,20 +20,19 @@ const Map<String, List<String>> mockAutocompleteIndex = {
   "crabapple": ['3', '4']
 };
 
-const mockProtien =
-    Nutrient(id: 1004, displayName: 'Protien', amount: 10, unit: 'g');
+const mockProtien = Nutrient(id: 1004, name: 'Protien', amount: 10, unit: 'g');
 
 const mockTotalFat =
-    Nutrient(id: 1003, displayName: 'Total Fat', amount: 5, unit: 'mg');
+    Nutrient(id: 1003, name: 'Total Fat', amount: 5, unit: 'mg');
 
 const mockTotalCarbs =
-    Nutrient(id: 1005, displayName: 'Total Carbs', amount: 10, unit: 'g');
+    Nutrient(id: 1005, name: 'Total Carbs', amount: 10, unit: 'g');
 
 const mockCalories =
-    Nutrient(id: 1008, displayName: 'Calories', amount: 80, unit: 'g');
+    Nutrient(id: 1008, name: 'Calories', amount: 80, unit: 'g');
 
 const mockSaturatedFat =
-    Nutrient(id: 1258, displayName: 'Saturated Fat', amount: 10, unit: 'g');
+    Nutrient(id: 1258, name: 'Saturated Fat', amount: 10, unit: 'g');
 
 const mockFoodItem = FoodModel(
     id: 111111,
@@ -51,11 +50,11 @@ const Map<int, dynamic> mockFoodJson = {
     'description':
         'Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough',
     'nutrients': [
-      {'id': 1004, 'displayName': 'Protien', 'amount': 10, 'unit': 'g'},
-      {'id': 1003, 'displayName': 'Total Fat', 'amount': 5, 'unit': 'mg'},
-      {'id': 1005, 'displayName': 'Total Carbs', 'amount': 10, 'unit': 'g'},
-      {'id': 1008, 'displayName': 'Calories', 'amount': 80, 'unit': 'g'},
-      {'id': 1258, 'displayName': 'Saturated Fat', 'amount': 10, 'unit': 'g'},
+      {'id': 1004, 'name': 'Protien', 'amount': 10, 'unit': 'g'},
+      {'id': 1003, 'name': 'Total Fat', 'amount': 5, 'unit': 'mg'},
+      {'id': 1005, 'name': 'Total Carbs', 'amount': 10, 'unit': 'g'},
+      {'id': 1008, 'name': 'Calories', 'amount': 80, 'unit': 'g'},
+      {'id': 1258, 'name': 'Saturated Fat', 'amount': 10, 'unit': 'g'},
     ]
   }
 };

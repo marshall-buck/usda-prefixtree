@@ -100,7 +100,7 @@ class DBParser {
       final num amount = originalNutrient['amount'] ?? 0.0;
       final nutrient = Nutrient(
         id: nutrientId,
-        displayName: name,
+        name: name,
         amount: amount,
         unit: unitName,
       );
