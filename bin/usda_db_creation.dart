@@ -12,8 +12,8 @@ void main() async {
   final fileLoaderService = FileLoaderService();
   final dbParser = DBParser.init(
       path: relativeOriginalDBPath, fileLoaderService: fileLoaderService);
-  // await db.createFoodsDatabase(
-  //     fileLoaderService: fileLoaderService, dbParser: dbParser);
+  await db.createFoodsDatabase(
+      fileLoaderService: fileLoaderService, dbParser: dbParser);
 
   // await db.writeAutocompleteHashToFile(fileLoaderService: fileLoaderService);
 
@@ -21,7 +21,4 @@ void main() async {
   //     fileLoaderService: fileLoaderService, dbParser: dbParser);
   // await db.writeAutocompleteWordIndexToFile(
   //     fileLoaderService: fileLoaderService);
-
-  // usda_db_creation.writeDuplicatePhrasesToFile(
-  //     fileLoaderService: fileLoaderService, dbParser: dbParser);
 }

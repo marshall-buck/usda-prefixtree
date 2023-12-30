@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Nutrient {
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   String get displayName => throw _privateConstructorUsedError;
   num get amount => throw _privateConstructorUsedError;
   String get unit => throw _privateConstructorUsedError;
@@ -31,7 +31,7 @@ abstract class $NutrientCopyWith<$Res> {
   factory $NutrientCopyWith(Nutrient value, $Res Function(Nutrient) then) =
       _$NutrientCopyWithImpl<$Res, Nutrient>;
   @useResult
-  $Res call({String id, String displayName, num amount, String unit});
+  $Res call({int id, String displayName, num amount, String unit});
 }
 
 /// @nodoc
@@ -56,7 +56,7 @@ class _$NutrientCopyWithImpl<$Res, $Val extends Nutrient>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       displayName: null == displayName
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
@@ -81,7 +81,7 @@ abstract class _$$NutrientImplCopyWith<$Res>
       __$$NutrientImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String displayName, num amount, String unit});
+  $Res call({int id, String displayName, num amount, String unit});
 }
 
 /// @nodoc
@@ -104,7 +104,7 @@ class __$$NutrientImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       displayName: null == displayName
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
@@ -132,7 +132,7 @@ class _$NutrientImpl extends _Nutrient {
       : super._();
 
   @override
-  final String id;
+  final int id;
   @override
   final String displayName;
   @override
@@ -169,14 +169,14 @@ class _$NutrientImpl extends _Nutrient {
 
 abstract class _Nutrient extends Nutrient {
   const factory _Nutrient(
-      {required final String id,
+      {required final int id,
       required final String displayName,
       required final num amount,
       required final String unit}) = _$NutrientImpl;
   const _Nutrient._() : super._();
 
   @override
-  String get id;
+  int get id;
   @override
   String get displayName;
   @override

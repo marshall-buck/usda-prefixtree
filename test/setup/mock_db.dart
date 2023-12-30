@@ -985,23 +985,13 @@ const mockFoodsMapResult = {
         "Pillsbury Golden Layer Buttermilk Biscuits, (Artificial Flavor,) refrigerated dough",
     'descriptionLength': 83,
     'nutrients': [
-      {'id': '1003', 'displayName': 'Protein', 'amount': 5.88, 'unit': 'g'},
-      {
-        'id': '1079',
-        'displayName': 'Dietary Fiber',
-        'amount': 1.2,
-        'unit': 'g'
-      },
-      {
-        'id': '1258',
-        'displayName': 'Saturated Fat',
-        'amount': 2.94,
-        'unit': 'g'
-      },
-      {'id': '1004', 'displayName': 'Total Fat', 'amount': 13.2, 'unit': 'g'},
-      {'id': '1005', 'displayName': 'Total Carbs', 'amount': 41.2, 'unit': 'g'},
-      {'id': '1008', 'displayName': 'Calories', 'amount': 307, 'unit': 'kcal'},
-      {'id': '2000', 'displayName': 'Total Sugars', 'amount': 5.88, 'unit': 'g'}
+      {'id': 1003, 'displayName': 'Protein', 'amount': 5.88, 'unit': 'g'},
+      {'id': 1079, 'displayName': 'Dietary Fiber', 'amount': 1.2, 'unit': 'g'},
+      {'id': 1258, 'displayName': 'Saturated Fat', 'amount': 2.94, 'unit': 'g'},
+      {'id': 1004, 'displayName': 'Total Fat', 'amount': 13.2, 'unit': 'g'},
+      {'id': 1005, 'displayName': 'Total Carbs', 'amount': 41.2, 'unit': 'g'},
+      {'id': 1008, 'displayName': 'Calories', 'amount': 307, 'unit': 'kcal'},
+      {'id': 2000, 'displayName': 'Total Sugars', 'amount': 5.88, 'unit': 'g'}
     ]
   },
   '167513': {
@@ -1009,28 +999,13 @@ const mockFoodsMapResult = {
         "Pillsbury, Cinnamon Rolls with Icing, 100% refrigerated dough",
     'descriptionLength': 61,
     'nutrients': [
-      {'id': '1003', 'displayName': 'Protein', 'amount': 4.34, 'unit': 'g'},
-      {
-        'id': '1079',
-        'displayName': 'Dietary Fiber',
-        'amount': 1.4,
-        'unit': 'g'
-      },
-      {
-        'id': '1258',
-        'displayName': 'Saturated Fat',
-        'amount': 3.25,
-        'unit': 'g'
-      },
-      {'id': '1004', 'displayName': 'Total Fat', 'amount': 11.3, 'unit': 'g'},
-      {
-        'id': '1005',
-        'displayName': 'Total Carbs',
-        'amount': 53.4,
-        'unit': ' g'
-      },
-      {'id': '1008', 'displayName': 'Calories', 'amount': 330, 'unit': 'kcal'},
-      {'id': '2000', 'displayName': 'Total Sugars', 'amount': 21.3, 'unit': 'g'}
+      {'id': 1003, 'displayName': 'Protein', 'amount': 4.34, 'unit': 'g'},
+      {'id': 1079, 'displayName': 'Dietary Fiber', 'amount': 1.4, 'unit': 'g'},
+      {'id': 1258, 'displayName': 'Saturated Fat', 'amount': 3.25, 'unit': 'g'},
+      {'id': 1004, 'displayName': 'Total Fat', 'amount': 11.3, 'unit': 'g'},
+      {'id': 1005, 'displayName': 'Total Carbs', 'amount': 53.4, 'unit': ' g'},
+      {'id': 1008, 'displayName': 'Calories', 'amount': 330, 'unit': 'kcal'},
+      {'id': 2000, 'displayName': 'Total Sugars', 'amount': 21.3, 'unit': 'g'}
     ]
   },
   '167514': {
@@ -1038,10 +1013,10 @@ const mockFoodsMapResult = {
         "Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry, 2% milk",
     'descriptionLength': 73,
     'nutrients': [
-      {'id': '1004', 'displayName': 'Total Fat', 'amount': 3.7, 'unit': 'g'},
-      {'id': '1005', 'displayName': 'Total Carbs', 'amount': 79.8, 'unit': 'g'},
-      {'id': '1008', 'displayName': 'Calories', 'amount': 377, 'unit': 'kcal'},
-      {'id': '1003', 'displayName': 'Protein', 'amount': 6.1, 'unit': 'g'}
+      {'id': 1004, 'displayName': 'Total Fat', 'amount': 3.7, 'unit': 'g'},
+      {'id': 1005, 'displayName': 'Total Carbs', 'amount': 79.8, 'unit': 'g'},
+      {'id': 1008, 'displayName': 'Calories', 'amount': 377, 'unit': 'kcal'},
+      {'id': 1003, 'displayName': 'Protein', 'amount': 6.1, 'unit': 'g'}
     ]
   }
 };

@@ -20,7 +20,7 @@ void main() {
   group('DBParser class tests', () {
     group('init() - ', () {
       test('loads file correctly', () {
-        when(() => mockFileLoaderService.loadData('fake'))
+        when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
         final dbParser = DBParser.init(
             path: 'fake', fileLoaderService: mockFileLoaderService);
@@ -32,7 +32,7 @@ void main() {
     });
     group('createNutrientsList() - ', () {
       test('creates nutrients list correctly', () {
-        when(() => mockFileLoaderService.loadData('fake'))
+        when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
         final dbParser = DBParser.init(
             path: 'fake', fileLoaderService: mockFileLoaderService);
@@ -45,7 +45,7 @@ void main() {
     });
     group('createFoodsMap() - ', () {
       test('createFoodsMap correctly', () {
-        when(() => mockFileLoaderService.loadData('fake'))
+        when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
 
         final dbParser = DBParser.init(

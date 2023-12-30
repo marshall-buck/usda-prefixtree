@@ -171,7 +171,7 @@ class DescriptionParser {
   static createFinalDescriptionMapFromFile(
       {required final String path,
       required final FileLoaderService fileLoaderService}) {
-    final String fileContents = fileLoaderService.loadData(path);
+    final String fileContents = fileLoaderService.loadData(filePath: path);
     final List<String> lines = fileContents.split('\n');
 
     lines.removeWhere(

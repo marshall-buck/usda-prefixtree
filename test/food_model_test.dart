@@ -17,32 +17,27 @@ void main() {
                 'Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough',
             'descriptionLength': 89,
             'nutrients': [
+              {'id': 1004, 'displayName': 'Protien', 'amount': 10, 'unit': 'g'},
               {
-                'id': '1004',
-                'displayName': 'Protien',
-                'amount': 10,
-                'unit': 'g'
-              },
-              {
-                'id': '1003',
+                'id': 1003,
                 'displayName': 'Total Fat',
                 'amount': 5,
                 'unit': 'mg'
               },
               {
-                'id': '1005',
+                'id': 1005,
                 'displayName': 'Total Carbs',
                 'amount': 10,
                 'unit': 'g'
               },
               {
-                'id': '1008',
+                'id': 1008,
                 'displayName': 'Calories',
                 'amount': 80,
                 'unit': 'g'
               },
               {
-                'id': '1258',
+                'id': 1258,
                 'displayName': 'Saturated Fat',
                 'amount': 10,
                 'unit': 'g'
@@ -64,27 +59,27 @@ void main() {
             'Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough');
         expect(res.descriptionLength, 89);
         expect(res.nutrients.length, 5);
-        expect(res.nutrients[0].id, '1004');
+        expect(res.nutrients[0].id, 1004);
         expect(res.nutrients[0].displayName, 'Protien');
         expect(res.nutrients[0].amount, 10);
         expect(res.nutrients[0].unit, 'g');
 
-        expect(res.nutrients[1].id, '1003');
+        expect(res.nutrients[1].id, 1003);
         expect(res.nutrients[1].displayName, 'Total Fat');
         expect(res.nutrients[1].amount, 5);
         expect(res.nutrients[1].unit, 'mg');
 
-        expect(res.nutrients[2].id, '1005');
+        expect(res.nutrients[2].id, 1005);
         expect(res.nutrients[2].displayName, 'Total Carbs');
         expect(res.nutrients[2].amount, 10);
         expect(res.nutrients[2].unit, 'g');
 
-        expect(res.nutrients[3].id, '1008');
+        expect(res.nutrients[3].id, 1008);
         expect(res.nutrients[3].displayName, 'Calories');
         expect(res.nutrients[3].amount, 80);
         expect(res.nutrients[3].unit, 'g');
 
-        expect(res.nutrients[4].id, '1258');
+        expect(res.nutrients[4].id, 1258);
         expect(res.nutrients[4].displayName, 'Saturated Fat');
         expect(res.nutrients[4].amount, 10);
         expect(res.nutrients[4].unit, 'g');

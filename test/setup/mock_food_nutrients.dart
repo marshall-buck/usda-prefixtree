@@ -323,11 +323,11 @@ const mockFoodNutrients = [
 ];
 
 const mockNutrientListResults = [
-  Nutrient(id: '1003', displayName: 'Protein', amount: 5.88, unit: 'g'),
-  Nutrient(id: '1079', displayName: 'Dietary Fiber', amount: 1.2, unit: 'g'),
-  Nutrient(id: '1258', displayName: 'Saturated Fat', amount: 2.94, unit: 'g'),
-  Nutrient(id: '1004', displayName: 'Total Fat', amount: 13.2, unit: 'g'),
-  Nutrient(id: '1005', displayName: 'Total Carbs', amount: 41.2, unit: 'g'),
-  Nutrient(id: '1008', displayName: 'Calories', amount: 307, unit: 'kcal'),
-  Nutrient(id: '2000', displayName: 'Total Sugars', amount: 5.88, unit: 'g')
+  Nutrient(id: 1003, displayName: 'Protein', amount: 5.88, unit: 'g'),
+  Nutrient(id: 1079, displayName: 'Dietary Fiber', amount: 1.2, unit: 'g'),
+  Nutrient(id: 1258, displayName: 'Saturated Fat', amount: 2.94, unit: 'g'),
+  Nutrient(id: 1004, displayName: 'Total Fat', amount: 13.2, unit: 'g'),
+  Nutrient(id: 1005, displayName: 'Total Carbs', amount: 41.2, unit: 'g'),
+  Nutrient(id: 1008, displayName: 'Calories', amount: 307, unit: 'kcal'),
+  Nutrient(id: 2000, displayName: 'Total Sugars', amount: 5.88, unit: 'g')
 ];

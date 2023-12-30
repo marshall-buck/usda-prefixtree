@@ -5,7 +5,7 @@ part 'nutrient.freezed.dart';
 @freezed
 class Nutrient with _$Nutrient {
   const factory Nutrient({
-    required final String id,
+    required final int id,
     required final String displayName,
     required final num amount,
     required final String unit,
@@ -36,39 +36,39 @@ class Nutrient with _$Nutrient {
   /// Parameters [nutrientId]
   ///
   /// Returns [String] of user friendly name.
-  static String switchNutrientName(final String id) {
+  static String switchNutrientName(final int id) {
     switch (id) {
-      case '1004':
+      case 1004:
         {
           return 'Total Fat';
         }
 
-      case '1005':
+      case 1005:
         {
           return 'Total Carbs';
         }
 
-      case '1008':
+      case 1008:
         {
           return 'Calories';
         }
 
-      case '1003':
+      case 1003:
         {
           return 'Protein';
         }
 
-      case '1258':
+      case 1258:
         {
           return 'Saturated Fat';
         }
 
-      case '1079':
+      case 1079:
         {
           return 'Dietary Fiber';
         }
 
-      case '2000':
+      case 2000:
         {
           return 'Total Sugars';
         }

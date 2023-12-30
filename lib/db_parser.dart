@@ -20,7 +20,7 @@ class DBParser {
   DBParser.init(
       {required FileLoaderService this.fileLoaderService,
       required final String path}) {
-    final file = fileLoaderService?.loadData(path);
+    final file = fileLoaderService?.loadData(filePath: path);
     _originalDBMap = jsonDecode(file!);
   }
 
@@ -96,13 +96,13 @@ class DBParser {
 
       final int nutrientId = originalNutrient['nutrient']['id'] ?? 9999;
       if (!findNutrient(nutrientId)) continue;
-      name = Nutrient.switchNutrientName(nutrientId.toString());
+      name = Nutrient.switchNutrientName(nutrientId);
 
       final unitName = originalNutrient['nutrient']['unitName'] ?? 'unknown';
 
       final num amount = originalNutrient['amount'] ?? 0.0;
       final nutrient = Nutrient(
-        id: nutrientId.toString(),
+        id: nutrientId,
         displayName: name,
         amount: amount,
         unit: unitName,

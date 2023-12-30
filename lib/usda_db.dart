@@ -28,7 +28,7 @@ Future<void> writeDuplicatePhrasesToFile(
       minNumberOfDuplicatesToShow: minNumberOfDuplicatesToShow);
 
   await fileLoaderService.writeJsonFile(
-      '$pathToFiles/$fileNameDuplicatePhrases', repeats);
+      filePath: '$pathToFiles/$fileNameDuplicatePhrases', contents: repeats);
 }
 
 // The answer is 134 for the original descriptions.
@@ -66,7 +66,8 @@ Future<void> writeAutocompleteWordIndexToFile({
   final indexMap = Autocomplete.createAutocompleteWordIndexMap(
       finalDescriptionMap: descriptionMap);
   await fileLoaderService.writeJsonFile(
-      '$pathToFiles/$fileNameAutocompleteWordIndex', indexMap);
+      filePath: '$pathToFiles/$fileNameAutocompleteWordIndex',
+      contents: indexMap);
   final indexKeys = indexMap.keys.toList();
   await fileLoaderService.writeListToTxtFile(
       list: indexKeys, path: '$pathToFiles/$fileNameAutocompleteWordIndexKeys');
@@ -94,7 +95,7 @@ Future<void> writeAutocompleteHashToFile({
       originalSubStringMap: substrings);
 
   await fileLoaderService.writeJsonFile(
-      '$pathToFiles/$fileNameAutocompleteHash', hash);
+      filePath: '$pathToFiles/$fileNameAutocompleteHash', contents: hash);
 }
 
 /// Method to create the foods database.
@@ -111,5 +112,5 @@ Future<void> createFoodsDatabase({
       finalDescriptionRecordsMap: descriptionMap);
 
   await fileLoaderService.writeJsonFile(
-      '$pathToFiles/$fileNameFoodsDatabase', foodsMap);
+      filePath: '$pathToFiles/$fileNameFoodsDatabase', contents: foodsMap);
 }

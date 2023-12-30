@@ -31,7 +31,7 @@ void main() {
             'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry',
           ),
         ];
-        when(() => mockFileLoaderService.loadData('fake'))
+        when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
         final dbParser = DBParser.init(
             path: 'fake', fileLoaderService: mockFileLoaderService);
@@ -257,7 +257,7 @@ void main() {
   });
   group('createFinalDescriptionMapFromFile()', () {
     test('coverts list of descriptions records to map', () {
-      when(() => mockFileLoaderService.loadData('fake'))
+      when(() => mockFileLoaderService.loadData(filePath: 'fake'))
           .thenReturn(mockDescriptionFile);
 
       const expected = {
