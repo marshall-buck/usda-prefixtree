@@ -12,7 +12,7 @@ void main() {
         final json = mockFoodItem.toJson();
 
         final expectation = {
-          111111: {
+          '111111': {
             'description':
                 'Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough',
             'descriptionLength': 89,

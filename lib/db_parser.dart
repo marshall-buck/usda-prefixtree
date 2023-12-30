@@ -49,14 +49,14 @@ class DBParser {
     return (categories, count);
   }
 
-  /// Method to creawte the map that wil be used fior the foods database.
+  /// Method to create the map that wil be used for the foods database.
   /// The map will be of the form:
   /// { id: { description, descritionLength,  nutrients }, ... }
   ///
-  Map<int, dynamic> createFoodsMap(
+  Map<String, dynamic> createFoodsMap(
       {required final List<dynamic> getFoodsList,
       required final Map<int, String> finalDescriptionRecordsMap}) {
-    final Map<int, dynamic> foodsMap = {};
+    final Map<String, dynamic> foodsMap = {};
 
     for (final food in getFoodsList) {
       final int foodId = food['fdcId'];
@@ -76,7 +76,7 @@ class DBParser {
           descriptionLength: foodDescription.length,
           nutrients: nutrientsList);
 
-      final Map<int, dynamic> foodModelJson = foodModel.toJson();
+      final Map<String, dynamic> foodModelJson = foodModel.toJson();
 
       foodsMap.addAll(foodModelJson);
     }
