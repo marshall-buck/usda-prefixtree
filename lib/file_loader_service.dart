@@ -25,27 +25,20 @@ class FileLoaderService {
   Future<void> writeListToTxtFile(
       {required final List<dynamic> list,
       required final String filePath}) async {
-    final File file = File(filePath);
+    try {
+      final File file = File(filePath);
 
-    final IOSink sink = file.openWrite();
+      final IOSink sink = file.openWrite();
 
-    for (final line in list) {
-      sink.writeln(line);
+      for (final line in list) {
+        sink.writeln(line);
+      }
+
+      await sink.flush();
+      await sink.close();
+    } catch (e, st) {
+      log(e.toString(), stackTrace: st, name: 'writeListToTxtFile');
     }
-
-    await sink.flush();
-    await sink.close();
-  }
-
-  ///Takes a file string from [loadData] and parses it into a List<List<String>>
-  List<List<String>> parseLines(String input) {
-    final List<String> lines = input.split('\n');
-    final List<List<String>> result = [];
-    for (final String line in lines) {
-      result.add(line.split(','));
-    }
-
-    return result;
   }
 
   Future<List<List<String>>> readCsvFile(String filePath) async {
@@ -57,8 +50,8 @@ class FileLoaderService {
       for (final line in lines) {
         csvData.add(_parseCsvLine(line));
       }
-    } catch (e) {
-      print('Error reading file: $e');
+    } catch (e, st) {
+      log(e.toString(), stackTrace: st, name: 'readCsvFile');
     }
 
     return csvData;
