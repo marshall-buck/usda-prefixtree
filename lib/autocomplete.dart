@@ -50,7 +50,7 @@ class Autocomplete {
     return indexMap;
   }
 
-  /// Creates substrings from the given [autoCompleteMap] and returns a map of
+  /// Creates substrings from the given [wordIndex] and returns a map of
   /// substrings with a minimum of [mimLength] length to a list of corresponding index's.
   ///
   /// Example usage:
@@ -70,11 +70,11 @@ class Autocomplete {
   /// }
   /// ```
   static Map<String, List<String>> createOriginalSubstringMap(
-      {required final Map<String, List<String>> autoCompleteMap}) {
+      {required final Map<String, List<String>> wordIndex}) {
     final indexMap =
         SplayTreeMap<String, Set<String>>((final a, final b) => a.compareTo(b));
 
-    for (final item in autoCompleteMap.entries) {
+    for (final item in wordIndex.entries) {
       final String word = item.key;
 
       final List<String> indexList = List<String>.from(item.value);

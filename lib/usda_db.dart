@@ -14,7 +14,9 @@ import 'package:usda_db_creation/nutrient.dart';
 
 ///************************* File Writers for individual tasks *************************************
 
-/// Creates the duplicate phrases file and writes to [path].
+/// Creates a duplicate phrases file based on parameters and writes to [path].
+/// This is not used in the database, but is useful for finding ways to shorten
+/// the descriptions.
 Future<void> writeDuplicatePhrasesToFile(
     {final int minPhraseLength = 20,
     final minNumberOfDuplicatesToShow = 25,
@@ -32,7 +34,8 @@ Future<void> writeDuplicatePhrasesToFile(
       filePath: '$pathToFiles/$fileNameDuplicatePhrases', contents: repeats);
 }
 
-/// Creates the final_descriptions.txt file and writes to [path].
+/// Creates a final_descriptions.txt file and writes to [path]. This is useful
+/// to easily inspect the final descriptions.  It is not needed for the database.
 Future<void> writeFinalDescriptionsTxtFile(
     {required final FileLoaderService fileLoaderService,
     required final DBParser dbParser}) async {
@@ -80,8 +83,8 @@ Future<void> writeAutocompleteHashToFile({
       finalDescriptionMap: descriptionMap);
 
   // Create the substrings from the autocomplete index map.
-  final substrings = Autocomplete.createOriginalSubstringMap(
-      autoCompleteMap: autoCompleteWordIndex);
+  final substrings =
+      Autocomplete.createOriginalSubstringMap(wordIndex: autoCompleteWordIndex);
 
   // Create the hash table from the substrings.
   final hash = Autocomplete.createAutocompleteHashTable(
@@ -144,9 +147,12 @@ Future<void> writeNutrientMapJsonFile(
 Future<void> replenishFullDatabase(
     {required final FileLoaderService fileLoaderService,
     required final DBParser dbParser}) async {
-  // 1. Creates the final_descriptions.txt file.
-  await writeFinalDescriptionsTxtFile(
-      fileLoaderService: fileLoaderService, dbParser: dbParser);
+  // 1. Creates the final description map.
+  final descriptionMap =
+      DescriptionParser.createDescriptionMapFromOriginalFoodsList(
+          dbParser: dbParser);
+  final createWordIndex = Autocomplete.createAutocompleteWordIndexMap(
+      finalDescriptionMap: descriptionMap);
 }
 
 // The answer is 134 for the original descriptions.

@@ -113,7 +113,7 @@ void main() {
     group('createSubstrings()', () {
       test('substrings populates correctly', () async {
         final res = Autocomplete.createOriginalSubstringMap(
-            autoCompleteMap: mockAutocompleteIndex);
+            wordIndex: mockAutocompleteIndex);
 
         final deep = DeepCollectionEquality();
 

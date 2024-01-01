@@ -274,6 +274,29 @@ void main() {
       expect(mapEquals.equals(expected, res), true);
     });
   });
+  group('createDescriptionMapFromOriginalFoodsList()', () {
+    test('coverts list of descriptions records to map', () {
+      when(() => mockFileLoaderService.loadData(filePath: 'fake'))
+          .thenReturn(mockUsdaFile);
+
+      const expected = {
+        167512:
+            "Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough",
+        167513: "Pillsbury, Cinnamon Rolls with Icing, refrigerated dough",
+        167514:
+            "Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry"
+      };
+
+      final dbParser =
+          DBParser.init(path: 'fake', fileLoaderService: mockFileLoaderService);
+
+      final res = DescriptionParser.createDescriptionMapFromOriginalFoodsList(
+          dbParser: dbParser);
+
+      final mapEquals = MapEquality();
+      expect(mapEquals.equals(expected, res), true);
+    });
+  });
 }
 
 const descriptionRecords = [

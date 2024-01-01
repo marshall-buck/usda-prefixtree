@@ -34,6 +34,86 @@ class DescriptionParser {
         .toList(); // Add this line to convert the nullable values to non-null values.
   }
 
+  /// Removes unwanted phrases from the descriptions.  This will
+  /// mutate the description and return a new list of description records.
+  static List<DescriptionRecord> removeUnwantedPhrasesFromDescriptions({
+    required final List<DescriptionRecord> descriptions,
+    required final List<String> unwantedPhrases,
+  }) {
+    return descriptions.map((final record) {
+      String description = record.$2;
+      for (final phrase in unwantedPhrases) {
+        if (description.contains(phrase)) {
+          description = description.replaceAll(phrase, '');
+        }
+      }
+      return (record.$1, description);
+    }).toList();
+  }
+
+  /// Creates the final description map from a file at [path]
+  ///
+  /// Returns:
+  ///
+  /// { 167512: 'Pillsbury Golden Layer Buttermilk Biscuits, (Artificial Flavor,) refrigerated dough' ,
+  ///   167513: 'Pillsbury, Cinnamon Rolls with Icing, 100% refrigerated dough',
+  ///   167514: 'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry, 2% milk', ...}
+  static Map<int, String> createFinalDescriptionMapFromFile(
+      {required final String path,
+      required final FileLoaderService fileLoaderService}) {
+    final String fileContents = fileLoaderService.loadData(filePath: path);
+    final List<String> lines = fileContents.split('\n');
+
+    lines.removeWhere(
+        (final line) => line.isEmpty); // Add this line to remove empty lines.
+    final Map<int, String> descriptionMap = {};
+    for (final line in lines) {
+      final MapEntry<int, String> entry =
+          parseDescriptionRecordFromString(line);
+
+      descriptionMap[entry.key] = entry.value;
+    }
+    return descriptionMap;
+  }
+
+  /// Used to create the final description map from the original foods list. This
+  /// is used to create the autocomplete hash table. And FoodModels
+  static Map<int, String> createDescriptionMapFromOriginalFoodsList(
+      {required DBParser dbParser}) {
+    final descriptions = DescriptionParser.createOriginalDescriptionRecords(
+        originalFoodsList: dbParser.originalFoodsList);
+    // assert(descriptions.length == 3);
+    final descriptionsFinal =
+        DescriptionParser.removeUnwantedPhrasesFromDescriptions(
+            descriptions: descriptions, unwantedPhrases: unwantedPhrases);
+
+    final Map<int, String> descriptionMap = {};
+    for (final line in descriptionsFinal) {
+      final MapEntry<int, String> entry = MapEntry(line.$1, line.$2);
+
+      descriptionMap[entry.key] = entry.value;
+    }
+    return descriptionMap;
+  }
+
+  /// Parses a string from a text file into a description record.
+  static MapEntry<int, String> parseDescriptionRecordFromString(
+      final String line) {
+    final int id = int.parse(line.substring(1, 7));
+    final String description = line.substring(9, line.length - 1);
+
+    return MapEntry(id, description);
+  }
+
+  /// Finds the longest description in a list of description records.
+  static int getLongestDescription(
+      {required final List<DescriptionRecord> descriptions}) {
+    return descriptions.fold(
+        0,
+        (final maxLength, final record) =>
+            maxLength > record.$2.length ? maxLength : record.$2.length);
+  }
+
   /// Creates a frequency map of repeated phrases in the given text.
 
   /// Example usage:
@@ -132,83 +212,5 @@ class DescriptionParser {
     }
 
     return listOfPhrases.toList();
-  }
-
-  /// Finds the longest description in a list of description records.
-  static int getLongestDescription(
-      {required final List<DescriptionRecord> descriptions}) {
-    return descriptions.fold(
-        0,
-        (final maxLength, final record) =>
-            maxLength > record.$2.length ? maxLength : record.$2.length);
-  }
-
-  /// Removes unwanted phrases from the descriptions.  This will
-  /// mutate the description and return a new list of description records.
-  static List<DescriptionRecord> removeUnwantedPhrasesFromDescriptions({
-    required final List<DescriptionRecord> descriptions,
-    required final List<String> unwantedPhrases,
-  }) {
-    return descriptions.map((final record) {
-      String description = record.$2;
-      for (final phrase in unwantedPhrases) {
-        if (description.contains(phrase)) {
-          description = description.replaceAll(phrase, '');
-        }
-      }
-      return (record.$1, description);
-    }).toList();
-  }
-
-  /// Creates the final description map from a file at [path]
-  ///
-  /// Returns:
-  ///
-  /// { 167512: 'Pillsbury Golden Layer Buttermilk Biscuits, (Artificial Flavor,) refrigerated dough' ,
-  ///   167513: 'Pillsbury, Cinnamon Rolls with Icing, 100% refrigerated dough',
-  ///   167514: 'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry, 2% milk', ...}
-  static Map<int, String> createFinalDescriptionMapFromFile(
-      {required final String path,
-      required final FileLoaderService fileLoaderService}) {
-    final String fileContents = fileLoaderService.loadData(filePath: path);
-    final List<String> lines = fileContents.split('\n');
-
-    lines.removeWhere(
-        (final line) => line.isEmpty); // Add this line to remove empty lines.
-    final Map<int, String> descriptionMap = {};
-    for (final line in lines) {
-      final MapEntry<int, String> entry =
-          parseDescriptionRecordFromString(line);
-
-      descriptionMap[entry.key] = entry.value;
-    }
-    return descriptionMap;
-  }
-
-  static Map<int, String> createDescriptionMapFromList(
-      {required DBParser dbParser}) {
-    final descriptions = DescriptionParser.createOriginalDescriptionRecords(
-        originalFoodsList: dbParser.originalFoodsList);
-    assert(descriptions.length == 7006);
-    final descriptionsFinal =
-        DescriptionParser.removeUnwantedPhrasesFromDescriptions(
-            descriptions: descriptions, unwantedPhrases: unwantedPhrases);
-
-    final Map<int, String> descriptionMap = {};
-    for (final line in descriptionsFinal) {
-      final MapEntry<int, String> entry = MapEntry(line.$1, line.$2);
-
-      descriptionMap[entry.key] = entry.value;
-    }
-    return descriptionMap;
-  }
-
-  /// Parses a string from a text file into a description record.
-  static MapEntry<int, String> parseDescriptionRecordFromString(
-      final String line) {
-    final int id = int.parse(line.substring(1, 7));
-    final String description = line.substring(9, line.length - 1);
-
-    return MapEntry(id, description);
   }
 }
