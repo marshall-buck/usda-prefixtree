@@ -1,3 +1,4 @@
+import 'package:usda_db_creation/db_parser.dart';
 import 'package:usda_db_creation/file_loader_service.dart';
 import 'package:usda_db_creation/global_const.dart';
 
@@ -11,9 +12,7 @@ class DescriptionParser {
   /// Parameters:
   /// [originalFoodsList] - a list of food items from the USDA database.
   ///
-  /// Example usage:
-  /// ```dart
-  /// createOriginalDescriptionRecords(originalFoodsList: originalFoodsList);
+
   /// Returns:
   ///  [(1, "Apple"), (2, "Carrot"), (3, "Milk")]
   /// ```
@@ -145,7 +144,7 @@ class DescriptionParser {
   }
 
   /// Removes unwanted phrases from the descriptions.  This will
-  /// mutate the description and retun a new list of description records.
+  /// mutate the description and return a new list of description records.
   static List<DescriptionRecord> removeUnwantedPhrasesFromDescriptions({
     required final List<DescriptionRecord> descriptions,
     required final List<String> unwantedPhrases,
@@ -161,14 +160,14 @@ class DescriptionParser {
     }).toList();
   }
 
-  /// Creates the final description map from a  at [path]
+  /// Creates the final description map from a file at [path]
   ///
   /// Returns:
   ///
   /// { 167512: 'Pillsbury Golden Layer Buttermilk Biscuits, (Artificial Flavor,) refrigerated dough' ,
   ///   167513: 'Pillsbury, Cinnamon Rolls with Icing, 100% refrigerated dough',
   ///   167514: 'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry, 2% milk', ...}
-  static createFinalDescriptionMapFromFile(
+  static Map<int, String> createFinalDescriptionMapFromFile(
       {required final String path,
       required final FileLoaderService fileLoaderService}) {
     final String fileContents = fileLoaderService.loadData(filePath: path);
@@ -180,6 +179,24 @@ class DescriptionParser {
     for (final line in lines) {
       final MapEntry<int, String> entry =
           parseDescriptionRecordFromString(line);
+
+      descriptionMap[entry.key] = entry.value;
+    }
+    return descriptionMap;
+  }
+
+  static Map<int, String> createDescriptionMapFromList(
+      {required DBParser dbParser}) {
+    final descriptions = DescriptionParser.createOriginalDescriptionRecords(
+        originalFoodsList: dbParser.originalFoodsList);
+    assert(descriptions.length == 7006);
+    final descriptionsFinal =
+        DescriptionParser.removeUnwantedPhrasesFromDescriptions(
+            descriptions: descriptions, unwantedPhrases: unwantedPhrases);
+
+    final Map<int, String> descriptionMap = {};
+    for (final line in descriptionsFinal) {
+      final MapEntry<int, String> entry = MapEntry(line.$1, line.$2);
 
       descriptionMap[entry.key] = entry.value;
     }

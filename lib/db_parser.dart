@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:usda_db_creation/description_parser.dart';
 import 'package:usda_db_creation/file_loader_service.dart';
 import 'package:usda_db_creation/food_model.dart';
 import 'package:usda_db_creation/global_const.dart';
@@ -20,12 +19,6 @@ class DBParser {
     final file = fileLoaderService?.loadData(filePath: path);
     _originalDBMap = jsonDecode(file!);
   }
-
-  // List<DescriptionRecord> get finalDescriptionRecords =>
-  //     DescriptionParser.removeUnwantedPhrasesFromDescriptions(
-  //         descriptions: DescriptionParser.createOriginalDescriptionRecords(
-  //             originalFoodsList: originalFoodsList),
-  //         unwantedPhrases: unwantedPhrases);
 
   (Map<String, int>, int) getFoodCategories() {
     final Map<String, int> categories = {};
@@ -48,7 +41,7 @@ class DBParser {
 
   /// Method to create the map that wil be used for the foods database.
   /// The map will be of the form:
-  /// { id: { description, descritionLength,  nutrients }, ... }
+  /// { id: { description, descriptionLength,  nutrients }, ... }
   ///
   Map<String, dynamic> createFoodsMap(
       {required final List<dynamic> getFoodsList,
@@ -116,5 +109,26 @@ class DBParser {
   /// Returns [bool].
   bool findNutrient(final int nutrientId) {
     return keepTheseNutrients.contains(nutrientId);
+  }
+
+  /// Creates a set of id's from the nutrients in hte original database.
+  /// This is used to create the `nutrientIds] property
+  /// in the 'global_const.dart' file.
+  static Set<int> findAllNutrientIds(
+      {required final Map<int, String> finalDescriptionRecordsMap,
+      required final List<dynamic> originalFoodsList}) {
+    final Set<int> nutrientIds = {};
+    for (final food in originalFoodsList) {
+      final int foodId = food['fdcId'];
+      if (!finalDescriptionRecordsMap.containsKey(foodId)) {
+        continue;
+      }
+      final foodNutrients = food['foodNutrients'];
+      for (final nutrient in foodNutrients) {
+        final int nutrientId = nutrient['nutrient']['id'];
+        nutrientIds.add(nutrientId);
+      }
+    }
+    return nutrientIds;
   }
 }

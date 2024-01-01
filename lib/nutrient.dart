@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:usda_db_creation/db/used_nutrient_ids.dart';
+import 'package:usda_db_creation/global_const.dart';
 
 part 'nutrient.freezed.dart';
 

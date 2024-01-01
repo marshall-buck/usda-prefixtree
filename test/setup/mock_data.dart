@@ -67,5 +67,5 @@ const mockNutrientCSVFile = '''
 const mockCsvLines = [
   ['id', 'name', 'unit_name', 'nutrient_nbr', 'rank'],
   ['1002', 'Nitrogen', 'G', '202', '500'],
-  ["1003", "Protein", "G", "203", "600"]
+  ["1003", "Protein", "G", "203", "600"],
 ];

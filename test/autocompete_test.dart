@@ -2,7 +2,7 @@ import 'dart:collection';
 
 import 'package:collection/collection.dart';
 import 'package:test/test.dart';
-import 'package:usda_db_creation/autocompete.dart';
+import 'package:usda_db_creation/autocomplete.dart';
 
 import 'setup/mock_data.dart';
 import 'setup/setup.dart';
@@ -16,7 +16,7 @@ void main() {
     tear_down();
   });
 
-  group('Autocomple class tests', () {
+  group('Autocomplete class tests', () {
     group('createAutocompleteIndexMap()', () {
       test('createAutocompleteIndexMap should return the correct index map',
           () {
@@ -87,7 +87,7 @@ void main() {
         expect(indexMap['being'], isNull);
       });
       test(
-          'createAutocompleteIndexMap should strip remaining parenthese and numbers and /es',
+          'createAutocompleteIndexMap should strip remaining parentheses and numbers and /es',
           () {
         final descriptionMap = {
           167782: 'apple 18fat is a (fruit 1/8',
@@ -136,6 +136,7 @@ void main() {
   });
 }
 
+/* cSpell:disable */
 const Map<String, List<String>> originalSubStringMap = {
   'aba': ['3', '4'],
   'abap': ['3', '4'],

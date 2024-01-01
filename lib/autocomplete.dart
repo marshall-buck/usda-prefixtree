@@ -7,7 +7,7 @@ import 'package:usda_db_creation/string_ext.dart';
 /// Class to handle the word index for the autocomplete search.
 class Autocomplete {
   /// Minimum number of characters to use for the substring.
-  static int window = 3;
+  static int mimLength = 3;
 
   /// Creates a word index from the given [finalDescriptionMap].
   ///
@@ -51,7 +51,7 @@ class Autocomplete {
   }
 
   /// Creates substrings from the given [autoCompleteMap] and returns a map of
-  /// substrings with a minumum of [window] length to a list of corresponding index's.
+  /// substrings with a minimum of [mimLength] length to a list of corresponding index's.
   ///
   /// Example usage:
   /// ```dart
@@ -80,7 +80,7 @@ class Autocomplete {
       final List<String> indexList = List<String>.from(item.value);
 
       for (int i = 0; i < word.length; i++) {
-        for (int j = i + window; j <= word.length; j++) {
+        for (int j = i + mimLength; j <= word.length; j++) {
           final String substring = word.substring(i, j);
 
           if (!indexMap.containsKey(substring)) {
@@ -98,6 +98,9 @@ class Autocomplete {
 
   /// Creates an indexHash table from the given [originalSubStringMap]  and
   /// rewrites the substring map with the new index values.
+  ///
+  /// This is the final step in creating the autocomplete hash table.
+  /// Write this output to a file.
   ///
   /// Example usage:
   /// ```dart

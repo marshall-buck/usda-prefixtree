@@ -980,40 +980,40 @@ const mockUsdaFile = '''
 ''';
 
 const mockFoodsMapResult = {
-  '167512': {
-    'description':
+  "167512": {
+    "description":
         "Pillsbury Golden Layer Buttermilk Biscuits, (Artificial Flavor,) refrigerated dough",
-    'nutrients': [
-      {'id': 1003, 'name': 'Protein', 'amount': 5.88, 'unit': 'g'},
-      {'id': 1079, 'name': 'Dietary Fiber', 'amount': 1.2, 'unit': 'g'},
-      {'id': 1258, 'name': 'Saturated Fat', 'amount': 2.94, 'unit': 'g'},
-      {'id': 1004, 'name': 'Total Fat', 'amount': 13.2, 'unit': 'g'},
-      {'id': 1005, 'name': 'Total Carbs', 'amount': 41.2, 'unit': 'g'},
-      {'id': 1008, 'name': 'Calories', 'amount': 307, 'unit': 'kcal'},
-      {'id': 2000, 'name': 'Total Sugars', 'amount': 5.88, 'unit': 'g'}
+    "nutrients": [
+      {"id": 1003, "amount": 5.88},
+      {"id": 1079, "amount": 1.2},
+      {"id": 1258, "amount": 2.94},
+      {"id": 1004, "amount": 13.2},
+      {"id": 1005, "amount": 41.2},
+      {"id": 1008, "amount": 307},
+      {"id": 2000, "amount": 5.88}
     ]
   },
-  '167513': {
-    'description':
+  "167513": {
+    "description":
         "Pillsbury, Cinnamon Rolls with Icing, 100% refrigerated dough",
-    'nutrients': [
-      {'id': 1003, 'name': 'Protein', 'amount': 4.34, 'unit': 'g'},
-      {'id': 1079, 'name': 'Dietary Fiber', 'amount': 1.4, 'unit': 'g'},
-      {'id': 1258, 'name': 'Saturated Fat', 'amount': 3.25, 'unit': 'g'},
-      {'id': 1004, 'name': 'Total Fat', 'amount': 11.3, 'unit': 'g'},
-      {'id': 1005, 'name': 'Total Carbs', 'amount': 53.4, 'unit': ' g'},
-      {'id': 1008, 'name': 'Calories', 'amount': 330, 'unit': 'kcal'},
-      {'id': 2000, 'name': 'Total Sugars', 'amount': 21.3, 'unit': 'g'}
+    "nutrients": [
+      {"id": 1003, "amount": 4.34},
+      {"id": 1079, "amount": 1.4},
+      {"id": 1258, "amount": 3.25},
+      {"id": 1004, "amount": 11.3},
+      {"id": 1005, "amount": 53.4},
+      {"id": 1008, "amount": 330},
+      {"id": 2000, "amount": 21.3}
     ]
   },
-  '167514': {
-    'description':
+  "167514": {
+    "description":
         "Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry, 2% milk",
-    'nutrients': [
-      {'id': 1004, 'name': 'Total Fat', 'amount': 3.7, 'unit': 'g'},
-      {'id': 1005, 'name': 'Total Carbs', 'amount': 79.8, 'unit': 'g'},
-      {'id': 1008, 'name': 'Calories', 'amount': 377, 'unit': 'kcal'},
-      {'id': 1003, 'name': 'Protein', 'amount': 6.1, 'unit': 'g'}
+    "nutrients": [
+      {"id": 1004, "amount": 3.7},
+      {"id": 1005, "amount": 79.8},
+      {"id": 1008, "amount": 377},
+      {"id": 1003, "amount": 6.1}
     ]
   }
 };

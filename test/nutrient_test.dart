@@ -55,7 +55,7 @@ void main() {
         };
 
         final res = Nutrient.createNutrientInfoMap(csvLines: mockCsvLines);
-        print('RES $res');
+
         final d = DeepCollectionEquality();
         expect(d.equals(res, expected), true);
         expect(res.entries.first.key.runtimeType, String);

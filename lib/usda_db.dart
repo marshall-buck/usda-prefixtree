@@ -4,15 +4,15 @@
 // 'dart run'. Not all methods in this file are used in the bin/usda_db_creation.dart
 // at the same time.
 
-import 'package:usda_db_creation/autocompete.dart';
+import 'package:usda_db_creation/autocomplete.dart';
 import 'package:usda_db_creation/db_parser.dart';
 import 'package:usda_db_creation/description_parser.dart';
 import 'package:usda_db_creation/file_loader_service.dart';
 
-// import 'dart:developer' as dev;
-
 import 'package:usda_db_creation/global_const.dart';
 import 'package:usda_db_creation/nutrient.dart';
+
+///************************* File Writers for individual tasks *************************************
 
 /// Creates the duplicate phrases file and writes to [path].
 Future<void> writeDuplicatePhrasesToFile(
@@ -32,19 +32,8 @@ Future<void> writeDuplicatePhrasesToFile(
       filePath: '$pathToFiles/$fileNameDuplicatePhrases', contents: repeats);
 }
 
-// The answer is 134 for the original descriptions.
-int getLongestDescriptionLength(final DBParser dbParser) {
-  final descriptions = DescriptionParser.createOriginalDescriptionRecords(
-      originalFoodsList: dbParser.originalFoodsList);
-  return DescriptionParser.getLongestDescription(descriptions: descriptions);
-}
-
-/// Retrieves the food categories from the specified [db]
-(Map<String, int>, int) getFoodCategories({required final DBParser db}) {
-  return db.getFoodCategories();
-}
-
-Future<void> writeDescriptionsToFile(
+/// Creates the final_descriptions.txt file and writes to [path].
+Future<void> writeFinalDescriptionsTxtFile(
     {required final FileLoaderService fileLoaderService,
     required final DBParser dbParser}) async {
   final descriptions = DescriptionParser.createOriginalDescriptionRecords(
@@ -55,14 +44,15 @@ Future<void> writeDescriptionsToFile(
           descriptions: descriptions, unwantedPhrases: unwantedPhrases);
   await fileLoaderService.writeListToTxtFile(
       list: descriptionsFinal,
-      filePath: '$pathToFiles/$fileNameFinalDescriptions');
+      filePath: '$pathToFiles/$fileNameFinalDescriptionsTxt');
 }
 
+/// Creates the autocomplete word index map and writes to [path].
 Future<void> writeAutocompleteWordIndexToFile({
   required final FileLoaderService fileLoaderService,
 }) async {
   final descriptionMap = DescriptionParser.createFinalDescriptionMapFromFile(
-      path: '$pathToFiles/$fileNameFinalDescriptions',
+      path: '$pathToFiles/$fileNameFinalDescriptionsTxt',
       fileLoaderService: fileLoaderService);
 
   final indexMap = Autocomplete.createAutocompleteWordIndexMap(
@@ -82,7 +72,7 @@ Future<void> writeAutocompleteHashToFile({
 }) async {
   // Create the description map from file.
   final descriptionMap = DescriptionParser.createFinalDescriptionMapFromFile(
-      path: '$pathToFiles/$fileNameFinalDescriptions',
+      path: '$pathToFiles/$fileNameFinalDescriptionsTxt',
       fileLoaderService: fileLoaderService);
 
   // Create the autocomplete index map from the description map.
@@ -101,13 +91,28 @@ Future<void> writeAutocompleteHashToFile({
       filePath: '$pathToFiles/$fileNameAutocompleteHash', contents: hash);
 }
 
-/// Method to create the foods database.
-Future<void> createFoodsDatabase({
+/// Method to create the foods database file
+/// Format:
+///   {"167512": {
+///       "description":
+///           "lorem ipsum dolor sit",
+///       "nutrients": [
+///         {"id": 1003, "amount": 5.88},
+///         {"id": 1079, "amount": 1.2},
+///         {"id": 1258, "amount": 2.94},
+///         {"id": 1004, "amount": 13.2},
+///         {"id": 1005, "amount": 41.2},
+///         {"id": 1008, "amount": 307},
+///         {"id": 2000, "amount": 5.88}, ...
+///       ]
+///     }, ...
+///  }
+Future<void> writeFoodDatabaseJsonFile({
   required final FileLoaderService fileLoaderService,
   required final DBParser dbParser,
 }) async {
   final descriptionMap = DescriptionParser.createFinalDescriptionMapFromFile(
-      path: '$pathToFiles/$fileNameFinalDescriptions',
+      path: '$pathToFiles/$fileNameFinalDescriptionsTxt',
       fileLoaderService: fileLoaderService);
 
   final foodsMap = dbParser.createFoodsMap(
@@ -118,7 +123,11 @@ Future<void> createFoodsDatabase({
       filePath: '$pathToFiles/$fileNameFoodsDatabase', contents: foodsMap);
 }
 
-createNutrientMap({required FileLoaderService fileLoaderService}) async {
+///Writes the nutrient map to json file
+///Format {"1003": {"name": "Protein","unit": "g"},
+///         "1004": {"name": "Total lipid (fat)","unit": "g"}, ... }
+Future<void> writeNutrientMapJsonFile(
+    {required FileLoaderService fileLoaderService}) async {
   final csvLines =
       await fileLoaderService.readCsvFile('$pathToFiles/$fileNameNutrientsCsv');
   final Map<String, dynamic> map =
@@ -128,21 +137,26 @@ createNutrientMap({required FileLoaderService fileLoaderService}) async {
       filePath: '$pathToFiles/$fileNameNutrientsMap', contents: map);
 }
 
-/// Finds all the nutrient ids that will actually be used in the database.
-Set<int> findAllNutrientIds(
-    {required final Map<int, String> finalDescriptionRecordsMap,
-    required final List<dynamic> originalFoodsList}) {
-  final Set<int> nutrientIds = {};
-  for (final food in originalFoodsList) {
-    final int foodId = food['fdcId'];
-    if (!finalDescriptionRecordsMap.containsKey(foodId)) {
-      continue;
-    }
-    final foodNutrients = food['foodNutrients'];
-    for (final nutrient in foodNutrients) {
-      final int nutrientId = nutrient['nutrient']['id'];
-      nutrientIds.add(nutrientId);
-    }
-  }
-  return nutrientIds;
+/// *****************  File Writer for replenishing the database **************
+
+/// Recreates all files from scratch.
+/// 1.  Create the Description Map to use for word index
+Future<void> replenishFullDatabase(
+    {required final FileLoaderService fileLoaderService,
+    required final DBParser dbParser}) async {
+  // 1. Creates the final_descriptions.txt file.
+  await writeFinalDescriptionsTxtFile(
+      fileLoaderService: fileLoaderService, dbParser: dbParser);
+}
+
+// The answer is 134 for the original descriptions.
+int getLongestDescriptionLength(final DBParser dbParser) {
+  final descriptions = DescriptionParser.createOriginalDescriptionRecords(
+      originalFoodsList: dbParser.originalFoodsList);
+  return DescriptionParser.getLongestDescription(descriptions: descriptions);
+}
+
+/// Retrieves the food categories from the specified [db]
+(Map<String, int>, int) getFoodCategories({required final DBParser db}) {
+  return db.getFoodCategories();
 }
