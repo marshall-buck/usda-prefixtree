@@ -17,9 +17,9 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Nutrient {
   int get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
   num get amount => throw _privateConstructorUsedError;
-  String get unit => throw _privateConstructorUsedError;
+  String? get unit => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $NutrientCopyWith<Nutrient> get copyWith =>
@@ -31,7 +31,7 @@ abstract class $NutrientCopyWith<$Res> {
   factory $NutrientCopyWith(Nutrient value, $Res Function(Nutrient) then) =
       _$NutrientCopyWithImpl<$Res, Nutrient>;
   @useResult
-  $Res call({int id, String name, num amount, String unit});
+  $Res call({int id, String? name, num amount, String? unit});
 }
 
 /// @nodoc
@@ -48,27 +48,27 @@ class _$NutrientCopyWithImpl<$Res, $Val extends Nutrient>
   @override
   $Res call({
     Object? id = null,
-    Object? name = null,
+    Object? name = freezed,
     Object? amount = null,
-    Object? unit = null,
+    Object? unit = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      name: null == name
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as num,
-      unit: null == unit
+      unit: freezed == unit
           ? _value.unit
           : unit // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -81,7 +81,7 @@ abstract class _$$NutrientImplCopyWith<$Res>
       __$$NutrientImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name, num amount, String unit});
+  $Res call({int id, String? name, num amount, String? unit});
 }
 
 /// @nodoc
@@ -96,27 +96,27 @@ class __$$NutrientImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? name = null,
+    Object? name = freezed,
     Object? amount = null,
-    Object? unit = null,
+    Object? unit = freezed,
   }) {
     return _then(_$NutrientImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      name: null == name
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as num,
-      unit: null == unit
+      unit: freezed == unit
           ? _value.unit
           : unit // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -125,20 +125,17 @@ class __$$NutrientImplCopyWithImpl<$Res>
 
 class _$NutrientImpl extends _Nutrient {
   const _$NutrientImpl(
-      {required this.id,
-      required this.name,
-      required this.amount,
-      required this.unit})
+      {required this.id, this.name, required this.amount, this.unit})
       : super._();
 
   @override
   final int id;
   @override
-  final String name;
+  final String? name;
   @override
   final num amount;
   @override
-  final String unit;
+  final String? unit;
 
   @override
   String toString() {
@@ -169,19 +166,19 @@ class _$NutrientImpl extends _Nutrient {
 abstract class _Nutrient extends Nutrient {
   const factory _Nutrient(
       {required final int id,
-      required final String name,
+      final String? name,
       required final num amount,
-      required final String unit}) = _$NutrientImpl;
+      final String? unit}) = _$NutrientImpl;
   const _Nutrient._() : super._();
 
   @override
   int get id;
   @override
-  String get name;
+  String? get name;
   @override
   num get amount;
   @override
-  String get unit;
+  String? get unit;
   @override
   @JsonKey(ignore: true)
   _$$NutrientImplCopyWith<_$NutrientImpl> get copyWith =>
