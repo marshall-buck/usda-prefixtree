@@ -119,18 +119,30 @@ Future<void> createFoodsDatabase({
 }
 
 createNutrientMap({required FileLoaderService fileLoaderService}) async {
-  // final String nutrientCsv = fileLoaderService.loadData(
-  //     filePath: '$pathToFiles/$fileNameNutrientsCsv');
-  // final csvLines = fileLoaderService.parseLines(nutrientCsv);
-  // for (final line in csvLines) {
-  //   print('line from db.createNutrientMap: $line');
-  // }
-  // print('csvLines: $csvLines\n csvLines.length: ${csvLines.length}');
   final csvLines =
       await fileLoaderService.readCsvFile('$pathToFiles/$fileNameNutrientsCsv');
   final Map<String, dynamic> map =
       Nutrient.createNutrientInfoMap(csvLines: csvLines);
-  // print('map.length ${map.length} ');
+
   await fileLoaderService.writeJsonFile(
       filePath: '$pathToFiles/$fileNameNutrientsMap', contents: map);
+}
+
+/// Finds all the nutrient ids that will actually be used in the database.
+Set<int> findAllNutrientIds(
+    {required final Map<int, String> finalDescriptionRecordsMap,
+    required final List<dynamic> originalFoodsList}) {
+  final Set<int> nutrientIds = {};
+  for (final food in originalFoodsList) {
+    final int foodId = food['fdcId'];
+    if (!finalDescriptionRecordsMap.containsKey(foodId)) {
+      continue;
+    }
+    final foodNutrients = food['foodNutrients'];
+    for (final nutrient in foodNutrients) {
+      final int nutrientId = nutrient['nutrient']['id'];
+      nutrientIds.add(nutrientId);
+    }
+  }
+  return nutrientIds;
 }

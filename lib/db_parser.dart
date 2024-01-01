@@ -13,9 +13,6 @@ class DBParser {
   /// [List] of foods from the database.
   List<dynamic> get originalFoodsList => _originalDBMap?['SRLegacyFoods'];
 
-  // DBParser({final FileLoaderService? fileLoaderService})
-  //     : fileLoaderService = fileLoaderService ?? FileLoaderService();
-
   /// Populates the _dbMap
   DBParser.init(
       {required FileLoaderService this.fileLoaderService,
@@ -24,11 +21,11 @@ class DBParser {
     _originalDBMap = jsonDecode(file!);
   }
 
-  List<DescriptionRecord> get finalDescriptionRecords =>
-      DescriptionParser.removeUnwantedPhrasesFromDescriptions(
-          descriptions: DescriptionParser.createOriginalDescriptionRecords(
-              originalFoodsList: originalFoodsList),
-          unwantedPhrases: unwantedPhrases);
+  // List<DescriptionRecord> get finalDescriptionRecords =>
+  //     DescriptionParser.removeUnwantedPhrasesFromDescriptions(
+  //         descriptions: DescriptionParser.createOriginalDescriptionRecords(
+  //             originalFoodsList: originalFoodsList),
+  //         unwantedPhrases: unwantedPhrases);
 
   (Map<String, int>, int) getFoodCategories() {
     final Map<String, int> categories = {};
@@ -89,20 +86,20 @@ class DBParser {
 
     for (int i = 0; i < listOfNutrients.length; i++) {
       final Map<String, dynamic> originalNutrient = listOfNutrients[i];
-      String name = originalNutrient['nutrient']['name'] ?? 'unknown';
+      // String name = originalNutrient['nutrient']['name'] ?? 'unknown';
 
       final int nutrientId = originalNutrient['nutrient']['id'] ?? 9999;
       if (!findNutrient(nutrientId)) continue;
-      name = Nutrient.switchNutrientName(nutrientId);
+      // name = Nutrient.switchNutrientName(nutrientId);
 
-      final unitName = originalNutrient['nutrient']['unitName'] ?? 'unknown';
+      // final unitName = originalNutrient['nutrient']['unitName'] ?? 'unknown';
 
       final num amount = originalNutrient['amount'] ?? 0.0;
       final nutrient = Nutrient(
         id: nutrientId,
-        name: name,
+        // name: name,
         amount: amount,
-        unit: unitName,
+        // unit: unitName,
       );
 
       nutrients.add(nutrient);
