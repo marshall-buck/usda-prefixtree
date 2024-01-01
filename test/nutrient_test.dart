@@ -2,6 +2,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:test/test.dart';
 import 'package:usda_db_creation/nutrient.dart';
 
+import 'setup/mock_data.dart';
+
 void main() {
   group('Nutrient class tests', () {
     group('toJson()', () {
@@ -13,9 +15,7 @@ void main() {
 
         final expectation = {
           'id': 1004,
-          'name': 'Protien',
-          'amount': 10,
-          'unit': 'g'
+          'info': 'Protien*10*g',
         };
 
         final d = DeepCollectionEquality();
@@ -23,8 +23,23 @@ void main() {
       });
     });
     group('fromJson()', () {
-      test('fromJson works correctly', () {
-        final json = {'id': 1004, 'name': 'Protien', 'amount': 10, 'unit': 'g'};
+      test('fromJson works correctly with double', () {
+        final json = {
+          'id': 1004,
+          'info': 'Protien*0.1*g',
+        };
+
+        final res = Nutrient.fromJson(json);
+        expect(res.id, 1004);
+        expect(res.name, 'Protien');
+        expect(res.amount, 0.1);
+        expect(res.unit, 'g');
+      });
+      test('fromJson works correctly with int', () {
+        final json = {
+          'id': 1004,
+          'info': 'Protien*10*g',
+        };
 
         final res = Nutrient.fromJson(json);
         expect(res.id, 1004);
@@ -72,6 +87,21 @@ void main() {
       test('switched nutrient name works for unknown id', () {
         final res = Nutrient.switchNutrientName(9999);
         expect(res, 'Unknown');
+      });
+    });
+    // FIXME: This test is failing.
+    group('createNutrientInfoMap()', () {
+      test('createNutrientInfoMap', () {
+        final expected = {
+          "1002": {"name": "Nitrogen", "unit": "g"},
+          "1003": {"name": "Protein", "unit": "g"}
+        };
+
+        final res = Nutrient.createNutrientInfoMap(csvLines: mockCsvLines);
+        print('RES $res');
+        final d = DeepCollectionEquality();
+        expect(d.equals(res, expected), true);
+        expect(res.entries.first.key.runtimeType, String);
       });
     });
   });

@@ -11,6 +11,8 @@ const fileNameAutocompleteWordIndex = 'autocomplete_word_index.json';
 const fileNameAutocompleteWordIndexKeys = 'autocomplete_word_index_keys.txt';
 const fileNameAutocompleteHash = 'autocomplete_hash.json';
 const fileNameFoodsDatabase = 'foods_db.json';
+const fileNameNutrientsCsv = 'nutrient.csv';
+const fileNameNutrientsMap = 'nutrient_map.json';
 
 const unwantedPhrases = [
   "(Includes foods for USDA's Food Distribution Program)",

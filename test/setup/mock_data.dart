@@ -58,3 +58,14 @@ const Map<int, dynamic> mockFoodJson = {
     ]
   }
 };
+
+const mockNutrientCSVFile = '''
+"id","name","unit_name","nutrient_nbr","rank"
+"1002","Nitrogen","G","202","500"
+''';
+
+const mockCsvLines = [
+  ['id', 'name', 'unit_name', 'nutrient_nbr', 'rank'],
+  ['1002', 'Nitrogen', 'G', '202', '500'],
+  ["1003", "Protein", "G", "203", "600"]
+];

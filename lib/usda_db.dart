@@ -12,6 +12,7 @@ import 'package:usda_db_creation/file_loader_service.dart';
 // import 'dart:developer' as dev;
 
 import 'package:usda_db_creation/global_const.dart';
+import 'package:usda_db_creation/nutrient.dart';
 
 /// Creates the duplicate phrases file and writes to [path].
 Future<void> writeDuplicatePhrasesToFile(
@@ -53,7 +54,8 @@ Future<void> writeDescriptionsToFile(
       DescriptionParser.removeUnwantedPhrasesFromDescriptions(
           descriptions: descriptions, unwantedPhrases: unwantedPhrases);
   await fileLoaderService.writeListToTxtFile(
-      list: descriptionsFinal, path: '$pathToFiles/$fileNameFinalDescriptions');
+      list: descriptionsFinal,
+      filePath: '$pathToFiles/$fileNameFinalDescriptions');
 }
 
 Future<void> writeAutocompleteWordIndexToFile({
@@ -70,7 +72,8 @@ Future<void> writeAutocompleteWordIndexToFile({
       contents: indexMap);
   final indexKeys = indexMap.keys.toList();
   await fileLoaderService.writeListToTxtFile(
-      list: indexKeys, path: '$pathToFiles/$fileNameAutocompleteWordIndexKeys');
+      list: indexKeys,
+      filePath: '$pathToFiles/$fileNameAutocompleteWordIndexKeys');
 }
 
 /// Creates the autocomplete hash table and writes to [path].
@@ -113,4 +116,21 @@ Future<void> createFoodsDatabase({
 
   await fileLoaderService.writeJsonFile(
       filePath: '$pathToFiles/$fileNameFoodsDatabase', contents: foodsMap);
+}
+
+createNutrientMap({required FileLoaderService fileLoaderService}) async {
+  // final String nutrientCsv = fileLoaderService.loadData(
+  //     filePath: '$pathToFiles/$fileNameNutrientsCsv');
+  // final csvLines = fileLoaderService.parseLines(nutrientCsv);
+  // for (final line in csvLines) {
+  //   print('line from db.createNutrientMap: $line');
+  // }
+  // print('csvLines: $csvLines\n csvLines.length: ${csvLines.length}');
+  final csvLines =
+      await fileLoaderService.readCsvFile('$pathToFiles/$fileNameNutrientsCsv');
+  final Map<String, dynamic> map =
+      Nutrient.createNutrientInfoMap(csvLines: csvLines);
+  // print('map.length ${map.length} ');
+  await fileLoaderService.writeJsonFile(
+      filePath: '$pathToFiles/$fileNameNutrientsMap', contents: map);
 }

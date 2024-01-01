@@ -17,7 +17,6 @@ include: package:lints/recommended.yaml
 
 linter:
   rules:
-
     - prefer_final_in_for_each
     - prefer_final_locals
 

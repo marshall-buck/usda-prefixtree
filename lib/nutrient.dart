@@ -13,22 +13,47 @@ class Nutrient with _$Nutrient {
   const Nutrient._();
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'amount': amount,
-      'unit': unit,
-    };
+    return {'id': id, 'info': '$name*$amount*$unit'};
   }
+  // Map<String, dynamic> toJson() {
+  //   return {
+  //     'id': id,
+  //     'name': name,
+  //     'amount': amount,
+  //     'unit': unit,
+  //   };
+  // }
 
   /// Maps JSON to Nutrient object.
   factory Nutrient.fromJson(final Map<String, dynamic> json) {
+    final info = json['info'].split('*');
     return Nutrient(
       id: json['id'],
-      name: json['name'],
-      amount: json['amount'],
-      unit: json['unit'],
+      name: info[0],
+      amount: num.parse(info[1]),
+      unit: info[2],
     );
+  }
+
+  /// Given the string form a csv file, iterate and create the nutrien info map
+  ///
+  /// Returns:{ {"1004" : {"name": "Total Fat", "unit": "g"}, ...}
+
+  static Map<String, dynamic> createNutrientInfoMap(
+      {required List<List<String>> csvLines}) {
+    final Map<String, dynamic> nutrientsMap = {};
+    // print('csvLines: $csvLines\n csvLines.length: ${csvLines.length}');
+    for (var i = 1; i < csvLines.length; i++) {
+      final line = csvLines[i];
+
+      final key = line[0];
+      final name = line[1];
+      final unit = line[2].toLowerCase();
+
+      nutrientsMap[key] = {"name": name, "unit": unit};
+    }
+
+    return nutrientsMap;
   }
 
   /// Switches nutrient name.
