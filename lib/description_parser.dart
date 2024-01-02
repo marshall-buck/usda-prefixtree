@@ -5,37 +5,43 @@ import 'package:usda_db_creation/global_const.dart';
 typedef DescriptionRecord = (int, String);
 
 /// A class for parsing description strings from the [originalFoodsList].
+/// A map of {{foodId: description}, ...} is needed, for both populating
+/// the main foods database and for creating the autocomplete hash map.
+
 class DescriptionParser {
-  /// Parses [originalFoodsList] to create a list of description records.
-  /// Of type [DescriptionRecord].
+  /// Parses [originalFoodsList] to create a list of [DescriptionRecord].
+  /// The descriptions will be unedited.
+  ///
+  /// The list will be filtered to remove any unwanted food categories,
+  /// from the [excludedCategories] list.  The list is defined in [global_const.dart].
   ///
   /// Parameters:
-  /// [originalFoodsList] - a list of food items from the USDA database.
+  /// [originalFoodsList] - the list of food items from the original_usda.json file.
   ///
+  /// Returns: [DescriptionRecord]
+  ///  [(id, description), ...]
 
-  /// Returns:
-  ///  [(1, "Apple"), (2, "Carrot"), (3, "Milk")]
-  /// ```
-  static List<(int, String)> createOriginalDescriptionRecords(
+  static List<DescriptionRecord> createOriginalDescriptionRecords(
       {required final List<dynamic> originalFoodsList}) {
     return originalFoodsList
         .map((final food) {
           final int id = food["fdcId"];
           assert(food["fdcId"] != null);
 
-          final foodCategory = food['foodCategory'];
-          final foodCategoryDescription = foodCategory['description'];
-          if (!excludedCategories.contains(foodCategoryDescription)) {
+          if (!isExcludedCategory(foodItem: food)) {
             return (id, food["description"] as String);
           }
-          return null; // Add this line to handle the case where the return value may be null.
+          // return null; // Add this line to handle the case where the return value may be null.
         })
-        .whereType<(int, String)>()
+        .whereType<DescriptionRecord>()
         .toList(); // Add this line to convert the nullable values to non-null values.
   }
 
   /// Removes unwanted phrases from the descriptions.  This will
-  /// mutate the description and return a new list of description records.
+  /// mutate the description as needed and return a new list.
+  ///
+  /// Returns:
+  ///  [(id, description), ...]
   static List<DescriptionRecord> removeUnwantedPhrasesFromDescriptions({
     required final List<DescriptionRecord> descriptions,
     required final List<String> unwantedPhrases,
@@ -51,17 +57,17 @@ class DescriptionParser {
     }).toList();
   }
 
-  /// Creates the final description map from a file at [path]
+  /// Creates a map from a txt file at [filePath]. the text file
+  /// must be in the format of (id, description).
   ///
   /// Returns:
-  ///
   /// { 167512: 'Pillsbury Golden Layer Buttermilk Biscuits, (Artificial Flavor,) refrigerated dough' ,
   ///   167513: 'Pillsbury, Cinnamon Rolls with Icing, 100% refrigerated dough',
   ///   167514: 'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry, 2% milk', ...}
   static Map<int, String> createFinalDescriptionMapFromFile(
-      {required final String path,
+      {required final String filePath,
       required final FileLoaderService fileLoaderService}) {
-    final String fileContents = fileLoaderService.loadData(filePath: path);
+    final String fileContents = fileLoaderService.loadData(filePath: filePath);
     final List<String> lines = fileContents.split('\n');
 
     lines.removeWhere(
@@ -76,8 +82,12 @@ class DescriptionParser {
     return descriptionMap;
   }
 
-  /// Used to create the final description map from the original foods list. This
-  /// is used to create the autocomplete hash table. And FoodModels
+  /// Creates a map from the original foods list.
+  ///
+  /// Returns:
+  /// { 167512: 'Pillsbury Golden Layer Buttermilk Biscuits, (Artificial Flavor,) refrigerated dough' ,
+  ///   167513: 'Pillsbury, Cinnamon Rolls with Icing, 100% refrigerated dough',
+  ///   167514: 'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry, 2% milk', ...}
   static Map<int, String> createDescriptionMapFromOriginalFoodsList(
       {required DBParser dbParser}) {
     final descriptions = DescriptionParser.createOriginalDescriptionRecords(
@@ -212,5 +222,11 @@ class DescriptionParser {
     }
 
     return listOfPhrases.toList();
+  }
+
+  static isExcludedCategory({required final Map<dynamic, dynamic> foodItem}) {
+    final foodCategory = foodItem['foodCategory'];
+    final foodCategoryDescription = foodCategory['description'];
+    return excludedCategories.contains(foodCategoryDescription);
   }
 }

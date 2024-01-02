@@ -1,3 +1,6 @@
+/// Some of the information in this file does not match the USDA database.
+library;
+
 const mockUsdaFile = '''
 {
     "SRLegacyFoods": [
@@ -955,7 +958,7 @@ const mockUsdaFile = '''
             "isHistoricalReference": false,
             "ndbNumber": 18637,
             "foodCategory": {
-                "description": "Baked Products"
+                "description": "Beverages"
             },
             "fdcId": 167514,
             "dataType": "SR Legacy",

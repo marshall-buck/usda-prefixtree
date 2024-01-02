@@ -26,10 +26,11 @@ void main() {
             'Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough'
           ),
           (167513, 'Pillsbury, Cinnamon Rolls with Icing, refrigerated dough'),
-          (
-            167514,
-            'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry',
-          ),
+          // Excluded category
+          // (
+          //   167514,
+          //   'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry',
+          // ),
         ];
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
@@ -269,7 +270,7 @@ void main() {
       };
 
       final res = DescriptionParser.createFinalDescriptionMapFromFile(
-          path: 'fake', fileLoaderService: mockFileLoaderService);
+          filePath: 'fake', fileLoaderService: mockFileLoaderService);
       final mapEquals = MapEquality();
       expect(mapEquals.equals(expected, res), true);
     });
@@ -283,8 +284,9 @@ void main() {
         167512:
             "Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough",
         167513: "Pillsbury, Cinnamon Rolls with Icing, refrigerated dough",
-        167514:
-            "Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry"
+        // excluded category
+        // 167514:
+        //     "Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry"
       };
 
       final dbParser =
@@ -295,6 +297,28 @@ void main() {
 
       final mapEquals = MapEquality();
       expect(mapEquals.equals(expected, res), true);
+    });
+  });
+  group('isExcludedCategory', () {
+    test('returns true is foodItem has an excluded category', () {
+      when(() => mockFileLoaderService.loadData(filePath: 'fake'))
+          .thenReturn(mockUsdaFile);
+      final dbParser =
+          DBParser.init(path: 'fake', fileLoaderService: mockFileLoaderService);
+      final originalFoodsList = dbParser.originalFoodsList;
+      final foodItem = originalFoodsList[2];
+      final res = DescriptionParser.isExcludedCategory(foodItem: foodItem);
+      expect(res, true);
+    });
+    test('returns false is foodItem has an excluded category', () {
+      when(() => mockFileLoaderService.loadData(filePath: 'fake'))
+          .thenReturn(mockUsdaFile);
+      final dbParser =
+          DBParser.init(path: 'fake', fileLoaderService: mockFileLoaderService);
+      final originalFoodsList = dbParser.originalFoodsList;
+      final foodItem = originalFoodsList[0];
+      final res = DescriptionParser.isExcludedCategory(foodItem: foodItem);
+      expect(res, false);
     });
   });
 }
