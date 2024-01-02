@@ -5,6 +5,13 @@ import 'dart:io';
 /// Class to handle reading and writing  files.
 // TODO: Add date now for hash for each save method
 class FileLoaderService {
+  late final DateTime _fileHash;
+
+  FileLoaderService() {
+    _fileHash = DateTime.now();
+  }
+  DateTime get fileHash => _fileHash;
+
   /// Synchronously opens a file from [filePath]. and returns the contents as a
   /// [String].
   String loadData({required final String filePath}) =>
@@ -14,7 +21,6 @@ class FileLoaderService {
   Future<void> writeJsonFile(
       {required final String filePath, required final Map contents}) async {
     try {
-      final fileHash = DateTime.now().toIso8601String();
       await File(filePath).writeAsString(jsonEncode(contents));
     } catch (e, st) {
       log(e.toString(), stackTrace: st, name: 'writeJsonFile');
@@ -82,5 +88,14 @@ class FileLoaderService {
     fields.add(buffer.toString());
 
     return fields;
+  }
+
+  /// Checks if the specified folder path exists and creates it if it doesn't.
+
+  static void checkAndCreateFolder({required final String folderPath}) {
+    final directory = Directory(folderPath);
+    if (!directory.existsSync()) {
+      directory.createSync(recursive: true);
+    }
   }
 }
