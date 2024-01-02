@@ -17,8 +17,8 @@ void main() {
   });
 
   group('Autocomplete class tests', () {
-    group('createAutocompleteIndexMap()', () {
-      test('createAutocompleteIndexMap should return the correct index map',
+    group('createAutocompleteWordIndexMap()', () {
+      test('createAutocompleteWordIndexMap should return the correct index map',
           () {
         const expectation = {
           '100%': ['167513'],
@@ -110,7 +110,7 @@ void main() {
         expect(indexMap['delicious)'], isNull);
       });
     });
-    group('createSubstrings()', () {
+    group('createOriginalSubstringMap()', () {
       test('substrings populates correctly', () async {
         final res = Autocomplete.createOriginalSubstringMap(
             wordIndex: mockAutocompleteIndex);
@@ -120,7 +120,7 @@ void main() {
         expect(deep.equals(res, originalSubStringMap), true);
       });
       group('createAutocompleteHashTable() - ', () {
-        test('returns correct list', () async {
+        test('hashes list correctly', () async {
           final res = Autocomplete.createAutocompleteHashTable(
               originalSubStringMap: originalSubStringMap);
           final d = DeepCollectionEquality();
@@ -138,6 +138,9 @@ void main() {
 
 /* cSpell:disable */
 const Map<String, List<String>> originalSubStringMap = {
+  '%': ['3'],
+  '1': ['3', '4'],
+  '2': ['3', '4'],
   'aba': ['3', '4'],
   'abap': ['3', '4'],
   'abapp': ['3', '4'],
@@ -165,42 +168,46 @@ const Map<String, List<String>> originalSubStringMap = {
   'rabap': ['3', '4'],
   'rabapp': ['3', '4'],
   'rabappl': ['3', '4'],
-  'rabapple': ['3', '4'],
+  'rabapple': ['3', '4']
 };
 
 const Map<String, dynamic> autoCompleteHashTable = {
   'substrings': {
-    'aba': 0,
-    'abap': 0,
-    'abapp': 0,
-    'abappl': 0,
-    'abapple': 0,
-    'app': 1,
-    'appl': 1,
-    'apple': 1,
-    'bap': 0,
-    'bapp': 0,
-    'bappl': 0,
-    'bapple': 0,
-    'cra': 0,
-    'crab': 0,
-    'craba': 0,
-    'crabap': 0,
-    'crabapp': 0,
-    'crabappl': 0,
-    'crabapple': 0,
-    'ple': 1,
-    'ppl': 1,
-    'pple': 1,
-    'rab': 0,
-    'raba': 0,
-    'rabap': 0,
-    'rabapp': 0,
-    'rabappl': 0,
-    'rabapple': 0,
+    '%': 0,
+    '1': 1,
+    '2': 1,
+    'aba': 1,
+    'abap': 1,
+    'abapp': 1,
+    'abappl': 1,
+    'abapple': 1,
+    'app': 2,
+    'appl': 2,
+    'apple': 2,
+    'bap': 1,
+    'bapp': 1,
+    'bappl': 1,
+    'bapple': 1,
+    'cra': 1,
+    'crab': 1,
+    'craba': 1,
+    'crabap': 1,
+    'crabapp': 1,
+    'crabappl': 1,
+    'crabapple': 1,
+    'ple': 2,
+    'ppl': 2,
+    'pple': 2,
+    'rab': 1,
+    'raba': 1,
+    'rabap': 1,
+    'rabapp': 1,
+    'rabappl': 1,
+    'rabapple': 1,
   },
   'indexHash': {
-    0: ['3', '4'],
-    1: ['1', '2', '3', '4']
+    0: ['3'],
+    1: ['3', '4'],
+    2: ['1', '2', '3', '4'],
   }
 };

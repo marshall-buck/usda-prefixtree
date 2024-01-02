@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 /// Class to handle reading and writing  files.
-
+// TODO: Add date now for hash for each save method
 class FileLoaderService {
   /// Synchronously opens a file from [filePath]. and returns the contents as a
   /// [String].
@@ -14,6 +14,7 @@ class FileLoaderService {
   Future<void> writeJsonFile(
       {required final String filePath, required final Map contents}) async {
     try {
+      final fileHash = DateTime.now().toIso8601String();
       await File(filePath).writeAsString(jsonEncode(contents));
     } catch (e, st) {
       log(e.toString(), stackTrace: st, name: 'writeJsonFile');

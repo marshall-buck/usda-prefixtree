@@ -7,7 +7,7 @@ import 'package:usda_db_creation/string_ext.dart';
 /// Class to handle the word index for the autocomplete search.
 class Autocomplete {
   /// Minimum number of characters to use for the substring.
-  static int mimLength = 3;
+  static int minLength = 3;
 
   /// Creates a word index from the given [finalDescriptionMap].
   ///
@@ -51,7 +51,7 @@ class Autocomplete {
   }
 
   /// Creates substrings from the given [wordIndex] and returns a map of
-  /// substrings with a minimum of [mimLength] length to a list of corresponding index's.
+  /// substrings with a minimum of [minLength] length to a list of corresponding index's.
   ///
   /// Example usage:
   /// ```dart
@@ -77,17 +77,28 @@ class Autocomplete {
     for (final item in wordIndex.entries) {
       final String word = item.key;
 
-      final List<String> indexList = List<String>.from(item.value);
-
+      final List<String> wordIndexList = List<String>.from(item.value);
+      // this inner loop will check for numbers and percents, for these
+      // we will not enforce a minimum length.
       for (int i = 0; i < word.length; i++) {
-        for (int j = i + mimLength; j <= word.length; j++) {
+        if (word[i] == '%' || word[i].isNumber()) {
+          if (!indexMap.containsKey(word[i])) {
+            indexMap[word[i]] = <String>{};
+          }
+
+          indexMap[word[i].toString()]!.addAll(wordIndexList);
+
+          continue;
+        }
+
+        for (int j = i + minLength; j <= word.length; j++) {
           final String substring = word.substring(i, j);
 
           if (!indexMap.containsKey(substring)) {
             indexMap[substring] = <String>{};
           }
 
-          indexMap[substring]!.addAll(indexList);
+          indexMap[substring]!.addAll(wordIndexList);
         }
       }
     }

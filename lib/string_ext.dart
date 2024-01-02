@@ -68,4 +68,9 @@ extension StringExtensions on String {
     final numberWithPercentRegex = RegExp(r"^\d+%$");
     return numberWithPercentRegex.hasMatch(this);
   }
+
+  bool isNumber() {
+    final numberRegex = RegExp(r"^\d+$");
+    return numberRegex.hasMatch(this);
+  }
 }
