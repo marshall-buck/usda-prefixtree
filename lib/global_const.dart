@@ -3,14 +3,15 @@ const keepTheseNutrients = [1003, 1004, 1005, 1008, 1079, 1258, 2000];
 /// DO NOT DELETE these variables, although they might not be used
 /// now, they can be used at any time in the future.
 const pathToFiles = 'lib/db';
+const pathToPackageFiles = 'db_package_files';
 const fileNameOriginalDBFile = 'original_usda.json';
 const fileNameDuplicatePhrases = 'duplicate_phrases.json';
 const fileNameOriginalDescriptions = 'original_descriptions.txt';
 const fileNameFinalDescriptionsTxt = 'final_descriptions.txt';
 const fileNameAutocompleteWordIndex = 'autocomplete_word_index.json';
 const fileNameAutocompleteWordIndexKeys = 'autocomplete_word_index_keys.txt';
-const fileNameAutocompleteHash = 'autocomplete_hash.json';
-const fileNameFoodsDatabase = 'foods_db.json';
+const fileNameAutocompleteHash = '$pathToPackageFiles/autocomplete_hash.json';
+const fileNameFoodsDatabase = '$pathToPackageFiles/foods_db.json';
 const fileNameNutrientsCsv = 'nutrient.csv';
 const fileNameNutrientsMap = 'original_nutrient_csv.json';
 

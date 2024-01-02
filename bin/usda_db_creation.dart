@@ -18,6 +18,9 @@ void main() async {
   final dbParser = DBParser.init(
       path: relativeOriginalDBPath, fileLoaderService: fileLoaderService);
 
+  await db.replenishFullDatabase(
+      fileLoaderService: fileLoaderService, dbParser: dbParser);
+
   // await db.writeFoodDatabaseJsonFile(
   //     fileLoaderService: fileLoaderService, dbParser: dbParser);
 

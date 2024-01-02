@@ -149,7 +149,7 @@ class Autocomplete {
         newWordIndex[element.key] = hashKey;
       }
     }
-
+// TODO: change index to numbers
     final Map<String, List<String>> stringKeyMap = hashTable
         .map((final key, final value) => MapEntry(key.toString(), value));
 

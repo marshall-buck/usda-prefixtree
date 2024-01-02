@@ -43,7 +43,7 @@ class DBParser {
   /// The map will be of the form:
   /// { id: { description, descriptionLength,  nutrients }, ... }
   ///
-  Map<String, dynamic> createFoodsMap(
+  Map<String, dynamic> createFoodsMapDB(
       {required final List<dynamic> getFoodsList,
       required final Map<int, String> finalDescriptionRecordsMap}) {
     final Map<String, dynamic> foodsMap = {};

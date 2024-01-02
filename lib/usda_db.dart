@@ -118,7 +118,7 @@ Future<void> writeFoodDatabaseJsonFile({
       path: '$pathToFiles/$fileNameFinalDescriptionsTxt',
       fileLoaderService: fileLoaderService);
 
-  final foodsMap = dbParser.createFoodsMap(
+  final foodsMap = dbParser.createFoodsMapDB(
       getFoodsList: dbParser.originalFoodsList,
       finalDescriptionRecordsMap: descriptionMap);
 
@@ -151,8 +151,32 @@ Future<void> replenishFullDatabase(
   final descriptionMap =
       DescriptionParser.createDescriptionMapFromOriginalFoodsList(
           dbParser: dbParser);
-  final createWordIndex = Autocomplete.createAutocompleteWordIndexMap(
+
+  // 2. Creates the autocomplete wordIndex
+  final wordIndex = Autocomplete.createAutocompleteWordIndexMap(
       finalDescriptionMap: descriptionMap);
+
+  // 3. Creates the original substring map
+  final originalSubstring =
+      Autocomplete.createOriginalSubstringMap(wordIndex: wordIndex);
+
+  // 4. Creates the autocomplete hash table
+  final autocompleteHashTable = Autocomplete.createAutocompleteHashTable(
+      originalSubStringMap: originalSubstring);
+
+  // 5. Writes the autocomplete hash table to file
+  await fileLoaderService.writeJsonFile(
+      filePath: '$pathToFiles/$fileNameAutocompleteHash',
+      contents: autocompleteHashTable);
+
+  // 6. Creates the food database.
+  final foodsMap = dbParser.createFoodsMapDB(
+      getFoodsList: dbParser.originalFoodsList,
+      finalDescriptionRecordsMap: descriptionMap);
+
+  // 7. Writes the food database to file.
+  await fileLoaderService.writeJsonFile(
+      filePath: '$pathToFiles/$fileNameFoodsDatabase', contents: foodsMap);
 }
 
 // The answer is 134 for the original descriptions.

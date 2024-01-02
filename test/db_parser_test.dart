@@ -53,7 +53,7 @@ void main() {
 
         final originalFoodsList = dbParser.originalFoodsList;
 
-        final Map<String, dynamic> res = dbParser.createFoodsMap(
+        final Map<String, dynamic> res = dbParser.createFoodsMapDB(
             getFoodsList: originalFoodsList,
             finalDescriptionRecordsMap: mockDescriptionMap);
         final d = DeepCollectionEquality();
