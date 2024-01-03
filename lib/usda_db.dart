@@ -144,40 +144,39 @@ Future<void> writeNutrientMapJsonFile(
 
 /// Recreates all files from scratch.
 /// 1.  Create the Description Map to use for word index
-Future<void> replenishFullDatabase(
-    {required final FileLoaderService fileLoaderService,
-    required final DBParser dbParser}) async {
-  // 1. Creates the final description map.
-  final descriptionMap =
-      DescriptionParser.createDescriptionMapFromOriginalFoodsList(
-          dbParser: dbParser);
+// Future<void> replenishFullDatabase(
+//     {required final FileLoaderService fileLoaderService,
+//     required final DBParser dbParser}) async {
+//   // 1. Creates the final description map.
+//   final descriptionMap =
+//       DescriptionParser.createDescriptionMap(dbParser: dbParser);
 
-  // 2. Creates the autocomplete wordIndex
-  final wordIndex = Autocomplete.createAutocompleteWordIndexMap(
-      finalDescriptionMap: descriptionMap);
+//   // 2. Creates the autocomplete wordIndex
+//   final wordIndex = Autocomplete.createAutocompleteWordIndexMap(
+//       finalDescriptionMap: descriptionMap);
 
-  // 3. Creates the original substring map
-  final originalSubstring =
-      Autocomplete.createOriginalSubstringMap(wordIndex: wordIndex);
+//   // 3. Creates the original substring map
+//   final originalSubstring =
+//       Autocomplete.createOriginalSubstringMap(wordIndex: wordIndex);
 
-  // 4. Creates the autocomplete hash table
-  final autocompleteHashTable = Autocomplete.createAutocompleteHashTable(
-      originalSubStringMap: originalSubstring);
+//   // 4. Creates the autocomplete hash table
+//   final autocompleteHashTable = Autocomplete.createAutocompleteHashTable(
+//       originalSubStringMap: originalSubstring);
 
-  // 5. Writes the autocomplete hash table to file
-  await fileLoaderService.writeJsonFile(
-      filePath: '$pathToFiles/$fileNameAutocompleteHash',
-      contents: autocompleteHashTable);
+//   // 5. Writes the autocomplete hash table to file
+//   await fileLoaderService.writeJsonFile(
+//       filePath: '$pathToFiles/$fileNameAutocompleteHash',
+//       contents: autocompleteHashTable);
 
-  // 6. Creates the food database.
-  final foodsMap = dbParser.createFoodsMapDB(
-      getFoodsList: dbParser.originalFoodsList,
-      finalDescriptionRecordsMap: descriptionMap);
+//   // 6. Creates the food database.
+//   final foodsMap = dbParser.createFoodsMapDB(
+//       getFoodsList: dbParser.originalFoodsList,
+//       finalDescriptionRecordsMap: descriptionMap);
 
-  // 7. Writes the food database to file.
-  await fileLoaderService.writeJsonFile(
-      filePath: '$pathToFiles/$fileNameFoodsDatabase', contents: foodsMap);
-}
+//   // 7. Writes the food database to file.
+//   await fileLoaderService.writeJsonFile(
+//       filePath: '$pathToFiles/$fileNameFoodsDatabase', contents: foodsMap);
+// }
 
 // The answer is 134 for the original descriptions.
 int getLongestDescriptionLength(final DBParser dbParser) {

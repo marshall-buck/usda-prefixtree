@@ -24,10 +24,12 @@ class DescriptionParser {
   /// { 167512: 'Pillsbury Golden Layer Buttermilk Biscuits, (Artificial Flavor,) refrigerated dough' ,
   ///   167513: 'Pillsbury, Cinnamon Rolls with Icing, 100% refrigerated dough',
   ///   167514: 'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry, 2% milk', ...}
-  static DescriptionMap createDescriptionMapFromOriginalFoodsList(
-      {required DBParser dbParser,
-      bool? writeListToFile,
-      bool? writeMapToFile}) {
+  static Future<DescriptionMap?> createDescriptionMap({
+    required DBParser dbParser,
+    bool returnMap = true,
+    bool? writeListToFile,
+    bool? writeMapToFile,
+  }) async {
     final descriptions = DescriptionParser.createOriginalDescriptionRecords(
         originalFoodsList: dbParser.originalFoodsList);
     // assert(descriptions.length == 3);
@@ -43,7 +45,7 @@ class DescriptionParser {
     }
 
     if (writeListToFile == true) {
-      dbParser.fileLoaderService.writeListToTxtFile(
+      await dbParser.fileLoaderService.writeListToTxtFile(
           list: descriptionsFinal,
           filePath: '$pathToFiles/$fileNameFinalDescriptionsTxt');
     }
@@ -51,10 +53,15 @@ class DescriptionParser {
     if (writeMapToFile == true) {
       final convertedMap =
           descriptionMap.map((key, value) => MapEntry(key.toString(), value));
-      dbParser.fileLoaderService.writeJsonFile(
+      await dbParser.fileLoaderService.writeJsonFile(
           filePath: '$pathToFiles/$fileNameFinalDescriptionsMap',
           contents: convertedMap);
     }
+
+    if (!returnMap) {
+      return null;
+    }
+
     return descriptionMap;
   }
 

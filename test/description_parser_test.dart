@@ -35,7 +35,7 @@ void main() {
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
         final dbParser = DBParser.init(
-            path: 'fake', fileLoaderService: mockFileLoaderService);
+            filePath: 'fake', fileLoaderService: mockFileLoaderService);
 
         final res = DescriptionParser.createOriginalDescriptionRecords(
             originalFoodsList: dbParser.originalFoodsList);
@@ -276,7 +276,7 @@ void main() {
     });
   });
   group('createDescriptionMapFromOriginalFoodsList()', () {
-    test('coverts list of descriptions records to map', () {
+    test('coverts list of descriptions records to map', () async {
       when(() => mockFileLoaderService.loadData(filePath: 'fake'))
           .thenReturn(mockUsdaFile);
 
@@ -289,11 +289,11 @@ void main() {
         //     "Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry"
       };
 
-      final dbParser =
-          DBParser.init(path: 'fake', fileLoaderService: mockFileLoaderService);
+      final dbParser = DBParser.init(
+          filePath: 'fake', fileLoaderService: mockFileLoaderService);
 
-      final res = DescriptionParser.createDescriptionMapFromOriginalFoodsList(
-          dbParser: dbParser);
+      final res =
+          await DescriptionParser.createDescriptionMap(dbParser: dbParser);
 
       final mapEquals = MapEquality();
       expect(mapEquals.equals(expected, res), true);
@@ -303,8 +303,8 @@ void main() {
     test('returns true is foodItem has an excluded category', () {
       when(() => mockFileLoaderService.loadData(filePath: 'fake'))
           .thenReturn(mockUsdaFile);
-      final dbParser =
-          DBParser.init(path: 'fake', fileLoaderService: mockFileLoaderService);
+      final dbParser = DBParser.init(
+          filePath: 'fake', fileLoaderService: mockFileLoaderService);
       final originalFoodsList = dbParser.originalFoodsList;
       final foodItem = originalFoodsList[2];
       final res = DescriptionParser.isExcludedCategory(foodItem: foodItem);
@@ -313,8 +313,8 @@ void main() {
     test('returns false is foodItem has an excluded category', () {
       when(() => mockFileLoaderService.loadData(filePath: 'fake'))
           .thenReturn(mockUsdaFile);
-      final dbParser =
-          DBParser.init(path: 'fake', fileLoaderService: mockFileLoaderService);
+      final dbParser = DBParser.init(
+          filePath: 'fake', fileLoaderService: mockFileLoaderService);
       final originalFoodsList = dbParser.originalFoodsList;
       final foodItem = originalFoodsList[0];
       final res = DescriptionParser.isExcludedCategory(foodItem: foodItem);

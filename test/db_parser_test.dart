@@ -23,7 +23,7 @@ void main() {
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
         final dbParser = DBParser.init(
-            path: 'fake', fileLoaderService: mockFileLoaderService);
+            filePath: 'fake', fileLoaderService: mockFileLoaderService);
         // dbParser.init('fake');
         final res = dbParser.originalFoodsList;
 
@@ -35,7 +35,7 @@ void main() {
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
         final dbParser = DBParser.init(
-            path: 'fake', fileLoaderService: mockFileLoaderService);
+            filePath: 'fake', fileLoaderService: mockFileLoaderService);
         final List<Nutrient> result =
             dbParser.createNutrientsList(listOfNutrients: mockFoodNutrients);
         final d = DeepCollectionEquality();
@@ -49,7 +49,7 @@ void main() {
             .thenReturn(mockUsdaFile);
 
         final dbParser = DBParser.init(
-            path: 'fake', fileLoaderService: mockFileLoaderService);
+            filePath: 'fake', fileLoaderService: mockFileLoaderService);
 
         final originalFoodsList = dbParser.originalFoodsList;
 

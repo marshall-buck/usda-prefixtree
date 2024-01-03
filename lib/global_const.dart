@@ -4,7 +4,7 @@ const keepTheseNutrients = [1003, 1004, 1005, 1008, 1079, 1258, 2000];
 /// now, they can be used at any time in the future.
 const pathToFiles = 'lib/db';
 const pathToPackageFiles = 'db_package_files';
-const fileNameOriginalDBFile = 'original_usda.json';
+const fileNameOriginalDBFile = 'do_not_delete/original_usda.json';
 const fileNameDuplicatePhrases = 'duplicate_phrases.json';
 const fileNameOriginalDescriptions = 'original_descriptions.txt';
 const fileNameFinalDescriptionsTxt = 'final_descriptions.txt';
