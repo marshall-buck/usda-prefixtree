@@ -8,6 +8,7 @@ const fileNameOriginalDBFile = 'original_usda.json';
 const fileNameDuplicatePhrases = 'duplicate_phrases.json';
 const fileNameOriginalDescriptions = 'original_descriptions.txt';
 const fileNameFinalDescriptionsTxt = 'final_descriptions.txt';
+const fileNameFinalDescriptionsMap = 'final_descriptions.json';
 const fileNameAutocompleteWordIndex = 'autocomplete_word_index.json';
 const fileNameAutocompleteWordIndexKeys = 'autocomplete_word_index_keys.txt';
 const fileNameAutocompleteHash = '$pathToPackageFiles/autocomplete_hash.json';

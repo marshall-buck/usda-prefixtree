@@ -29,9 +29,10 @@ class FileLoaderService {
 
   /// Takes a [List], and writes a file to given [filePath], creating a new
   ///  line for each list item.
-  Future<void> writeListToTxtFile(
-      {required final List<dynamic> list,
-      required final String filePath}) async {
+  Future<void> writeListToTxtFile({
+    required final String filePath,
+    required final List<dynamic> list,
+  }) async {
     try {
       final File file = File(filePath);
 
@@ -96,6 +97,16 @@ class FileLoaderService {
     final directory = Directory(folderPath);
     if (!directory.existsSync()) {
       directory.createSync(recursive: true);
+    }
+  }
+
+  /// Writes the contents to a file based on its type.
+  Future<void> writeFileByType<T>(
+      {required final String filePath, required final T contents}) async {
+    if (contents is List) {
+      await writeListToTxtFile(list: contents, filePath: filePath);
+    } else if (contents is Map) {
+      await writeJsonFile(filePath: filePath, contents: contents);
     }
   }
 }

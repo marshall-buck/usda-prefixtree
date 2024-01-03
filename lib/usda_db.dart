@@ -54,7 +54,7 @@ Future<void> writeFinalDescriptionsTxtFile(
 Future<void> writeAutocompleteWordIndexToFile({
   required final FileLoaderService fileLoaderService,
 }) async {
-  final descriptionMap = DescriptionParser.createFinalDescriptionMapFromFile(
+  final descriptionMap = DescriptionParser.createFinalDescriptionMapFromTxtFile(
       filePath: '$pathToFiles/$fileNameFinalDescriptionsTxt',
       fileLoaderService: fileLoaderService);
 
@@ -74,7 +74,7 @@ Future<void> writeAutocompleteHashToFile({
   required final FileLoaderService fileLoaderService,
 }) async {
   // Create the description map from file.
-  final descriptionMap = DescriptionParser.createFinalDescriptionMapFromFile(
+  final descriptionMap = DescriptionParser.createFinalDescriptionMapFromTxtFile(
       filePath: '$pathToFiles/$fileNameFinalDescriptionsTxt',
       fileLoaderService: fileLoaderService);
 
@@ -114,7 +114,7 @@ Future<void> writeFoodDatabaseJsonFile({
   required final FileLoaderService fileLoaderService,
   required final DBParser dbParser,
 }) async {
-  final descriptionMap = DescriptionParser.createFinalDescriptionMapFromFile(
+  final descriptionMap = DescriptionParser.createFinalDescriptionMapFromTxtFile(
       filePath: '$pathToFiles/$fileNameFinalDescriptionsTxt',
       fileLoaderService: fileLoaderService);
 

@@ -3,14 +3,66 @@ import 'package:usda_db_creation/file_loader_service.dart';
 import 'package:usda_db_creation/global_const.dart';
 
 typedef DescriptionRecord = (int, String);
+typedef DescriptionMap = Map<int, String>;
 
 /// A class for parsing description strings from the [originalFoodsList].
 /// A map of {{foodId: description}, ...} is needed, for both populating
 /// the main foods database and for creating the autocomplete hash map.
 
 class DescriptionParser {
+  /// Creates Description Map from the original foods list.  This is the only method
+  /// that needs to be called to create the final description map. All other methods
+  /// are helper methods.
+  ///
+  /// Parameters:
+  /// [dbParser] - the DBParser object.
+  /// [writeListToFile] - if true, the list will be written to a file.
+  /// [writeMapToFile] - if true, the map will be written to a file.
+  ///
+  ///
+  /// Returns:
+  /// { 167512: 'Pillsbury Golden Layer Buttermilk Biscuits, (Artificial Flavor,) refrigerated dough' ,
+  ///   167513: 'Pillsbury, Cinnamon Rolls with Icing, 100% refrigerated dough',
+  ///   167514: 'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry, 2% milk', ...}
+  static DescriptionMap createDescriptionMapFromOriginalFoodsList(
+      {required DBParser dbParser,
+      bool? writeListToFile,
+      bool? writeMapToFile}) {
+    final descriptions = DescriptionParser.createOriginalDescriptionRecords(
+        originalFoodsList: dbParser.originalFoodsList);
+    // assert(descriptions.length == 3);
+    final descriptionsFinal =
+        DescriptionParser.removeUnwantedPhrasesFromDescriptions(
+            descriptions: descriptions, unwantedPhrases: unwantedPhrases);
+
+    final DescriptionMap descriptionMap = {};
+    for (final line in descriptionsFinal) {
+      final MapEntry<int, String> entry = MapEntry(line.$1, line.$2);
+
+      descriptionMap[entry.key] = entry.value;
+    }
+
+    if (writeListToFile == true) {
+      dbParser.fileLoaderService.writeListToTxtFile(
+          list: descriptionsFinal,
+          filePath: '$pathToFiles/$fileNameFinalDescriptionsTxt');
+    }
+
+    if (writeMapToFile == true) {
+      final convertedMap =
+          descriptionMap.map((key, value) => MapEntry(key.toString(), value));
+      dbParser.fileLoaderService.writeJsonFile(
+          filePath: '$pathToFiles/$fileNameFinalDescriptionsMap',
+          contents: convertedMap);
+    }
+    return descriptionMap;
+  }
+
+  //************************ Helper Methods **********************************/
+
   /// Parses [originalFoodsList] to create a list of [DescriptionRecord].
   /// The descriptions will be unedited.
+  /// This is the first method called in the process of creating the final database.
   ///
   /// The list will be filtered to remove any unwanted food categories,
   /// from the [excludedCategories] list.  The list is defined in [global_const.dart].
@@ -57,14 +109,14 @@ class DescriptionParser {
     }).toList();
   }
 
-  /// Creates a map from a txt file at [filePath]. the text file
+  /// Creates the description map from a txt file at [filePath]. the text file
   /// must be in the format of (id, description).
   ///
   /// Returns:
   /// { 167512: 'Pillsbury Golden Layer Buttermilk Biscuits, (Artificial Flavor,) refrigerated dough' ,
   ///   167513: 'Pillsbury, Cinnamon Rolls with Icing, 100% refrigerated dough',
   ///   167514: 'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry, 2% milk', ...}
-  static Map<int, String> createFinalDescriptionMapFromFile(
+  static Map<int, String> createFinalDescriptionMapFromTxtFile(
       {required final String filePath,
       required final FileLoaderService fileLoaderService}) {
     final String fileContents = fileLoaderService.loadData(filePath: filePath);
@@ -76,30 +128,6 @@ class DescriptionParser {
     for (final line in lines) {
       final MapEntry<int, String> entry =
           parseDescriptionRecordFromString(line);
-
-      descriptionMap[entry.key] = entry.value;
-    }
-    return descriptionMap;
-  }
-
-  /// Creates a map from the original foods list.
-  ///
-  /// Returns:
-  /// { 167512: 'Pillsbury Golden Layer Buttermilk Biscuits, (Artificial Flavor,) refrigerated dough' ,
-  ///   167513: 'Pillsbury, Cinnamon Rolls with Icing, 100% refrigerated dough',
-  ///   167514: 'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry, 2% milk', ...}
-  static Map<int, String> createDescriptionMapFromOriginalFoodsList(
-      {required DBParser dbParser}) {
-    final descriptions = DescriptionParser.createOriginalDescriptionRecords(
-        originalFoodsList: dbParser.originalFoodsList);
-    // assert(descriptions.length == 3);
-    final descriptionsFinal =
-        DescriptionParser.removeUnwantedPhrasesFromDescriptions(
-            descriptions: descriptions, unwantedPhrases: unwantedPhrases);
-
-    final Map<int, String> descriptionMap = {};
-    for (final line in descriptionsFinal) {
-      final MapEntry<int, String> entry = MapEntry(line.$1, line.$2);
 
       descriptionMap[entry.key] = entry.value;
     }

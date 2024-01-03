@@ -269,7 +269,7 @@ void main() {
             'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry, 2% milk',
       };
 
-      final res = DescriptionParser.createFinalDescriptionMapFromFile(
+      final res = DescriptionParser.createFinalDescriptionMapFromTxtFile(
           filePath: 'fake', fileLoaderService: mockFileLoaderService);
       final mapEquals = MapEquality();
       expect(mapEquals.equals(expected, res), true);
