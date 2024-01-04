@@ -14,9 +14,13 @@ void main() async {
   final dbParser = DBParser.init(
       filePath: '$pathToFiles/$fileNameOriginalDBFile',
       fileLoaderService: fileLoaderService);
+  final descriptions = DescriptionParser();
 
-  await DescriptionParser.createDescriptionMap(
-      dbParser: dbParser, writeListToFile: true, writeMapToFile: true);
+  await descriptions.createDescriptionMap(
+      dbParser: dbParser,
+      writeListToFile: true,
+      writeMapToFile: true,
+      returnMap: false);
 
   // await db.replenishFullDatabase(
   //     fileLoaderService: fileLoaderService, dbParser: dbParser);

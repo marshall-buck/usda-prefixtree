@@ -292,8 +292,8 @@ void main() {
       final dbParser = DBParser.init(
           filePath: 'fake', fileLoaderService: mockFileLoaderService);
 
-      final res =
-          await DescriptionParser.createDescriptionMap(dbParser: dbParser);
+      final descriptions = DescriptionParser();
+      final res = await descriptions.createDescriptionMap(dbParser: dbParser);
 
       final mapEquals = MapEquality();
       expect(mapEquals.equals(expected, res), true);

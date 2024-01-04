@@ -5,11 +5,22 @@ import 'package:usda_db_creation/global_const.dart';
 typedef DescriptionRecord = (int, String);
 typedef DescriptionMap = Map<int, String>;
 
+/// Abstract class for descriptions. Any class that implements this class
+/// must implement the [createDescriptionMap] method.
+abstract class Description {
+  Future<DescriptionMap?> createDescriptionMap({
+    required DBParser dbParser,
+    bool returnMap,
+    bool? writeListToFile,
+    bool? writeMapToFile,
+  });
+}
+
 /// A class for parsing description strings from the [originalFoodsList].
 /// A map of {{foodId: description}, ...} is needed, for both populating
 /// the main foods database and for creating the autocomplete hash map.
 
-class DescriptionParser {
+class DescriptionParser implements Description {
   /// Creates Description Map from the original foods list.  This is the only method
   /// that needs to be called to create the final description map. All other methods
   /// are helper methods.
@@ -25,7 +36,9 @@ class DescriptionParser {
   /// { 167512: 'Pillsbury Golden Layer Buttermilk Biscuits, (Artificial Flavor,) refrigerated dough' ,
   ///   167513: 'Pillsbury, Cinnamon Rolls with Icing, 100% refrigerated dough',
   ///   167514: 'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry, 2% milk', ...}
-  static Future<DescriptionMap?> createDescriptionMap({
+
+  @override
+  Future<DescriptionMap?> createDescriptionMap({
     required DBParser dbParser,
     bool returnMap = true,
     bool? writeListToFile,
