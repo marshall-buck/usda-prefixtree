@@ -12,10 +12,17 @@ class FileLoaderService {
   }
   DateTime get fileHash => _fileHash;
 
-  /// Synchronously opens a file from [filePath]. and returns the contents as a
-  /// [String].
-  String loadData({required final String filePath}) =>
-      File(filePath).readAsStringSync();
+// ************************** File Writers **************************
+
+  /// Writes the contents to a file based on its type.
+  Future<void> writeFileByType<T>(
+      {required final String filePath, required final T contents}) async {
+    if (contents is List) {
+      await writeListToTxtFile(list: contents, filePath: filePath);
+    } else if (contents is Map) {
+      await writeJsonFile(filePath: filePath, contents: contents);
+    }
+  }
 
   /// Writes a json file from a [Map].
   Future<void> writeJsonFile(
@@ -49,6 +56,19 @@ class FileLoaderService {
     }
   }
 
+  /// Synchronously opens a file from [filePath]. and returns the contents as a
+  /// [String].
+  String loadData({required final String filePath}) =>
+      File(filePath).readAsStringSync();
+
+// ************************** File Readers **************************
+
+  ///
+  /// Reads a CSV file from the given [filePath] and returns its contents as a
+  /// list of lists of strings.
+  ///
+  /// Each inner list represents a row in the CSV file, and each string represents a cell value.
+
   Future<List<List<String>>> readCsvFile(String filePath) async {
     final file = File(filePath);
     final List<List<String>> csvData = [];
@@ -64,6 +84,15 @@ class FileLoaderService {
 
     return csvData;
   }
+
+  /// Parses a CSV line and returns a list of fields.
+  ///
+  /// The [line] parameter represents a single line of a CSV file.
+  /// This method iterates over each character in the line and extracts
+  /// the fields separated by commas. If a field is enclosed in double quotes,
+  /// it is treated as a single field even if it contains commas.
+  ///
+  /// Returns a list of strings representing the fields in the CSV line.
 
   List<String> _parseCsvLine(String line) {
     final List<String> fields = [];
@@ -92,21 +121,10 @@ class FileLoaderService {
   }
 
   /// Checks if the specified folder path exists and creates it if it doesn't.
-
-  static void checkAndCreateFolder({required final String folderPath}) {
+  void checkAndCreateFolder({required final String folderPath}) {
     final directory = Directory(folderPath);
     if (!directory.existsSync()) {
       directory.createSync(recursive: true);
-    }
-  }
-
-  /// Writes the contents to a file based on its type.
-  Future<void> writeFileByType<T>(
-      {required final String filePath, required final T contents}) async {
-    if (contents is List) {
-      await writeListToTxtFile(list: contents, filePath: filePath);
-    } else if (contents is Map) {
-      await writeJsonFile(filePath: filePath, contents: contents);
     }
   }
 }
