@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:usda_db_creation/global_const.dart';
+
 /// Class to handle reading and writing  files.
 // TODO: Add date now for hash for each save method
 class FileLoaderService {
@@ -20,13 +22,20 @@ class FileLoaderService {
 
 // ************************** File Writers **************************
 
-  /// Writes the contents to a file based on its type.
+  /// Writes the contents to a file based on its type. appends a _fileHash folder to the path.
   Future<void> writeFileByType<T>(
-      {required final String filePath, required final T contents}) async {
+      {required final String fileName, required final T contents}) async {
+    try {
+      _checkAndCreateFolder();
+    } catch (e, st) {
+      log(e.toString(), stackTrace: st, name: '_checkAndCreateFolder');
+    }
     if (contents is List) {
-      await writeListToTxtFile(filePath: filePath, list: contents);
+      await writeListToTxtFile(
+          filePath: '$pathToFiles/$fileHash/$fileName', list: contents);
     } else if (contents is Map) {
-      await writeJsonFile(filePath: filePath, contents: contents);
+      await writeJsonFile(
+          filePath: '$pathToFiles/$fileHash/$fileName', contents: contents);
     }
   }
 
@@ -127,10 +136,15 @@ class FileLoaderService {
   }
 
   /// Checks if the specified folder path exists and creates it if it doesn't.
-  void checkAndCreateFolder({required final String folderPath}) {
-    final directory = Directory(folderPath);
+  void _checkAndCreateFolder() {
+    final directory = Directory('$pathToFiles/$fileHash');
     if (!directory.existsSync()) {
-      directory.createSync(recursive: true);
+      try {
+        directory.createSync(recursive: true);
+      } catch (e, st) {
+        throw Exception(
+            'Failed to create folder: $pathToFiles/$fileHash\n$e\n$st');
+      }
     }
   }
 }

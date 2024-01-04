@@ -62,7 +62,7 @@ class DescriptionParser implements Description {
     if (writeListToFile == true) {
       await dbParser.fileLoaderService.writeFileByType(
           contents: descriptionsFinal,
-          filePath: '$pathToFiles/${fileHash}_$fileNameFinalDescriptionsTxt');
+          fileName: '${fileHash}_$fileNameFinalDescriptionsTxt');
     }
 
     if (writeMapToFile == true) {
@@ -70,7 +70,7 @@ class DescriptionParser implements Description {
           descriptionMap.map((key, value) => MapEntry(key.toString(), value));
       await dbParser.fileLoaderService.writeFileByType(
           contents: convertedMap,
-          filePath: '$pathToFiles/${fileHash}_$fileNameFinalDescriptionsMap');
+          fileName: '${fileHash}_$fileNameFinalDescriptionsMap');
     }
 
     if (!returnMap) {
