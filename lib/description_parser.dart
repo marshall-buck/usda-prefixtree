@@ -57,19 +57,20 @@ class DescriptionParser implements Description {
 
       descriptionMap[entry.key] = entry.value;
     }
+    final fileHash = dbParser.fileLoaderService.fileHash;
 
     if (writeListToFile == true) {
-      await dbParser.fileLoaderService.writeListToTxtFile(
-          list: descriptionsFinal,
-          filePath: '$pathToFiles/$fileNameFinalDescriptionsTxt');
+      await dbParser.fileLoaderService.writeFileByType(
+          contents: descriptionsFinal,
+          filePath: '$pathToFiles/${fileHash}_$fileNameFinalDescriptionsTxt');
     }
 
     if (writeMapToFile == true) {
       final convertedMap =
           descriptionMap.map((key, value) => MapEntry(key.toString(), value));
-      await dbParser.fileLoaderService.writeJsonFile(
-          filePath: '$pathToFiles/$fileNameFinalDescriptionsMap',
-          contents: convertedMap);
+      await dbParser.fileLoaderService.writeFileByType(
+          contents: convertedMap,
+          filePath: '$pathToFiles/${fileHash}_$fileNameFinalDescriptionsMap');
     }
 
     if (!returnMap) {

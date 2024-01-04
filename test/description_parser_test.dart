@@ -34,6 +34,7 @@ void main() {
         ];
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
+
         final dbParser = DBParser.init(
             filePath: 'fake', fileLoaderService: mockFileLoaderService);
 
@@ -275,10 +276,12 @@ void main() {
       expect(mapEquals.equals(expected, res), true);
     });
   });
-  group('createDescriptionMapFromOriginalFoodsList()', () {
+  group('createDescriptionMap()', () {
     test('coverts list of descriptions records to map', () async {
       when(() => mockFileLoaderService.loadData(filePath: 'fake'))
           .thenReturn(mockUsdaFile);
+      when(() => mockFileLoaderService.fileHash)
+          .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
 
       const expected = {
         167512:

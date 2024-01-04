@@ -5,12 +5,18 @@ import 'dart:io';
 /// Class to handle reading and writing  files.
 // TODO: Add date now for hash for each save method
 class FileLoaderService {
-  late final DateTime _fileHash;
+  final DateTime _fileHash = DateTime.now();
 
-  FileLoaderService() {
-    _fileHash = DateTime.now();
+  // FileLoaderService() {
+  //   // _fileHash = DateTime.parse(DateTime.now().toString());
+  // }
+  // String get fileHash => convertTimestampToDateString();
+  String get fileHash => convertTimestampToDateString();
+
+  String convertTimestampToDateString() {
+    final now = '$_fileHash';
+    return now.replaceAll(" ", "_");
   }
-  DateTime get fileHash => _fileHash;
 
 // ************************** File Writers **************************
 
@@ -18,7 +24,7 @@ class FileLoaderService {
   Future<void> writeFileByType<T>(
       {required final String filePath, required final T contents}) async {
     if (contents is List) {
-      await writeListToTxtFile(list: contents, filePath: filePath);
+      await writeListToTxtFile(filePath: filePath, list: contents);
     } else if (contents is Map) {
       await writeJsonFile(filePath: filePath, contents: contents);
     }
