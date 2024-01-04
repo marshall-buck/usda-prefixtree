@@ -16,6 +16,7 @@ class DescriptionParser {
   ///
   /// Parameters:
   /// [dbParser] - the DBParser object.
+  /// [returnMap] - if true, the map will be returned.
   /// [writeListToFile] - if true, the list will be written to a file.
   /// [writeMapToFile] - if true, the map will be written to a file.
   ///
@@ -116,14 +117,9 @@ class DescriptionParser {
     }).toList();
   }
 
-  /// Creates the description map from a txt file at [filePath]. the text file
-  /// must be in the format of (id, description).
-  ///
-  /// Returns:
-  /// { 167512: 'Pillsbury Golden Layer Buttermilk Biscuits, (Artificial Flavor,) refrigerated dough' ,
-  ///   167513: 'Pillsbury, Cinnamon Rolls with Icing, 100% refrigerated dough',
-  ///   167514: 'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry, 2% milk', ...}
-  static Map<int, String> createFinalDescriptionMapFromTxtFile(
+  /// Helper method to create a [DescriptionMap] from a txt file at [filePath].
+  /// The text file must be in the format of 1 (id, description) per line
+  static DescriptionMap parseDescriptionsFromTxt(
       {required final String filePath,
       required final FileLoaderService fileLoaderService}) {
     final String fileContents = fileLoaderService.loadData(filePath: filePath);
@@ -140,8 +136,21 @@ class DescriptionParser {
     }
     return descriptionMap;
   }
+  // TODO: Add this method to parse a json file.
+  // /// Helper method to create a [DescriptionMap] from a txt file at [filePath].
+  // /// The text file must be in the format of 1 (id, description) per line
+  // static DescriptionMap parseDescriptionsFromJson(
+  //     {required final String filePath,
+  //     required final FileLoaderService fileLoaderService}) {
+  //   final String fileContents = fileLoaderService.loadData(filePath: filePath);
+  //   final Map<String, dynamic> jsonMap = jsonDecode(fileContents);
 
-  /// Parses a string from a text file into a description record.
+  //     descriptionMap[entry.key] = entry.value;
+  //   }
+  //   return descriptionMap;
+  // }
+
+  /// Helper method to parse a description record from a line in a txt file.
   static MapEntry<int, String> parseDescriptionRecordFromString(
       final String line) {
     final int id = int.parse(line.substring(1, 7));
@@ -150,7 +159,7 @@ class DescriptionParser {
     return MapEntry(id, description);
   }
 
-  /// Finds the longest description in a list of description records.
+  /// Helper Method to get the longest description in a list of [DescriptionRecord]s.
   static int getLongestDescription(
       {required final List<DescriptionRecord> descriptions}) {
     return descriptions.fold(
@@ -159,17 +168,14 @@ class DescriptionParser {
             maxLength > record.$2.length ? maxLength : record.$2.length);
   }
 
-  /// Creates a frequency map of repeated phrases in the given text.
-
-  /// Example usage:
-  /// ```dart
-  /// listOfRecords= ['Lorem ipsum dolor sit amet',
-  ///                'Lorem ipsum dolor.',
-  ///                'Lorem ipsum dolor sit amet',
-  ///                'Hi there!'].
-  /// createRepeatedPhraseFrequencyMap(listOfRecords: listOfRecords,
-  ///                                   minPhraseLength: 10,
-  ///                                   minNumberOfDuplicatesToShow: 2);
+  /// Helper method to create a frequency map of repeated phrases in a list of strings.
+  ///
+  /// Parameters:
+  /// [listOfRecords] - the list of [DescriptionRecord]s.
+  /// [minPhraseLength] - the minimum length of the phrase to be included in the map.
+  /// [minNumberOfDuplicatesToShow] - the minimum number of duplicate phrases to be included in the map.
+  ///
+  ///
   /// Returns:
   ///   {Lorem ipsum: 3,
   ///     Lorem ipsum dolor: 3,
@@ -177,7 +183,7 @@ class DescriptionParser {
   ///     Lorem ipsum dolor sit amet: 2,
   ///     ipsum dolor: 3,
   ///     ipsum dolor sit: 2, ...}
-  /// ```
+  ///
 
   static Map<String, int> createRepeatedPhraseFrequencyMap(
       {required final List<DescriptionRecord> listOfRecords,
@@ -209,7 +215,7 @@ class DescriptionParser {
     return Map.fromEntries(sortedList);
   }
 
-  /// Creates a list of  phrase's from a [sentence].
+  /// Helper method to create a list of phrase's from a [sentence].
   ///
   /// The phrase will be at least [minPhraseLength] long.
   ///
@@ -259,6 +265,8 @@ class DescriptionParser {
     return listOfPhrases.toList();
   }
 
+  /// Helper method to check if a food item is in an excluded category.
+  ///  [excludedCategories] can be found in [global_const.dart].
   static isExcludedCategory({required final Map<dynamic, dynamic> foodItem}) {
     final foodCategory = foodItem['foodCategory'];
     final foodCategoryDescription = foodCategory['description'];
