@@ -6,8 +6,8 @@ typedef DescriptionRecord = (int, String);
 typedef DescriptionMap = Map<int, String>;
 
 /// Abstract class for descriptions. Any class that implements this class
-/// must implement the [createDescriptionMap] method.  As this is needed for
-/// populating the main foods database and for creating the autocomplete hash map.
+/// must implement the [createDescriptionMap] method.  The database is
+/// dependent on the [DescriptionMap] created by this method.
 abstract class Description {
   Future<DescriptionMap?> createDescriptionMap({
     required DBParser dbParser,
@@ -17,18 +17,25 @@ abstract class Description {
   });
 }
 
-/// A class for parsing description strings from the [originalFoodsList].
-/// A map of {{foodId: description}, ...} is needed, for both populating
-/// the main foods database and for creating the autocomplete hash map.
+/// A class for parsing description strings from the [originalFoodsList] of the
+/// original_usda.json file.
+///
+/// The [originalFoodsList] is a list of food items at the jsonFile['SRLegacyFoods'].
+/// This is initialized in the [DBParser] class.
+///
+/// A map of {167513: 'Pillsbury, Cinnamon Rolls with Icing, 100% refrigerated dough', ...}
+/// is needed, for both populating the main foods database and for creating the autocomplete hash map.
 
 class DescriptionParser implements Description {
-  /// Creates Description Map from the original foods list.  This is the only method
+  /// Creates [DescriptionMap] from the original foods list.
+  ///
+  /// This is the only method
   /// that needs to be called to create the final description map. All other methods
   /// are helper methods.
   ///
   /// Parameters:
   /// [dbParser] - the DBParser object.
-  /// [returnMap] - if true, the map will be returned.
+  /// [returnMap] - if true (default), the map will be returned.
   /// [writeListToFile] - if true, the list will be written to a file.
   /// [writeMapToFile] - if true, the map will be written to a file.
   ///
