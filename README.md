@@ -14,7 +14,7 @@ The output is 2 files.
 
 
 
-
+### Process
 
 1. Create a map food descriptions `{id: description, ...}` from the original database.  Parse descriptions as necessary.
 2. Create the autocomplete hash file, from parsed descriptions.
