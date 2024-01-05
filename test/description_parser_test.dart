@@ -18,7 +18,7 @@ void main() {
     tear_down();
   });
   group('DescriptionParser class tests', () {
-    group('populateOriginalDescriptions', () {
+    group('createOriginalDescriptionRecords()', () {
       test('populates the correct records', () {
         const List<DescriptionRecord> expectedResults = [
           (
@@ -41,7 +41,10 @@ void main() {
         final res = DescriptionParser.createOriginalDescriptionRecords(
             originalFoodsList: dbParser.originalFoodsList);
 
-        expect(res, expectedResults);
+        final listEquals = ListEquality();
+        expect(listEquals.equals(expectedResults, res), true);
+
+        // expect(res, expectedResults);
       });
     });
     group('getLongestDescription()--', () {
@@ -67,7 +70,7 @@ void main() {
     group('separateIntoPhrasesWithMinimumLength()', () {
       test('String greater than twice minLength returns correctly', () {
         // 'Quietly, an old oak stood, surrounded by natures.'
-
+        const sentence49 = 'Quietly, an old oak stood, surrounded by natures.';
         const expectation = [
           'Quietly, an old oak stood,',
           'Quietly, an old oak stood, surrounded',
@@ -401,26 +404,5 @@ const descriptionRecords = [
   (502345, 'The sun rose, casting a golden light on the new day.'),
   (512346, 'Enchanted whispers echoed in the forgotten ruins.')
 ]; //length 55
-const sentence134 =
-    'Under the (shimmering) moonlight, an old oak, rooted deeply, stood majestically as the silent guardian of the ancient, mystical woods.';
-const sentence49 = 'Quietly, an old oak stood, surrounded by natures.';
 
-// const expectation = [
-//   'Quietly, an old oak ',
-//   'Quietly, an old oak stood,',
-//   'Quietly, an old oak stood, surrounded',
-//   'Quietly, an old oak stood, surrounded by',
-//   'Quietly, an old oak stood, surrounded by natures.',
-//   'an old oak stood, surrounded',
-//   'an old oak stood, surrounded by',
-//   'an old oak stood, surrounded by natures.',
-//   'old oak stood, surrounded',
-//   'old oak stood, surrounded by',
-//   'old oak stood, surrounded by natures.',
-//   'oak stood, surrounded',
-//   'oak stood, surrounded by',
-//   'oak stood, surrounded by natures.',
-//   'stood, surrounded by',
-//   'stood, surrounded by natures.',
-//   'surrounded by natures.'
-// ];
+

@@ -6,7 +6,8 @@ typedef DescriptionRecord = (int, String);
 typedef DescriptionMap = Map<int, String>;
 
 /// Abstract class for descriptions. Any class that implements this class
-/// must implement the [createDescriptionMap] method.
+/// must implement the [createDescriptionMap] method.  As this is needed for
+/// populating the main foods database and for creating the autocomplete hash map.
 abstract class Description {
   Future<DescriptionMap?> createDescriptionMap({
     required DBParser dbParser,
@@ -44,9 +45,13 @@ class DescriptionParser implements Description {
     bool? writeListToFile,
     bool? writeMapToFile,
   }) async {
+    if (!returnMap && !writeListToFile! && !writeMapToFile!) {
+      throw ArgumentError(
+          'One of the following parameters must be true: returnMap, writeListToFile, writeMapToFile');
+    }
     final descriptions = DescriptionParser.createOriginalDescriptionRecords(
         originalFoodsList: dbParser.originalFoodsList);
-    // assert(descriptions.length == 3);
+
     final descriptionsFinal =
         DescriptionParser.removeUnwantedPhrasesFromDescriptions(
             descriptions: descriptions, unwantedPhrases: unwantedPhrases);
