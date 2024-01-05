@@ -1,25 +1,32 @@
 import 'dart:collection';
 
 import 'package:collection/collection.dart';
+import 'package:usda_db_creation/description_parser.dart';
 import 'package:usda_db_creation/global_const.dart';
 import 'package:usda_db_creation/string_ext.dart';
 
+// TODO: make the  parameters from the descriptions.
+// abstract class AutoComplete {
+//   Map<String, dynamic> createAutocompleteHashTable(
+//       {required final Map<String, List<String>> originalSubStringMap});
+// }
+
 /// Class to handle the word index for the autocomplete search.
-class Autocomplete {
+class AutocompleteHash {
   /// Minimum number of characters to use for the substring.
   static int minLength = 3;
 
   /// Creates a word index from the given [finalDescriptionMap].
   ///
   /// Parameters:
-  /// [finalDescriptionMap] - the [DescriptionRecords] from a text file.
+  /// [finalDescriptionMap] -  [DescriptionMap].
   ///
   /// Returns - [Map]
   ///  {..."apple": ["167782",..],
   ///      "apples": [ "173175", "174170",...],
   ///      "orange": [ "171686", "171687",...], ...}.
   static Map<String, List<String>> createAutocompleteWordIndexMap(
-      {required final Map<int, String> finalDescriptionMap}) {
+      {required final DescriptionMap finalDescriptionMap}) {
     final indexMap = SplayTreeMap<String, List<String>>(
         (final a, final b) => a.compareTo(b));
 
@@ -139,7 +146,8 @@ class Autocomplete {
   ///    }
   ///   }
   /// ```
-  static Map<String, dynamic> createAutocompleteHashTable(
+
+  Map<String, dynamic> createAutocompleteHashTable(
       {required final Map<String, List<String>> originalSubStringMap}) {
     final Map<String, int> newWordIndex = {};
     final Map<int, List<String>> hashTable = {};

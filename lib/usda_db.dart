@@ -58,7 +58,7 @@ Future<void> writeAutocompleteWordIndexToFile({
       filePath: '$pathToFiles/$fileNameFinalDescriptionsTxt',
       fileLoaderService: fileLoaderService);
 
-  final indexMap = Autocomplete.createAutocompleteWordIndexMap(
+  final indexMap = AutocompleteHash.createAutocompleteWordIndexMap(
       finalDescriptionMap: descriptionMap);
   await fileLoaderService.writeJsonFile(
       filePath: '$pathToFiles/$fileNameAutocompleteWordIndex',
@@ -69,30 +69,31 @@ Future<void> writeAutocompleteWordIndexToFile({
       filePath: '$pathToFiles/$fileNameAutocompleteWordIndexKeys');
 }
 
-/// Creates the autocomplete hash table and writes to [path].
-Future<void> writeAutocompleteHashToFile({
-  required final FileLoaderService fileLoaderService,
-}) async {
-  // Create the description map from file.
-  final descriptionMap = DescriptionParser.parseDescriptionsFromTxt(
-      filePath: '$pathToFiles/$fileNameFinalDescriptionsTxt',
-      fileLoaderService: fileLoaderService);
+// /// Creates the autocomplete hash table and writes to [path].
+// Future<void> writeAutocompleteHashToFile({
+//   required final FileLoaderService fileLoaderService,
+// }) async {
+//   // Create the description map from file.
+//   final descriptionMap = DescriptionParser.parseDescriptionsFromTxt(
+//       filePath: '$pathToFiles/$fileNameFinalDescriptionsTxt',
+//       fileLoaderService: fileLoaderService);
 
-  // Create the autocomplete index map from the description map.
-  final autoCompleteWordIndex = Autocomplete.createAutocompleteWordIndexMap(
-      finalDescriptionMap: descriptionMap);
+//   // Create the autocomplete index map from the description map.
+//   final autoCompleteWordIndex = AutocompleteHash.createAutocompleteWordIndexMap(
+//       finalDescriptionMap: descriptionMap);
 
-  // Create the substrings from the autocomplete index map.
-  final substrings =
-      Autocomplete.createOriginalSubstringMap(wordIndex: autoCompleteWordIndex);
+//   // Create the substrings from the autocomplete index map.
+//   final substrings = AutocompleteHash._createOriginalSubstringMap(
+//       wordIndex: autoCompleteWordIndex);
+//   final autocomplete = AutocompleteHash();
 
-  // Create the hash table from the substrings.
-  final hash = Autocomplete.createAutocompleteHashTable(
-      originalSubStringMap: substrings);
+//   // Create the hash table from the substrings.
+//   final hash = autocomplete.createAutocompleteHashTable(
+//       originalSubStringMap: substrings);
 
-  await fileLoaderService.writeJsonFile(
-      filePath: '$pathToFiles/$fileNameAutocompleteHash', contents: hash);
-}
+//   await fileLoaderService.writeJsonFile(
+//       filePath: '$pathToFiles/$fileNameAutocompleteHash', contents: hash);
+// }
 
 /// Method to create the foods database file
 /// Format:

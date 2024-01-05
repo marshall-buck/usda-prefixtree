@@ -47,7 +47,7 @@ void main() {
           'shake': ['167514']
         };
 
-        final indexMap = Autocomplete.createAutocompleteWordIndexMap(
+        final indexMap = AutocompleteHash.createAutocompleteWordIndexMap(
             finalDescriptionMap: mockDescriptionMap);
 
         final deepEquals = const DeepCollectionEquality();
@@ -57,7 +57,7 @@ void main() {
           () {
         final Map<int, String> descriptionMap = {};
 
-        final indexMap = Autocomplete.createAutocompleteWordIndexMap(
+        final indexMap = AutocompleteHash.createAutocompleteWordIndexMap(
           finalDescriptionMap: descriptionMap,
         );
 
@@ -74,7 +74,7 @@ void main() {
           171686: 'orange being is a citrus fruit',
         };
 
-        final indexMap = Autocomplete.createAutocompleteWordIndexMap(
+        final indexMap = AutocompleteHash.createAutocompleteWordIndexMap(
           finalDescriptionMap: descriptionMap,
         );
 
@@ -95,7 +95,7 @@ void main() {
           171686: 'orange being is a citrus/fruit 100%',
         };
 
-        final indexMap = Autocomplete.createAutocompleteWordIndexMap(
+        final indexMap = AutocompleteHash.createAutocompleteWordIndexMap(
           finalDescriptionMap: descriptionMap,
         );
 
@@ -112,7 +112,7 @@ void main() {
     });
     group('createOriginalSubstringMap()', () {
       test('substrings populates correctly', () async {
-        final res = Autocomplete.createOriginalSubstringMap(
+        final res = AutocompleteHash.createOriginalSubstringMap(
             wordIndex: mockAutocompleteIndex);
 
         final deep = DeepCollectionEquality();
@@ -121,7 +121,8 @@ void main() {
       });
       group('createAutocompleteHashTable() - ', () {
         test('hashes list correctly', () async {
-          final res = Autocomplete.createAutocompleteHashTable(
+          final autocomplete = AutocompleteHash();
+          final res = autocomplete.createAutocompleteHashTable(
               originalSubStringMap: originalSubStringMap);
           final d = DeepCollectionEquality();
 
