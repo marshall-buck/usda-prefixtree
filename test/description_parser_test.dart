@@ -18,6 +18,48 @@ void main() {
     tear_down();
   });
   group('DescriptionParser class tests', () {
+    group('createDescriptionMap()', () {
+      test('coverts list of descriptions records to map', () async {
+        when(() => mockFileLoaderService.loadData(filePath: 'fake'))
+            .thenReturn(mockUsdaFile);
+        when(() => mockFileLoaderService.fileHash)
+            .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
+
+        const expected = {
+          167512:
+              "Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough",
+          167513: "Pillsbury, Cinnamon Rolls with Icing, refrigerated dough",
+          // excluded category
+          // 167514:
+          //     "Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry"
+        };
+
+        final dbParser = DBParser.init(
+            filePath: 'fake', fileLoaderService: mockFileLoaderService);
+
+        final descriptions = DescriptionParser();
+        final res = await descriptions.createDescriptionMap(dbParser: dbParser);
+
+        final mapEquals = MapEquality();
+        expect(mapEquals.equals(expected, res), true);
+      });
+
+      test('Throws ArgumentError', () {
+        when(() => mockFileLoaderService.loadData(filePath: 'fake'))
+            .thenReturn(mockUsdaFile);
+        when(() => mockFileLoaderService.fileHash)
+            .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
+        final descriptions = DescriptionParser();
+        final dbParser = DBParser.init(
+            filePath: 'fake', fileLoaderService: mockFileLoaderService);
+        final res = descriptions.createDescriptionMap(
+            dbParser: dbParser,
+            returnMap: false,
+            writeListToFile: false,
+            writeMapToFile: false);
+        expect(res, throwsArgumentError);
+      });
+    });
     group('createOriginalDescriptionRecords()', () {
       test('populates the correct records', () {
         const List<DescriptionRecord> expectedResults = [
@@ -47,6 +89,7 @@ void main() {
         // expect(res, expectedResults);
       });
     });
+
     group('getLongestDescription()--', () {
       test('returns length of longest string', () {
         final res = DescriptionParser.getLongestDescription(
@@ -279,32 +322,7 @@ void main() {
       expect(mapEquals.equals(expected, res), true);
     });
   });
-  group('createDescriptionMap()', () {
-    test('coverts list of descriptions records to map', () async {
-      when(() => mockFileLoaderService.loadData(filePath: 'fake'))
-          .thenReturn(mockUsdaFile);
-      when(() => mockFileLoaderService.fileHash)
-          .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
 
-      const expected = {
-        167512:
-            "Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough",
-        167513: "Pillsbury, Cinnamon Rolls with Icing, refrigerated dough",
-        // excluded category
-        // 167514:
-        //     "Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry"
-      };
-
-      final dbParser = DBParser.init(
-          filePath: 'fake', fileLoaderService: mockFileLoaderService);
-
-      final descriptions = DescriptionParser();
-      final res = await descriptions.createDescriptionMap(dbParser: dbParser);
-
-      final mapEquals = MapEquality();
-      expect(mapEquals.equals(expected, res), true);
-    });
-  });
   group('isExcludedCategory', () {
     test('returns true is foodItem has an excluded category', () {
       when(() => mockFileLoaderService.loadData(filePath: 'fake'))
