@@ -46,7 +46,7 @@ Future<void> writeFinalDescriptionsTxtFile(
       DescriptionParser.removeUnwantedPhrasesFromDescriptions(
           descriptions: descriptions, unwantedPhrases: unwantedPhrases);
   await fileLoaderService.writeListToTxtFile(
-      list: descriptionsFinal,
+      contents: descriptionsFinal,
       filePath: '$pathToFiles/$fileNameFinalDescriptionsTxt');
 }
 
@@ -65,7 +65,7 @@ Future<void> writeAutocompleteWordIndexToFile({
       contents: indexMap);
   final indexKeys = indexMap.keys.toList();
   await fileLoaderService.writeListToTxtFile(
-      list: indexKeys,
+      contents: indexKeys,
       filePath: '$pathToFiles/$fileNameAutocompleteWordIndexKeys');
 }
 

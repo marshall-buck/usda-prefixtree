@@ -32,8 +32,8 @@ class FileLoaderService {
     }
     if (contents is List) {
       await writeListToTxtFile(
-          filePath: '$pathToFiles/$fileHash/$fileName', list: contents);
-    } else if (contents is Map) {
+          filePath: '$pathToFiles/$fileHash/$fileName', contents: contents);
+    } else if (contents is Map<String, dynamic>) {
       await writeJsonFile(
           filePath: '$pathToFiles/$fileHash/$fileName', contents: contents);
     }
@@ -41,7 +41,8 @@ class FileLoaderService {
 
   /// Writes a json file from a [Map].
   Future<void> writeJsonFile(
-      {required final String filePath, required final Map contents}) async {
+      {required final String filePath,
+      required final Map<String, dynamic> contents}) async {
     try {
       await File(filePath).writeAsString(jsonEncode(contents));
     } catch (e, st) {
@@ -53,14 +54,14 @@ class FileLoaderService {
   ///  line for each list item.
   Future<void> writeListToTxtFile({
     required final String filePath,
-    required final List<dynamic> list,
+    required final List<dynamic> contents,
   }) async {
     try {
       final File file = File(filePath);
 
       final IOSink sink = file.openWrite();
 
-      for (final line in list) {
+      for (final line in contents) {
         sink.writeln(line);
       }
 
