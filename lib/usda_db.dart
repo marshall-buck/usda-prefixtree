@@ -17,22 +17,22 @@ import 'package:usda_db_creation/nutrient.dart';
 /// Creates a duplicate phrases file based on parameters and writes to [path].
 /// This is not used in the database, but is useful for finding ways to shorten
 /// the descriptions.
-Future<void> writeDuplicatePhrasesToFile(
-    {final int minPhraseLength = 20,
-    final minNumberOfDuplicatesToShow = 25,
-    required final FileLoaderService fileLoaderService,
-    required final DBParser dbParser}) async {
-  final descriptionRecords = DescriptionParser.createOriginalDescriptionRecords(
-      originalFoodsList: dbParser.originalFoodsList);
+// Future<void> writeDuplicatePhrasesToFile(
+//     {final int minPhraseLength = 20,
+//     final minNumberOfDuplicatesToShow = 25,
+//     required final FileLoaderService fileLoaderService,
+//     required final DBParser dbParser}) async {
+//   final descriptionRecords = DescriptionParser.createOriginalDescriptionRecords(
+//       originalFoodsList: dbParser.originalFoodsList);
 
-  final repeats = DescriptionParser.createRepeatedPhraseFrequencyMap(
-      listOfRecords: descriptionRecords,
-      minPhraseLength: minPhraseLength,
-      minNumberOfDuplicatesToShow: minNumberOfDuplicatesToShow);
+//   final repeats = DescriptionParser.createRepeatedPhraseFrequencyMap(
+//       listOfRecords: descriptionRecords,
+//       minPhraseLength: minPhraseLength,
+//       minNumberOfDuplicatesToShow: minNumberOfDuplicatesToShow);
 
-  await fileLoaderService.writeJsonFile(
-      filePath: '$pathToFiles/$fileNameDuplicatePhrases', contents: repeats);
-}
+//   await fileLoaderService.writeJsonFile(
+//       filePath: '$pathToFiles/$fileNameDuplicatePhrases', contents: repeats);
+// }
 
 /// Creates a final_descriptions.txt file and writes to [path]. This is useful
 /// to easily inspect the final descriptions.  It is not needed for the database.
