@@ -156,16 +156,46 @@ void main() {
       });
     });
     group('createRepeatedPhraseFrequencyMap()', () {
-      test('returns duplicates from anywhere in sentence', () {
-        final Map<String, int> res =
-            DescriptionParser.createRepeatedPhraseFrequencyMap(
+      test('returns duplicates from anywhere in sentence', () async {
+        final Map<String, int>? res =
+            await DescriptionParser.createRepeatedPhraseFrequencyMap(
                 listOfRecords: mockDescriptionRecords,
                 minPhraseLength: 28,
-                minNumberOfDuplicatesToShow: 3);
+                minNumberOfDuplicatesToShow: 3,
+                returnMap: true);
 
         final bool doesContainValue1 =
-            res.containsKey('this is a repeated phrase 28');
+            res!.containsKey('this is a repeated phrase 28');
         expect(doesContainValue1, true);
+      });
+      test('writeByType is called', () async {
+        when(() => mockFileLoaderService.loadData(filePath: 'fake'))
+            .thenReturn(mockUsdaFile);
+        when(() => mockFileLoaderService.fileHash)
+            .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
+
+        when(() => mockFileLoaderService.writeFileByType<Map<String, int>>(
+              fileName: any(
+                named: 'fileName',
+              ),
+              contents: any<Map<String, int>>(named: 'contents'),
+            )).thenAnswer((_) async {});
+
+        final dbParser = DBParser.init(
+            filePath: 'fake', fileLoaderService: mockFileLoaderService);
+        final Map<String, int>? res =
+            await DescriptionParser.createRepeatedPhraseFrequencyMap(
+                listOfRecords: mockDescriptionRecords,
+                minPhraseLength: 28,
+                minNumberOfDuplicatesToShow: 3,
+                dbParser: dbParser,
+                returnMap: false);
+
+        expect(res, isNull);
+
+        verify(() => mockFileLoaderService.writeFileByType<Map<String, int>>(
+            fileName: '$pathToFiles/${mockFileLoaderService.fileHash}/fileName',
+            contents: {"167512": 1})).called(1);
       });
     });
     group('separateIntoPhrasesWithMinimumLength()', () {

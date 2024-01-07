@@ -211,10 +211,12 @@ class DescriptionParser implements Description {
   ///     ipsum dolor sit: 2, ...}
   ///
 
-  static Map<String, int> createRepeatedPhraseFrequencyMap(
+  static Future<Map<String, int>?> createRepeatedPhraseFrequencyMap(
       {required final List<DescriptionRecord> listOfRecords,
       required final int minPhraseLength,
-      required final minNumberOfDuplicatesToShow}) {
+      required final minNumberOfDuplicatesToShow,
+      DBParser? dbParser,
+      bool returnMap = false}) async {
     final Map<String, int> freqMap = {};
 
     for (final record in listOfRecords) {
@@ -238,7 +240,15 @@ class DescriptionParser implements Description {
     final sortedList = freqMap.entries.toList()
       ..sort((final a, final b) => b.value.compareTo(a.value));
 
-    return Map.fromEntries(sortedList);
+    final Map<String, int> outPut = Map.fromEntries(sortedList);
+
+    if (dbParser != null) {
+      final fileHash = dbParser.fileLoaderService.fileHash;
+
+      await dbParser.fileLoaderService.writeFileByType(
+          contents: outPut, fileName: '${fileHash}_$fileNameDuplicatePhrases');
+    }
+    return returnMap ? outPut : null;
   }
 
   /// Helper method to create a list of phrase's from a [sentence].
