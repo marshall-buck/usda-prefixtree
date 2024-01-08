@@ -1,6 +1,7 @@
 import 'package:usda_db_creation/db_parser.dart';
 import 'package:usda_db_creation/file_loader_service.dart';
 import 'package:usda_db_creation/global_const.dart';
+import 'package:usda_db_creation/string_ext.dart';
 
 typedef DescriptionRecord = (int, String);
 typedef DescriptionMap = Map<int, String>;
@@ -222,8 +223,9 @@ class DescriptionParser implements Description {
 
     for (final record in listOfRecords) {
       final String description = record.$2;
-      final List<String?> phrases = separateIntoPhrasesWithMinimumLength(
-          sentence: description, minPhraseLength: minPhraseLength);
+      final List<String?> phrases =
+          description.separateIntoPhrasesWithMinimumLength(
+              minPhraseLength: minPhraseLength);
 
       for (final phrase in phrases) {
         if (phrase!.isNotEmpty) {
@@ -250,56 +252,6 @@ class DescriptionParser implements Description {
           contents: outPut, fileName: '${fileHash}_$fileNameDuplicatePhrases');
     }
     return returnMap ? outPut : null;
-  }
-
-  /// Helper method to create a list of phrase's from a [sentence].
-  ///
-  /// The phrase will be at least [minPhraseLength] long.
-  ///
-  /// separateIntoPhrasesWithMinimumLength(
-  ///           "Quietly, an old oak stood, surrounded by natures.", 20) =>
-  /// [
-  ///        "Quietly, an old oak stood,",
-  ///        "Quietly, an old oak stood, surrounded",
-  ///        "Quietly, an old oak stood, surrounded by",
-  ///        "Quietly, an old oak stood, surrounded by natures.",
-  ///        "an old oak stood, surrounded",
-  ///        "an old oak stood, surrounded by",
-  ///        "an old oak stood, surrounded by natures.",
-  ///        "old oak stood, surrounded",
-  ///        "old oak stood, surrounded by",
-  ///        "old oak stood, surrounded by natures.",
-  ///        "oak stood, surrounded",
-  ///        "oak stood, surrounded by",
-  ///        "oak stood, surrounded by natures.",
-  ///        "stood, surrounded by",
-  ///        "stood, surrounded by natures.",
-  ///        "surrounded by natures."
-  ///      ];
-
-  static List<String?> separateIntoPhrasesWithMinimumLength({
-    required final String sentence,
-    required final int minPhraseLength,
-  }) {
-    final Set<String> listOfPhrases = {};
-
-    final List<String> wordList = sentence.split(' ');
-
-    int length = wordList.join(' ').length;
-
-    while (length >= minPhraseLength) {
-      String phrase = wordList.removeAt(0);
-
-      for (final word in wordList) {
-        phrase = '$phrase $word';
-        if (phrase.length >= minPhraseLength) {
-          listOfPhrases.add(phrase);
-        }
-      }
-      length = wordList.join(' ').length;
-    }
-
-    return listOfPhrases.toList();
   }
 
   /// Helper method to check if a food item is in an excluded category.

@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:test/test.dart';
 import 'package:usda_db_creation/string_ext.dart';
 
@@ -22,17 +23,17 @@ void main() {
 
     group('stripDashedAndParenthesisWord()', () {
       test(' separates words with dashes or parentheses', () {
-        expect('hello-there'.stripDashedAndParenthesisAndorwardSlashesWord(),
+        expect('hello-there'.stripDashedAndParenthesisAndForwardSlashesWord(),
             ['hello', 'there']);
-        expect(
-            'hello'.stripDashedAndParenthesisAndorwardSlashesWord(), ['hello']);
-        expect('ready-to-bake'.stripDashedAndParenthesisAndorwardSlashesWord(),
+        expect('hello'.stripDashedAndParenthesisAndForwardSlashesWord(),
+            ['hello']);
+        expect('ready-to-bake'.stripDashedAndParenthesisAndForwardSlashesWord(),
             ['ready', 'to', 'bake']);
-        expect('-to-bake'.stripDashedAndParenthesisAndorwardSlashesWord(),
+        expect('-to-bake'.stripDashedAndParenthesisAndForwardSlashesWord(),
             ['', 'to', 'bake']);
-        expect('-to-bake-'.stripDashedAndParenthesisAndorwardSlashesWord(),
+        expect('-to-bake-'.stripDashedAndParenthesisAndForwardSlashesWord(),
             ['', 'to', 'bake', '']);
-        expect('syrup/caramel'.stripDashedAndParenthesisAndorwardSlashesWord(),
+        expect('syrup/caramel'.stripDashedAndParenthesisAndForwardSlashesWord(),
             ['syrup', 'caramel']);
       });
     });
@@ -106,37 +107,97 @@ void main() {
         expect(notNumber.isNumberWithPercent(), false);
       });
     });
+    group('separateIntoPhrasesWithMinimumLength()', () {
+      test('String greater than twice minLength returns correctly', () {
+        // 'Quietly, an old oak stood, surrounded by natures.'
+        const sentence49 = 'Quietly, an old oak stood, surrounded by natures.';
+        const expectation = [
+          'Quietly, an old oak stood,',
+          'Quietly, an old oak stood, surrounded',
+          'Quietly, an old oak stood, surrounded by',
+          'Quietly, an old oak stood, surrounded by natures.',
+          'an old oak stood, surrounded',
+          'an old oak stood, surrounded by',
+          'an old oak stood, surrounded by natures.',
+          'old oak stood, surrounded',
+          'old oak stood, surrounded by',
+          'old oak stood, surrounded by natures.',
+          'oak stood, surrounded',
+          'oak stood, surrounded by',
+          'oak stood, surrounded by natures.',
+          'stood, surrounded by',
+          'stood, surrounded by natures.',
+          'surrounded by natures.'
+        ];
+        /* cSpell:enable */
+        final res = sentence49.separateIntoPhrasesWithMinimumLength(
+          minPhraseLength: 20,
+        );
+
+        final listEquals = ListEquality();
+
+        expect(listEquals.equals(expectation, res), true);
+      });
+      test('String of equal length to minLength returns correctly', () {
+        // 'Quietly, an old oak stood, surrounded by natures.'
+
+        const expectation = [
+          'Quietly, an old oak ',
+        ];
+
+        final res = 'Quietly, an old oak '.separateIntoPhrasesWithMinimumLength(
+          minPhraseLength: 20,
+        );
+
+        final listEquals = ListEquality();
+        expect(listEquals.equals(expectation, res), true);
+      });
+      test('String of equal length + 1 to minLength returns correctly', () {
+        const expectation = ['Quietly, an old oaK T'];
+
+        final res =
+            'Quietly, an old oaK T'.separateIntoPhrasesWithMinimumLength(
+          minPhraseLength: 20,
+        );
+
+        final listEquals = ListEquality();
+        expect(listEquals.equals(expectation, res), true);
+      });
+      test('String of equal length - 1 to minLength returns correctly', () {
+        final res = 'Quietly, an old oak'.separateIntoPhrasesWithMinimumLength(
+          minPhraseLength: 20,
+        );
+        final listEquals = ListEquality();
+        expect(listEquals.equals([], res), true);
+        expect(res.isEmpty, true);
+      });
+      test('String of less than to minLength returns correctly', () {
+        // 'Quietly, an old oak stood, surrounded by natures.'
+
+        final res = 'George Weston Bakeries, Thomas English Muffins'
+            .separateIntoPhrasesWithMinimumLength(
+          minPhraseLength: 48,
+        );
+        final listEquals = ListEquality();
+        expect(listEquals.equals([], res), true);
+        expect(res.isEmpty, true);
+      });
+
+      test('When the next space is always the last space', () {
+        // 'Quietly, an old oak stood, surrounded by natures.'
+        const expectation = [
+          'In a distant galaxy, stars shimmered like diamonds.',
+          'a distant galaxy, stars shimmered like diamonds.',
+          'distant galaxy, stars shimmered like diamonds.'
+        ];
+        final res = 'In a distant galaxy, stars shimmered like diamonds.'
+            .separateIntoPhrasesWithMinimumLength(
+          minPhraseLength: 45,
+        );
+
+        final listEquals = ListEquality();
+        expect(listEquals.equals(expectation, res), true);
+      });
+    });
   });
 }
-// group('isLowerCaseOrNumberWithPercent()', () {
-//   test('returns true if the string is lowercase or a number followed by percent', () {
-//     expect('a'.isLowerCaseOrNumberWithPercent(), isTrue);
-//     expect('b'.isLowerCaseOrNumberWithPercent(), isTrue);
-//     expect('1'.isLowerCaseOrNumberWithPercent(), isTrue);
-//     expect('2'.isLowerCaseOrNumberWithPercent(), isTrue);
-//     expect('3'.isLowerCaseOrNumberWithPercent(), isTrue);
-//     expect('4'.isLowerCaseOrNumberWithPercent(), isTrue);
-//     expect('5'.isLowerCaseOrNumberWithPercent(), isTrue);
-//     expect('6'.isLowerCaseOrNumberWithPercent(), isTrue);
-//     expect('7'.isLowerCaseOrNumberWithPercent(), isTrue);
-//     expect('8'.isLowerCaseOrNumberWithPercent(), isTrue);
-//     expect('9'.isLowerCaseOrNumberWithPercent(), isTrue);
-//     expect('0'.isLowerCaseOrNumberWithPercent(), isTrue);
-//     expect('2%'.isLowerCaseOrNumberWithPercent(), isTrue);
-//     expect('20%'.isLowerCaseOrNumberWithPercent(), isTrue);
-//     expect('200%'.isLowerCaseOrNumberWithPercent(), isTrue);
-//     expect('2%b'.isLowerCaseOrNumberWithPercent(), isFalse);
-//     expect('A'.isLowerCaseOrNumberWithPercent(), isFalse);
-//     expect('B'.isLowerCaseOrNumberWithPercent(), isFalse);
-//     expect('!'.isLowerCaseOrNumberWithPercent(), isFalse);
-//     expect('@'.isLowerCaseOrNumberWithPercent(), isFalse);
-//     expect('#'.isLowerCaseOrNumberWithPercent(), isFalse);
-//     expect('$'.isLowerCaseOrNumberWithPercent(), isFalse);
-//     expect('%'.isLowerCaseOrNumberWithPercent(), isFalse);
-//     expect('^'.isLowerCaseOrNumberWithPercent(), isFalse);
-//     expect('&'.isLowerCaseOrNumberWithPercent(), isFalse);
-//     expect('*'.isLowerCaseOrNumberWithPercent(), isFalse);
-//     expect('()'.isLowerCaseOrNumberWithPercent(), isFalse);
-//     expect(''.isLowerCaseOrNumberWithPercent(), isFalse);
-//   });
-// });

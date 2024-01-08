@@ -18,7 +18,7 @@ extension StringExtensions on String {
 
   /// Separates words with dashes or parentheses and forward slashes.
   /// Returns a list of a word(s), list may be empty and may contain empty strings.
-  List<String> stripDashedAndParenthesisAndorwardSlashesWord() {
+  List<String> stripDashedAndParenthesisAndForwardSlashesWord() {
     if (contains('-')) return split('-');
     if (contains('/')) return split('/');
     if (startsWith('(') && endsWith(')')) {
@@ -39,7 +39,7 @@ extension StringExtensions on String {
     for (final word in split(' ')) {
       final String charDash = word.removeUnwantedChars().toLowerCase();
       final List<String> splitWords =
-          charDash.stripDashedAndParenthesisAndorwardSlashesWord();
+          charDash.stripDashedAndParenthesisAndForwardSlashesWord();
 
       if (splitWords.isNotEmpty) {
         words.add(splitWords);
@@ -72,5 +72,55 @@ extension StringExtensions on String {
   bool isNumber() {
     final numberRegex = RegExp(r"^\d+$");
     return numberRegex.hasMatch(this);
+  }
+
+  /// Helper method to create a list of phrase's from a [sentence].
+  ///
+  /// The phrase will be at least [minPhraseLength] long.
+  ///
+  /// separateIntoPhrasesWithMinimumLength(
+  ///           "Quietly, an old oak stood, surrounded by natures.", 20) =>
+  /// [
+  ///        "Quietly, an old oak stood,",
+  ///        "Quietly, an old oak stood, surrounded",
+  ///        "Quietly, an old oak stood, surrounded by",
+  ///        "Quietly, an old oak stood, surrounded by natures.",
+  ///        "an old oak stood, surrounded",
+  ///        "an old oak stood, surrounded by",
+  ///        "an old oak stood, surrounded by natures.",
+  ///        "old oak stood, surrounded",
+  ///        "old oak stood, surrounded by",
+  ///        "old oak stood, surrounded by natures.",
+  ///        "oak stood, surrounded",
+  ///        "oak stood, surrounded by",
+  ///        "oak stood, surrounded by natures.",
+  ///        "stood, surrounded by",
+  ///        "stood, surrounded by natures.",
+  ///        "surrounded by natures."
+  ///      ];
+
+  List<String?> separateIntoPhrasesWithMinimumLength({
+    // required final String sentence,
+    required final int minPhraseLength,
+  }) {
+    final Set<String> listOfPhrases = {};
+
+    final List<String> wordList = split(' ');
+
+    int length = wordList.join(' ').length;
+
+    while (length >= minPhraseLength) {
+      String phrase = wordList.removeAt(0);
+
+      for (final word in wordList) {
+        phrase = '$phrase $word';
+        if (phrase.length >= minPhraseLength) {
+          listOfPhrases.add(phrase);
+        }
+      }
+      length = wordList.join(' ').length;
+    }
+
+    return listOfPhrases.toList();
   }
 }
