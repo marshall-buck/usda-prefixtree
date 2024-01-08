@@ -56,24 +56,25 @@ class DescriptionParser implements Description {
       throw ArgumentError(
           'One of the following parameters must be true: returnMap, writeListToFile, writeMapToFile');
     }
-    final descriptions = DescriptionParser.createOriginalDescriptionRecords(
-        originalFoodsList: dbParser.originalFoodsList);
+    final List<DescriptionRecord> originalDescriptions =
+        createOriginalDescriptionRecords(
+            originalFoodsList: dbParser.originalFoodsList);
 
-    final descriptionsFinal =
-        DescriptionParser.removeUnwantedPhrasesFromDescriptions(
-            descriptions: descriptions, unwantedPhrases: unwantedPhrases);
+    final parsedDescriptions = removeUnwantedPhrasesFromDescriptions(
+        descriptions: originalDescriptions, unwantedPhrases: unwantedPhrases);
 
     final DescriptionMap descriptionMap = {};
-    for (final line in descriptionsFinal) {
+
+    for (final DescriptionRecord line in parsedDescriptions) {
       final MapEntry<int, String> entry = MapEntry(line.$1, line.$2);
 
       descriptionMap[entry.key] = entry.value;
     }
-    final fileHash = dbParser.fileLoaderService.fileHash;
+    final String fileHash = dbParser.fileLoaderService.fileHash;
 
     if (writeListToFile == true) {
       await dbParser.fileLoaderService.writeFileByType(
-          contents: descriptionsFinal,
+          contents: parsedDescriptions,
           fileName: '${fileHash}_$fileNameFinalDescriptionsTxt');
     }
 
@@ -145,7 +146,7 @@ class DescriptionParser implements Description {
 
   /// Helper method to create a [DescriptionMap] from a txt file at [filePath].
   /// The text file must be in the format of 1 (id, description) per line
-  static DescriptionMap parseDescriptionsFromTxt(
+  static DescriptionMap parseDescriptionsFromTxtFile(
       {required final String filePath,
       required final FileLoaderService fileLoaderService}) {
     final String fileContents = fileLoaderService.loadData(filePath: filePath);
@@ -156,7 +157,7 @@ class DescriptionParser implements Description {
     final Map<int, String> descriptionMap = {};
     for (final line in lines) {
       final MapEntry<int, String> entry =
-          parseDescriptionRecordFromString(line);
+          _parseDescriptionRecordFromString(line);
 
       descriptionMap[entry.key] = entry.value;
     }
@@ -177,7 +178,7 @@ class DescriptionParser implements Description {
   // }
 
   /// Helper method to parse a description record from a line in a txt file.
-  static MapEntry<int, String> parseDescriptionRecordFromString(
+  static MapEntry<int, String> _parseDescriptionRecordFromString(
       final String line) {
     final int id = int.parse(line.substring(1, 7));
     final String description = line.substring(9, line.length - 1);

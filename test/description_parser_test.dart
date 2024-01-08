@@ -375,26 +375,26 @@ void main() {
       });
     });
   });
-  group('parseDescriptionRecordFromString()', () {
-    test('parses description record correctly', () {
-      // Input string
-      final String input =
-          '(111111, George Weston Bakeries, Thomas English Muffins)';
+  // group('parseDescriptionRecordFromString()', () {
+  //   test('parses description record correctly', () {
+  //     // Input string
+  //     final String input =
+  //         '(111111, George Weston Bakeries, Thomas English Muffins)';
 
-      // Expected result
-      final expectedOutput =
-          MapEntry(111111, 'George Weston Bakeries, Thomas English Muffins');
+  //     // Expected result
+  //     final expectedOutput =
+  //         MapEntry(111111, 'George Weston Bakeries, Thomas English Muffins');
 
-      // Execute the function
-      final result = DescriptionParser.parseDescriptionRecordFromString(input);
-      expect(result.key, equals(expectedOutput.key));
-      expect(result.value, equals(expectedOutput.value));
-    });
-  });
-  group('createFinalDescriptionMapFromFile()', () {
+  //     // Execute the function
+  //     final result = DescriptionParser._parseDescriptionRecordFromString(input);
+  //     expect(result.key, equals(expectedOutput.key));
+  //     expect(result.value, equals(expectedOutput.value));
+  //   });
+  // });
+  group('parseDescriptionsFromTxtFile()', () {
     test('coverts list of descriptions records to map', () {
       when(() => mockFileLoaderService.loadData(filePath: 'fake'))
-          .thenReturn(mockDescriptionFile);
+          .thenReturn(mockDescriptionTxtFile);
 
       const expected = {
         167512:
@@ -404,7 +404,7 @@ void main() {
             'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry, 2% milk',
       };
 
-      final res = DescriptionParser.parseDescriptionsFromTxt(
+      final res = DescriptionParser.parseDescriptionsFromTxtFile(
           filePath: 'fake', fileLoaderService: mockFileLoaderService);
       final mapEquals = MapEquality();
       expect(mapEquals.equals(expected, res), true);

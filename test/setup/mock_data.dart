@@ -1,7 +1,7 @@
 import 'package:usda_db_creation/food_model.dart';
 import 'package:usda_db_creation/nutrient.dart';
 
-const mockDescriptionFile = '''
+const mockDescriptionTxtFile = '''
 (167512, Pillsbury Golden Layer Buttermilk Biscuits, (Artificial Flavor,) refrigerated dough)
 (167513, Pillsbury, Cinnamon Rolls with Icing, 100% refrigerated dough)
 (167514, Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry, 2% milk)

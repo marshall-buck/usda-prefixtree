@@ -54,7 +54,7 @@ Future<void> writeFinalDescriptionsTxtFile(
 Future<void> writeAutocompleteWordIndexToFile({
   required final FileLoaderService fileLoaderService,
 }) async {
-  final descriptionMap = DescriptionParser.parseDescriptionsFromTxt(
+  final descriptionMap = DescriptionParser.parseDescriptionsFromTxtFile(
       filePath: '$pathToFiles/$fileNameFinalDescriptionsTxt',
       fileLoaderService: fileLoaderService);
 
@@ -115,7 +115,7 @@ Future<void> writeFoodDatabaseJsonFile({
   required final FileLoaderService fileLoaderService,
   required final DBParser dbParser,
 }) async {
-  final descriptionMap = DescriptionParser.parseDescriptionsFromTxt(
+  final descriptionMap = DescriptionParser.parseDescriptionsFromTxtFile(
       filePath: '$pathToFiles/$fileNameFinalDescriptionsTxt',
       fileLoaderService: fileLoaderService);
 
