@@ -74,7 +74,7 @@ extension StringExtensions on String {
     return numberRegex.hasMatch(this);
   }
 
-  /// Helper method to create a list of phrase's from a [sentence].
+  ///  Method to create a list of phrase's from a [sentence].
   ///
   /// The phrase will be at least [minPhraseLength] long.
   ///

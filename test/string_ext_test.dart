@@ -79,7 +79,7 @@ void main() {
     });
     group('isLowerCaseOrNumberWithPercent()', () {
       test(
-          'returns true if the string is lowercase caracther or a number followed by percent',
+          'returns true if the string is lowercase char or a number followed by percent',
           () {
         expect('a'.isLowerCaseOrNumberWithPercent(), true);
         expect('b'.isLowerCaseOrNumberWithPercent(), true);
@@ -109,7 +109,6 @@ void main() {
     });
     group('separateIntoPhrasesWithMinimumLength()', () {
       test('String greater than twice minLength returns correctly', () {
-        // 'Quietly, an old oak stood, surrounded by natures.'
         const sentence49 = 'Quietly, an old oak stood, surrounded by natures.';
         const expectation = [
           'Quietly, an old oak stood,',

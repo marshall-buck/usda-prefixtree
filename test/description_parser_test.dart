@@ -276,22 +276,7 @@ void main() {
       });
     });
   });
-  // group('parseDescriptionRecordFromString()', () {
-  //   test('parses description record correctly', () {
-  //     // Input string
-  //     final String input =
-  //         '(111111, George Weston Bakeries, Thomas English Muffins)';
 
-  //     // Expected result
-  //     final expectedOutput =
-  //         MapEntry(111111, 'George Weston Bakeries, Thomas English Muffins');
-
-  //     // Execute the function
-  //     final result = DescriptionParser._parseDescriptionRecordFromString(input);
-  //     expect(result.key, equals(expectedOutput.key));
-  //     expect(result.value, equals(expectedOutput.value));
-  //   });
-  // });
   group('parseDescriptionsFromTxtFile()', () {
     test('coverts list of descriptions records to map', () {
       when(() => mockFileLoaderService.loadData(filePath: 'fake'))
