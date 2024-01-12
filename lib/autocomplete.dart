@@ -68,6 +68,7 @@ class AutocompleteHash {
   /// };
   ///
   /// final substringMap = createSubstrings(autoCompleteMap: autoCompleteMap);
+  /// /* Cspell: disable*/
   /// ```
   /// { 'aba': ['3', '4'],
   ///   'abap': ['3', '4'],
@@ -76,6 +77,7 @@ class AutocompleteHash {
   ///   'abapple': ['3', '4'], ...
   /// }
   /// ```
+  /// /* Cspell: enable*/
   static Map<String, List<String>> createOriginalSubstringMap(
       {required final Map<String, List<String>> wordIndex}) {
     final indexMap =
@@ -121,6 +123,7 @@ class AutocompleteHash {
   /// Write this output to a file.
   ///
   /// Example usage:
+  /// /* Cspell: disable*/
   /// ```dart
   /// final originalSubStringMap = {
   ///     'aba': ['3', '4'],
@@ -146,6 +149,7 @@ class AutocompleteHash {
   ///    }
   ///   }
   /// ```
+  /// /* Cspell: enable*/
 
   Map<String, dynamic> createAutocompleteHashTable(
       {required final Map<String, List<String>> originalSubStringMap}) {
