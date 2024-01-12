@@ -6,10 +6,28 @@ import 'package:usda_db_creation/global_const.dart';
 import 'package:usda_db_creation/string_ext.dart';
 
 // TODO: make the  parameters from the descriptions.
-// abstract class AutoComplete {
-//   Map<String, dynamic> createAutocompleteHashTable(
-//       {required final Map<String, List<String>> originalSubStringMap});
-// }
+abstract class AutoComplete {
+  AutoCompleteHashTable createAutocompleteHashTable();
+}
+
+class AutoCompleteHashTable {
+  final Map<String, Map<String, int>> substrings;
+  final Map<String, Map<int, List<String>>> indexHash;
+
+  AutoCompleteHashTable(this.substrings, this.indexHash);
+
+  Map<String, dynamic> toJson() {
+    return {
+      'substrings': substrings,
+      'indexHash': indexHash,
+    };
+  }
+
+  @override
+  String toString() {
+    return 'AutoCompleteHashTable(substrings: $substrings, indexHash: $indexHash)';
+  }
+}
 
 /// Class to handle the word index for the autocomplete search.
 class AutocompleteHash {
@@ -194,3 +212,26 @@ class AutocompleteHash {
     return -1;
   }
 }
+
+
+// class MyAutoComplete extends AutoComplete {
+//   @override
+//   AutoCompleteHashTable createAutocompleteHashTable({final List? descriptions}) {
+//     // Implementation for a method that takes a List as descriptions
+//     // For example, processing the list to create an AutoCompleteHashTable
+//     // ...
+
+//     // Returning a dummy AutoCompleteHashTable for demonstration
+//     return AutoCompleteHashTable({'substrings': {}}, {'indexHash': {}});
+//   }
+
+//   @override
+//   AutoCompleteHashTable createSubstrings({final Map? otherObject}) {
+//     // Implementation for a method that takes a Map as otherObject
+//     // For example, processing the map to create an AutoCompleteHashTable
+//     // ...
+
+//     // Returning a dummy AutoCompleteHashTable for demonstration
+//     return AutoCompleteHashTable({'substrings': {}}, {'indexHash': {}});
+//   }
+// }
