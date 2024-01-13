@@ -47,10 +47,9 @@ void main() {
           'shake': [167514]
         };
 
-        final words = WordIndexMap();
+        final words = WordIndexMap(mockDescriptionMap);
 
-        final indexMap = words.createAutocompleteWordIndexMap(
-            finalDescriptionMap: mockDescriptionMap);
+        final indexMap = words.createAutocompleteWordIndexMap();
 
         final deepEquals = const DeepCollectionEquality();
         expect(deepEquals.equals(expectation, indexMap), true);
@@ -58,11 +57,9 @@ void main() {
       test('createAutocompleteIndexMap should handle empty description map',
           () {
         final DescriptionMap descriptionMap = {};
-        final words = WordIndexMap();
+        final words = WordIndexMap(descriptionMap);
 
-        final indexMap = words.createAutocompleteWordIndexMap(
-          finalDescriptionMap: descriptionMap,
-        );
+        final indexMap = words.createAutocompleteWordIndexMap();
         expect(indexMap, isA<SplayTreeMap<String, List<int>>>());
         expect(indexMap.isEmpty, true);
       });
@@ -75,10 +72,9 @@ void main() {
           173175: 'apples are delicious',
           171686: 'orange being is a citrus fruit',
         };
-        final words = WordIndexMap();
-        final indexMap = words.createAutocompleteWordIndexMap(
-          finalDescriptionMap: descriptionMap,
-        );
+        final words = WordIndexMap(descriptionMap);
+
+        final indexMap = words.createAutocompleteWordIndexMap();
 
         expect(indexMap, isA<SplayTreeMap<String, List<int>>>());
         expect(indexMap.length, 6);
@@ -96,10 +92,8 @@ void main() {
           173175: 'apples are delicious) 200 aa 11g',
           171686: 'orange being is a citrus/fruit 100%',
         };
-        final words = WordIndexMap();
-        final indexMap = words.createAutocompleteWordIndexMap(
-          finalDescriptionMap: descriptionMap,
-        );
+        final words = WordIndexMap(descriptionMap);
+        final indexMap = words.createAutocompleteWordIndexMap();
 
         expect(indexMap, isA<SplayTreeMap<String, List<int>>>());
         expect(indexMap.length, 7);

@@ -1,8 +1,7 @@
 import 'dart:collection';
 
 import 'package:collection/collection.dart';
-import 'package:usda_db_creation/description_parser.dart';
-import 'package:usda_db_creation/global_const.dart';
+
 import 'package:usda_db_creation/string_ext.dart';
 
 // TODO: make the  parameters from the descriptions.
