@@ -34,47 +34,6 @@ class AutocompleteHash {
   /// Minimum number of characters to use for the substring.
   static int minLength = 3;
 
-  /// Creates a word index from the given [finalDescriptionMap].
-  ///
-  /// Parameters:
-  /// [finalDescriptionMap] -  [DescriptionMap].
-  ///
-  /// Returns - [Map]
-  ///  {..."apple": ["167782",..],
-  ///      "apples": [ "173175", "174170",...],
-  ///      "orange": [ "171686", "171687",...], ...}.
-  static Map<String, List<String>> createAutocompleteWordIndexMap(
-      {required final DescriptionMap finalDescriptionMap}) {
-    final indexMap = SplayTreeMap<String, List<String>>(
-        (final a, final b) => a.compareTo(b));
-
-    for (final entry in finalDescriptionMap.entries) {
-      final sanitizedList = entry.value.getWordsToIndex();
-      if (sanitizedList.isNotEmpty) {
-        for (String word in sanitizedList) {
-          if (word.startsWith('(')) {
-            word = word.substring(1);
-          }
-          if (word.endsWith(')')) {
-            word = word.substring(0, word.length - 1);
-          }
-          if (word.isStopWord(stopWords) ||
-              !word.isLowerCaseOrNumberWithPercent()) {
-            continue;
-          } else if (!word.isNumberWithPercent() && word.length < 3) {
-            continue;
-          } else {
-            indexMap.containsKey(word)
-                ? indexMap[word]!.add(entry.key.toString())
-                : indexMap[word] = [entry.key.toString()];
-          }
-        }
-      }
-    }
-
-    return indexMap;
-  }
-
   /// Creates substrings from the given [wordIndex] and returns a map of
   /// substrings with a minimum of [minLength] length to a list of corresponding index's.
   ///
