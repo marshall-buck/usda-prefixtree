@@ -39,12 +39,31 @@ class FileLoaderService {
     }
   }
 
-  /// Writes a json file from a [Map].
-  Future<void> writeJsonFile(
-      {required final String filePath,
-      required final Map<String, dynamic> contents}) async {
+  // /// Writes a json file from a [Map].
+  // Future<void> writeJsonFile(
+  //     {required final String filePath,
+  //     required final Map<String, dynamic> contents}) async {
+  //   try {
+  //     await File(filePath).writeAsString(jsonEncode(contents));
+  //   } catch (e, st) {
+  //     log(e.toString(), stackTrace: st, name: 'writeJsonFile');
+  //   }
+  // }
+
+  Future<void> writeJsonFile({
+    required final String filePath,
+    required final Map<dynamic, dynamic> contents,
+    bool convertKeysToStrings = false,
+  }) async {
     try {
-      await File(filePath).writeAsString(jsonEncode(contents));
+      Map mapToWrite;
+      if (convertKeysToStrings) {
+        mapToWrite =
+            contents.map((key, value) => MapEntry(key.toString(), value));
+      } else {
+        mapToWrite = contents;
+      }
+      await File(filePath).writeAsString(jsonEncode(mapToWrite));
     } catch (e, st) {
       log(e.toString(), stackTrace: st, name: 'writeJsonFile');
     }
@@ -76,6 +95,19 @@ class FileLoaderService {
   /// [String].
   String loadData({required final String filePath}) =>
       File(filePath).readAsStringSync();
+
+  /// Checks if the specified folder path exists and creates it if it doesn't.
+  void _checkAndCreateFolder() {
+    final directory = Directory('$pathToFiles/$fileHash');
+    if (!directory.existsSync()) {
+      try {
+        directory.createSync(recursive: true);
+      } catch (e, st) {
+        throw Exception(
+            'Failed to create folder: $pathToFiles/$fileHash\n$e\n$st');
+      }
+    }
+  }
 
 // ************************** File Readers **************************
 
@@ -134,18 +166,5 @@ class FileLoaderService {
     fields.add(buffer.toString());
 
     return fields;
-  }
-
-  /// Checks if the specified folder path exists and creates it if it doesn't.
-  void _checkAndCreateFolder() {
-    final directory = Directory('$pathToFiles/$fileHash');
-    if (!directory.existsSync()) {
-      try {
-        directory.createSync(recursive: true);
-      } catch (e, st) {
-        throw Exception(
-            'Failed to create folder: $pathToFiles/$fileHash\n$e\n$st');
-      }
-    }
   }
 }
