@@ -9,10 +9,6 @@ import 'package:usda_db_creation/global_const.dart';
 class FileLoaderService {
   final DateTime _fileHash = DateTime.now();
 
-  // FileLoaderService() {
-  //   // _fileHash = DateTime.parse(DateTime.now().toString());
-  // }
-  // String get fileHash => convertTimestampToDateString();
   String get fileHash => convertTimestampToDateString();
 
   String convertTimestampToDateString() {
@@ -22,33 +18,33 @@ class FileLoaderService {
 
 // ************************** File Writers **************************
 
-  /// Writes the contents to a file based on its type. appends a _fileHash folder to the path.
-  Future<void> writeFileByType<T>(
-      {required final String fileName, required final T contents}) async {
+  /// Writes the contents to a file based on its type.
+  /// Appends a _fileHash folder to the path.
+  Future<void> writeFileByType<T>({
+    required final String fileName,
+    required final T contents,
+    bool convertKeysToStrings = false,
+  }) async {
     try {
       _checkAndCreateFolder();
+
+      final String filePath = '$pathToFiles/$fileHash/$fileName';
+
+      if (contents is List) {
+        await writeListToTxtFile(filePath: filePath, contents: contents);
+      } else if (contents is Map) {
+        await writeJsonFile(
+          filePath: filePath,
+          contents: contents,
+          convertKeysToStrings: convertKeysToStrings,
+        );
+      } else {
+        throw ArgumentError('Unsupported type for contents: writeFileByType');
+      }
     } catch (e, st) {
-      log(e.toString(), stackTrace: st, name: '_checkAndCreateFolder');
-    }
-    if (contents is List) {
-      await writeListToTxtFile(
-          filePath: '$pathToFiles/$fileHash/$fileName', contents: contents);
-    } else if (contents is Map<String, dynamic>) {
-      await writeJsonFile(
-          filePath: '$pathToFiles/$fileHash/$fileName', contents: contents);
+      log(e.toString(), stackTrace: st, name: 'writeFileByType');
     }
   }
-
-  // /// Writes a json file from a [Map].
-  // Future<void> writeJsonFile(
-  //     {required final String filePath,
-  //     required final Map<String, dynamic> contents}) async {
-  //   try {
-  //     await File(filePath).writeAsString(jsonEncode(contents));
-  //   } catch (e, st) {
-  //     log(e.toString(), stackTrace: st, name: 'writeJsonFile');
-  //   }
-  // }
 
   Future<void> writeJsonFile({
     required final String filePath,
