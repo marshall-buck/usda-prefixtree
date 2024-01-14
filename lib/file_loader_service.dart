@@ -7,6 +7,8 @@ import 'package:usda_db_creation/global_const.dart';
 /// Class to handle reading and writing  files.
 // TODO: Add date now for hash for each save method
 class FileLoaderService {
+  /// Loads a DateTime sting at initialization so all
+  /// Prefixes wil be the same.
   final DateTime _fileHash = DateTime.now();
 
   String get fileHash => convertTimestampToDateString();
@@ -18,35 +20,40 @@ class FileLoaderService {
 
 // ************************** File Writers **************************
 
-  /// Writes the contents to a file based on its type.
-  /// Appends a _fileHash folder to the path.
-  Future<void> writeFileByType<T>({
+  /// Writes the contents to files based on their types.
+  /// Appends a [fileHash] folder to the path.
+  Future<void> writeFileByType<T, U>({
     required final String fileName,
-    required final T contents,
-    bool convertKeysToStrings = false,
+    required final bool convertKeysToStrings,
+    T? listContents,
+    U? mapContents,
   }) async {
     try {
       _checkAndCreateFolder();
 
-      final String filePath = '$pathToFiles/$fileHash/$fileName';
+      if (listContents != null && listContents is List) {
+        final String listFilePath = '$pathToFiles/$fileHash/$fileName.txt';
+        await _writeListToTxtFile(
+            filePath: listFilePath, contents: listContents);
+      }
 
-      if (contents is List) {
-        await writeListToTxtFile(filePath: filePath, contents: contents);
-      } else if (contents is Map) {
-        await writeJsonFile(
-          filePath: filePath,
-          contents: contents,
-          convertKeysToStrings: convertKeysToStrings,
-        );
-      } else {
-        throw ArgumentError('Unsupported type for contents: writeFileByType');
+      if (mapContents != null && mapContents is Map) {
+        final String mapFilePath = '$pathToFiles/$fileHash/$fileName.json';
+        final Map convertedMap = convertKeysToStrings
+            ? mapContents.map((key, value) => MapEntry(key.toString(), value))
+            : mapContents;
+        await _writeJsonFile(filePath: mapFilePath, contents: convertedMap);
+      }
+
+      if (listContents == null && mapContents == null) {
+        throw ArgumentError('No contents provided: writeFileByType');
       }
     } catch (e, st) {
       log(e.toString(), stackTrace: st, name: 'writeFileByType');
     }
   }
 
-  Future<void> writeJsonFile({
+  Future<void> _writeJsonFile({
     required final String filePath,
     required final Map<dynamic, dynamic> contents,
     bool convertKeysToStrings = false,
@@ -67,7 +74,7 @@ class FileLoaderService {
 
   /// Takes a [List], and writes a file to given [filePath], creating a new
   ///  line for each list item.
-  Future<void> writeListToTxtFile({
+  Future<void> _writeListToTxtFile({
     required final String filePath,
     required final List<dynamic> contents,
   }) async {
@@ -87,11 +94,6 @@ class FileLoaderService {
     }
   }
 
-  /// Synchronously opens a file from [filePath]. and returns the contents as a
-  /// [String].
-  String loadData({required final String filePath}) =>
-      File(filePath).readAsStringSync();
-
   /// Checks if the specified folder path exists and creates it if it doesn't.
   void _checkAndCreateFolder() {
     final directory = Directory('$pathToFiles/$fileHash');
@@ -106,6 +108,10 @@ class FileLoaderService {
   }
 
 // ************************** File Readers **************************
+
+  /// Synchronously opens a file from [filePath].  Returns the contents as a [String].
+  String loadData({required final String filePath}) =>
+      File(filePath).readAsStringSync();
 
   ///
   /// Reads a CSV file from the given [filePath] and returns its contents as a
