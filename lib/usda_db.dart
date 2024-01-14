@@ -36,19 +36,19 @@ import 'package:usda_db_creation/nutrient.dart';
 
 /// Creates a final_descriptions.txt file and writes to [path]. This is useful
 /// to easily inspect the final descriptions.  It is not needed for the database.
-Future<void> writeFinalDescriptionsTxtFile(
-    {required final FileLoaderService fileLoaderService,
-    required final DBParser dbParser}) async {
-  final descriptions = DescriptionParser.createOriginalDescriptionRecords(
-      originalFoodsList: dbParser.originalFoodsList);
-  assert(descriptions.length == 7006);
-  final descriptionsFinal =
-      DescriptionParser.removeUnwantedPhrasesFromDescriptions(
-          descriptions: descriptions, unwantedPhrases: unwantedPhrases);
-  await fileLoaderService.writeListToTxtFile(
-      contents: descriptionsFinal,
-      filePath: '$pathToFiles/$fileNameFinalDescriptionsTxt');
-}
+// Future<void> writeFinalDescriptionsTxtFile(
+//     {required final FileLoaderService fileLoaderService,
+//     required final DBParser dbParser}) async {
+//   final descriptions = DescriptionParser.createOriginalDescriptionRecords(
+//       originalFoodsList: dbParser.originalFoodsList);
+//   assert(descriptions.length == 7006);
+//   final descriptionsFinal =
+//       DescriptionParser.removeUnwantedPhrasesFromDescriptions(
+//           descriptions: descriptions, unwantedPhrases: unwantedPhrases);
+//   await fileLoaderService._writeListToTxtFile(
+//       contents: descriptionsFinal,
+//       filePath: '$pathToFiles/$fileNameFinalDescriptionsTxt');
+// }
 
 /// Creates the autocomplete word index map and writes to [path].
 // Future<void> writeAutocompleteWordIndexToFile({
@@ -111,35 +111,35 @@ Future<void> writeFinalDescriptionsTxtFile(
 ///       ]
 ///     }, ...
 ///  }
-Future<void> writeFoodDatabaseJsonFile({
-  required final FileLoaderService fileLoaderService,
-  required final DBParser dbParser,
-}) async {
-  final descriptionMap = DescriptionParser.parseDescriptionsFromTxtFile(
-      filePath: '$pathToFiles/$fileNameFinalDescriptionsTxt',
-      fileLoaderService: fileLoaderService);
+// Future<void> writeFoodDatabaseJsonFile({
+//   required final FileLoaderService fileLoaderService,
+//   required final DBParser dbParser,
+// }) async {
+//   final descriptionMap = DescriptionParser.parseDescriptionsFromTxtFile(
+//       filePath: '$pathToFiles/$fileNameFinalDescriptionsTxt',
+//       fileLoaderService: fileLoaderService);
 
-  final foodsMap = dbParser.createFoodsMapDB(
-      getFoodsList: dbParser.originalFoodsList,
-      finalDescriptionRecordsMap: descriptionMap);
+//   final foodsMap = dbParser.createFoodsMapDB(
+//       getFoodsList: dbParser.originalFoodsList,
+//       finalDescriptionRecordsMap: descriptionMap);
 
-  await fileLoaderService.writeJsonFile(
-      filePath: '$pathToFiles/$fileNameFoodsDatabase', contents: foodsMap);
-}
+//   await fileLoaderService._writeJsonFile(
+//       filePath: '$pathToFiles/$fileNameFoodsDatabase', contents: foodsMap);
+// }
 
 ///Writes the nutrient map to json file
 ///Format {"1003": {"name": "Protein","unit": "g"},
 ///         "1004": {"name": "Total lipid (fat)","unit": "g"}, ... }
-Future<void> writeNutrientMapJsonFile(
-    {required FileLoaderService fileLoaderService}) async {
-  final csvLines =
-      await fileLoaderService.readCsvFile('$pathToFiles/$fileNameNutrientsCsv');
-  final Map<String, dynamic> map =
-      Nutrient.createNutrientInfoMap(csvLines: csvLines);
+// Future<void> writeNutrientMapJsonFile(
+//     {required FileLoaderService fileLoaderService}) async {
+//   final csvLines =
+//       await fileLoaderService.readCsvFile('$pathToFiles/$fileNameNutrientsCsv');
+//   final Map<String, dynamic> map =
+//       Nutrient.createNutrientInfoMap(csvLines: csvLines);
 
-  await fileLoaderService.writeJsonFile(
-      filePath: '$pathToFiles/$fileNameNutrientsMap', contents: map);
-}
+//   await fileLoaderService._writeJsonFile(
+//       filePath: '$pathToFiles/$fileNameNutrientsMap', contents: map);
+// }
 
 /// *****************  File Writer for replenishing the database **************
 

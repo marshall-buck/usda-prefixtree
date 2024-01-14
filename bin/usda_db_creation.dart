@@ -17,11 +17,8 @@ void main() async {
 
   final descriptions = DescriptionParser();
 
-  await descriptions.createDescriptionMap(
-      dbParser: dbParser,
-      writeListToFile: true,
-      writeMapToFile: true,
-      returnMap: false);
+  await descriptions.createDataStructure(
+      dbParser: dbParser, writeFile: true, returnStructure: false);
 
   // await db.replenishFullDatabase(
   //     fileLoaderService: fileLoaderService, dbParser: dbParser);

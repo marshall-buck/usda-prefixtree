@@ -4,7 +4,6 @@ import 'package:test/test.dart';
 
 import 'package:usda_db_creation/db_parser.dart';
 import 'package:usda_db_creation/description_parser.dart';
-import 'package:usda_db_creation/global_const.dart';
 
 import 'setup/mock_data.dart';
 import 'setup/mock_db.dart';
@@ -19,7 +18,7 @@ void main() {
     tear_down();
   });
   group('DescriptionParser class tests', () {
-    group('createDescriptionMap()', () {
+    group('createDataStructure()', () {
       test('coverts list of descriptions records to map', () async {
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
@@ -39,67 +38,89 @@ void main() {
             filePath: 'fake', fileLoaderService: mockFileLoaderService);
 
         final descriptions = DescriptionParser();
-        final res = await descriptions.createDescriptionMap(dbParser: dbParser);
-
+        final res = await descriptions.createDataStructure(dbParser: dbParser);
+        // print(res);
         final mapEquals = MapEquality();
         expect(mapEquals.equals(expected, res), true);
+        verifyNever(() => mockFileLoaderService
+            .writeFileByType<List<DescriptionRecord>, Map<int, String>>(
+                fileName: 'descriptions',
+                convertKeysToStrings: true,
+                mapContents: any<Map<int, String>>(named: 'mapContents'),
+                listContents:
+                    any<List<DescriptionRecord>>(named: 'listContents')));
       });
 
-      test('fileLoader methods are called when writeMapToFile is true ',
+      test('fileLoader writeFileByType is called when writeFile is true',
           () async {
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
         when(() => mockFileLoaderService.fileHash)
             .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
 
-        when(() => mockFileLoaderService.writeFileByType<Map<String, String>>(
-              fileName: any(
-                named: 'fileName',
-              ),
-              contents: any<Map<String, String>>(named: 'contents'),
-            )).thenAnswer((_) async {});
-
-        final dbParser = DBParser.init(
-            filePath: 'fake', fileLoaderService: mockFileLoaderService);
-
-        final descriptions = DescriptionParser();
-        await descriptions.createDescriptionMap(
-            dbParser: dbParser,
-            writeListToFile: false,
-            writeMapToFile: true,
-            returnMap: false);
-
-        verify(() => mockFileLoaderService.writeFileByType<Map<String, String>>(
-            fileName: '$pathToFiles/${mockFileLoaderService.fileHash}/fileName',
-            contents: {"167512": "String"})).called(1);
-      });
-      test('fileLoader methods are called when writeListToFile is true ',
-          () async {
-        when(() => mockFileLoaderService.loadData(filePath: 'fake'))
-            .thenReturn(mockUsdaFile);
-        when(() => mockFileLoaderService.fileHash)
-            .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
-
-        when(() => mockFileLoaderService.writeFileByType<List<(int, String)>>(
+        when(() => mockFileLoaderService
+                .writeFileByType<List<DescriptionRecord>, Map<int, String>>(
               fileName: any<String>(
                 named: 'fileName',
               ),
-              contents: any<List<(int, String)>>(named: 'contents'),
+              convertKeysToStrings: true,
+              listContents: any<List<DescriptionRecord>>(named: 'listContents'),
+              mapContents: any<Map<int, String>>(named: 'mapContents'),
             )).thenAnswer((_) async {});
 
         final dbParser = DBParser.init(
             filePath: 'fake', fileLoaderService: mockFileLoaderService);
 
         final descriptions = DescriptionParser();
-        await descriptions.createDescriptionMap(
-            dbParser: dbParser,
-            writeListToFile: true,
-            writeMapToFile: false,
-            returnMap: false);
+        await descriptions.createDataStructure(
+          dbParser: dbParser,
+          returnStructure: false,
+          writeFile: true,
+        );
 
-        verify(() => mockFileLoaderService.writeFileByType<List<(int, String)>>(
-            fileName: '$pathToFiles/${mockFileLoaderService.fileHash}/fileName',
-            contents: [(1, "")])).called(1);
+        verify(() => mockFileLoaderService
+                .writeFileByType<List<DescriptionRecord>, Map<int, String>>(
+                    fileName: 'descriptions',
+                    convertKeysToStrings: true,
+                    mapContents: any<Map<int, String>>(named: 'mapContents'),
+                    listContents:
+                        any<List<DescriptionRecord>>(named: 'listContents')))
+            .called(1);
+      });
+      test('fileLoader methods are not called when writeFile is false',
+          () async {
+        when(() => mockFileLoaderService.loadData(filePath: 'fake'))
+            .thenReturn(mockUsdaFile);
+        when(() => mockFileLoaderService.fileHash)
+            .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
+
+        when(() => mockFileLoaderService
+                .writeFileByType<List<DescriptionRecord>, Map<int, String>>(
+              fileName: any<String>(
+                named: 'fileName',
+              ),
+              convertKeysToStrings: true,
+              listContents: any<List<DescriptionRecord>>(named: 'listContents'),
+              mapContents: any<Map<int, String>>(named: 'mapContents'),
+            )).thenAnswer((_) async {});
+
+        final dbParser = DBParser.init(
+            filePath: 'fake', fileLoaderService: mockFileLoaderService);
+
+        final descriptions = DescriptionParser();
+        await descriptions.createDataStructure(
+          dbParser: dbParser,
+          returnStructure: true,
+          writeFile: false,
+        );
+
+        verifyNever(() => mockFileLoaderService
+            .writeFileByType<List<DescriptionRecord>, Map<int, String>>(
+                fileName: 'descriptions',
+                convertKeysToStrings: true,
+                mapContents: any<Map<int, String>>(named: 'mapContents'),
+                listContents:
+                    any<List<DescriptionRecord>>(named: 'listContents')));
       });
 
       test('Throws ArgumentError', () {
@@ -110,11 +131,11 @@ void main() {
         final descriptions = DescriptionParser();
         final dbParser = DBParser.init(
             filePath: 'fake', fileLoaderService: mockFileLoaderService);
-        final res = descriptions.createDescriptionMap(
-            dbParser: dbParser,
-            returnMap: false,
-            writeListToFile: false,
-            writeMapToFile: false);
+        final res = descriptions.createDataStructure(
+          dbParser: dbParser,
+          writeFile: false,
+          returnStructure: false,
+        );
         expect(res, throwsArgumentError);
       });
     });
@@ -174,12 +195,13 @@ void main() {
         when(() => mockFileLoaderService.fileHash)
             .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
 
-        when(() => mockFileLoaderService.writeFileByType<Map<String, int>>(
-              fileName: any(
-                named: 'fileName',
-              ),
-              contents: any<Map<String, int>>(named: 'contents'),
-            )).thenAnswer((_) async {});
+        when(
+            () => mockFileLoaderService.writeFileByType<Null, Map<String, int>>(
+                fileName: any<String>(
+                  named: 'fileName',
+                ),
+                mapContents: any<Map<String, int>>(named: 'mapContents'),
+                convertKeysToStrings: false)).thenAnswer((_) async {});
 
         final dbParser = DBParser.init(
             filePath: 'fake', fileLoaderService: mockFileLoaderService);
@@ -190,12 +212,16 @@ void main() {
                 minNumberOfDuplicatesToShow: 3,
                 dbParser: dbParser,
                 returnMap: false);
+        verify(() =>
+                mockFileLoaderService.writeFileByType<Null, Map<String, int>>(
+                    convertKeysToStrings: false,
+                    fileName: any<String>(
+                      named: 'fileName',
+                    ),
+                    mapContents: any<Map<String, int>>(named: 'mapContents')))
+            .called(1);
 
         expect(res, isNull);
-
-        verify(() => mockFileLoaderService.writeFileByType<Map<String, int>>(
-            fileName: '$pathToFiles/${mockFileLoaderService.fileHash}/fileName',
-            contents: {"167512": 1})).called(1);
       });
     });
 
