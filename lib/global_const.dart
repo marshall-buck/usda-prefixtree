@@ -3,18 +3,19 @@ const keepTheseNutrients = [1003, 1004, 1005, 1008, 1079, 1258, 2000];
 /// DO NOT DELETE these variables, although they might not be used
 /// now, they can be used at any time in the future.
 const pathToFiles = 'lib/db';
-const pathToPackageFiles = 'db_package_files';
+
 const fileNameOriginalDBFile = 'do_not_delete/original_usda.json';
-const fileNameDuplicatePhrases = 'duplicate_phrases.json';
+const fileNameNutrientsCsv = 'do_not_delete/nutrient.csv';
+const fileNameNutrientsMap = 'do_not_delete/original_nutrient_csv.json';
+
+const fileNameDuplicatePhrases = 'duplicate_phrases';
 const fileNameOriginalDescriptions = 'original_descriptions.txt';
-const fileNameFinalDescriptionsTxt = 'final_descriptions.txt';
-const fileNameFinalDescriptionsMap = 'final_descriptions.json';
-const fileNameAutocompleteWordIndex = 'autocomplete_word_index.json';
-const fileNameAutocompleteWordIndexKeys = 'autocomplete_word_index_keys.txt';
-const fileNameAutocompleteHash = '$pathToPackageFiles/autocomplete_hash.json';
-const fileNameFoodsDatabase = '$pathToPackageFiles/foods_db.json';
-const fileNameNutrientsCsv = 'nutrient.csv';
-const fileNameNutrientsMap = 'original_nutrient_csv.json';
+const fileNameFinalDescriptionsTxt = 'final_descriptions';
+const fileNameFinalDescriptionsMap = 'final_descriptions';
+const fileNameAutocompleteWordIndex = 'autocomplete_word_index';
+const fileNameAutocompleteWordIndexKeys = 'autocomplete_word_index_keys';
+const fileNameAutocompleteHash = 'autocomplete_hash';
+const fileNameFoodsDatabase = 'foods_db';
 
 const unwantedPhrases = [
   "(Includes foods for USDA's Food Distribution Program)",
