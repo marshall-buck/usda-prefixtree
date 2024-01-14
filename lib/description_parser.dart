@@ -1,3 +1,4 @@
+import 'package:usda_db_creation/data_structure.dart';
 import 'package:usda_db_creation/db_parser.dart';
 import 'package:usda_db_creation/file_loader_service.dart';
 import 'package:usda_db_creation/global_const.dart';
@@ -9,14 +10,13 @@ typedef DescriptionMap = Map<int, String>;
 /// Abstract class for descriptions. Any class that implements this class
 /// must implement the [createDescriptionMap] method.  The database is
 /// dependent on the [DescriptionMap] created by this method.
-abstract class Description {
-  Future<DescriptionMap?> createDescriptionMap({
-    required DBParser dbParser,
-    bool returnMap,
-    bool? writeListToFile,
-    bool? writeMapToFile,
-  });
-}
+// abstract class Description {
+//   Future<DescriptionMap?> createDescriptionMap({
+//     required DBParser dbParser,
+//     bool returnMap = true,
+//     bool writeFile = false,
+//   });
+// }
 
 /// A class for parsing description strings from the [originalFoodsList] of the
 /// original_usda.json file.
@@ -27,7 +27,7 @@ abstract class Description {
 /// A map of {167513: 'Pillsbury, Cinnamon Rolls with Icing, 100% refrigerated dough', ...}
 /// is needed, for both populating the main foods database and for creating the autocomplete hash map.
 
-class DescriptionParser implements Description {
+class DescriptionParser implements DataStructure {
   /// Creates [DescriptionMap] from the original foods list.
   ///
   /// This is the only method
@@ -37,8 +37,9 @@ class DescriptionParser implements Description {
   /// Parameters:
   /// [dbParser] - the DBParser object.
   /// [returnMap] - if true (default), the map will be returned.
-  /// [writeListToFile] - if true, the list will be written to a file.
-  /// [writeMapToFile] - if true, the map will be written to a file.
+  /// [writeFile] - if true, the list of parsed [DescriptionRecord]s and [DescriptionMap] will
+  /// be written to file.
+
   ///
   ///
   /// Returns:
@@ -47,22 +48,19 @@ class DescriptionParser implements Description {
   ///   167514: 'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry, 2% milk', ...}
 
   @override
-  Future<DescriptionMap?> createDescriptionMap({
+  Future<DescriptionMap?> createDataStructure({
     required DBParser dbParser,
-    bool returnMap = true,
-    bool? writeListToFile,
-    bool? writeMapToFile,
+    bool returnStructure = true,
+    bool writeFile = false,
   }) async {
-    if (!returnMap && !writeListToFile! && !writeMapToFile!) {
-      throw ArgumentError(
-          'One of the following parameters must be true: returnMap, writeListToFile, writeMapToFile');
-    }
     final List<DescriptionRecord> originalDescriptions =
         createOriginalDescriptionRecords(
             originalFoodsList: dbParser.originalFoodsList);
 
-    final parsedDescriptions = removeUnwantedPhrasesFromDescriptions(
-        descriptions: originalDescriptions, unwantedPhrases: unwantedPhrases);
+    final List<DescriptionRecord> parsedDescriptions =
+        removeUnwantedPhrasesFromDescriptions(
+            descriptions: originalDescriptions,
+            unwantedPhrases: unwantedPhrases);
 
     final DescriptionMap descriptionMap = {};
 
@@ -71,23 +69,29 @@ class DescriptionParser implements Description {
 
       descriptionMap[entry.key] = entry.value;
     }
-    final String fileHash = dbParser.fileLoaderService.fileHash;
 
-    if (writeListToFile == true) {
-      await dbParser.fileLoaderService.writeFileByType(
-          contents: parsedDescriptions,
-          fileName: '${fileHash}_$fileNameFinalDescriptionsTxt');
-    }
+    await dbParser.fileLoaderService.writeFileByType<List?, Map?>(
+        fileName: 'descriptions',
+        convertKeysToStrings: true,
+        listContents: writeFile ? parsedDescriptions : null,
+        mapContents: writeFile ? descriptionMap : null);
+    // final String fileHash = dbParser.fileLoaderService.fileHash;
 
-    if (writeMapToFile == true) {
-      final convertedMap =
-          descriptionMap.map((key, value) => MapEntry(key.toString(), value));
-      await dbParser.fileLoaderService.writeFileByType(
-          contents: convertedMap,
-          fileName: '${fileHash}_$fileNameFinalDescriptionsMap');
-    }
+    // if (writeListToFile == true) {
+    //   await dbParser.fileLoaderService.writeFileByType(
+    //       contents: parsedDescriptions,
+    //       fileName: '${fileHash}_$fileNameFinalDescriptionsTxt');
+    // }
 
-    if (!returnMap) {
+    // if (writeMapToFile == true) {
+    //   final convertedMap =
+    //       descriptionMap.map((key, value) => MapEntry(key.toString(), value));
+    //   await dbParser.fileLoaderService.writeFileByType(
+    //       contents: convertedMap,
+    //       fileName: '${fileHash}_$fileNameFinalDescriptionsMap');
+    // }
+
+    if (!returnStructure) {
       return null;
     }
 
@@ -249,7 +253,9 @@ class DescriptionParser implements Description {
       final fileHash = dbParser.fileLoaderService.fileHash;
 
       await dbParser.fileLoaderService.writeFileByType(
-          contents: outPut, fileName: '${fileHash}_$fileNameDuplicatePhrases');
+          mapContents: outPut,
+          fileName: '${fileHash}_$fileNameDuplicatePhrases',
+          convertKeysToStrings: false);
     }
     return returnMap ? outPut : null;
   }
