@@ -15,66 +15,55 @@ void main() {
   });
 
   group('Autocomplete class tests', () {
-    group('createOriginalSubstringMap()', () {
-      test('substrings populates correctly', () async {
-        final res = AutocompleteHash.createSubstringsFromWordIndex(
-            wordIndex: mockAutocompleteIndex);
+    group('createAutocompleteHashTable() - ', () {
+      test('hashes list correctly', () async {
+        final autocomplete = AutocompleteHash();
+        final res = autocomplete.createAutocompleteHashTable(
+            originalSubStringMap: originalSubStringMap);
+        final d = DeepCollectionEquality();
 
-        final deep = DeepCollectionEquality();
-
-        expect(deep.equals(res, originalSubStringMap), true);
-      });
-      group('createAutocompleteHashTable() - ', () {
-        test('hashes list correctly', () async {
-          final autocomplete = AutocompleteHash();
-          final res = autocomplete.createAutocompleteHashTable(
-              originalSubStringMap: originalSubStringMap);
-          final d = DeepCollectionEquality();
-
-          expect(
-              d.equals(res['substrings'], autoCompleteHashTable['substrings']),
-              true);
-          expect(d.equals(res['hashIndex'], autoCompleteHashTable['hashIndex']),
-              true);
-        });
+        expect(d.equals(res['substrings'], autoCompleteHashTable['substrings']),
+            true);
+        expect(d.equals(res['hashIndex'], autoCompleteHashTable['hashIndex']),
+            true);
       });
     });
   });
 }
 
 /* cSpell:disable */
-const Map<String, List<String>> originalSubStringMap = {
-  '%': ['3'],
-  '1': ['3', '4'],
-  '2': ['3', '4'],
-  'aba': ['3', '4'],
-  'abap': ['3', '4'],
-  'abapp': ['3', '4'],
-  'abappl': ['3', '4'],
-  'abapple': ['3', '4'],
-  'app': ['1', '2', '3', '4'],
-  'appl': ['1', '2', '3', '4'],
-  'apple': ['1', '2', '3', '4'],
-  'bap': ['3', '4'],
-  'bapp': ['3', '4'],
-  'bappl': ['3', '4'],
-  'bapple': ['3', '4'],
-  'cra': ['3', '4'],
-  'crab': ['3', '4'],
-  'craba': ['3', '4'],
-  'crabap': ['3', '4'],
-  'crabapp': ['3', '4'],
-  'crabappl': ['3', '4'],
-  'crabapple': ['3', '4'],
-  'ple': ['1', '2', '3', '4'],
-  'ppl': ['1', '2', '3', '4'],
-  'pple': ['1', '2', '3', '4'],
-  'rab': ['3', '4'],
-  'raba': ['3', '4'],
-  'rabap': ['3', '4'],
-  'rabapp': ['3', '4'],
-  'rabappl': ['3', '4'],
-  'rabapple': ['3', '4']
+const Map<String, List<int>> originalSubStringMap = {
+  '%': [3],
+  '1': [3, 4],
+  '2': [3, 4],
+  'aba': [3, 4],
+  'abap': [3, 4],
+  'abapp': [3, 4],
+  'abappl': [3, 4],
+  'abapple': [3, 4],
+  'app': [1, 2, 3, 4],
+  'appl': [1, 2, 3, 4],
+  'apple': [1, 2, 3, 4],
+  'bap': [3, 4],
+  'bapp': [3, 4],
+  'bappl': [3, 4],
+  'bapple': [3, 4],
+  'cra': [3, 4],
+  'crab': [3, 4],
+  'craba': [3, 4],
+  'crabap': [3, 4],
+  'crabapp': [3, 4],
+  'crabappl': [3, 4],
+  'crabapple': [3, 4],
+  'ple': [1, 2, 3, 4],
+  'ppl': [1, 2, 3, 4],
+  'pple': [1, 2, 3, 4],
+  'rab': [3, 4],
+  'raba': [3, 4],
+  'rabap': [3, 4],
+  'rabapp': [3, 4],
+  'rabappl': [3, 4],
+  'rabapple': [3, 4]
 };
 
 const Map<String, dynamic> autoCompleteHashTable = {
@@ -112,8 +101,8 @@ const Map<String, dynamic> autoCompleteHashTable = {
     'rabapple': 1,
   },
   'indexHash': {
-    0: ['3'],
-    1: ['3', '4'],
-    2: ['1', '2', '3', '4'],
+    0: [3],
+    1: [3, 4],
+    2: [1, 2, 3, 4],
   }
 };

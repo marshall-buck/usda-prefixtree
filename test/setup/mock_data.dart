@@ -15,11 +15,11 @@ const mockDescriptionMap = {
       'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry, 2% milk',
 };
 
-const Map<String, List<String>> mockAutocompleteIndex = {
-  "apple": ['1', '2'],
-  "crabapple": ['3', '4'],
-  "2%": ['3'],
-  "21": ['3', '4'],
+const Map<String, List<int>> mockAutocompleteIndex = {
+  "apple": [1, 2],
+  "crabapple": [3, 4],
+  "2%": [3],
+  "21": [3, 4],
 };
 
 const mockProtein = Nutrient(id: 1004, name: 'Protein', amount: 10, unit: 'g');

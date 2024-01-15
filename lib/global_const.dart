@@ -11,6 +11,7 @@ const fileNameNutrientsMap = 'do_not_delete/original_nutrient_csv.json';
 const fileNameDuplicatePhrases = 'duplicate_phrases';
 const fileNameOriginalDescriptions = 'original_descriptions.txt';
 const fileNameFinalDescriptions = 'descriptions';
+final fileNameSubstrings = 'substrings';
 
 const fileNameAutocompleteWordIndex = 'autocomplete_word_index';
 const fileNameAutocompleteWordIndexKeys = 'autocomplete_word_index_keys';

@@ -5,93 +5,29 @@ import 'package:usda_db_creation/data_structure.dart';
 import 'package:usda_db_creation/db_parser.dart';
 
 import 'package:usda_db_creation/extensions/string_ext.dart';
+import 'package:usda_db_creation/word_index.dart';
 
-// class AutoCompleteHashTable {
-//   final Map<String, Map<String, int>> substrings;
-//   final Map<String, Map<int, List<String>>> indexHash;
+class AutoCompleteHashTable {
+  late final Map<String, Map<String, int>> substrings;
+  late final Map<String, Map<int, List<String>>> indexHash;
 
-//   AutoCompleteHashTable(this.substrings, this.indexHash);
+  // AutoCompleteHashTable(this.substrings, this.indexHash);
 
-//   Map<String, dynamic> toJson() {
-//     return {
-//       'substrings': substrings,
-//       'indexHash': indexHash,
-//     };
-//   }
+  Map<String, dynamic> toJson() {
+    return {
+      'substrings': substrings,
+      'indexHash': indexHash,
+    };
+  }
 
-//   @override
-//   String toString() {
-//     return 'AutoCompleteHashTable(substrings: $substrings, indexHash: $indexHash)';
-//   }
-// }
+  @override
+  String toString() {
+    return 'AutoCompleteHashTable(substrings: $substrings, indexHash: $indexHash)';
+  }
+}
 
 /// Class to handle the word index for the autocomplete search.
 class AutocompleteHash implements DataStructure {
-  static int minLength = 3;
-  @override
-  Future createDataStructure(
-      {required DBParser dbParser,
-      bool returnData = true,
-      bool writeFile = false}) {
-    // TODO: implement createDataStructure
-    throw UnimplementedError();
-  }
-
-  /// Minimum number of characters to use for the substring.
-
-//TODO: Change to list of <int>.
-  /// Creates substrings from the given [wordIndex] and returns a map of
-  /// substrings with a minimum of [minLength] length to a list of corresponding index's.
-  ///
-  ///  {'apple': [1, 2], 'crabapple': [3, 4] };
-  ///
-  /// /* Cspell: disable*/
-  /// Returns:
-  /// { 'aba': [3, 4],
-  ///   'abap': [3, 4],
-  ///   'abapp': [3, 4],
-  ///   'abappl': [3, 4],
-  ///   'abapple': [3, 4], ... }
-
-  /// /* Cspell: enable*/
-  static Map<String, List<int>> createSubstringsFromWordIndex(
-      {required final Map<String, List<String>> wordIndex}) {
-    final indexMap =
-        SplayTreeMap<String, Set<int>>((final a, final b) => a.compareTo(b));
-
-    for (final item in wordIndex.entries) {
-      final String word = item.key;
-
-      final List<int> wordIndexList = List<int>.from(item.value);
-      // this inner loop will check for numbers and percents, for these
-      // we will not enforce a minimum length.
-      for (int i = 0; i < word.length; i++) {
-        if (word[i] == '%' || word[i].isNumber()) {
-          if (!indexMap.containsKey(word[i])) {
-            indexMap[word[i]] = <int>{};
-          }
-
-          indexMap[word[i].toString()]!.addAll(wordIndexList);
-
-          continue;
-        }
-
-        for (int j = i + minLength; j <= word.length; j++) {
-          final String substring = word.substring(i, j);
-
-          if (!indexMap.containsKey(substring)) {
-            indexMap[substring] = <int>{};
-          }
-
-          indexMap[substring]!.addAll(wordIndexList);
-        }
-      }
-    }
-
-    return indexMap
-        .map((final key, final value) => MapEntry(key, value.toList()..sort()));
-  }
-
   /// Creates an indexHash table from the given [originalSubStringMap]  and
   /// rewrites the substring map with the new index values.
   ///
@@ -126,8 +62,8 @@ class AutocompleteHash implements DataStructure {
   ///   }
   /// ```
   /// /* Cspell: enable*/
-
-  Map<String, dynamic> createAutocompleteHashTable(
+  @override
+  Map<String, dynamic> createDataStructure(
       {required final Map<String, List<int>> originalSubStringMap}) {
     final Map<String, int> newWordIndex = {};
     final Map<int, List<int>> hashTable = {};
@@ -170,26 +106,3 @@ class AutocompleteHash implements DataStructure {
     return -1;
   }
 }
-
-
-// class MyAutoComplete extends AutoComplete {
-//   @override
-//   AutoCompleteHashTable createAutocompleteHashTable({final List? descriptions}) {
-//     // Implementation for a method that takes a List as descriptions
-//     // For example, processing the list to create an AutoCompleteHashTable
-//     // ...
-
-//     // Returning a dummy AutoCompleteHashTable for demonstration
-//     return AutoCompleteHashTable({'substrings': {}}, {'indexHash': {}});
-//   }
-
-//   @override
-//   AutoCompleteHashTable createSubstrings({final Map? otherObject}) {
-//     // Implementation for a method that takes a Map as otherObject
-//     // For example, processing the map to create an AutoCompleteHashTable
-//     // ...
-
-//     // Returning a dummy AutoCompleteHashTable for demonstration
-//     return AutoCompleteHashTable({'substrings': {}}, {'indexHash': {}});
-//   }
-// }

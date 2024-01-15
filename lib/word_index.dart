@@ -36,10 +36,10 @@ class WordIndexMap implements DataStructure {
       throw (ArgumentError('Both returnStructure and writeFile are false'));
     }
     final indexMap =
-        SplayTreeMap<String, List<int>>((final a, final b) => a.compareTo(b));
+        SplayTreeMap<String, Set<int>>((final a, final b) => a.compareTo(b));
 
     for (final entry in finalDescriptionMap.entries) {
-      final sanitizedList = entry.value.getWordsToIndex();
+      final Set<String> sanitizedList = entry.value.getWordsToIndex();
       if (sanitizedList.isNotEmpty) {
         for (String word in sanitizedList) {
           if (word.startsWith('(')) {
@@ -56,18 +56,26 @@ class WordIndexMap implements DataStructure {
           } else {
             indexMap.containsKey(word)
                 ? indexMap[word]!.add(entry.key)
-                : indexMap[word] = [entry.key];
+                : indexMap[word] = {entry.key};
           }
         }
       }
     }
+
+    // Convert Set values to List's
+    final SplayTreeMap<String, List<int>> convertedMap =
+        SplayTreeMap<String, List<int>>();
+    indexMap.forEach((key, value) {
+      convertedMap[key] = value.toList();
+    });
+
     if (writeFile) {
       await dbParser.fileLoaderService
           .writeFileByType<Null, SplayTreeMap<String, List<int>>>(
               fileName: fileNameAutocompleteWordIndex,
               convertKeysToStrings: false,
-              mapContents: indexMap);
+              mapContents: convertedMap);
     }
-    return returnData ? indexMap : null;
+    return returnData ? convertedMap : null;
   }
 }
