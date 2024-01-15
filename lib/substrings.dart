@@ -34,6 +34,9 @@ class Substrings implements DataStructure {
       {required DBParser dbParser,
       bool returnData = true,
       bool writeFile = false}) async {
+    if (!returnData && !writeFile) {
+      throw (ArgumentError('Both returnStructure and writeFile are false'));
+    }
     final indexMap =
         SplayTreeMap<String, Set<int>>((final a, final b) => a.compareTo(b));
 

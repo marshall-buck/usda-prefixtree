@@ -15,13 +15,6 @@ const mockDescriptionMap = {
       'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry, 2% milk',
 };
 
-const Map<String, List<int>> mockAutocompleteIndex = {
-  "apple": [1, 2],
-  "crabapple": [3, 4],
-  "2%": [3],
-  "21": [3, 4],
-};
-
 const mockProtein = Nutrient(id: 1004, name: 'Protein', amount: 10, unit: 'g');
 
 const mockTotalFat =
@@ -148,3 +141,44 @@ const mockDescriptionRecords = [
   (512346, 'Enchanted whispers echoed in the forgotten ruins.')
 ]; //length 55
 
+const Map<String, List<int>> mockWordIndexMap = {
+  "apple": [1, 2],
+  "crabapple": [3, 4],
+  "2%": [3],
+  "21": [3, 4],
+};
+
+/* cSpell:disable */
+const Map<String, List<int>> mockOriginalSubStringMap = {
+  '%': [3],
+  '1': [3, 4],
+  '2': [3, 4],
+  'aba': [3, 4],
+  'abap': [3, 4],
+  'abapp': [3, 4],
+  'abappl': [3, 4],
+  'abapple': [3, 4],
+  'app': [1, 2, 3, 4],
+  'appl': [1, 2, 3, 4],
+  'apple': [1, 2, 3, 4],
+  'bap': [3, 4],
+  'bapp': [3, 4],
+  'bappl': [3, 4],
+  'bapple': [3, 4],
+  'cra': [3, 4],
+  'crab': [3, 4],
+  'craba': [3, 4],
+  'crabap': [3, 4],
+  'crabapp': [3, 4],
+  'crabappl': [3, 4],
+  'crabapple': [3, 4],
+  'ple': [1, 2, 3, 4],
+  'ppl': [1, 2, 3, 4],
+  'pple': [1, 2, 3, 4],
+  'rab': [3, 4],
+  'raba': [3, 4],
+  'rabap': [3, 4],
+  'rabapp': [3, 4],
+  'rabappl': [3, 4],
+  'rabapple': [3, 4]
+};
