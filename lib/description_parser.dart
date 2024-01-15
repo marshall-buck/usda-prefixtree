@@ -200,7 +200,7 @@ class DescriptionParser implements DataStructure {
       required final int minPhraseLength,
       required final minNumberOfDuplicatesToShow,
       DBParser? dbParser,
-      bool returnMap = false}) async {
+      bool returnData = false}) async {
     final Map<String, int> freqMap = {};
 
     for (final record in listOfRecords) {
@@ -235,7 +235,7 @@ class DescriptionParser implements DataStructure {
           fileName: '${fileHash}_$fileNameDuplicatePhrases',
           convertKeysToStrings: false);
     }
-    return returnMap ? outPut : null;
+    return returnData ? outPut : null;
   }
 
   /// Helper method to check if a food item is in an excluded category.

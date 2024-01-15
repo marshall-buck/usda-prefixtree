@@ -183,7 +183,7 @@ void main() {
                 listOfRecords: mockDescriptionRecords,
                 minPhraseLength: 28,
                 minNumberOfDuplicatesToShow: 3,
-                returnMap: true);
+                returnData: true);
 
         final bool doesContainValue1 =
             res!.containsKey('this is a repeated phrase 28');
@@ -211,7 +211,7 @@ void main() {
                 minPhraseLength: 28,
                 minNumberOfDuplicatesToShow: 3,
                 dbParser: dbParser,
-                returnMap: false);
+                returnData: false);
         verify(() =>
                 mockFileLoaderService.writeFileByType<Null, Map<String, int>>(
                     convertKeysToStrings: false,
