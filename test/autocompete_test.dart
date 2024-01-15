@@ -17,7 +17,7 @@ void main() {
   group('Autocomplete class tests', () {
     group('createOriginalSubstringMap()', () {
       test('substrings populates correctly', () async {
-        final res = AutocompleteHash.createOriginalSubstringMap(
+        final res = AutocompleteHash.createSubstringsFromWordIndex(
             wordIndex: mockAutocompleteIndex);
 
         final deep = DeepCollectionEquality();

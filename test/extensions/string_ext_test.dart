@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:test/test.dart';
-import 'package:usda_db_creation/string_ext.dart';
+import 'package:usda_db_creation/extensions/string_ext.dart';
 
 void main() {
   group('StringExtensions Unit Tests', () {

@@ -4,7 +4,7 @@ import 'package:usda_db_creation/data_structure.dart';
 import 'package:usda_db_creation/db_parser.dart';
 import 'package:usda_db_creation/description_parser.dart';
 import 'package:usda_db_creation/global_const.dart';
-import 'package:usda_db_creation/string_ext.dart';
+import 'package:usda_db_creation/extensions/string_ext.dart';
 
 /// Class to create a [Map] of words to index, from the Food descriptions.
 /// Each key is a word that will be used in an autocomplete search.

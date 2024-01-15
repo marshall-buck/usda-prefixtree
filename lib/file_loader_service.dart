@@ -53,6 +53,39 @@ class FileLoaderService {
     }
   }
 
+  static Map<String, dynamic> convertMapKeysToString(
+      Map<dynamic, dynamic> map) {
+    final Map<String, dynamic> newMap = {};
+
+    map.forEach((key, value) {
+      final newKey = key is int ? key.toString() : key;
+
+      if (value is Map) {
+        newMap[newKey] = convertMapKeysToString(value);
+      } else {
+        newMap[newKey] = value;
+      }
+    });
+
+    return newMap;
+  }
+
+  static Map<dynamic, dynamic> convertMapKeysToInt(Map<dynamic, dynamic> map) {
+    final Map<dynamic, dynamic> newMap = {};
+
+    map.forEach((key, value) {
+      if (value is String && int.tryParse(value) != null) {
+        newMap[key] = int.parse(value);
+      } else if (value is Map) {
+        newMap[key] = convertMapKeysToInt(value);
+      } else {
+        newMap[key] = value;
+      }
+    });
+
+    return newMap;
+  }
+
   Future<void> _writeJsonFile({
     required final String filePath,
     required final Map<dynamic, dynamic> contents,
