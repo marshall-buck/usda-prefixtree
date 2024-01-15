@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:mocktail/mocktail.dart';
 import 'package:usda_db_creation/file_loader_service.dart';
 
@@ -11,4 +13,7 @@ tear_down() {
 
 set_up_all() {
   mockFileLoaderService = MockFileLoaderService();
+  final SplayTreeMap<String, List<int>> fallback =
+      SplayTreeMap<String, List<int>>((final a, final b) => a.compareTo(b));
+  registerFallbackValue(fallback);
 }

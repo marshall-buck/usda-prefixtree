@@ -123,7 +123,7 @@ void main() {
                     any<List<DescriptionRecord>>(named: 'listContents')));
       });
 
-      test('Throws ArgumentError', () {
+      test('Throws ArgumentError', () async {
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
         when(() => mockFileLoaderService.fileHash)
@@ -131,12 +131,21 @@ void main() {
         final descriptions = DescriptionParser();
         final dbParser = DBParser.init(
             filePath: 'fake', fileLoaderService: mockFileLoaderService);
-        final res = descriptions.createDataStructure(
-          dbParser: dbParser,
-          writeFile: false,
-          returnStructure: false,
-        );
-        expect(res, throwsArgumentError);
+        // await descriptions.createDataStructure(
+        //   dbParser: dbParser,
+        //   writeFile: false,
+        //   returnStructure: false,
+        // );
+        // expect(() async => await yourAsyncFunction(),
+        //     throwsA(isA<ArgumentError>()));
+
+        expect(
+            () async => await descriptions.createDataStructure(
+                  dbParser: dbParser,
+                  writeFile: false,
+                  returnStructure: false,
+                ),
+            throwsA(isA<ArgumentError>()));
       });
     });
     group('createOriginalDescriptionRecords()', () {

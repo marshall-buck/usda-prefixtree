@@ -1,21 +1,19 @@
 import 'dart:collection';
 
+import 'package:usda_db_creation/data_structure.dart';
+import 'package:usda_db_creation/db_parser.dart';
 import 'package:usda_db_creation/description_parser.dart';
 import 'package:usda_db_creation/global_const.dart';
 import 'package:usda_db_creation/string_ext.dart';
 
-abstract class WordIndex {
-  SplayTreeMap<String, List<int>> createAutocompleteWordIndexMap();
-}
-
-/// Class to create a [Map] of words to index, from teh Food descriptions.
+/// Class to create a [Map] of words to index, from the Food descriptions.
 /// Each key is a word that will be used in an autocomplete search.
 /// the value of the word key is a list of [int]s of the food items id's.
 /// Technically I could have skipped this step and created the autocomplete
 /// hashes without this step, but it is useful to see a visual
 /// representation of all the words and location's.
 /// So this is needed for the step of creating the [AutoCompleteHashTable]
-class WordIndexMap implements WordIndex {
+class WordIndexMap implements DataStructure {
   final DescriptionMap finalDescriptionMap;
 
   WordIndexMap(this.finalDescriptionMap);
@@ -30,7 +28,13 @@ class WordIndexMap implements WordIndex {
   ///      "apples": [ 173175, 174170,...],
   ///      "orange": [ 171686, 171687,...], ...}.
   @override
-  SplayTreeMap<String, List<int>> createAutocompleteWordIndexMap() {
+  Future<SplayTreeMap<String, List<int>>?> createDataStructure(
+      {required DBParser dbParser,
+      bool returnStructure = true,
+      bool writeFile = false}) async {
+    if (!returnStructure && !writeFile) {
+      throw (ArgumentError('Both returnStructure and writeFile are false'));
+    }
     final indexMap =
         SplayTreeMap<String, List<int>>((final a, final b) => a.compareTo(b));
 
@@ -57,7 +61,16 @@ class WordIndexMap implements WordIndex {
         }
       }
     }
-
+    if (writeFile) {
+      await dbParser.fileLoaderService
+          .writeFileByType<Null, SplayTreeMap<String, List<int>>>(
+              fileName: fileNameAutocompleteWordIndex,
+              convertKeysToStrings: false,
+              mapContents: indexMap);
+    }
+    if (!returnStructure) {
+      return null;
+    }
     return indexMap;
   }
 }
