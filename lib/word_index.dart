@@ -30,9 +30,9 @@ class WordIndexMap implements DataStructure {
   @override
   Future<SplayTreeMap<String, List<int>>?> createDataStructure(
       {required DBParser dbParser,
-      bool returnStructure = true,
+      bool returnData = true,
       bool writeFile = false}) async {
-    if (!returnStructure && !writeFile) {
+    if (!returnData && !writeFile) {
       throw (ArgumentError('Both returnStructure and writeFile are false'));
     }
     final indexMap =
@@ -68,9 +68,6 @@ class WordIndexMap implements DataStructure {
               convertKeysToStrings: false,
               mapContents: indexMap);
     }
-    if (!returnStructure) {
-      return null;
-    }
-    return indexMap;
+    return returnData ? indexMap : null;
   }
 }

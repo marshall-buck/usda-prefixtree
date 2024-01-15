@@ -161,7 +161,7 @@ void main() {
         final words = WordIndexMap(descriptionMap);
 
         await words.createDataStructure(
-            dbParser: dbParser, writeFile: true, returnStructure: false);
+            dbParser: dbParser, writeFile: true, returnData: false);
 
         verify(() => mockFileLoaderService
                 .writeFileByType<Null, SplayTreeMap<String, List<int>>>(
@@ -199,7 +199,7 @@ void main() {
         final words = WordIndexMap(descriptionMap);
 
         await words.createDataStructure(
-            dbParser: dbParser, writeFile: false, returnStructure: true);
+            dbParser: dbParser, writeFile: false, returnData: true);
 
         verifyNever(() => mockFileLoaderService
                 .writeFileByType<Null, SplayTreeMap<String, List<int>>>(
@@ -229,7 +229,7 @@ void main() {
             () async => await words.createDataStructure(
                   dbParser: dbParser,
                   writeFile: false,
-                  returnStructure: false,
+                  returnData: false,
                 ),
             throwsA(isA<ArgumentError>()));
       });

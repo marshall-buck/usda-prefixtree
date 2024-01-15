@@ -74,7 +74,7 @@ void main() {
         final descriptions = DescriptionParser();
         await descriptions.createDataStructure(
           dbParser: dbParser,
-          returnStructure: false,
+          returnData: false,
           writeFile: true,
         );
 
@@ -110,7 +110,7 @@ void main() {
         final descriptions = DescriptionParser();
         await descriptions.createDataStructure(
           dbParser: dbParser,
-          returnStructure: true,
+          returnData: true,
           writeFile: false,
         );
 
@@ -143,7 +143,7 @@ void main() {
             () async => await descriptions.createDataStructure(
                   dbParser: dbParser,
                   writeFile: false,
-                  returnStructure: false,
+                  returnData: false,
                 ),
             throwsA(isA<ArgumentError>()));
       });

@@ -7,29 +7,21 @@ import 'package:usda_db_creation/string_ext.dart';
 typedef DescriptionRecord = (int, String);
 typedef DescriptionMap = Map<int, String>;
 
-/// A class for parsing description strings from the [originalFoodsList] of the
+/// A class for parsing description strings from the [originalFoodsList] from the
 /// original_usda.json file.
 ///
 /// The [originalFoodsList] is a list of food items at the jsonFile['SRLegacyFoods'].
 /// This is initialized in the [DBParser] class.
 ///
 /// A map of {167513: 'Pillsbury, Cinnamon Rolls with Icing, 100% refrigerated dough', ...}
-/// is needed, for both populating the main foods database and for creating the autocomplete hash map.
+/// is needed, for both populating the main foods database and for creating the
+/// autocomplete hash map.
 
 class DescriptionParser implements DataStructure {
   /// Creates [DescriptionMap] from the original foods list.
   ///
-  /// This is the only method
-  /// that needs to be called to create the final description map. All other methods
-  /// are helper methods.
-  ///
-  /// Parameters:
-  /// [dbParser] - the DBParser object.
-  /// [returnMap] - if true (default), the map will be returned.
-  /// [writeFile] - if true, the list of parsed [DescriptionRecord]s and [DescriptionMap] will
-  /// be written to file.
-
-  ///
+  /// This is the only method that needs to be called to create the final description map.
+  /// All other methods are helper methods.
   ///
   /// Returns:
   /// { 167512: 'Pillsbury Golden Layer Buttermilk Biscuits, (Artificial Flavor,) refrigerated dough' ,
@@ -38,10 +30,10 @@ class DescriptionParser implements DataStructure {
   @override
   Future<DescriptionMap?> createDataStructure({
     required DBParser dbParser,
-    bool returnStructure = true,
+    bool returnData = true,
     bool writeFile = false,
   }) async {
-    if (!returnStructure && !writeFile) {
+    if (!returnData && !writeFile) {
       throw (ArgumentError('Both returnStructure and writeFile are false'));
     }
     final List<DescriptionRecord> originalDescriptions =
@@ -69,16 +61,12 @@ class DescriptionParser implements DataStructure {
               mapContents: descriptionMap);
     }
 
-    if (!returnStructure) {
-      return null;
-    }
-
-    return descriptionMap;
+    return returnData ? descriptionMap : null;
   }
 
   //************************ Helper Methods **********************************/
 
-  /// Parses [originalFoodsList] to create a list of [DescriptionRecord].
+  /// Parses [originalFoodsList] to create a list of [DescriptionRecord]s.
   /// The descriptions will be unedited.
   /// This is the first method called in the process of creating the final database.
   ///
@@ -107,8 +95,8 @@ class DescriptionParser implements DataStructure {
         .toList(); // Add this line to convert the nullable values to non-null values.
   }
 
-  /// Removes unwanted phrases from the descriptions.  This will
-  /// mutate the description as needed and return a new list.
+  /// Removes unwanted phrases from the descriptions.
+  /// This will return a new list.
   ///
   /// Returns:
   ///  [(id, description), ...]
@@ -129,6 +117,7 @@ class DescriptionParser implements DataStructure {
 
   /// Helper method to create a [DescriptionMap] from a txt file at [filePath].
   /// The text file must be in the format of 1 (id, description) per line
+  /// (167521, Pie Crust, Cookie-type, Chocolate, Ready Crust)
   static DescriptionMap parseDescriptionsFromTxtFile(
       {required final String filePath,
       required final FileLoaderService fileLoaderService}) {
@@ -161,6 +150,8 @@ class DescriptionParser implements DataStructure {
   // }
 
   /// Helper method to parse a description record from a line in a txt file.
+  /// The line must be in the format of 1 (id, description) per line
+  /// (167521, Pie Crust, Cookie-type, Chocolate, Ready Crust).
   static MapEntry<int, String> _parseDescriptionRecordFromString(
       final String line) {
     final int id = int.parse(line.substring(1, 7));
@@ -183,8 +174,10 @@ class DescriptionParser implements DataStructure {
   /// Parameters:
   /// [listOfRecords] - the list of [DescriptionRecord]s.
   /// [minPhraseLength] - the minimum length of the phrase to be included in the map.
-  /// [minNumberOfDuplicatesToShow] - the minimum number of duplicate phrases to be included in the map.
-  ///
+  /// [minNumberOfDuplicatesToShow] - the minimum number of duplicate phrases to be
+  /// included in the map.
+  /// [dbParser] - Optional [DBParser] instance, if included the output
+  /// will write data to json file
   ///
   /// Returns:
   ///   {Lorem ipsum: 3,
@@ -228,11 +221,9 @@ class DescriptionParser implements DataStructure {
     final Map<String, int> outPut = Map.fromEntries(sortedList);
 
     if (dbParser != null) {
-      final fileHash = dbParser.fileLoaderService.fileHash;
-
       await dbParser.fileLoaderService.writeFileByType<Null, Map<String, int>>(
           mapContents: outPut,
-          fileName: '${fileHash}_$fileNameDuplicatePhrases',
+          fileName: fileNameDuplicatePhrases,
           convertKeysToStrings: false);
     }
     return returnData ? outPut : null;

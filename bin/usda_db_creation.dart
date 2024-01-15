@@ -19,7 +19,7 @@ void main() async {
   final descriptions = DescriptionParser();
 
   final desMap = await descriptions.createDataStructure(
-      dbParser: dbParser, writeFile: true, returnStructure: true);
+      dbParser: dbParser, writeFile: true, returnData: true);
   final wordIndex = WordIndexMap(desMap!);
   await wordIndex.createDataStructure(dbParser: dbParser, writeFile: true);
 
