@@ -135,19 +135,6 @@ class DescriptionParser implements DataStructure {
     }
     return descriptionMap;
   }
-  // TODO: Add this method to parse a json file.
-  // /// Helper method to create a [DescriptionMap] from a txt file at [filePath].
-  // /// The text file must be in the format of 1 (id, description) per line
-  // static DescriptionMap parseDescriptionsFromJson(
-  //     {required final String filePath,
-  //     required final FileLoaderService fileLoaderService}) {
-  //   final String fileContents = fileLoaderService.loadData(filePath: filePath);
-  //   final Map<String, dynamic> jsonMap = jsonDecode(fileContents);
-
-  //     descriptionMap[entry.key] = entry.value;
-  //   }
-  //   return descriptionMap;
-  // }
 
   /// Helper method to parse a description record from a line in a txt file.
   /// The line must be in the format of 1 (id, description) per line

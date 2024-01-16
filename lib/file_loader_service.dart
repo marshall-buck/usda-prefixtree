@@ -6,7 +6,7 @@ import 'package:usda_db_creation/extensions/map_ext.dart';
 import 'package:usda_db_creation/global_const.dart';
 
 /// Class to handle reading and writing  files.
-// TODO: Add date now for hash for each save method
+
 class FileLoaderService {
   /// Loads a DateTime sting at initialization so all
   /// Prefixes wil be the same.
