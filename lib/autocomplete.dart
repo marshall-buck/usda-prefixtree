@@ -47,7 +47,7 @@ class AutoCompleteHashTable implements DataStructure {
               mapContents: data.toJson());
     }
 
-    return data;
+    return returnData ? data : null;
   }
 
   /// Creates an indexHash table from the given [substringMap]  and

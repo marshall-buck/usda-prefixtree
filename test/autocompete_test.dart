@@ -17,7 +17,7 @@ void main() {
     tear_down();
   });
 
-  group('Autocomplete class tests', () {
+  group('AutoCompleteHashTable class tests', () {
     group('createAutocompleteHashTable() - ', () {
       test('hashes list correctly', () async {
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
@@ -38,6 +38,26 @@ void main() {
             true);
         expect(
             d.equals(res.indexHash, autoCompleteHashTable['indexHash']), true);
+      });
+    });
+  });
+  group('AutoCompleteHashData class tests', () {
+    group('toJson() - ', () {
+      test('converts all keys to strings', () {
+        final data = AutoCompleteHashData(
+            substringHash:
+                autoCompleteHashTable['substringHash'] as Map<String, int>,
+            indexHash:
+                autoCompleteHashTable['indexHash'] as Map<int, List<int>>);
+
+        final json = data.toJson();
+        final index = json['indexHash'];
+        index.keys.forEach((key) {
+          expect(key, isA<String>());
+        });
+        index.values.forEach((value) {
+          expect(value, isA<List<int>>());
+        });
       });
     });
   });
