@@ -1,9 +1,37 @@
 import 'dart:convert';
 
+import 'package:usda_db_creation/data_structure.dart';
+
 import 'package:usda_db_creation/file_loader_service.dart';
 import 'package:usda_db_creation/food_model.dart';
 import 'package:usda_db_creation/global_const.dart';
 import 'package:usda_db_creation/nutrient.dart';
+
+class DB implements DataStructure {
+  final Map<int, String> descriptionMap;
+
+  DB(this.descriptionMap);
+
+  @override
+  Future<Map<String, dynamic>?> createDataStructure(
+      {required DBParser dbParser,
+      bool returnData = true,
+      bool writeFile = false}) async {
+    final foodsList = dbParser.originalFoodsList;
+
+    final Map<String, dynamic> data = dbParser.createFoodsMapDB(
+        getFoodsList: foodsList, finalDescriptionRecordsMap: descriptionMap);
+
+    if (writeFile) {
+      await dbParser.fileLoaderService
+          .writeFileByType<Null, Map<String, dynamic>>(
+              fileName: fileNameFoodsDatabase,
+              convertKeysToStrings: false,
+              mapContents: data);
+    }
+    return returnData ? data : null;
+  }
+}
 
 class DBParser {
   FileLoaderService fileLoaderService;
@@ -38,6 +66,7 @@ class DBParser {
     return (categories, count);
   }
 
+// TODO:move this functioality into DB class
   /// Method to create the map that wil be used for the foods database.
   /// The map will be of the form:
   /// { id: { description, descriptionLength,  nutrients }, ... }

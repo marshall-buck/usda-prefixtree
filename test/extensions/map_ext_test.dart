@@ -136,7 +136,7 @@ void main() {
     group('convertStringKeysToInts', () {
       test('should convert string keys to int keys', () {
         final map = {
-          '1': 'one',
+          '1123': 'one',
           '2': 'two',
           '3': {'4': 'four'}
         };
@@ -144,7 +144,7 @@ void main() {
         final deep = DeepCollectionEquality();
         expect(
             deep.equals(result, {
-              1: 'one',
+              1123: 'one',
               2: 'two',
               3: {4: 'four'}
             }),

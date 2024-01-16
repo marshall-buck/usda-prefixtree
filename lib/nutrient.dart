@@ -30,7 +30,7 @@ class Nutrient with _$Nutrient {
     );
   }
 
-  /// Given the string form a csv file, iterate and create the nutrien info map
+  /// Given the string form a csv file, iterate and create the nutrient info map
   ///
   /// Returns:{ {"1004" : {"name": "Total Fat", "unit": "g"}, ...}
 

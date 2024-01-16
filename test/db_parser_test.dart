@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 import 'package:usda_db_creation/db_parser.dart';
+import 'package:usda_db_creation/extensions/map_ext.dart';
 import 'package:usda_db_creation/nutrient.dart';
 
 import 'setup/mock_data.dart';
@@ -19,12 +20,14 @@ void main() {
   });
   group('DBParser class tests', () {
     group('init() - ', () {
-      test('loads file correctly', () {
+      test(
+          'loads USDA json file correctly, by populating _originalDBMap correctly',
+          () {
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
         final dbParser = DBParser.init(
             filePath: 'fake', fileLoaderService: mockFileLoaderService);
-        // dbParser.init('fake');
+
         final res = dbParser.originalFoodsList;
 
         expect(res.length, 3);
@@ -56,6 +59,9 @@ void main() {
         final Map<String, dynamic> res = dbParser.createFoodsMapDB(
             getFoodsList: originalFoodsList,
             finalDescriptionRecordsMap: mockDescriptionMap);
+
+        final converted = res.deepConvertMapKeyToInt();
+
         final d = DeepCollectionEquality();
 
         expect(
@@ -67,10 +73,9 @@ void main() {
             d.equals(
                 res.entries.last.value, mockFoodsMapResult.entries.last.value),
             true);
+
+        expect(converted.entries.first.key, isA<int>());
       });
     });
   });
 }
-// Existing code...
-
-// Existing code...
