@@ -1,5 +1,6 @@
 // ignore_for_file: unused_import
 
+import 'package:usda_db_creation/autocomplete.dart';
 import 'package:usda_db_creation/db_parser.dart';
 import 'package:usda_db_creation/description_parser.dart';
 
@@ -25,8 +26,10 @@ void main() async {
   final wordIndexMap =
       await wordIndex.createDataStructure(dbParser: dbParser, writeFile: true);
   final substring = Substrings(wordIndexMap!);
-  // final substringMap =
-  await substring.createDataStructure(dbParser: dbParser, writeFile: true);
+  final substringMap =
+      await substring.createDataStructure(dbParser: dbParser, writeFile: false);
+  final hashTable = AutoCompleteHashTable(substringMap!);
+  await hashTable.createDataStructure(dbParser: dbParser, writeFile: true);
 
   // await db.replenishFullDatabase(
   //     fileLoaderService: fileLoaderService, dbParser: dbParser);

@@ -1,4 +1,4 @@
-extension optional on Map {
+extension MapExtensions on Map {
   // TODO:Figure out how to handle optional params
   /// Recursively traverses a map and converts [int] keys to  [String]
   Map<dynamic, dynamic> deepConvertMapKeyToString(

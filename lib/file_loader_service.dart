@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:usda_db_creation/extensions/map_ext.dart';
 import 'package:usda_db_creation/global_const.dart';
 
 /// Class to handle reading and writing  files.
@@ -40,7 +41,7 @@ class FileLoaderService {
       if (mapContents != null && mapContents is Map) {
         final String mapFilePath = '$pathToFiles/$fileHash/$fileName.json';
         final Map convertedMap = convertKeysToStrings
-            ? mapContents.map((key, value) => MapEntry(key.toString(), value))
+            ? mapContents.deepConvertMapKeyToString()
             : mapContents;
         await _writeJsonFile(filePath: mapFilePath, contents: convertedMap);
       }
@@ -51,39 +52,6 @@ class FileLoaderService {
     } catch (e, st) {
       log(e.toString(), stackTrace: st, name: 'writeFileByType');
     }
-  }
-
-  static Map<String, dynamic> convertMapKeysToString(
-      Map<dynamic, dynamic> map) {
-    final Map<String, dynamic> newMap = {};
-
-    map.forEach((key, value) {
-      final newKey = key is int ? key.toString() : key;
-
-      if (value is Map) {
-        newMap[newKey] = convertMapKeysToString(value);
-      } else {
-        newMap[newKey] = value;
-      }
-    });
-
-    return newMap;
-  }
-
-  static Map<dynamic, dynamic> convertMapKeysToInt(Map<dynamic, dynamic> map) {
-    final Map<dynamic, dynamic> newMap = {};
-
-    map.forEach((key, value) {
-      if (value is String && int.tryParse(value) != null) {
-        newMap[key] = int.parse(value);
-      } else if (value is Map) {
-        newMap[key] = convertMapKeysToInt(value);
-      } else {
-        newMap[key] = value;
-      }
-    });
-
-    return newMap;
   }
 
   Future<void> _writeJsonFile({

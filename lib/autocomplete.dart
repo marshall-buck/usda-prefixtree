@@ -1,34 +1,56 @@
-import 'dart:collection';
-
 import 'package:collection/collection.dart';
 import 'package:usda_db_creation/data_structure.dart';
 import 'package:usda_db_creation/db_parser.dart';
+import 'package:usda_db_creation/extensions/map_ext.dart';
 
-import 'package:usda_db_creation/extensions/string_ext.dart';
-import 'package:usda_db_creation/word_index.dart';
+import 'package:usda_db_creation/global_const.dart';
 
-class AutoCompleteHashTable {
-  late final Map<String, Map<String, int>> substrings;
-  late final Map<String, Map<int, List<String>>> indexHash;
+class AutoCompleteHashData {
+  final Map<String, int> substringHash;
+  final Map<int, List<int>> indexHash;
 
-  // AutoCompleteHashTable(this.substrings, this.indexHash);
+  AutoCompleteHashData({required this.substringHash, required this.indexHash});
 
   Map<String, dynamic> toJson() {
     return {
-      'substrings': substrings,
-      'indexHash': indexHash,
+      'substringHash': substringHash,
+      'indexHash': indexHash.deepConvertMapKeyToString()
     };
-  }
-
-  @override
-  String toString() {
-    return 'AutoCompleteHashTable(substrings: $substrings, indexHash: $indexHash)';
   }
 }
 
-/// Class to handle the word index for the autocomplete search.
-class AutocompleteHash implements DataStructure {
-  /// Creates an indexHash table from the given [originalSubStringMap]  and
+class AutoCompleteHashTable implements DataStructure {
+  final Map<String, int> _substringHash = {};
+  final Map<int, List<int>> _indexHash = {};
+
+  final Map<String, List<int>> substringMap;
+
+  AutoCompleteHashTable(this.substringMap);
+
+  @override
+  Future<AutoCompleteHashData?> createDataStructure(
+      {required DBParser dbParser,
+      bool returnData = true,
+      bool writeFile = false}) async {
+    _populateHashes();
+
+    final AutoCompleteHashData data = AutoCompleteHashData(
+      substringHash: _substringHash,
+      indexHash: _indexHash,
+    );
+
+    if (writeFile) {
+      await dbParser.fileLoaderService
+          .writeFileByType<Null, Map<String, dynamic>>(
+              fileName: fileNameAutocompleteHash,
+              convertKeysToStrings: false,
+              mapContents: data.toJson());
+    }
+
+    return data;
+  }
+
+  /// Creates an indexHash table from the given [substringMap]  and
   /// rewrites the substring map with the new index values.
   ///
   /// This is the final step in creating the autocomplete hash table.
@@ -47,52 +69,44 @@ class AutocompleteHash implements DataStructure {
   /// final table = createAutocompleteHashTable(originalSubStringMap: originalSubStringMap);
   /// ```
   ///
-  /// Returns -  {
-  ///   'substrings': {
+  //{
+  ///
+  /// _substringHash = {
   ///   'aba': 0,
   ///   'abap': 0,
   ///   'abapp': 0,
   ///   'abappl': 0,
   ///   'abapple': 0, ...
   ///    },
-  ///   'indexHash': {
+  ///   _indexHash = {
   ///     0: [3, 4],
   ///     1: [1, 2, 3, 4]
   ///    }
   ///   }
   /// ```
   /// /* Cspell: enable*/
-  @override
-  Map<String, dynamic> createDataStructure(
-      {required final Map<String, List<int>> originalSubStringMap}) {
-    final Map<String, int> newWordIndex = {};
-    final Map<int, List<int>> hashTable = {};
+  void _populateHashes() {
     int count = 0;
 
-    for (final element in originalSubStringMap.entries) {
+    for (final element in substringMap.entries) {
       final List<int> indexListValue = element.value;
-      final int hashKey = findHashKey(
-          indexListFromSubstring: indexListValue, hashTable: hashTable);
+      final int hashKey = _findHashKey(
+          indexListFromSubstring: indexListValue, hashTable: _indexHash);
 
       if (hashKey == -1) {
-        hashTable[count] = indexListValue;
-        newWordIndex[element.key] = count;
+        _indexHash[count] = indexListValue;
+        _substringHash[element.key] = count;
         count++;
       }
 
       if (hashKey >= 0) {
-        newWordIndex[element.key] = hashKey;
+        _substringHash[element.key] = hashKey;
       }
     }
-// TODO: change index to numbers
-    final Map<String, List<String>> stringKeyMap = hashTable
-        .map((final key, final value) => MapEntry(key.toString(), value));
-
-    return {"substrings": newWordIndex, "indexHash": stringKeyMap};
   }
 
   /// Finds the hash key for the given [indexListFromSubstring] and [hashTable].
-  static int findHashKey(
+  static int _findHashKey(
       {required final List<int> indexListFromSubstring,
       required final Map<int, List<int>> hashTable}) {
     for (final element in hashTable.entries) {

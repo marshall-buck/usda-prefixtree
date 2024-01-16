@@ -3,7 +3,7 @@ import 'package:test/test.dart';
 import 'package:usda_db_creation/extensions/map_ext.dart';
 
 void main() {
-  group('MpExtensions', () {
+  group('MapExtensions', () {
     group('convertMapKeyToString()', () {
       test('should convert int keys to string keys', () {
         final map = {
@@ -11,9 +11,9 @@ void main() {
           2: 'two',
           3: {'4': 'four'}
         };
-        final result = map.convertMapKeyToString();
+        final result = map.deepConvertMapKeyToString();
 
-        expect(result, isA<Map<String, dynamic>>());
+        // expect(result, isA<Map<String, dynamic>>());
 
         final deep = DeepCollectionEquality();
         expect(
@@ -41,9 +41,9 @@ void main() {
             }
           }
         };
-        final result = map.convertMapKeyToString();
+        final result = map.deepConvertMapKeyToString();
 
-        expect(result['2'], isA<Map<String, dynamic>>());
+        expect(result['2'], isA<Map<dynamic, dynamic>>());
         expect(result['2'].keys, contains('3'));
 
         final deep = DeepCollectionEquality();
@@ -68,6 +68,70 @@ void main() {
             }),
             false);
       });
+      // test('should skip keys value, but change the key', () {
+      //   final map = {
+      //     1: 'one',
+      //     2: {
+      //       3: {
+      //         4: [1, 2, 3, 4],
+      //         "5": 9
+      //       }
+      //     },
+      //     '3': 'as'
+      //   };
+      //   final result = map.deepConvertMapKeyToString(
+      //       keyMatch: ((key) => key == 3), changeKey: true);
+
+      //   expect(result['2'], isA<Map<dynamic, dynamic>>());
+
+      //   final deep = DeepCollectionEquality();
+      //   expect(
+      //       deep.equals(result, {
+      //         '1': 'one',
+      //         '2': {
+      //           '3': {
+      //             4: [1, 2, 3, 4],
+      //             "5": 9
+      //           }
+      //         },
+      //         '3': 'as'
+      //       }),
+      //       true);
+      // });
+      // test('should skip keys value, and not change the key', () {
+      //   final map = {
+      //     1: 'one',
+      //     2: {
+      //       3: {
+      //         4: [1, 2, 3, 4],
+      //         '5': 9
+      //       }
+      //     },
+      //     '3': 'as',
+      //     4: 0
+      //   };
+      //   final result = map.deepConvertMapKeyToString(
+      //       keyMatch: ((key) => key == 3), changeKey: false);
+      //   print('result: $result');
+
+      //   // expect(result["2"], isA<Map<int, dynamic>>());
+      //   print('result 2: ${result['2']}');
+
+      //   final deep = DeepCollectionEquality();
+      //   expect(
+      //       deep.equals(result, {
+      //         '1': 'one',
+      //         '2': {
+      //           3: {
+      //             4: [1, 2, 3, 4],
+      //             '5': 9
+      //           }
+      //         },
+      //         '3': 'as',
+      //         '4': 0
+      //       }),
+      //       true);
+      // });
     });
     group('convertStringKeysToInts', () {
       test('should convert string keys to int keys', () {
@@ -76,7 +140,7 @@ void main() {
           '2': 'two',
           '3': {'4': 'four'}
         };
-        final result = map.convertMapKeyToInt();
+        final result = map.deepConvertMapKeyToInt();
         final deep = DeepCollectionEquality();
         expect(
             deep.equals(result, {
@@ -94,7 +158,7 @@ void main() {
             '3': {'4': 'four'}
           }
         };
-        final result = map.convertMapKeyToInt();
+        final result = map.deepConvertMapKeyToInt();
         final deep = DeepCollectionEquality();
         expect(
             deep.equals(result, {
@@ -108,14 +172,14 @@ void main() {
 
       test('should ignore non-string keys', () {
         final map = {1: 'one', '2': 'two', '3': true};
-        final result = map.convertMapKeyToInt();
+        final result = map.deepConvertMapKeyToInt();
         final deep = DeepCollectionEquality();
         expect(deep.equals(result, {1: 'one', 2: 'two', 3: true}), true);
       });
 
       test('should ignore non-integer string keys', () {
         final map = {'a': 'alpha', '2': 'two', '3b': 'threeB'};
-        final result = map.convertMapKeyToInt();
+        final result = map.deepConvertMapKeyToInt();
         final deep = DeepCollectionEquality();
         expect(deep.equals(result, {'a': 'alpha', 2: 'two', '3b': 'threeB'}),
             true);

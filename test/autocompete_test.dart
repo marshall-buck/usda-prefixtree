@@ -1,8 +1,11 @@
 import 'package:collection/collection.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 import 'package:usda_db_creation/autocomplete.dart';
+import 'package:usda_db_creation/db_parser.dart';
 
 import 'setup/mock_data.dart';
+import 'setup/mock_db.dart';
 import 'setup/setup.dart';
 
 void main() {
@@ -17,15 +20,24 @@ void main() {
   group('Autocomplete class tests', () {
     group('createAutocompleteHashTable() - ', () {
       test('hashes list correctly', () async {
-        final autocomplete = AutocompleteHash();
-        final res = autocomplete.createAutocompleteHashTable(
-            substringMap: originalSubStringMap);
+        when(() => mockFileLoaderService.loadData(filePath: 'fake'))
+            .thenReturn(mockUsdaFile);
+        when(() => mockFileLoaderService.fileHash)
+            .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
+
+        final dbParser = DBParser.init(
+            filePath: 'fake', fileLoaderService: mockFileLoaderService);
+        final hash = AutoCompleteHashTable(mockOriginalSubStringMap);
+        final res = await hash.createDataStructure(dbParser: dbParser);
+
         final d = DeepCollectionEquality();
 
-        expect(d.equals(res['substrings'], autoCompleteHashTable['substrings']),
+        expect(
+            d.equals(
+                res!.substringHash, autoCompleteHashTable['substringHash']),
             true);
-        expect(d.equals(res['hashIndex'], autoCompleteHashTable['hashIndex']),
-            true);
+        expect(
+            d.equals(res.indexHash, autoCompleteHashTable['indexHash']), true);
       });
     });
   });
@@ -33,7 +45,7 @@ void main() {
 
 /* cSpell:disable */
 const Map<String, dynamic> autoCompleteHashTable = {
-  'substrings': {
+  'substringHash': {
     '%': 0,
     '1': 1,
     '2': 1,
