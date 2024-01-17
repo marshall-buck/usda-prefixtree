@@ -27,7 +27,7 @@ void main() {
 
         final dbParser = DBParser.init(
             filePath: 'fake', fileLoaderService: mockFileLoaderService);
-        final hash = AutoCompleteHashTable(mockOriginalSubStringMap);
+        final hash = AutoCompleteHashTable(mockUnHashedSubstrings);
         final res = await hash.createDataStructure(dbParser: dbParser);
 
         final d = DeepCollectionEquality();

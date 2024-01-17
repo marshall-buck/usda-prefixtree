@@ -32,7 +32,7 @@ void main() {
 
         final deep = DeepCollectionEquality();
 
-        expect(deep.equals(res, mockOriginalSubStringMap), true);
+        expect(deep.equals(res, mockUnHashedSubstrings), true);
       });
       test('fileLoader writeFileByType is called when writeFile is true',
           () async {

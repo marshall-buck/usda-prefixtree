@@ -5,6 +5,29 @@ import 'package:usda_db_creation/extensions/map_ext.dart';
 
 import 'package:usda_db_creation/global_const.dart';
 
+/// Class to represent the [AutoCompleteHashData]'s structure and methods.
+/// This is the data structure that represents a substring tree, and a lookup table
+/// for the substrings values.
+///
+/// Typically the data would be written to one json file.
+/// and converted in to the data structure.
+/// /*Cspell:disable
+/// ```
+///  {
+/// substringHash = {
+///   'aba': 0,
+///   'abap': 0,
+///   'abapp': 0,
+///   'abappl': 1,
+///   'abapple': 0, ...
+///    },
+///   indexHash = {
+///     0: [3, 4],
+///     1: [1, 2, 3, 4]
+///    }
+///   }
+/// ```
+///  /*Cspell:enable
 class AutoCompleteHashData {
   final Map<String, int> substringHash;
   final Map<int, List<int>> indexHash;
@@ -19,14 +42,18 @@ class AutoCompleteHashData {
   }
 }
 
+/// Class to create the substrings and indexHash file and object.
+/// Initialize with a Map<String, List<int>> from the [Substrings] class.
+
 class AutoCompleteHashTable implements DataStructure {
   final Map<String, int> _substringHash = {};
   final Map<int, List<int>> _indexHash = {};
 
-  final Map<String, List<int>> substringMap;
+  final Map<String, List<int>> unHashedSubstrings;
 
-  AutoCompleteHashTable(this.substringMap);
+  AutoCompleteHashTable(this.unHashedSubstrings);
 
+  /// Method to create the data and write the files.
   @override
   Future<AutoCompleteHashData?> createDataStructure(
       {required DBParser dbParser,
@@ -50,45 +77,26 @@ class AutoCompleteHashTable implements DataStructure {
     return returnData ? data : null;
   }
 
-  /// Creates an indexHash table from the given [substringMap]  and
-  /// rewrites the substring map with the new index values.
-  ///
-  /// This is the final step in creating the autocomplete hash table.
-  /// Write this output to a file.
-  ///
-  /// Example usage:
+  /// Populates the _indexHash and _substringMap properties from the given [unHashedSubstrings].
   /// /* Cspell: disable*/
   /// ```dart
-  /// final originalSubStringMap = {
+  /// Map<String, List<int>> originalSubStringMap = {
   ///     'aba': [3, 4],
   ///     'abap': [3, 4],
-  ///     'abapp': [3, 4],
+  ///     'abapp': [1, 2, 3, 4],
   ///     'abappl': [3, 4], ...
   ///      };
-  ///
-  /// final table = createAutocompleteHashTable(originalSubStringMap: originalSubStringMap);
+
   /// ```
+  /// _substringHash = { 'aba': 0, 'abap': 0, 'abapp': 1, 'abappl': 0, ... }
   ///
-  //{
-  ///
-  /// _substringHash = {
-  ///   'aba': 0,
-  ///   'abap': 0,
-  ///   'abapp': 0,
-  ///   'abappl': 0,
-  ///   'abapple': 0, ...
-  ///    },
-  ///   _indexHash = {
-  ///     0: [3, 4],
-  ///     1: [1, 2, 3, 4]
-  ///    }
-  ///   }
+  /// _indexHash = { 0: [3, 4], 1: [1, 2, 3, 4], ...  }
   /// ```
   /// /* Cspell: enable*/
   void _populateHashes() {
     int count = 0;
 
-    for (final element in substringMap.entries) {
+    for (final element in unHashedSubstrings.entries) {
       final List<int> indexListValue = element.value;
       final int hashKey = _findHashKey(
           indexListFromSubstring: indexListValue, hashTable: _indexHash);
