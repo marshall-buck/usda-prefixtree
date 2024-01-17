@@ -1,11 +1,13 @@
 extension StringExtensions on String {
   /// Removes all non-alpha except dashes and parentheses,
   /// and numbers followed by a %.
-  /// [^\w()%\-] matches any character that is not a word character
-  /// (letters, numbers, underscores), not a parenthesis (( or )) and not a hyphen (-).
+  ///
+  /// [^\w()%\-] matches any character that is not (letters, numbers, underscores),
+  /// not a parenthesis (( or )) and not a hyphen (-).
   /// | is the OR operator in regular expressions, which means the pattern will
   ///  match if either the left side or the right side of the | is true.
   /// (\d+%) matches one or more digits followed by a percent sign (%).
+  ///
   /// So, this pattern will match any string that contains a character
   /// not in the set defined by [^\w()%\-] or a string that contains one or more
   /// digits followed by a percent sign.
@@ -50,11 +52,12 @@ extension StringExtensions on String {
     return wordsSet;
   }
 
+  /// Checks if [String] is in provided [List]
   bool isStopWord(final List<String> stopWords) {
     return stopWords.contains(this);
   }
 
-  /// Checks if a string contains either digits followed by a %,
+  /// Checks if a [String] contains either digits followed by a %,
   /// 'or' a string of lowercase characters.
   bool isLowerCaseOrNumberWithPercent() {
     final lowerCaseRegex = RegExp(r"^[a-z]+$");
@@ -64,17 +67,20 @@ extension StringExtensions on String {
         numberWithPercentRegex.hasMatch(this);
   }
 
+  /// Checks if [String] is a number followed by a `%` sign.
   bool isNumberWithPercent() {
     final numberWithPercentRegex = RegExp(r"^\d+%$");
     return numberWithPercentRegex.hasMatch(this);
   }
 
+  /// Checks if string is a digit.
   bool isNumber() {
     final numberRegex = RegExp(r"^\d+$");
     return numberRegex.hasMatch(this);
   }
 
-  ///  Method to create a list of phrase's from a [sentence].
+  /// Creates a list of phrase's from a [String] sentence.
+  /// Meant to be used on typical sentence.
   ///
   /// The phrase will be at least [minPhraseLength] long.
   ///

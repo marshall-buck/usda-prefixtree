@@ -12,7 +12,7 @@ extension MapExtensions on Map {
   }
 
   /// Recursively traverses a map and converts [String] keys to  [int].
-  ///Keys might be parsable to ints, so return type is Map<dynamic, dynamic>
+  /// Keys might not be parsable to ints, so return type is Map<dynamic, dynamic>.
   Map<dynamic, dynamic> deepConvertMapKeyToInt() {
     final newMap = <dynamic, dynamic>{};
     forEach((key, value) {
