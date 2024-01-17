@@ -54,6 +54,7 @@ class Nutrient with _$Nutrient {
     return nutrientsMap;
   }
 
+/*CSpell:disable*/
   /// Some names have ben changed to be more user friendly.
   static const originalNutrientTableEdit = {
     1003: {"name": "Protein", "unit": "g"},

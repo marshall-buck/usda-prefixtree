@@ -1,7 +1,6 @@
 
 
 # A dart library made to create a json database and autocomplete lookup, from the USDA SR Legacy database json download file.
-## This library is only made to create 2 files to be used in other packages.
 
 #### Link to download Page
 https://fdc.nal.usda.gov/download-datasets.html
@@ -9,8 +8,11 @@ https://fdc.nal.usda.gov/download-datasets.html
 #### Link to download
 https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_json_2018-04.zip
 
-The output is 2 files.
-1.  The foods and nutritional information. In the form of json.
+
+
+#### The intended output is 2 json files.
+1.  The foods and nutritional information. I
+   - The key is the food items index.
    ```
 {
   '111111': {
@@ -21,12 +23,14 @@ The output is 2 files.
       {'id': 1003, 'name': 'Total Fat', 'amount': 5, 'unit': 'mg'},
       {'id': 1005, 'name': 'Total Carbs', 'amount': 10, 'unit': 'g'},
       {'id': 1008, 'name': 'Calories', 'amount': 80, 'unit': 'g'},
-      {'id': 1258, 'name': 'Saturated Fat', 'amount': 10, 'unit': 'g'},
+      {'id': 1258, 'name': 'Saturated Fat', 'amount': 10, 'unit': 'g'}, ...
     ]
   }, ...
 };
 ```
-2.  A lookup hash table of indexed words to search in the form of
+1.  A lookup hash table of indexed words to search.
+  - Each substringHash.value is a lookup to the indexHash.key.
+  - The indexHash.value is a list of all the food items descriptions
 <!-- CSpell: disable -->
 ```
 {
@@ -77,8 +81,7 @@ The output is 2 files.
 
 
 1. Create a map food descriptions `{id: description, ...}` from the original database.  Parse descriptions as necessary.
-2. Create the word index in the form of.
-    - Although the hashes could have been made by skipping this step, its good to have a file to look at.
+2. Create the word index. *Although the hashes could have been made by skipping this step, its good to have a file to look at.*
 ```
 {
   "apple": [1, 2],
@@ -89,7 +92,7 @@ The output is 2 files.
 
 ```
 <!-- CSpell: disable -->
-3. Create the substrings of word index.
+3. Create the substrings of the word index.
 ```
 {
     '%': [3],
@@ -187,7 +190,7 @@ The output is 2 files.
 };
 ```
 
-
+##### The do_not_delete folder has the original db file, and the nutrients files.
 
 
 

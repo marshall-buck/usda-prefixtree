@@ -67,7 +67,7 @@ class DBParser {
     return (categories, count);
   }
 
-// TODO:move  into DB.
+// TODO:move into DB.
   /// Method to create the map that wil be used for the foods database.
   /// The map will be of the form:
   /// { id: { description, descriptionLength,  nutrients }, ... }
