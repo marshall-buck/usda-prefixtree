@@ -15,10 +15,10 @@ void main() async {
   final fileLoaderService = FileLoaderService();
 
   final dbParser = DBParser.init(
-      filePath: '$pathToFiles/$fileNameOriginalDBFile',
+      filePath: FileLoaderService.fileNameOriginalDBFile,
       fileLoaderService: fileLoaderService);
   await runner.createDBFiles(
-      dbParser: dbParser, fileLoaderService: fileLoaderService);
+      dbParser: dbParser, fileLoaderService: fileLoaderService, extras: true);
 
   // final descriptions = DescriptionParser();
 

@@ -59,6 +59,6 @@ Future<void> createDBFiles(
     await hashTable.createDataStructure(dbParser: dbParser, writeFile: true);
 
     final db = DB(desMap);
-    db.createDataStructure(dbParser: dbParser, writeFile: true);
+    await db.createDataStructure(dbParser: dbParser);
   }
 }

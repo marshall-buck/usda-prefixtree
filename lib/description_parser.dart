@@ -55,7 +55,8 @@ class DescriptionParser implements DataStructure {
     if (writeFile) {
       await dbParser.fileLoaderService
           .writeFileByType<List<DescriptionRecord>, Map<int, String>>(
-              fileName: fileNameFinalDescriptions,
+              fileName: FileLoaderService
+                  .fileNameFinalDescriptions, //fileNameFinalDescriptions,
               convertKeysToStrings: true,
               listContents: parsedDescriptions,
               mapContents: descriptionMap);
@@ -210,7 +211,7 @@ class DescriptionParser implements DataStructure {
     if (dbParser != null) {
       await dbParser.fileLoaderService.writeFileByType<Null, Map<String, int>>(
           mapContents: outPut,
-          fileName: fileNameDuplicatePhrases,
+          fileName: FileLoaderService.fileNameDuplicatePhrases,
           convertKeysToStrings: false);
     }
     return returnData ? outPut : null;

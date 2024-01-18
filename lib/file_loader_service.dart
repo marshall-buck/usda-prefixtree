@@ -3,11 +3,31 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:usda_db_creation/extensions/map_ext.dart';
-import 'package:usda_db_creation/global_const.dart';
+import 'package:path/path.dart' as p;
 
 /// Class to handle reading and writing  files.
 
 class FileLoaderService {
+  static final pathToFiles = p.join('lib', 'db');
+
+  static final fileNameOriginalDBFile =
+      p.join(pathToFiles, 'do_not_delete', 'original_usda.json');
+  static final fileNameNutrientsCsv =
+      p.join(pathToFiles, 'do_not_delete', 'nutrient.csv');
+  static final fileNameNutrientsMap =
+      p.join(pathToFiles, 'do_not_delete', 'original_nutrient_csv.json');
+
+  static const fileNameDuplicatePhrases = 'duplicate_phrases';
+  static const fileNameOriginalDescriptions = 'original_descriptions.txt';
+  static const fileNameFinalDescriptions = 'descriptions';
+  static final fileNameSubstrings = 'substrings';
+
+  static const fileNameAutocompleteWordIndex = 'autocomplete_word_index';
+  static const fileNameAutocompleteWordIndexKeys =
+      'autocomplete_word_index_keys';
+  static const fileNameAutocompleteHash = 'autocomplete_hash';
+  static const fileNameFoodsDatabase = 'foods_db';
+
   /// Loads a DateTime sting at initialization so all
   /// Prefixes wil be the same.
   final DateTime _fileHash = DateTime.now();
@@ -33,13 +53,15 @@ class FileLoaderService {
       _checkAndCreateFolder();
 
       if (listContents != null && listContents is List) {
-        final String listFilePath = '$pathToFiles/$fileHash/$fileName.txt';
+        final String listFilePath = p.join(pathToFiles, fileHash,
+            '$fileName.txt'); // '$pathToFiles/$fileHash/$fileName.txt';
         await _writeListToTxtFile(
             filePath: listFilePath, contents: listContents);
       }
 
       if (mapContents != null && mapContents is Map) {
-        final String mapFilePath = '$pathToFiles/$fileHash/$fileName.json';
+        final String mapFilePath = p.join(pathToFiles, fileHash,
+            '$fileName.json'); //'$pathToFiles/$fileHash/$fileName.json';
         final Map convertedMap = convertKeysToStrings
             ? mapContents.deepConvertMapKeyToString()
             : mapContents;

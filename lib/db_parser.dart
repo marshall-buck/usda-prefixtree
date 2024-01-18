@@ -6,18 +6,22 @@ import 'package:usda_db_creation/file_loader_service.dart';
 import 'package:usda_db_creation/food_model.dart';
 import 'package:usda_db_creation/global_const.dart';
 import 'package:usda_db_creation/nutrient.dart';
-//TODO:Docs
 
+//TODO:Docs
+/// Class to create the main database of food items and nutrient information.
+/// The instance needs to be initialized with a map of
+/// parsed descriptions [descriptionMap].
 class DB implements DataStructure {
   final Map<int, String> descriptionMap;
 
   DB(this.descriptionMap);
 
+  /// Creates the database data.
   @override
   Future<Map<String, dynamic>?> createDataStructure(
       {required DBParser dbParser,
-      bool returnData = true,
-      bool writeFile = false}) async {
+      bool returnData = false,
+      bool writeFile = true}) async {
     final foodsList = dbParser.originalFoodsList;
 
     final Map<String, dynamic> data = dbParser.createFoodsMapDB(
@@ -26,7 +30,8 @@ class DB implements DataStructure {
     if (writeFile) {
       await dbParser.fileLoaderService
           .writeFileByType<Null, Map<String, dynamic>>(
-              fileName: fileNameFoodsDatabase,
+              fileName: FileLoaderService
+                  .fileNameFoodsDatabase, //fileNameFoodsDatabase,
               convertKeysToStrings: false,
               mapContents: data);
     }
