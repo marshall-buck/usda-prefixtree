@@ -119,7 +119,8 @@ class FileLoaderService {
 
   /// Checks if the specified folder path exists and creates it if it doesn't.
   void _checkAndCreateFolder() {
-    final directory = Directory('$pathToFiles/$fileHash');
+    final path = p.join(pathToFiles, fileHash);
+    final directory = Directory(path);
     if (!directory.existsSync()) {
       try {
         directory.createSync(recursive: true);
