@@ -124,7 +124,7 @@ class FileService {
         directory.createSync(recursive: true);
       } catch (e, st) {
         throw Exception(
-            'Failed to create folder: $pathToFiles/$fileHash\n$e\n$st');
+            'Failed to create folder: $path.  Error: $e, StackTrace: $st');
       }
     }
   }
