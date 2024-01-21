@@ -118,7 +118,6 @@ void main() {
       });
 
       test('should correctly load very large JSON files', () async {
-        // Create a large JSON file
         final filePath = p.join('test', 'test_files', 'largeFile.json');
         final file = File(filePath);
         final largeFileContent = {
@@ -128,7 +127,6 @@ void main() {
 
         final loadedContent = fileService.loadData(filePath: filePath);
 
-        // Check that the loaded content is correct
         expect(loadedContent, isA<String>());
         file.deleteSync();
       });

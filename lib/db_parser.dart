@@ -44,7 +44,7 @@ class DBParser {
   /// [List] of foods from the database.
   List<dynamic> get originalFoodsList => _originalDBMap?['SRLegacyFoods'];
 
-  /// Populates the _dbMap
+  /// Opens the original database file and creates a map.
   DBParser.init({required this.fileService, required final String filePath}) {
     final file = fileService.loadData(filePath: filePath);
     _originalDBMap = jsonDecode(file);
