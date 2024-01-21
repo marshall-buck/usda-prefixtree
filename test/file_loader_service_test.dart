@@ -9,18 +9,22 @@ import 'package:usda_db_creation/file_loader_service.dart';
 
 import 'setup/setup.dart';
 
+late final FileService fileService;
+
 void main() {
-  // setUpAll(() {
-  //   set_up_all();
+  setUpAll(() => fileService = FileService());
+  // tearDown(() async {
+  //   final testDirectory =
+  //       Directory(p.join(fileService.pathToFiles, fileService.fileHash));
+  //   if (await testDirectory.exists()) {
+  //     await testDirectory.delete(recursive: true);
+  //   }
   // });
 
-  // tearDown(() {
-  //   tear_down();
-  // });
   group('FileService class tests', () {
     // tearDown(() async {
     //   final testDirectory =
-    //       Directory(p.join(pathToTestFiles, fileService.fileHash));
+    //       Directory(p.join(fileService!.pathToFiles, fileService!.fileHash));
     //   if (await testDirectory.exists()) {
     //     await testDirectory.delete(recursive: true);
     //   }
@@ -28,30 +32,20 @@ void main() {
 
     group('writeFileByType method tests', () {
       test('should write list contents to a text file', () async {
-        // final fileName = 'testList';
         final listContents = ['item1', 'item2', 'item3'];
 
-        // when(() => mockFileLoaderService.pathToFiles)
-        //     .thenReturn(p.join('test', 'test_files'));
+        await fileService!.writeFileByType<List, Null>(
+          fileName: 'testList',
+          convertKeysToStrings: false,
+          listContents: listContents,
+        );
 
-        // when(() => mockFileLoaderService.fileHash).thenReturn('fakeHash');
+        final filePath = p.join(
+            fileService.pathToFiles, fileService.fileHash, 'testList.txt');
+        final file = File(filePath);
 
-        // // when(() => mockFileLoaderService.fileHash)
-        // //     .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
-
-        // when(() => mockFileLoaderService.writeFileByType<List, Null>(
-        //       fileName: 'testList',
-        //       convertKeysToStrings: false,
-        //       listContents: listContents,
-        //     )).thenAnswer((_) async {});
-
-        // print(mockFileLoaderService.pathToFiles);
-
-        // await mockFileLoaderService.writeFileByType<List, Null>(
-        //   fileName: 'testList',
-        //   convertKeysToStrings: false,
-        //   listContents: listContents,
-        // );
+        expect(await file.exists(), isTrue);
+        expect(await file.readAsString(), listContents.join('\n'));
       });
 
       // test('should write map contents to a json file', () async {

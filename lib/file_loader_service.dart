@@ -5,22 +5,10 @@ import 'dart:io';
 import 'package:usda_db_creation/extensions/map_ext.dart';
 import 'package:path/path.dart' as p;
 
-class FilePath {
-  final pathToFiles = p.join('lib', 'db');
-}
-
 /// Class to handle reading and writing  files.
 
 class FileService {
-  late final path = FilePath();
-  // final pathToFiles = p.join('lib', 'db');
-  late final String pathToFiles = path.pathToFiles;
-
-  // String get pathToFiles => _pathToFiles;
-
-  // set pathToFiles(String value) {
-  //   _pathToFiles = value;
-  // }
+  final pathToFiles = p.join('lib', 'db');
 
   late final fileNameOriginalDBFile =
       p.join(pathToFiles, 'do_not_delete', 'original_usda.json');
@@ -121,8 +109,14 @@ class FileService {
 
       final IOSink sink = file.openWrite();
 
-      for (final line in contents) {
-        sink.writeln(line);
+      // Write the lines, if line is the last line, don't add \n
+      for (int i = 0; i < contents.length; i++) {
+        final line = contents[i];
+        if (i == contents.length - 1) {
+          sink.write(line);
+        } else {
+          sink.writeln(line);
+        }
       }
 
       await sink.flush();
