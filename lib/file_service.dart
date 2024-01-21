@@ -30,7 +30,8 @@ class FileService {
 
   /// Loads a DateTime sting at initialization so all
   /// Prefixes wil be the same.
-  String fileHash = '${DateTime.now()}'.replaceAll(" ", "_");
+  String fileHash =
+      '${DateTime.now()}'.replaceAll(RegExp(r'[\\/:*?"<>|\s]'), '_');
 
 // ************************** File Writers **************************
 

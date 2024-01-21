@@ -141,7 +141,6 @@ void main() {
 
         expect(Directory(folderPath).existsSync(), isTrue);
 
-        // Cleanup
         Directory(folderPath).deleteSync();
       });
 
@@ -154,7 +153,6 @@ void main() {
 
         expect(Directory(folderPath).existsSync(), isTrue);
 
-        // Cleanup
         Directory(folderPath).deleteSync();
       });
     });
