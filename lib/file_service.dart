@@ -32,17 +32,6 @@ class FileService {
   /// Prefixes wil be the same.
   String fileHash = '${DateTime.now()}'.replaceAll(" ", "_");
 
-  // String get fileHash => _fileHash;
-
-  // set fileHash(String value) {
-  //   _fileHash = value;
-  // }
-
-  // String convertTimestampToDateString() {
-  //   final now = '$_fileHash';
-  //   return now.replaceAll(" ", "_");
-  // }
-
 // ************************** File Writers **************************
 
   /// Writes the contents to files based on their types.
@@ -143,8 +132,14 @@ class FileService {
 // ************************** File Readers **************************
 
   /// Synchronously opens a file from [filePath].  Returns the contents as a [String].
-  String loadData({required final String filePath}) =>
-      File(filePath).readAsStringSync();
+  String loadData({required final String filePath}) {
+    final file = File(filePath);
+    final String contents = file.readAsStringSync();
+    if (!file.existsSync()) {
+      throw FileSystemException('File not found', filePath);
+    }
+    return contents;
+  }
 
   /// Reads a CSV file from the given [filePath] and returns its contents as a
   /// list of lists of strings.
@@ -152,7 +147,8 @@ class FileService {
   /// Each inner list represents a row in the CSV file,
   /// and each string represents a cell value.
   /// [[cell1, cell2, cell3], [cell1, cell2, cell3]]
-  Future<List<List<String>>> readCsvFile(String filePath) async {
+  Future<List<List<String>>> readCsvFile(
+      {required final String filePath}) async {
     final file = File(filePath);
     final List<List<String>> csvData = [];
 

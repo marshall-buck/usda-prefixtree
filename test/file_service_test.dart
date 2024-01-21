@@ -71,7 +71,7 @@ void main() {
           () async {
         final filePath = p.join('test', 'test_files', 'test_file.csv');
 
-        final result = await fileService.readCsvFile(filePath);
+        final result = await fileService.readCsvFile(filePath: filePath);
 
         final d = DeepCollectionEquality();
         expect(
@@ -87,33 +87,36 @@ void main() {
       test('should throw an exception when the file does not exist', () async {
         final filePath = p.join('test', 'test_files', 'non_existent_file.csv');
 
-        expect(() async => await fileService.readCsvFile(filePath),
+        expect(() async => await fileService.readCsvFile(filePath: filePath),
             throwsA(isA<FileSystemException>()));
       });
 
       test('should return an empty list when the file is empty', () async {
         final filePath = p.join('test', 'test_files', 'empty_file.csv');
 
-        final result = await fileService.readCsvFile(filePath);
+        final result = await fileService.readCsvFile(filePath: filePath);
 
         expect(result, isEmpty);
         expect(result, isA<List<List<String>>>());
       });
     });
 
-    // group('loadData method tests', () {
-    //   test('should read file and return its contents as a string', () async {
-    //     final filePath = p.join(pathToTestFiles, 'test_file.txt');
-    //     final testContent = 'This is a test string.';
+    group('loadData method tests', () {
+      test('should read file and return its contents as a string', () {
+        final filePath = p.join('test', 'test_files', 'test_file.txt');
+        final testContent = 'This is a test string.';
 
-    //     final result = fileService.loadData(filePath: filePath);
+        final result = fileService.loadData(filePath: filePath);
 
-    //     expect(result, testContent);
-    //   });
+        expect(result, testContent);
+      });
 
-    //   // Additional tests for error handling, etc., could be added here.
-    // });
+      test('should throw an exception when the file does not exist', () {
+        final filePath = p.join('test', 'test_files', 'non_existent_file.txt');
 
-    // Additional groups for other methods...
+        expect(() => fileService.loadData(filePath: filePath),
+            throwsA(isA<FileSystemException>()));
+      });
+    });
   });
 }
