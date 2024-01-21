@@ -10,13 +10,13 @@ import 'package:usda_db_creation/file_loader_service.dart';
 import 'setup/setup.dart';
 
 void main() {
-  setUpAll(() {
-    set_up_all();
-  });
+  // setUpAll(() {
+  //   set_up_all();
+  // });
 
-  tearDown(() {
-    tear_down();
-  });
+  // tearDown(() {
+  //   tear_down();
+  // });
   group('FileService class tests', () {
     // tearDown(() async {
     //   final testDirectory =
@@ -31,23 +31,27 @@ void main() {
         // final fileName = 'testList';
         final listContents = ['item1', 'item2', 'item3'];
 
-        when(() => mockFileLoaderService.pathToFiles)
-            .thenReturn(p.join('test', 'test_files'));
+        // when(() => mockFileLoaderService.pathToFiles)
+        //     .thenReturn(p.join('test', 'test_files'));
 
-        when(() => mockFileLoaderService.fileHash)
-            .thenReturn('2021-09-01_12:00:00.000');
+        // when(() => mockFileLoaderService.fileHash).thenReturn('fakeHash');
 
-        when(() => mockFileLoaderService.writeFileByType<List, Null>(
-              fileName: 'testList',
-              convertKeysToStrings: false,
-              listContents: any<List>(named: 'listContents'),
-            )).thenAnswer((_) => Future.value());
+        // // when(() => mockFileLoaderService.fileHash)
+        // //     .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
 
-        await mockFileLoaderService.writeFileByType<List, Null>(
-          fileName: 'testList',
-          convertKeysToStrings: false,
-          listContents: listContents,
-        );
+        // when(() => mockFileLoaderService.writeFileByType<List, Null>(
+        //       fileName: 'testList',
+        //       convertKeysToStrings: false,
+        //       listContents: listContents,
+        //     )).thenAnswer((_) async {});
+
+        // print(mockFileLoaderService.pathToFiles);
+
+        // await mockFileLoaderService.writeFileByType<List, Null>(
+        //   fileName: 'testList',
+        //   convertKeysToStrings: false,
+        //   listContents: listContents,
+        // );
       });
 
       // test('should write map contents to a json file', () async {

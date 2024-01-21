@@ -5,10 +5,22 @@ import 'dart:io';
 import 'package:usda_db_creation/extensions/map_ext.dart';
 import 'package:path/path.dart' as p;
 
+class FilePath {
+  final pathToFiles = p.join('lib', 'db');
+}
+
 /// Class to handle reading and writing  files.
 
 class FileService {
-  final pathToFiles = p.join('lib', 'db');
+  late final path = FilePath();
+  // final pathToFiles = p.join('lib', 'db');
+  late final String pathToFiles = path.pathToFiles;
+
+  // String get pathToFiles => _pathToFiles;
+
+  // set pathToFiles(String value) {
+  //   _pathToFiles = value;
+  // }
 
   late final fileNameOriginalDBFile =
       p.join(pathToFiles, 'do_not_delete', 'original_usda.json');
@@ -30,14 +42,18 @@ class FileService {
 
   /// Loads a DateTime sting at initialization so all
   /// Prefixes wil be the same.
-  final DateTime _fileHash = DateTime.now();
+  String fileHash = '${DateTime.now()}'.replaceAll(" ", "_");
 
-  String get fileHash => convertTimestampToDateString();
+  // String get fileHash => _fileHash;
 
-  String convertTimestampToDateString() {
-    final now = '$_fileHash';
-    return now.replaceAll(" ", "_");
-  }
+  // set fileHash(String value) {
+  //   _fileHash = value;
+  // }
+
+  // String convertTimestampToDateString() {
+  //   final now = '$_fileHash';
+  //   return now.replaceAll(" ", "_");
+  // }
 
 // ************************** File Writers **************************
 
