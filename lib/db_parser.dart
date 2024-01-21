@@ -28,28 +28,25 @@ class DB implements DataStructure {
         getFoodsList: foodsList, finalDescriptionRecordsMap: descriptionMap);
 
     if (writeFile) {
-      await dbParser.fileLoaderService
-          .writeFileByType<Null, Map<String, dynamic>>(
-              fileName: FileLoaderService
-                  .fileNameFoodsDatabase, //fileNameFoodsDatabase,
-              convertKeysToStrings: false,
-              mapContents: data);
+      await dbParser.fileService.writeFileByType<Null, Map<String, dynamic>>(
+          fileName: FileService.fileNameFoodsDatabase, //fileNameFoodsDatabase,
+          convertKeysToStrings: false,
+          mapContents: data);
     }
     return returnData ? data : null;
   }
 }
 
 class DBParser {
-  FileLoaderService fileLoaderService;
+  FileService fileService;
   Map<dynamic, dynamic>? _originalDBMap;
 
   /// [List] of foods from the database.
   List<dynamic> get originalFoodsList => _originalDBMap?['SRLegacyFoods'];
 
   /// Populates the _dbMap
-  DBParser.init(
-      {required this.fileLoaderService, required final String filePath}) {
-    final file = fileLoaderService.loadData(filePath: filePath);
+  DBParser.init({required this.fileService, required final String filePath}) {
+    final file = fileService.loadData(filePath: filePath);
     _originalDBMap = jsonDecode(file);
   }
 

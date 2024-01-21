@@ -34,8 +34,8 @@ void main() {
           //     "Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry"
         };
 
-        final dbParser = DBParser.init(
-            filePath: 'fake', fileLoaderService: mockFileLoaderService);
+        final dbParser =
+            DBParser.init(filePath: 'fake', fileService: mockFileLoaderService);
 
         final descriptions = DescriptionParser();
         final res = await descriptions.createDataStructure(dbParser: dbParser);
@@ -68,8 +68,8 @@ void main() {
               mapContents: any<Map<int, String>>(named: 'mapContents'),
             )).thenAnswer((_) async {});
 
-        final dbParser = DBParser.init(
-            filePath: 'fake', fileLoaderService: mockFileLoaderService);
+        final dbParser =
+            DBParser.init(filePath: 'fake', fileService: mockFileLoaderService);
 
         final descriptions = DescriptionParser();
         await descriptions.createDataStructure(
@@ -104,8 +104,8 @@ void main() {
               mapContents: any<Map<int, String>>(named: 'mapContents'),
             )).thenAnswer((_) async {});
 
-        final dbParser = DBParser.init(
-            filePath: 'fake', fileLoaderService: mockFileLoaderService);
+        final dbParser =
+            DBParser.init(filePath: 'fake', fileService: mockFileLoaderService);
 
         final descriptions = DescriptionParser();
         await descriptions.createDataStructure(
@@ -129,8 +129,8 @@ void main() {
         when(() => mockFileLoaderService.fileHash)
             .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
         final descriptions = DescriptionParser();
-        final dbParser = DBParser.init(
-            filePath: 'fake', fileLoaderService: mockFileLoaderService);
+        final dbParser =
+            DBParser.init(filePath: 'fake', fileService: mockFileLoaderService);
         // await descriptions.createDataStructure(
         //   dbParser: dbParser,
         //   writeFile: false,
@@ -165,8 +165,8 @@ void main() {
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
 
-        final dbParser = DBParser.init(
-            filePath: 'fake', fileLoaderService: mockFileLoaderService);
+        final dbParser =
+            DBParser.init(filePath: 'fake', fileService: mockFileLoaderService);
 
         final res = DescriptionParser.createOriginalDescriptionRecords(
             originalFoodsList: dbParser.originalFoodsList);
@@ -212,8 +212,8 @@ void main() {
                 mapContents: any<Map<String, int>>(named: 'mapContents'),
                 convertKeysToStrings: false)).thenAnswer((_) async {});
 
-        final dbParser = DBParser.init(
-            filePath: 'fake', fileLoaderService: mockFileLoaderService);
+        final dbParser =
+            DBParser.init(filePath: 'fake', fileService: mockFileLoaderService);
         final Map<String, int>? res =
             await DescriptionParser.createRepeatedPhraseFrequencyMap(
                 listOfRecords: mockDescriptionRecords,
@@ -326,7 +326,7 @@ void main() {
       };
 
       final res = DescriptionParser.parseDescriptionsFromTxtFile(
-          filePath: 'fake', fileLoaderService: mockFileLoaderService);
+          filePath: 'fake', fileService: mockFileLoaderService);
       final mapEquals = MapEquality();
       expect(mapEquals.equals(expected, res), true);
     });
@@ -336,8 +336,8 @@ void main() {
     test('returns true is foodItem has an excluded category', () {
       when(() => mockFileLoaderService.loadData(filePath: 'fake'))
           .thenReturn(mockUsdaFile);
-      final dbParser = DBParser.init(
-          filePath: 'fake', fileLoaderService: mockFileLoaderService);
+      final dbParser =
+          DBParser.init(filePath: 'fake', fileService: mockFileLoaderService);
       final originalFoodsList = dbParser.originalFoodsList;
       final foodItem = originalFoodsList[2];
       final res = DescriptionParser.isExcludedCategory(foodItem: foodItem);
@@ -346,8 +346,8 @@ void main() {
     test('returns false is foodItem has an excluded category', () {
       when(() => mockFileLoaderService.loadData(filePath: 'fake'))
           .thenReturn(mockUsdaFile);
-      final dbParser = DBParser.init(
-          filePath: 'fake', fileLoaderService: mockFileLoaderService);
+      final dbParser =
+          DBParser.init(filePath: 'fake', fileService: mockFileLoaderService);
       final originalFoodsList = dbParser.originalFoodsList;
       final foodItem = originalFoodsList[0];
       final res = DescriptionParser.isExcludedCategory(foodItem: foodItem);

@@ -71,9 +71,9 @@ class WordIndexMap implements DataStructure {
     });
 
     if (writeFile) {
-      await dbParser.fileLoaderService.writeFileByType<Null,
+      await dbParser.fileService.writeFileByType<Null,
               SplayTreeMap<String, List<int>>>(
-          fileName: FileLoaderService
+          fileName: FileService
               .fileNameAutocompleteWordIndex, // fileNameAutocompleteWordIndex,
           convertKeysToStrings: false,
           mapContents: convertedMap);

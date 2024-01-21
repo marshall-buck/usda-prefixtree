@@ -24,8 +24,8 @@ void main() {
         when(() => mockFileLoaderService.fileHash)
             .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
 
-        final dbParser = DBParser.init(
-            filePath: 'fake', fileLoaderService: mockFileLoaderService);
+        final dbParser =
+            DBParser.init(filePath: 'fake', fileService: mockFileLoaderService);
 
         final sub = Substrings(mockWordIndexMap);
         final res = await sub.createDataStructure(dbParser: dbParser);
@@ -50,8 +50,8 @@ void main() {
               mapContents: any<Map<String, List<int>>>(named: 'mapContents'),
             )).thenAnswer((_) async {});
 
-        final dbParser = DBParser.init(
-            filePath: 'fake', fileLoaderService: mockFileLoaderService);
+        final dbParser =
+            DBParser.init(filePath: 'fake', fileService: mockFileLoaderService);
 
         final substring = Substrings(mockWordIndexMap);
         await substring.createDataStructure(
@@ -80,8 +80,8 @@ void main() {
               mapContents: any<Map<String, List<int>>>(named: 'mapContents'),
             )).thenAnswer((_) async {});
 
-        final dbParser = DBParser.init(
-            filePath: 'fake', fileLoaderService: mockFileLoaderService);
+        final dbParser =
+            DBParser.init(filePath: 'fake', fileService: mockFileLoaderService);
 
         final substring = Substrings(mockWordIndexMap);
         await substring.createDataStructure(
@@ -100,8 +100,8 @@ void main() {
         when(() => mockFileLoaderService.fileHash)
             .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
 
-        final dbParser = DBParser.init(
-            filePath: 'fake', fileLoaderService: mockFileLoaderService);
+        final dbParser =
+            DBParser.init(filePath: 'fake', fileService: mockFileLoaderService);
 
         final substring = Substrings(mockWordIndexMap);
 

@@ -11,14 +11,13 @@ import 'package:usda_db_creation/usda_db.dart' as runner;
 import 'package:usda_db_creation/word_index.dart';
 
 void main() async {
-  // Initialize the file loader service. The filename hash is created in the FileLoaderService class.
-  final fileLoaderService = FileLoaderService();
+  // Initialize the file loader service. The filename hash is created in the FileService class.
+  final fileService = FileService();
 
   final dbParser = DBParser.init(
-      filePath: FileLoaderService.fileNameOriginalDBFile,
-      fileLoaderService: fileLoaderService);
+      filePath: fileService.fileNameOriginalDBFile, fileService: fileService);
   await runner.createDBFiles(
-      dbParser: dbParser, fileLoaderService: fileLoaderService, extras: true);
+      dbParser: dbParser, fileService: fileService, extras: true);
 
   // final descriptions = DescriptionParser();
 

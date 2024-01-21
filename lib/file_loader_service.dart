@@ -7,14 +7,14 @@ import 'package:path/path.dart' as p;
 
 /// Class to handle reading and writing  files.
 
-class FileLoaderService {
-  static final pathToFiles = p.join('lib', 'db');
+class FileService {
+  final pathToFiles = p.join('lib', 'db');
 
-  static final fileNameOriginalDBFile =
+  late final fileNameOriginalDBFile =
       p.join(pathToFiles, 'do_not_delete', 'original_usda.json');
-  static final fileNameNutrientsCsv =
+  late final fileNameNutrientsCsv =
       p.join(pathToFiles, 'do_not_delete', 'nutrient.csv');
-  static final fileNameNutrientsMap =
+  late final fileNameNutrientsMap =
       p.join(pathToFiles, 'do_not_delete', 'original_nutrient_csv.json');
 
   static const fileNameDuplicatePhrases = 'duplicate_phrases';
@@ -49,6 +49,9 @@ class FileLoaderService {
     T? listContents,
     U? mapContents,
   }) async {
+    if (listContents == null && mapContents == null) {
+      throw ArgumentError('No contents provided: writeFileByType');
+    }
     try {
       _checkAndCreateFolder();
 
@@ -66,10 +69,6 @@ class FileLoaderService {
             ? mapContents.deepConvertMapKeyToString()
             : mapContents;
         await _writeJsonFile(filePath: mapFilePath, contents: convertedMap);
-      }
-
-      if (listContents == null && mapContents == null) {
-        throw ArgumentError('No contents provided: writeFileByType');
       }
     } catch (e, st) {
       log(e.toString(), stackTrace: st, name: 'writeFileByType');
@@ -149,6 +148,7 @@ class FileLoaderService {
 
     try {
       final List<String> lines = await file.readAsLines();
+
       for (final line in lines) {
         csvData.add(_parseCsvLine(line));
       }
@@ -161,9 +161,13 @@ class FileLoaderService {
 
   /// Parses a CSV line and returns a list of fields.
   ///
+  /// This is used for csv files
+  ///
   /// The [line] parameter represents a single line of a CSV file.
   /// This method iterates over each character in the line and extracts
-  /// the fields separated by commas. If a field is enclosed in double quotes,
+  /// the fields separated by commas.
+  ///
+  /// If a field is enclosed in double quotes,
   /// it is treated as a single field even if it contains commas.
   ///
   /// Returns a list of strings representing the fields in the CSV line.

@@ -26,7 +26,7 @@ int getLongestDescriptionLength(final DBParser dbParser) {
 
 Future<void> createDBFiles(
     {required DBParser dbParser,
-    required FileLoaderService fileLoaderService,
+    required FileService fileService,
     bool extras = false}) async {
   if (extras) {
     final descriptions = DescriptionParser();

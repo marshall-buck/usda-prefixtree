@@ -53,8 +53,8 @@ void main() {
             .thenReturn(mockUsdaFile);
         when(() => mockFileLoaderService.fileHash)
             .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
-        final dbParser = DBParser.init(
-            filePath: 'fake', fileLoaderService: mockFileLoaderService);
+        final dbParser =
+            DBParser.init(filePath: 'fake', fileService: mockFileLoaderService);
         final words = WordIndexMap(mockDescriptionMap);
 
         final indexMap = await words.createDataStructure(dbParser: dbParser);
@@ -67,8 +67,8 @@ void main() {
             .thenReturn(mockUsdaFile);
         when(() => mockFileLoaderService.fileHash)
             .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
-        final dbParser = DBParser.init(
-            filePath: 'fake', fileLoaderService: mockFileLoaderService);
+        final dbParser =
+            DBParser.init(filePath: 'fake', fileService: mockFileLoaderService);
         final DescriptionMap descriptionMap = {};
         final words = WordIndexMap(descriptionMap);
 
@@ -90,8 +90,8 @@ void main() {
             .thenReturn(mockUsdaFile);
         when(() => mockFileLoaderService.fileHash)
             .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
-        final dbParser = DBParser.init(
-            filePath: 'fake', fileLoaderService: mockFileLoaderService);
+        final dbParser =
+            DBParser.init(filePath: 'fake', fileService: mockFileLoaderService);
         final words = WordIndexMap(descriptionMap);
 
         final indexMap = await words.createDataStructure(dbParser: dbParser);
@@ -117,8 +117,8 @@ void main() {
             .thenReturn(mockUsdaFile);
         when(() => mockFileLoaderService.fileHash)
             .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
-        final dbParser = DBParser.init(
-            filePath: 'fake', fileLoaderService: mockFileLoaderService);
+        final dbParser =
+            DBParser.init(filePath: 'fake', fileService: mockFileLoaderService);
         final words = WordIndexMap(descriptionMap);
 
         final indexMap = await words.createDataStructure(dbParser: dbParser);
@@ -155,8 +155,8 @@ void main() {
                   any<SplayTreeMap<String, List<int>>>(named: 'mapContents'),
             )).thenAnswer((_) async {});
 
-        final dbParser = DBParser.init(
-            filePath: 'fake', fileLoaderService: mockFileLoaderService);
+        final dbParser =
+            DBParser.init(filePath: 'fake', fileService: mockFileLoaderService);
 
         final words = WordIndexMap(descriptionMap);
 
@@ -193,8 +193,8 @@ void main() {
                   any<SplayTreeMap<String, List<int>>>(named: 'mapContents'),
             )).thenAnswer((_) async {});
 
-        final dbParser = DBParser.init(
-            filePath: 'fake', fileLoaderService: mockFileLoaderService);
+        final dbParser =
+            DBParser.init(filePath: 'fake', fileService: mockFileLoaderService);
 
         final words = WordIndexMap(descriptionMap);
 
@@ -220,8 +220,8 @@ void main() {
         when(() => mockFileLoaderService.fileHash)
             .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
 
-        final dbParser = DBParser.init(
-            filePath: 'fake', fileLoaderService: mockFileLoaderService);
+        final dbParser =
+            DBParser.init(filePath: 'fake', fileService: mockFileLoaderService);
 
         final words = WordIndexMap(descriptionMap);
 

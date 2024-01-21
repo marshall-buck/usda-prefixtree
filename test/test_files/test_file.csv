@@ -1,0 +1,5 @@
+"id","name","unit_name","nutrient_nbr","rank"
+"1002","Nitrogen","G","202","500"
+"1003","Protein","G","203","600"
+"1004","Total lipid (fat)","G","204","800"
+"1005","Carbohydrate, by difference","G","205","1110"

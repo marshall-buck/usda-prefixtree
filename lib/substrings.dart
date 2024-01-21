@@ -73,12 +73,10 @@ class Substrings implements DataStructure {
         .map((final key, final value) => MapEntry(key, value.toList()..sort()));
 
     if (writeFile) {
-      await dbParser.fileLoaderService
-          .writeFileByType<Null, Map<String, List<int>>>(
-              fileName:
-                  FileLoaderService.fileNameSubstrings, // fileNameSubstrings,
-              convertKeysToStrings: false,
-              mapContents: sortedMap);
+      await dbParser.fileService.writeFileByType<Null, Map<String, List<int>>>(
+          fileName: FileService.fileNameSubstrings, // fileNameSubstrings,
+          convertKeysToStrings: false,
+          mapContents: sortedMap);
     }
 
     return returnData ? sortedMap : null;

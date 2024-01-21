@@ -53,9 +53,9 @@ class DescriptionParser implements DataStructure {
       descriptionMap[entry.key] = entry.value;
     }
     if (writeFile) {
-      await dbParser.fileLoaderService
+      await dbParser.fileService
           .writeFileByType<List<DescriptionRecord>, Map<int, String>>(
-              fileName: FileLoaderService
+              fileName: FileService
                   .fileNameFinalDescriptions, //fileNameFinalDescriptions,
               convertKeysToStrings: true,
               listContents: parsedDescriptions,
@@ -121,8 +121,8 @@ class DescriptionParser implements DataStructure {
   /// (167521, Pie Crust, Cookie-type, Chocolate, Ready Crust)
   static DescriptionMap parseDescriptionsFromTxtFile(
       {required final String filePath,
-      required final FileLoaderService fileLoaderService}) {
-    final String fileContents = fileLoaderService.loadData(filePath: filePath);
+      required final FileService fileService}) {
+    final String fileContents = fileService.loadData(filePath: filePath);
     final List<String> lines = fileContents.split('\n');
 
     lines.removeWhere(
@@ -209,9 +209,9 @@ class DescriptionParser implements DataStructure {
     final Map<String, int> outPut = Map.fromEntries(sortedList);
 
     if (dbParser != null) {
-      await dbParser.fileLoaderService.writeFileByType<Null, Map<String, int>>(
+      await dbParser.fileService.writeFileByType<Null, Map<String, int>>(
           mapContents: outPut,
-          fileName: FileLoaderService.fileNameDuplicatePhrases,
+          fileName: FileService.fileNameDuplicatePhrases,
           convertKeysToStrings: false);
     }
     return returnData ? outPut : null;

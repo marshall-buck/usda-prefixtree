@@ -25,8 +25,8 @@ void main() {
         when(() => mockFileLoaderService.fileHash)
             .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
 
-        final dbParser = DBParser.init(
-            filePath: 'fake', fileLoaderService: mockFileLoaderService);
+        final dbParser =
+            DBParser.init(filePath: 'fake', fileService: mockFileLoaderService);
         final hash = AutoCompleteHashTable(mockUnHashedSubstrings);
         final res = await hash.createDataStructure(dbParser: dbParser);
 

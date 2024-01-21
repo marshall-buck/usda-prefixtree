@@ -66,11 +66,10 @@ class AutoCompleteHashTable implements DataStructure {
     );
 
     if (writeFile) {
-      await dbParser.fileLoaderService
-          .writeFileByType<Null, Map<String, dynamic>>(
-              fileName: FileLoaderService.fileNameAutocompleteHash,
-              convertKeysToStrings: false,
-              mapContents: data.toJson());
+      await dbParser.fileService.writeFileByType<Null, Map<String, dynamic>>(
+          fileName: FileService.fileNameAutocompleteHash,
+          convertKeysToStrings: false,
+          mapContents: data.toJson());
     }
 
     return returnData ? data : null;
