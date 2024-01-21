@@ -2,7 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:usda_db_creation/data_structure.dart';
 import 'package:usda_db_creation/db_parser.dart';
 import 'package:usda_db_creation/extensions/map_ext.dart';
-import 'package:usda_db_creation/file_loader_service.dart';
+import 'package:usda_db_creation/file_service.dart';
 
 /// Class to represent the [AutoCompleteHashData]'s structure and methods.
 /// This is the data structure that represents a substring tree, and a lookup table

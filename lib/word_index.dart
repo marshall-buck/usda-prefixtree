@@ -3,7 +3,7 @@ import 'dart:collection';
 import 'package:usda_db_creation/data_structure.dart';
 import 'package:usda_db_creation/db_parser.dart';
 import 'package:usda_db_creation/description_parser.dart';
-import 'package:usda_db_creation/file_loader_service.dart';
+import 'package:usda_db_creation/file_service.dart';
 import 'package:usda_db_creation/global_const.dart';
 import 'package:usda_db_creation/extensions/string_ext.dart';
 

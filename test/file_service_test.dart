@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
-import 'package:usda_db_creation/file_loader_service.dart';
+import 'package:usda_db_creation/file_service.dart';
 
 late final FileService fileService;
 

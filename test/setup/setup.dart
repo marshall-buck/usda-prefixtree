@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:mocktail/mocktail.dart';
-import 'package:usda_db_creation/file_loader_service.dart';
+import 'package:usda_db_creation/file_service.dart';
 
 class MockFileLoaderService extends Mock implements FileService {}
 

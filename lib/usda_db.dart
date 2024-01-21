@@ -7,7 +7,7 @@
 import 'package:usda_db_creation/autocomplete.dart';
 import 'package:usda_db_creation/db_parser.dart';
 import 'package:usda_db_creation/description_parser.dart';
-import 'package:usda_db_creation/file_loader_service.dart';
+import 'package:usda_db_creation/file_service.dart';
 
 import 'package:usda_db_creation/substrings.dart';
 import 'package:usda_db_creation/word_index.dart';

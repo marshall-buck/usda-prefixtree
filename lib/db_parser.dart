@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:usda_db_creation/data_structure.dart';
 
-import 'package:usda_db_creation/file_loader_service.dart';
+import 'package:usda_db_creation/file_service.dart';
 import 'package:usda_db_creation/food_model.dart';
 import 'package:usda_db_creation/global_const.dart';
 import 'package:usda_db_creation/nutrient.dart';
