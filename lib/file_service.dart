@@ -46,7 +46,7 @@ class FileService {
       throw ArgumentError('No contents provided: writeFileByType');
     }
     try {
-      _checkAndCreateFolder();
+      checkAndCreateFolder();
 
       if (listContents != null && listContents is List) {
         final String listFilePath = p.join(pathToFiles, fileHash,
@@ -116,7 +116,7 @@ class FileService {
   }
 
   /// Checks if the specified folder path exists and creates it if it doesn't.
-  void _checkAndCreateFolder() {
+  void checkAndCreateFolder() {
     final path = p.join(pathToFiles, fileHash);
     final directory = Directory(path);
     if (!directory.existsSync()) {
@@ -124,7 +124,7 @@ class FileService {
         directory.createSync(recursive: true);
       } catch (e, st) {
         throw Exception(
-            'Failed to create folder: $path.  Error: $e, StackTrace: $st');
+            'Failed to create folder in _checkAndCreateFolder: $path.  Error: $e, StackTrace: $st');
       }
     }
   }

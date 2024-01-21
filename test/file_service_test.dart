@@ -131,5 +131,32 @@ void main() {
         file.deleteSync();
       });
     });
+
+    group('checkAndCreateFolder method tests', () {
+      test('should create folder if it does not exist', () {
+        final folderPath =
+            p.join(fileService.pathToFiles, fileService.fileHash);
+
+        fileService.checkAndCreateFolder();
+
+        expect(Directory(folderPath).existsSync(), isTrue);
+
+        // Cleanup
+        Directory(folderPath).deleteSync();
+      });
+
+      test('should not create folder if it already exists', () {
+        final folderPath =
+            p.join(fileService.pathToFiles, fileService.fileHash);
+        Directory(folderPath).createSync();
+
+        fileService.checkAndCreateFolder();
+
+        expect(Directory(folderPath).existsSync(), isTrue);
+
+        // Cleanup
+        Directory(folderPath).deleteSync();
+      });
+    });
   });
 }
