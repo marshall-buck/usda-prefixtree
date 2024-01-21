@@ -1,4 +1,4 @@
-const keepTheseNutrients = [1003, 1004, 1005, 1008, 1079, 1258, 2000];
+// const keepTheseNutrients = [1003, 1004, 1005, 1008, 1079, 1258, 2000];
 
 const unwantedPhrases = [
   "(Includes foods for USDA's Food Distribution Program)",

@@ -4,7 +4,7 @@ import 'package:usda_db_creation/data_structure.dart';
 
 import 'package:usda_db_creation/file_service.dart';
 import 'package:usda_db_creation/food_model.dart';
-import 'package:usda_db_creation/global_const.dart';
+
 import 'package:usda_db_creation/nutrient.dart';
 
 /// Class to create the main database of food items and nutrient information.
@@ -56,7 +56,7 @@ class DBParser {
   List<dynamic> get originalFoodsList => _originalDBMap?['SRLegacyFoods'];
 
   /// Method to create the map that wil be used for the foods database.
-  /// The map will be of the form:
+  /// Returns:
   /// { id: { description, descriptionLength,  nutrients }, ... }
   Map<String, dynamic> createFoodsMapDB(
       {required final List<dynamic> getFoodsList,
@@ -87,9 +87,12 @@ class DBParser {
   }
 
   /// Method to create the nutrients list that will be used for the foods database.
+  ///
   /// Parameters:
   /// [listOfNutrients] - the list of nutrients from a food item.
-  /// Returns a [List] of [Nutrient] objects.
+  ///
+  /// Returns:
+  /// [List] of [Nutrient] objects.
   List<Nutrient> createNutrientsList({
     required final List<dynamic> listOfNutrients,
   }) {
@@ -99,7 +102,7 @@ class DBParser {
       final Map<String, dynamic> originalNutrient = listOfNutrients[i];
 
       final int nutrientId = originalNutrient['nutrient']['id'] ?? 9999;
-      if (!findNutrient(nutrientId)) continue;
+      if (!_findNutrient(nutrientId)) continue;
 
       final num amount = originalNutrient['amount'] ?? 0.0;
       final nutrient = Nutrient(
@@ -113,14 +116,14 @@ class DBParser {
     return nutrients;
   }
 
-  /// Checks if nutrient is in [keepTheseNutrients].
+  /// Checks if nutrient is in [Nutrient.keepTheseNutrients].
   ///
   /// Parameters:
   /// [nutrientId] - the id of the nutrient to be included.
   ///
   /// Returns [bool].
-  bool findNutrient(final int nutrientId) {
-    return keepTheseNutrients.contains(nutrientId);
+  bool _findNutrient(final int nutrientId) {
+    return Nutrient.keepTheseNutrients.contains(nutrientId);
   }
 
   /// Creates a set of id's from the nutrients in hte original database.
