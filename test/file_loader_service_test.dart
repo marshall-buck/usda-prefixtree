@@ -1,35 +1,23 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:collection/collection.dart';
-import 'package:mocktail/mocktail.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 import 'package:usda_db_creation/file_loader_service.dart';
-
-import 'setup/setup.dart';
 
 late final FileService fileService;
 
 void main() {
   setUpAll(() => fileService = FileService());
-  // tearDown(() async {
-  //   final testDirectory =
-  //       Directory(p.join(fileService.pathToFiles, fileService.fileHash));
-  //   if (await testDirectory.exists()) {
-  //     await testDirectory.delete(recursive: true);
-  //   }
-  // });
+  tearDown(() async {
+    final testDirectory =
+        Directory(p.join(fileService.pathToFiles, fileService.fileHash));
+    if (await testDirectory.exists()) {
+      await testDirectory.delete(recursive: true);
+    }
+  });
 
   group('FileService class tests', () {
-    // tearDown(() async {
-    //   final testDirectory =
-    //       Directory(p.join(fileService!.pathToFiles, fileService!.fileHash));
-    //   if (await testDirectory.exists()) {
-    //     await testDirectory.delete(recursive: true);
-    //   }
-    // });
-
     group('writeFileByType method tests', () {
       test('should write list contents to a text file', () async {
         final listContents = ['item1', 'item2', 'item3'];
@@ -48,32 +36,32 @@ void main() {
         expect(await file.readAsString(), listContents.join('\n'));
       });
 
-      // test('should write map contents to a json file', () async {
-      //   final fileName = 'testMap';
-      //   final mapContents = {'key1': 'value1', 'key2': 'value2'};
+      test('should write map contents to a json file', () async {
+        final mapContents = {'key1': 'value1', 'key2': 'value2'};
 
-      //   await fileService.writeFileByType(
-      //     fileName: fileName,
-      //     convertKeysToStrings: false,
-      //     mapContents: mapContents,
-      //   );
+        await fileService.writeFileByType<Null, Map>(
+          fileName: 'testJson',
+          convertKeysToStrings: false,
+          mapContents: mapContents,
+        );
 
-      //   final filePath = p.join(pathToTestFiles, '$fileName.json');
-      //   final file = File(filePath);
+        final filePath = p.join(
+            fileService.pathToFiles, fileService.fileHash, 'testJson.json');
+        final file = File(filePath);
 
-      //   expect(await file.exists(), isTrue);
-      //   expect(jsonDecode(await file.readAsString()), mapContents);
-      // });
+        expect(await file.exists(), isTrue);
+        expect(jsonDecode(await file.readAsString()), mapContents);
+      });
 
-      // test('should throw ArgumentError when no contents are provided', () {
-      //   expect(
-      //     () async => await fileService.writeFileByType(
-      //       fileName: 'testEmpty',
-      //       convertKeysToStrings: false,
-      //     ),
-      //     throwsA(isA<ArgumentError>()),
-      //   );
-      // });
+      test('should throw ArgumentError when no contents are provided', () {
+        expect(
+          () async => await fileService.writeFileByType(
+            fileName: 'testEmpty',
+            convertKeysToStrings: false,
+          ),
+          throwsA(isA<ArgumentError>()),
+        );
+      });
     });
 
     // group('readCsvFile method tests', () {
