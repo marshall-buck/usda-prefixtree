@@ -7,7 +7,6 @@ import 'package:usda_db_creation/food_model.dart';
 import 'package:usda_db_creation/global_const.dart';
 import 'package:usda_db_creation/nutrient.dart';
 
-//TODO:Docs
 /// Class to create the main database of food items and nutrient information.
 /// The instance needs to be initialized with a map of
 /// parsed descriptions [descriptionMap].
@@ -16,7 +15,9 @@ class DB implements DataStructure {
 
   DB(this.descriptionMap);
 
-  /// Creates the database data.
+  /// Creates the database data structure and writes it to a file,
+  /// if [writeFile] is true.
+  /// Returns the data structure if [returnData] is true.
   @override
   Future<Map<String, dynamic>?> createDataStructure(
       {required DBParser dbParser,
@@ -29,7 +30,7 @@ class DB implements DataStructure {
 
     if (writeFile) {
       await dbParser.fileService.writeFileByType<Null, Map<String, dynamic>>(
-          fileName: FileService.fileNameFoodsDatabase, //fileNameFoodsDatabase,
+          fileName: FileService.fileNameFoodsDatabase,
           convertKeysToStrings: false,
           mapContents: data);
     }
@@ -37,43 +38,26 @@ class DB implements DataStructure {
   }
 }
 
+/// A class that represents a parser for the [original_usda.json].
+/// It is used to extract information and perform various operations on the data.
+/// The instance needs to be initialized with the [original_usda.json] file,
+///  with [DBParser.init]
 class DBParser {
   FileService fileService;
   Map<dynamic, dynamic>? _originalDBMap;
 
-  /// [List] of foods from the database.
-  List<dynamic> get originalFoodsList => _originalDBMap?['SRLegacyFoods'];
-
-  /// Opens the original database file and creates a map.
+  /// Opens [original_usda.json]  and creates a map.
   DBParser.init({required this.fileService, required final String filePath}) {
     final file = fileService.loadData(filePath: filePath);
     _originalDBMap = jsonDecode(file);
   }
 
-  (Map<String, int>, int) getFoodCategories() {
-    final Map<String, int> categories = {};
-    int count = 0;
-    for (final food in originalFoodsList) {
-      final foodCategory = food['foodCategory'];
-      final foodCategoryDescription = foodCategory['description'];
-      if (categories.containsKey(foodCategoryDescription)) {
-        categories[foodCategoryDescription] =
-            categories[foodCategoryDescription]! + 1;
-        count++;
-      } else {
-        categories[foodCategoryDescription] = 1;
-        count++;
-      }
-    }
+  /// [List] of foods from [_originalDBMap.json].
+  List<dynamic> get originalFoodsList => _originalDBMap?['SRLegacyFoods'];
 
-    return (categories, count);
-  }
-
-// TODO:move into DB.
   /// Method to create the map that wil be used for the foods database.
   /// The map will be of the form:
   /// { id: { description, descriptionLength,  nutrients }, ... }
-  ///
   Map<String, dynamic> createFoodsMapDB(
       {required final List<dynamic> getFoodsList,
       required final Map<int, String> finalDescriptionRecordsMap}) {
@@ -103,6 +87,9 @@ class DBParser {
   }
 
   /// Method to create the nutrients list that will be used for the foods database.
+  /// Parameters:
+  /// [listOfNutrients] - the list of nutrients from a food item.
+  /// Returns a [List] of [Nutrient] objects.
   List<Nutrient> createNutrientsList({
     required final List<dynamic> listOfNutrients,
   }) {
@@ -110,20 +97,14 @@ class DBParser {
 
     for (int i = 0; i < listOfNutrients.length; i++) {
       final Map<String, dynamic> originalNutrient = listOfNutrients[i];
-      // String name = originalNutrient['nutrient']['name'] ?? 'unknown';
 
       final int nutrientId = originalNutrient['nutrient']['id'] ?? 9999;
       if (!findNutrient(nutrientId)) continue;
-      // name = Nutrient.switchNutrientName(nutrientId);
-
-      // final unitName = originalNutrient['nutrient']['unitName'] ?? 'unknown';
 
       final num amount = originalNutrient['amount'] ?? 0.0;
       final nutrient = Nutrient(
         id: nutrientId,
-        // name: name,
         amount: amount,
-        // unit: unitName,
       );
 
       nutrients.add(nutrient);
@@ -161,5 +142,33 @@ class DBParser {
       }
     }
     return nutrientIds;
+  }
+
+  /******************************* Research Methods **************************/
+
+  /// Retrieves the food categories from the database.
+  /// Informational method
+  /// Returns a [Map] containing the food categories as keys and their
+  /// corresponding IDs as values. The second element of the
+  /// returned record represents the total number of food categories.
+  /// Returns:
+  /// {"category1": 1, "category2": 2, ..., "total": 3}
+  Map<String, int> getFoodCategories() {
+    final Map<String, int> categories = {};
+    int count = 0;
+    for (final food in originalFoodsList) {
+      final foodCategory = food['foodCategory'];
+      final foodCategoryDescription = foodCategory['description'];
+      if (categories.containsKey(foodCategoryDescription)) {
+        categories[foodCategoryDescription] =
+            categories[foodCategoryDescription]! + 1;
+        count++;
+      } else {
+        categories[foodCategoryDescription] = 1;
+        count++;
+      }
+    }
+    categories['total'] = count;
+    return categories;
   }
 }

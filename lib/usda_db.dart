@@ -19,10 +19,10 @@ int getLongestDescriptionLength(final DBParser dbParser) {
   return DescriptionParser.getLongestDescription(descriptions: descriptions);
 }
 
-/// Retrieves the food categories from the specified [db]
-(Map<String, int>, int) getFoodCategories({required final DBParser db}) {
-  return db.getFoodCategories();
-}
+// /// Retrieves the food categories from the specified [db]
+// (Map<String, int>, int) getFoodCategories({required final DBParser db}) {
+//   return db.getFoodCategories();
+// }
 
 Future<void> createDBFiles(
     {required DBParser dbParser,

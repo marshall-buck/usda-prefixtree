@@ -17,7 +17,8 @@ void main() async {
   final dbParser = DBParser.init(
       filePath: fileService.fileNameOriginalDBFile, fileService: fileService);
   await runner.createDBFiles(
-      dbParser: dbParser, fileService: fileService, extras: true);
+      dbParser: dbParser, fileService: fileService, extras: false);
+  print(dbParser.getFoodCategories());
 
   // final descriptions = DescriptionParser();
 

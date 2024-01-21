@@ -55,7 +55,7 @@ class Nutrient with _$Nutrient {
   }
 
 /*CSpell:disable*/
-  /// Some names have ben changed to be more user friendly.
+  /// Some names have been changed to be more user friendly.
   static const originalNutrientTableEdit = {
     1003: {"name": "Protein", "unit": "g"},
     1004: {"name": "Total Fat", "unit": "g"},

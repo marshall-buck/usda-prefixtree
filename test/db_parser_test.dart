@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
@@ -75,6 +77,20 @@ void main() {
             true);
 
         expect(converted.entries.first.key, isA<int>());
+      });
+    });
+
+    group('getFoodCategories()', () {
+      test('should return a map of food categories and their counts', () {
+        when(() => mockFileLoaderService.loadData(filePath: 'fake'))
+            .thenReturn(mockUsdaFile);
+        final expected = {'Baked Products': 2, 'Beverages': 1, 'total': 3};
+
+        final dbParser =
+            DBParser.init(filePath: 'fake', fileService: mockFileLoaderService);
+        final d = DeepCollectionEquality();
+        final res = dbParser.getFoodCategories();
+        expect(d.equals(res, expected), true);
       });
     });
   });
