@@ -146,24 +146,22 @@ class FileService {
   String loadData({required final String filePath}) =>
       File(filePath).readAsStringSync();
 
-  ///
   /// Reads a CSV file from the given [filePath] and returns its contents as a
   /// list of lists of strings.
   ///
-  /// Each inner list represents a row in the CSV file, and each string represents a cell value.
-
+  /// Each inner list represents a row in the CSV file,
+  /// and each string represents a cell value.
+  /// [[cell1, cell2, cell3], [cell1, cell2, cell3]]
   Future<List<List<String>>> readCsvFile(String filePath) async {
     final file = File(filePath);
     final List<List<String>> csvData = [];
 
-    try {
-      final List<String> lines = await file.readAsLines();
-
-      for (final line in lines) {
-        csvData.add(_parseCsvLine(line));
-      }
-    } catch (e, st) {
-      log(e.toString(), stackTrace: st, name: 'readCsvFile');
+    if (!file.existsSync()) {
+      throw FileSystemException('File not found', filePath);
+    }
+    final List<String> lines = await file.readAsLines();
+    for (final line in lines) {
+      csvData.add(_parseCsvLine(line));
     }
 
     return csvData;

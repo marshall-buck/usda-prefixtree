@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
+import 'package:collection/collection.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 import 'package:usda_db_creation/file_service.dart';
@@ -22,7 +24,7 @@ void main() {
       test('should write list contents to a text file', () async {
         final listContents = ['item1', 'item2', 'item3'];
 
-        await fileService!.writeFileByType<List, Null>(
+        await fileService.writeFileByType<List, Null>(
           fileName: 'testList',
           convertKeysToStrings: false,
           listContents: listContents,
@@ -64,27 +66,40 @@ void main() {
       });
     });
 
-    // group('readCsvFile method tests', () {
-    //   test('should read CSV file and return its contents as a list of lists',
-    //       () async {
-    //     final filePath = p.join(pathToTestFiles, 'test_file.csv');
+    group('readCsvFile method tests', () {
+      test('should read CSV file and return its contents as a list of lists',
+          () async {
+        final filePath = p.join('test', 'test_files', 'test_file.csv');
 
-    //     final result = await fileService.readCsvFile(filePath);
+        final result = await fileService.readCsvFile(filePath);
 
-    //     final d = DeepCollectionEquality();
-    //     expect(
-    //         d.equals(result, [
-    //           ["id", "name", "unit_name", "nutrient_nbr", "rank"],
-    //           ["1002", "Nitrogen", "G", "202", "500"],
-    //           ["1003", "Protein", "G", "203", "600"],
-    //           ["1004", "Total lipid (fat)", "G", "204", "800"],
-    //           ["1005", "Carbohydrate, by difference", "G", "205", "1110"]
-    //         ]),
-    //         true);
-    //   });
+        final d = DeepCollectionEquality();
+        expect(
+            d.equals(result, [
+              ["id", "name", "unit_name", "nutrient_nbr", "rank"],
+              ["1002", "Nitrogen", "G", "202", "500"],
+              ["1003", "Protein", "G", "203", "600"],
+              ["1004", "Total lipid (fat)", "G", "204", "800"],
+              ["1005", "Carbohydrate, by difference", "G", "205", "1110"]
+            ]),
+            true);
+      });
+      test('should throw an exception when the file does not exist', () async {
+        final filePath = p.join('test', 'test_files', 'non_existent_file.csv');
 
-    //   // Additional tests for error handling, etc., could be added here.
-    // });
+        expect(() async => await fileService.readCsvFile(filePath),
+            throwsA(isA<FileSystemException>()));
+      });
+
+      test('should return an empty list when the file is empty', () async {
+        final filePath = p.join('test', 'test_files', 'empty_file.csv');
+
+        final result = await fileService.readCsvFile(filePath);
+
+        expect(result, isEmpty);
+        expect(result, isA<List<List<String>>>());
+      });
+    });
 
     // group('loadData method tests', () {
     //   test('should read file and return its contents as a string', () async {
