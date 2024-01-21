@@ -19,7 +19,7 @@ void main() {
   });
 
   group('FileService class tests', () {
-    group('writeFileByType method tests', () {
+    group('writeFileByType() - ', () {
       test('should write list contents to a text file', () async {
         final listContents = ['item1', 'item2', 'item3'];
 
@@ -29,8 +29,10 @@ void main() {
           listContents: listContents,
         );
 
-        final filePath = p.join(
-            fileService.pathToFiles, fileService.folderHash, 'testList.txt');
+        final fileName = '${fileService.fileHash}_testList.txt';
+
+        final filePath =
+            p.join(fileService.pathToFiles, fileService.folderHash, fileName);
         final file = File(filePath);
 
         expect(await file.exists(), isTrue);
@@ -45,9 +47,10 @@ void main() {
           convertKeysToStrings: false,
           mapContents: mapContents,
         );
+        final fileName = '${fileService.fileHash}_testJson.json';
 
-        final filePath = p.join(
-            fileService.pathToFiles, fileService.folderHash, 'testJson.json');
+        final filePath =
+            p.join(fileService.pathToFiles, fileService.folderHash, fileName);
         final file = File(filePath);
 
         expect(await file.exists(), isTrue);

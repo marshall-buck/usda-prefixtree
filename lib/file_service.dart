@@ -33,6 +33,8 @@ class FileService {
   String folderHash =
       '${DateTime.now()}'.replaceAll(RegExp(r'[\\/:*?"<>|\s]'), '_');
 
+  String get fileHash => folderHash.substring(folderHash.indexOf('.') + 1);
+
 // ************************** File Writers **************************
 
   /// Writes the contents to files based on their types.
@@ -46,19 +48,20 @@ class FileService {
     if (listContents == null && mapContents == null) {
       throw ArgumentError('No contents provided: writeFileByType');
     }
+
     try {
       checkAndCreateFolder();
 
       if (listContents != null && listContents is List) {
         final String listFilePath = p.join(pathToFiles, folderHash,
-            '$fileName.txt'); // '$pathToFiles/$fileHash/$fileName.txt';
+            '${fileHash}_$fileName.txt'); // '$pathToFiles/$fileHash/$fileName.txt';
         await _writeListToTxtFile(
             filePath: listFilePath, contents: listContents);
       }
 
       if (mapContents != null && mapContents is Map) {
         final String mapFilePath = p.join(pathToFiles, folderHash,
-            '$fileName.json'); //'$pathToFiles/$fileHash/$fileName.json';
+            '${fileHash}_$fileName.json'); //'$pathToFiles/$fileHash/$fileName.json';
         final Map convertedMap = convertKeysToStrings
             ? mapContents.deepConvertMapKeyToString()
             : mapContents;
