@@ -156,5 +156,25 @@ void main() {
         Directory(folderPath).deleteSync();
       });
     });
+    group('fileHash tests', () {
+      test('fileHash should not be empty', () {
+        expect(fileService.fileHash, isNotEmpty);
+      });
+
+      test('fileHash should not contain any invalid characters', () {
+        expect(fileService.fileHash.contains(RegExp(r'[\\/:*?"<>|\s]')), false);
+      });
+
+      test('fileHash should not contain any invalid characters', () {
+        expect(
+            fileService.fileHash.contains(RegExp(r'[\\/:*?"<>|\s]')), isFalse);
+      });
+
+      test('fileHash should be unique for each instance of FileService', () {
+        final anotherFileService = FileService();
+        expect(
+            fileService.fileHash, isNot(equals(anotherFileService.fileHash)));
+      });
+    });
   });
 }
