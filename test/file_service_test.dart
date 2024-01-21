@@ -12,7 +12,7 @@ void main() {
   setUpAll(() => fileService = FileService());
   tearDown(() async {
     final testDirectory =
-        Directory(p.join(fileService.pathToFiles, fileService.fileHash));
+        Directory(p.join(fileService.pathToFiles, fileService.folderHash));
     if (await testDirectory.exists()) {
       await testDirectory.delete(recursive: true);
     }
@@ -30,7 +30,7 @@ void main() {
         );
 
         final filePath = p.join(
-            fileService.pathToFiles, fileService.fileHash, 'testList.txt');
+            fileService.pathToFiles, fileService.folderHash, 'testList.txt');
         final file = File(filePath);
 
         expect(await file.exists(), isTrue);
@@ -47,7 +47,7 @@ void main() {
         );
 
         final filePath = p.join(
-            fileService.pathToFiles, fileService.fileHash, 'testJson.json');
+            fileService.pathToFiles, fileService.folderHash, 'testJson.json');
         final file = File(filePath);
 
         expect(await file.exists(), isTrue);
@@ -135,7 +135,7 @@ void main() {
     group('checkAndCreateFolder method tests', () {
       test('should create folder if it does not exist', () {
         final folderPath =
-            p.join(fileService.pathToFiles, fileService.fileHash);
+            p.join(fileService.pathToFiles, fileService.folderHash);
 
         fileService.checkAndCreateFolder();
 
@@ -146,7 +146,7 @@ void main() {
 
       test('should not create folder if it already exists', () {
         final folderPath =
-            p.join(fileService.pathToFiles, fileService.fileHash);
+            p.join(fileService.pathToFiles, fileService.folderHash);
         Directory(folderPath).createSync();
 
         fileService.checkAndCreateFolder();
@@ -158,22 +158,23 @@ void main() {
     });
     group('fileHash tests', () {
       test('fileHash should not be empty', () {
-        expect(fileService.fileHash, isNotEmpty);
-      });
-
-      test('fileHash should not contain any invalid characters', () {
-        expect(fileService.fileHash.contains(RegExp(r'[\\/:*?"<>|\s]')), false);
+        expect(fileService.folderHash, isNotEmpty);
       });
 
       test('fileHash should not contain any invalid characters', () {
         expect(
-            fileService.fileHash.contains(RegExp(r'[\\/:*?"<>|\s]')), isFalse);
+            fileService.folderHash.contains(RegExp(r'[\\/:*?"<>|\s]')), false);
+      });
+
+      test('fileHash should not contain any invalid characters', () {
+        expect(fileService.folderHash.contains(RegExp(r'[\\/:*?"<>|\s]')),
+            isFalse);
       });
 
       test('fileHash should be unique for each instance of FileService', () {
         final anotherFileService = FileService();
-        expect(
-            fileService.fileHash, isNot(equals(anotherFileService.fileHash)));
+        expect(fileService.folderHash,
+            isNot(equals(anotherFileService.folderHash)));
       });
     });
   });

@@ -22,7 +22,7 @@ void main() {
       test('coverts list of descriptions records to map', () async {
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
-        when(() => mockFileLoaderService.fileHash)
+        when(() => mockFileLoaderService.folderHash)
             .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
 
         const expected = {
@@ -55,7 +55,7 @@ void main() {
           () async {
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
-        when(() => mockFileLoaderService.fileHash)
+        when(() => mockFileLoaderService.folderHash)
             .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
 
         when(() => mockFileLoaderService
@@ -91,7 +91,7 @@ void main() {
           () async {
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
-        when(() => mockFileLoaderService.fileHash)
+        when(() => mockFileLoaderService.folderHash)
             .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
 
         when(() => mockFileLoaderService
@@ -126,7 +126,7 @@ void main() {
       test('Throws ArgumentError', () async {
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
-        when(() => mockFileLoaderService.fileHash)
+        when(() => mockFileLoaderService.folderHash)
             .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
         final descriptions = DescriptionParser();
         final dbParser =
@@ -201,7 +201,7 @@ void main() {
       test('writeByType is called', () async {
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
-        when(() => mockFileLoaderService.fileHash)
+        when(() => mockFileLoaderService.folderHash)
             .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
 
         when(

@@ -21,7 +21,7 @@ void main() {
       test('substrings populates correctly', () async {
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
-        when(() => mockFileLoaderService.fileHash)
+        when(() => mockFileLoaderService.folderHash)
             .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
 
         final dbParser =
@@ -38,7 +38,7 @@ void main() {
           () async {
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
-        when(() => mockFileLoaderService.fileHash)
+        when(() => mockFileLoaderService.folderHash)
             .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
 
         when(() =>
@@ -68,7 +68,7 @@ void main() {
           () async {
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
-        when(() => mockFileLoaderService.fileHash)
+        when(() => mockFileLoaderService.folderHash)
             .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
 
         when(() =>
@@ -97,7 +97,7 @@ void main() {
       test('Throws ArgumentError', () async {
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
-        when(() => mockFileLoaderService.fileHash)
+        when(() => mockFileLoaderService.folderHash)
             .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
 
         final dbParser =

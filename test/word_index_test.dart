@@ -51,7 +51,7 @@ void main() {
 
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
-        when(() => mockFileLoaderService.fileHash)
+        when(() => mockFileLoaderService.folderHash)
             .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
         final dbParser =
             DBParser.init(filePath: 'fake', fileService: mockFileLoaderService);
@@ -65,7 +65,7 @@ void main() {
       test('createDataStructure should handle empty description map', () async {
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
-        when(() => mockFileLoaderService.fileHash)
+        when(() => mockFileLoaderService.folderHash)
             .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
         final dbParser =
             DBParser.init(filePath: 'fake', fileService: mockFileLoaderService);
@@ -88,7 +88,7 @@ void main() {
         };
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
-        when(() => mockFileLoaderService.fileHash)
+        when(() => mockFileLoaderService.folderHash)
             .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
         final dbParser =
             DBParser.init(filePath: 'fake', fileService: mockFileLoaderService);
@@ -115,7 +115,7 @@ void main() {
 
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
-        when(() => mockFileLoaderService.fileHash)
+        when(() => mockFileLoaderService.folderHash)
             .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
         final dbParser =
             DBParser.init(filePath: 'fake', fileService: mockFileLoaderService);
@@ -142,7 +142,7 @@ void main() {
         };
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
-        when(() => mockFileLoaderService.fileHash)
+        when(() => mockFileLoaderService.folderHash)
             .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
 
         when(() => mockFileLoaderService
@@ -180,7 +180,7 @@ void main() {
         };
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
-        when(() => mockFileLoaderService.fileHash)
+        when(() => mockFileLoaderService.folderHash)
             .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
 
         when(() => mockFileLoaderService
@@ -217,7 +217,7 @@ void main() {
         };
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
-        when(() => mockFileLoaderService.fileHash)
+        when(() => mockFileLoaderService.folderHash)
             .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
 
         final dbParser =

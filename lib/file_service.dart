@@ -30,13 +30,13 @@ class FileService {
 
   /// Loads a DateTime sting at initialization so all
   /// Prefixes wil be the same.
-  String fileHash =
+  String folderHash =
       '${DateTime.now()}'.replaceAll(RegExp(r'[\\/:*?"<>|\s]'), '_');
 
 // ************************** File Writers **************************
 
   /// Writes the contents to files based on their types.
-  /// Appends a [fileHash] folder to the path.
+  /// Appends a [folderHash] folder to the path.
   Future<void> writeFileByType<T, U>({
     required final String fileName,
     required final bool convertKeysToStrings,
@@ -50,14 +50,14 @@ class FileService {
       checkAndCreateFolder();
 
       if (listContents != null && listContents is List) {
-        final String listFilePath = p.join(pathToFiles, fileHash,
+        final String listFilePath = p.join(pathToFiles, folderHash,
             '$fileName.txt'); // '$pathToFiles/$fileHash/$fileName.txt';
         await _writeListToTxtFile(
             filePath: listFilePath, contents: listContents);
       }
 
       if (mapContents != null && mapContents is Map) {
-        final String mapFilePath = p.join(pathToFiles, fileHash,
+        final String mapFilePath = p.join(pathToFiles, folderHash,
             '$fileName.json'); //'$pathToFiles/$fileHash/$fileName.json';
         final Map convertedMap = convertKeysToStrings
             ? mapContents.deepConvertMapKeyToString()
@@ -118,7 +118,7 @@ class FileService {
 
   /// Checks if the specified folder path exists and creates it if it doesn't.
   void checkAndCreateFolder() {
-    final path = p.join(pathToFiles, fileHash);
+    final path = p.join(pathToFiles, folderHash);
     final directory = Directory(path);
     if (!directory.existsSync()) {
       try {

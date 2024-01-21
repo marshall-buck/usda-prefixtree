@@ -22,7 +22,7 @@ void main() {
       test('hashes list correctly', () async {
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
-        when(() => mockFileLoaderService.fileHash)
+        when(() => mockFileLoaderService.folderHash)
             .thenReturn(DateTime.now().microsecondsSinceEpoch.toString());
 
         final dbParser =
