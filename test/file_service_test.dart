@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:path/path.dart' as p;
@@ -116,6 +115,22 @@ void main() {
 
         expect(() => fileService.loadData(filePath: filePath),
             throwsA(isA<FileSystemException>()));
+      });
+
+      test('should correctly load very large JSON files', () async {
+        // Create a large JSON file
+        final filePath = p.join('test', 'test_files', 'largeFile.json');
+        final file = File(filePath);
+        final largeFileContent = {
+          'key': 'a' * 300000000,
+        };
+        await file.writeAsString(jsonEncode(largeFileContent));
+
+        final loadedContent = fileService.loadData(filePath: filePath);
+
+        // Check that the loaded content is correct
+        expect(loadedContent, isA<String>());
+        file.deleteSync();
       });
     });
   });
