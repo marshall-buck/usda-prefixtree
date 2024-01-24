@@ -33,6 +33,7 @@ class AutoCompleteHashData {
 
   AutoCompleteHashData({required this.substringHash, required this.indexHash});
 
+  /// Converts the properties to a Map<String, dynamic> for json serialization.
   Map<String, dynamic> toJson() {
     return {
       'substringHash': substringHash,
@@ -52,7 +53,7 @@ class AutoCompleteHashTable implements DataStructure {
 
   AutoCompleteHashTable(this.unHashedSubstrings);
 
-  /// Method to create the data and write the files.
+  /// Method to create the data and optionally write the files.
   @override
   Future<AutoCompleteHashData?> createDataStructure(
       {required DBParser dbParser,
@@ -84,7 +85,6 @@ class AutoCompleteHashTable implements DataStructure {
   ///     'abapp': [1, 2, 3, 4],
   ///     'abappl': [3, 4], ...
   ///      };
-
   /// ```
   /// _substringHash = { 'aba': 0, 'abap': 0, 'abapp': 1, 'abappl': 0, ... }
   ///
