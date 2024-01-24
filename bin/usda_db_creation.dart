@@ -11,10 +11,15 @@ import 'package:usda_db_creation/usda_db.dart' as runner;
 import 'package:usda_db_creation/word_index.dart';
 
 void main() async {
+  final startTime = DateTime.now();
   final fileService = FileService();
 
   final dbParser = DBParser.init(
       filePath: fileService.fileNameOriginalDBFile, fileService: fileService);
   await runner.createDBFiles(
       dbParser: dbParser, fileService: fileService, extras: true);
+
+  final endTime = DateTime.now();
+  final duration = endTime.difference(startTime);
+  print('Time taken: ${duration.inMilliseconds} milliseconds');
 }
