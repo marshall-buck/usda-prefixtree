@@ -27,6 +27,7 @@ class FileService {
       'autocomplete_word_index_keys';
   static const fileNameAutocompleteHash = 'autocomplete_hash';
   static const fileNameFoodsDatabase = 'foods_db';
+  static const fileNameManifest = 'file_manifest';
 
   /// Loads a DateTime sting at initialization so all
   /// Prefixes wil be the same.
@@ -69,6 +70,17 @@ class FileService {
       }
     } catch (e, st) {
       log(e.toString(), stackTrace: st, name: 'writeFileByType');
+    }
+  }
+
+  Future<void> writeManifestFile() async {
+    final String manifestFilePath = p.join(pathToFiles, folderHash);
+    try {
+      final File file = File('$manifestFilePath/$fileNameManifest.txt');
+      print('Writing manifest file to: $manifestFilePath');
+      await file.writeAsString(fileHash);
+    } catch (e, st) {
+      log(e.toString(), stackTrace: st, name: 'writeStringToTxtFile');
     }
   }
 

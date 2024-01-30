@@ -61,4 +61,5 @@ Future<void> createDBFiles(
     final db = DB(desMap);
     await db.createDataStructure(dbParser: dbParser);
   }
+  await fileService.writeManifestFile();
 }
