@@ -22,11 +22,19 @@ class DescriptionParser implements DataStructure {
   ///
   /// This is the only method that needs to be called to create the final description map.
   /// All other methods are helper methods.
-  ///
-  /// Returns:
+  /// ```
+  /// final dbParser = DBParser();
+  /// final descriptionParser = DescriptionParser();
+  /// final descriptionMap = await descriptionParser.createDataStructure(
+  ///  dbParser: dbParser,
+  /// returnData: true,
+  /// writeFile: true,
+  /// )  =>
   /// { 167512: 'Pillsbury Golden Layer Buttermilk Biscuits, (Artificial Flavor,) refrigerated dough' ,
   ///   167513: 'Pillsbury, Cinnamon Rolls with Icing, 100% refrigerated dough',
   ///   167514: 'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry, 2% milk', ...}
+  ///
+  /// ```
   @override
   Future<DescriptionMap?> createDataStructure({
     required DBParser dbParser,
