@@ -8,7 +8,7 @@ https://fdc.nal.usda.gov/download-datasets.html
 #### Link to download
 https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_json_2018-04.zip
 
-#TODO: create a manifest.txt to keep the file hash so the consumer db can programmatically change the hash
+
 
 #### The intended output is 2 json files.
 1.  The foods and nutritional information. I
