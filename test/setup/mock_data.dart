@@ -150,9 +150,8 @@ const Map<String, List<int>> mockWordIndexMap = {
 
 /* cSpell:disable */
 const Map<String, List<int>> mockUnHashedSubstrings = {
-  '%': [3],
-  '1': [3, 4],
-  '2': [3, 4],
+  '2%': [3],
+  '21': [3, 4],
   'aba': [3, 4],
   'abap': [3, 4],
   'abapp': [3, 4],

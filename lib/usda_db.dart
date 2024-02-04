@@ -38,7 +38,7 @@ Future<void> createDBFiles(
         dbParser: dbParser, writeFile: true);
     final substring = Substrings(wordIndexMap!);
     final substringMap = await substring.createDataStructure(
-        dbParser: dbParser, writeFile: false);
+        dbParser: dbParser, writeFile: true);
     final hashTable = AutoCompleteHashTable(substringMap!);
     await hashTable.createDataStructure(dbParser: dbParser, writeFile: true);
 

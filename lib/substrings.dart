@@ -44,15 +44,15 @@ class Substrings implements DataStructure {
       final String word = item.key;
 
       final List<int> wordIndexList = List<int>.from(item.value);
-      // this inner loop will check for numbers and percents, for these
-      // we will not enforce a minimum length.
-      for (int i = 0; i < word.length; i++) {
-        if (word[i] == '%' || word[i].isNumber()) {
-          if (!indexMap.containsKey(word[i])) {
-            indexMap[word[i]] = <int>{};
-          }
 
-          indexMap[word[i].toString()]!.addAll(wordIndexList);
+      for (int i = 0; i < word.length; i++) {
+        // If the word is a number followed by a % or just a number,
+        //add it to the indexMap directly, and skip the iteration.
+        if (word.isNumberWithPercent() || word.isNumber()) {
+          if (!indexMap.containsKey(word)) {
+            indexMap[word] = <int>{};
+          }
+          indexMap[word.toString()]!.addAll(wordIndexList);
 
           continue;
         }
@@ -82,41 +82,3 @@ class Substrings implements DataStructure {
     return returnData ? sortedMap : null;
   }
 }
-
-
- // Map<String, List<int>> createSubstringsFromWordIndex() {
-  //   final indexMap =
-  //       SplayTreeMap<String, Set<int>>((final a, final b) => a.compareTo(b));
-
-  //   for (final item in wordIndexMap.entries) {
-  //     final String word = item.key;
-
-  //     final List<int> wordIndexList = List<int>.from(item.value);
-  //     // this inner loop will check for numbers and percents, for these
-  //     // we will not enforce a minimum length.
-  //     for (int i = 0; i < word.length; i++) {
-  //       if (word[i] == '%' || word[i].isNumber()) {
-  //         if (!indexMap.containsKey(word[i])) {
-  //           indexMap[word[i]] = <int>{};
-  //         }
-
-  //         indexMap[word[i].toString()]!.addAll(wordIndexList);
-
-  //         continue;
-  //       }
-
-  //       for (int j = i + minLength; j <= word.length; j++) {
-  //         final String substring = word.substring(i, j);
-
-  //         if (!indexMap.containsKey(substring)) {
-  //           indexMap[substring] = <int>{};
-  //         }
-
-  //         indexMap[substring]!.addAll(wordIndexList);
-  //       }
-  //     }
-  //   }
-
-  //   return indexMap
-  //       .map((final key, final value) => MapEntry(key, value.toList()..sort()));
-  // }
