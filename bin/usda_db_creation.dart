@@ -17,7 +17,7 @@ void main() async {
   final dbParser = DBParser.init(
       filePath: fileService.fileNameOriginalDBFile, fileService: fileService);
   await runner.createDBFiles(
-      dbParser: dbParser, fileService: fileService, extras: true);
+      dbParser: dbParser, fileService: fileService, extras: false);
 
   final endTime = DateTime.now();
   final duration = endTime.difference(startTime);
