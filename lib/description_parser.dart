@@ -7,20 +7,62 @@ import 'package:usda_db_creation/extensions/string_ext.dart';
 typedef DescriptionRecord = (int, String);
 typedef DescriptionMap = Map<int, String>;
 
-/// A class for parsing description strings from the [originalFoodsList] from the
-/// original_usda.json file.
+/// A class that parses descriptions and creates a [DescriptionMap] from the
+/// original foods list.
 ///
-/// The [originalFoodsList] is a list of food items at the jsonFile['SRLegacyFoods'].
-/// This is initialized in the [DBParser] class.
+/// This class implements the [DataStructure] interface.
+/// The [createDataStructure] method is the main method that needs to be called
+/// to create the final description map.
+/// All other methods are helper methods.
 ///
-/// A map of {167513: 'Pillsbury, Cinnamon Rolls with Icing, 100% refrigerated dough', ...}
-/// is needed, for both populating the main foods database and for creating the
-/// autocomplete hash map.
+/// Example usage:
+/// ```dart
+/// final dbParser = DBParser();
+/// final descriptionParser = DescriptionParser();
+/// final descriptionMap = await descriptionParser.createDataStructure(
+///   dbParser: dbParser,
+///   returnData: true,
+///   writeFile: true,
+/// );
+/// ```
+///
+/// The [createDataStructure] method takes the following parameters:
+/// - [dbParser] An instance of [DBParser] used to parse the original foods list.
+/// - [returnData] A boolean indicating whether to return the description map
+/// or not. Default is `true`.
+/// - [writeFile] A boolean indicating whether to write the description map to
+/// a file or not. Default is `false`.
+///
+/// The [createDataStructure] method returns a [Future] of [DescriptionMap] or
+/// `null` if [returnData] is `false`.
+///
+/// The [DescriptionParser] class also provides several helper methods:
+/// - [createOriginalDescriptionRecords] Parses the original foods list to
+/// create a list of [DescriptionRecord]s.
+/// - [removeUnwantedPhrasesFromDescriptions] Removes unwanted phrases from
+/// the descriptions.
+/// - [parseDescriptionsFromTxtFile] Parses a description map from a text file.
+/// - [_parseDescriptionRecordFromString] Helper method to parse a description
+/// record from a line in a text file.
+/// - [getLongestDescription] Helper method to get the length of the longest
+/// description in a list of [DescriptionRecord]s.
+/// - [createRepeatedPhraseFrequencyMap] Helper method to create a frequency
+/// map of repeated phrases in a list of descriptions.
+/// - [isExcludedCategory] Helper method to check if a food item is in an
+/// excluded category.
+///
+/// Note: The [DescriptionParser] class assumes the existence of a
+/// [DescriptionRecord] class and a [DescriptionMap] type.
+/// The [DescriptionRecord] class should have properties `$1` and `$2`
+/// representing the id and description respectively.
+/// The [DescriptionMap] type should be a [Map] with keys of type [int]
+/// and values of type [String].
 
 class DescriptionParser implements DataStructure {
   /// Creates [DescriptionMap] from the original foods list.
   ///
-  /// This is the only method that needs to be called to create the final description map.
+  /// This is the only method that needs to be called to create the final
+  /// description map.
   /// All other methods are helper methods.
   /// ```
   /// final dbParser = DBParser();
