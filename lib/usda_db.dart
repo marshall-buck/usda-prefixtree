@@ -12,17 +12,48 @@ import 'package:usda_db_creation/file_service.dart';
 import 'package:usda_db_creation/substrings.dart';
 import 'package:usda_db_creation/word_index.dart';
 
-// The answer is 134 for the original descriptions.
-int getLongestDescriptionLength(final DBParser dbParser) {
+/// Returns the length of the longest description in the provided DBParser object.
+///
+/// Takes a [DBParser] object as a parameter which contains the original foods list.
+/// Returns the length of the longest description.
+///
+/// [dbParser]: The [DBParser] object containing the original foods list.
+int getLongestDescriptionLength({required final DBParser dbParser}) {
   final descriptions = DescriptionParser.createOriginalDescriptionRecords(
       originalFoodsList: dbParser.originalFoodsList);
   return DescriptionParser.getLongestDescription(descriptions: descriptions);
 }
 
-// /// Retrieves the food categories from the specified [db]
-// (Map<String, int>, int) getFoodCategories({required final DBParser db}) {
-//   return db.getFoodCategories();
-// }
+/// Creates the necessary database files based on the provided [DBParser] object.
+///
+/// This function generates the required files for the database creation process.
+///  It takes a [DBParser] object as a parameter, which contains the original foods list.
+/// Additionally, it requires a [FileService] object for file operations and an
+/// optional boolean parameter [extras] to indicate whether to include extra files.
+///
+/// If [extras] is set to true, the function generates additional files including
+/// description records, word index map, substring map, autocomplete hash table,
+/// and the database itself. These files are written to disk.
+///
+/// If [extras] is set to false, the function generates only the necessary files
+/// for the database creation process, excluding the additional files.
+/// These files are not written to disk.
+///
+/// Note: The [DBParser] object must be properly initialized before calling this function.
+///
+/// Example usage:
+/// ```dart
+/// final dbParser = DBParser();
+/// final fileService = FileService();
+/// await createDBFiles(dbParser: dbParser, fileService: fileService, extras: true);
+/// ```
+///
+/// [dbParser]: The [DBParser] object containing the original foods list.
+/// [fileService]: The [FileService] object for file operations.
+/// [extras]: A boolean value indicating whether to include extra files. Defaults to false.
+///
+/// Throws a [FormatException] if the [DBParser] object is not properly initialized.
+/// Throws an [IOException] if there is an error during file operations.
 
 Future<void> createDBFiles(
     {required DBParser dbParser,
