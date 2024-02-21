@@ -7,13 +7,42 @@ import 'package:usda_db_creation/file_service.dart';
 import 'package:usda_db_creation/global_const.dart';
 import 'package:usda_db_creation/extensions/string_ext.dart';
 
-/// Class to create a [Map] of words to index, from the Food descriptions.
-/// Each key is a word that will be used in an autocomplete search.
-/// the value of the word key is a list of [int]s of the food items id's.
-/// Technically I could have skipped this step and created the autocomplete
-/// hashes without this step, but it is useful to see a visual
-/// representation of all the words and location's.
-/// So this is needed for the step of creating the [AutoCompleteHashTable]
+/// A class that represents a word index map.
+///
+/// This class implements the [DataStructure] interface and provides a method t
+/// o create a word index from a given [finalDescriptionMap].
+/// The word index is represented as a [SplayTreeMap] where the keys are
+/// words and the values are lists of integers representing the indices of the descriptions that contain the word.
+///
+/// Example:
+/// ```
+/// WordIndexMap wordIndexMap = WordIndexMap(finalDescriptionMap);
+/// SplayTreeMap<String, List<int>>? indexMap = await wordIndexMap.createDataStructure(dbParser: dbParser, returnData: true, writeFile: false);
+/// ```
+///
+/// The [createDataStructure] method takes the following parameters:
+/// - [dbParser]: A [DBParser] object used for file operations.
+/// - [returnData]: A boolean value indicating whether to return the created
+/// word index map. Default is `true`.
+/// - [writeFile]: A boolean value indicating whether to write the created
+/// word index map to a file. Default is `false`.
+///
+/// If both [returnData] and [writeFile] are set to `false`, an [ArgumentError]
+/// is thrown.
+///
+/// The method returns a [Future] that resolves to a [SplayTreeMap] of words
+/// and their corresponding indices.
+/// If [returnData] is set to `true`, the method returns the word index map.
+/// Otherwise, it returns `null`.
+///
+/// Example:
+/// ```
+/// SplayTreeMap<String, List<int>>? indexMap = await wordIndexMap.createDataStructure(dbParser: dbParser, returnData: true, writeFile: false);
+/// if (indexMap != null) {
+///   // Do something with the word index map
+/// }
+/// ```
+
 class WordIndexMap implements DataStructure {
   final DescriptionMap finalDescriptionMap;
 
