@@ -42,9 +42,73 @@ class AutoCompleteHashData {
   }
 }
 
-/// Class to create the substrings and indexHash file and object.
-/// Initialize with a Map<String, List<int>> from the [Substrings] class.
-
+/// Class to represent the [AutoCompleteHashTable]'s structure and methods.
+/// This class implements the [DataStructure] interface.
+///
+/// The [AutoCompleteHashTable] is a data structure that represents a substring
+/// tree and a lookup table for the substring values.
+/// It is used to create and manipulate data for autocomplete functionality.
+///
+/// The data structure consists of two main properties:
+/// - [_substringHash]: A map that stores the hash values for each substring.
+/// - [_indexHash]: A map that stores the index values for each hash key.
+///
+/// The [unHashedSubstrings] parameter is used to initialize the data structure
+/// with a map of un-hashed substrings and their corresponding index values.
+///
+/// The [createDataStructure] method is used to create the data structure and
+/// optionally write the data to a file.
+/// It takes a [DBParser] object as a parameter, which is used for file operations.
+/// The [returnData] parameter determines whether the method should return the
+/// created data or not.
+/// The [writeFile] parameter determines whether the method should write the
+/// data to a file or not.
+///
+/// The [_populateHashes] method is a private method that populates the [_substringHash]
+/// and [_indexHash] properties from the [unHashedSubstrings] map.
+/// It iterates over the entries of the [unHashedSubstrings] map and calculates
+/// the hash key for each substring.
+/// If the hash key is not found in the [_indexHash] map, it adds the index list
+/// value to the [_indexHash] map and assigns the hash key to the substring in the [_substringHash] map.
+/// If the hash key is found in the [_indexHash] map, it assigns the hash key to
+/// the substring in the [_substringHash] map.
+///
+/// The [_findHashKey] method is a static private method that finds the hash key
+/// for a given index list from a substring in the [hashTable].
+/// It iterates over the entries of the [hashTable] and compares the index list
+/// values with the given index list from the substring.
+/// If a match is found, it returns the hash key. If no match is found,
+/// it returns -1.
+///
+//// *Cspell:disable
+/// Example usage:
+/// ```dart
+/// final unHashedSubstrings = {
+///   'aba': [3, 4],
+///   'abap': [3, 4],
+///   'abapp': [1, 2, 3, 4],
+///   'abappl': [3, 4],
+/// };
+/// /*Cspell:enable
+/// final autoCompleteHashTable = AutoCompleteHashTable(unHashedSubstrings);
+/// final data = await autoCompleteHashTable.createDataStructure(
+///   dbParser: dbParser,
+///   returnData: true,
+///   writeFile: true,
+/// );
+/// ```
+///
+/// Note: This class requires the 'collection' package for the [ListEquality]
+/// class and the 'usda_db_creation' package for the [DBParser], [DataStructure],
+/// and [FileService] classes.
+/// Make sure to import these packages before using this class.
+///
+/// See Also:
+/// - [AutoCompleteHashData]: The data structure that represents the substring
+/// tree and lookup table.
+/// - [DBParser] The class used for file operations.
+/// - [DataStructure] The interface implemented by this class.
+/// - [FileService] The class used for file operations.
 class AutoCompleteHashTable implements DataStructure {
   final Map<String, int> _substringHash = {};
   final Map<int, List<int>> _indexHash = {};
