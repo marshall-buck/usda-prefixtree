@@ -17,7 +17,7 @@ import 'package:usda_db_creation/word_index.dart';
 /// Takes a [DBParser] object as a parameter which contains the original foods list.
 /// Returns the length of the longest description.
 ///
-/// [dbParser]: The [DBParser] object containing the original foods list.
+/// [dbParser] The [DBParser] object containing the original foods list.
 int getLongestDescriptionLength({required final DBParser dbParser}) {
   final descriptions = DescriptionParser.createOriginalDescriptionRecords(
       originalFoodsList: dbParser.originalFoodsList);
@@ -48,9 +48,9 @@ int getLongestDescriptionLength({required final DBParser dbParser}) {
 /// await createDBFiles(dbParser: dbParser, fileService: fileService, extras: true);
 /// ```
 ///
-/// [dbParser]: The [DBParser] object containing the original foods list.
-/// [fileService]: The [FileService] object for file operations.
-/// [extras]: A boolean value indicating whether to include extra files. Defaults to false.
+/// [dbParser] The [DBParser] object containing the original foods list.
+/// [fileService] The [FileService] object for file operations.
+/// [extras] A boolean value indicating whether to include extra files. Defaults to false.
 ///
 /// Throws a [FormatException] if the [DBParser] object is not properly initialized.
 /// Throws an [IOException] if there is an error during file operations.

@@ -21,10 +21,10 @@ import 'package:usda_db_creation/extensions/string_ext.dart';
 /// ```
 ///
 /// The [createDataStructure] method takes the following parameters:
-/// - [dbParser]: A [DBParser] object used for file operations.
-/// - [returnData]: A boolean value indicating whether to return the created
+/// - [dbParser] A [DBParser] object used for file operations.
+/// - [returnData] A boolean value indicating whether to return the created
 /// word index map. Default is `true`.
-/// - [writeFile]: A boolean value indicating whether to write the created
+/// - [writeFile] A boolean value indicating whether to write the created
 /// word index map to a file. Default is `false`.
 ///
 /// If both [returnData] and [writeFile] are set to `false`, an [ArgumentError]

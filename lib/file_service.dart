@@ -5,8 +5,45 @@ import 'dart:io';
 import 'package:usda_db_creation/extensions/map_ext.dart';
 import 'package:path/path.dart' as p;
 
-/// Class to handle reading and writing  files.
-
+/// A class that provides file-related services, such as reading and writing files.
+///
+/// This class handles various file operations, including writing different types of data to files,
+/// reading data from files, and parsing CSV files.
+///
+/// The [FileService] class has the following properties:
+/// - [pathToFiles] The path to the files directory.
+/// - [fileNameOriginalDBFile] The file name for the original USDA database file.
+/// - [fileNameNutrientsCsv] The file name for the nutrient CSV file.
+/// - [fileNameNutrientsMap] The file name for the original nutrient CSV file.
+/// - [fileNameDuplicatePhrases] The file name for the duplicate phrases file.
+/// - [fileNameOriginalDescriptions] The file name for the original descriptions file.
+/// - [fileNameFinalDescriptions] The file name for the final descriptions file.
+/// - [fileNameSubstrings] The file name for the substrings file.
+/// - [fileNameAutocompleteWordIndex] The file name for the autocomplete word index file.
+/// - [fileNameAutocompleteWordIndexKeys] The file name for the autocomplete word index keys file.
+/// - [fileNameAutocompleteHash] The file name for the autocomplete hash file.
+/// - [fileNameFoodsDatabase] The file name for the foods database file.
+/// - [fileNameManifest] The file name for the file manifest file.
+///
+/// The [FileService] class provides the following methods:
+/// - [writeFileByType] Writes the contents to files based on their types.
+/// - [writeManifestFile] Writes the manifest file.
+/// - [_writeJsonFile] Writes a JSON file.
+/// - [_writeListToTxtFile] Writes a list to a text file.
+/// - [checkAndCreateFolder] Checks if the specified folder path exists and creates it if it doesn't.
+/// - [loadData] Loads the contents of a file.
+/// - [readCsvFile] Reads a CSV file and returns its contents as a list of lists of strings.
+/// - [_parseCsvLine] Parses a CSV line and returns a list of fields.
+///
+/// Example usage:
+/// ```dart
+/// final fileService = FileService();
+/// await fileService.writeFileByType(
+///   fileName: 'example',
+///   convertKeysToStrings: true,
+///   mapContents: {'key1': 'value1', 'key2': 'value2'},
+/// );
+/// ```
 class FileService {
   final pathToFiles = p.join('lib', 'db');
 

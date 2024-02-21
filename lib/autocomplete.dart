@@ -50,8 +50,8 @@ class AutoCompleteHashData {
 /// It is used to create and manipulate data for autocomplete functionality.
 ///
 /// The data structure consists of two main properties:
-/// - [_substringHash]: A map that stores the hash values for each substring.
-/// - [_indexHash]: A map that stores the index values for each hash key.
+/// - [_substringHash] A map that stores the hash values for each substring.
+/// - [_indexHash] A map that stores the index values for each hash key.
 ///
 /// The [unHashedSubstrings] parameter is used to initialize the data structure
 /// with a map of un-hashed substrings and their corresponding index values.
@@ -104,7 +104,7 @@ class AutoCompleteHashData {
 /// Make sure to import these packages before using this class.
 ///
 /// See Also:
-/// - [AutoCompleteHashData]: The data structure that represents the substring
+/// - [AutoCompleteHashData] The data structure that represents the substring
 /// tree and lookup table.
 /// - [DBParser] The class used for file operations.
 /// - [DataStructure] The interface implemented by this class.
