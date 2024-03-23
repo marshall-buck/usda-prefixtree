@@ -1,4 +1,4 @@
-
+<!-- TODO: redo -->
 
 # A dart library made to create a json database and autocomplete lookup, from the USDA SR Legacy database json download file.
 
@@ -12,18 +12,18 @@ https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_json_2018-
 
 #### The intended output is 2 json files.
 1.  The foods and nutritional information. I
-   - The key is the food items index.
+   - The key is the food items id.
    ```
 {
   '111111': {
     'description':
         'Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough',
     'nutrients': [
-      {'id': 1004, 'name': 'Protein', 'amount': 10, 'unit': 'g'},
-      {'id': 1003, 'name': 'Total Fat', 'amount': 5, 'unit': 'mg'},
-      {'id': 1005, 'name': 'Total Carbs', 'amount': 10, 'unit': 'g'},
-      {'id': 1008, 'name': 'Calories', 'amount': 80, 'unit': 'g'},
-      {'id': 1258, 'name': 'Saturated Fat', 'amount': 10, 'unit': 'g'}, ...
+      {'id': 1004, 'amount': 10 },
+      {'id': 1003, 'amount': 5},
+      {'id': 1005, 'amount': 10 },
+      {'id': 1008, 'amount': 80 },
+      {'id': 1258, 'amount': 10 }, ...
     ]
   }, ...
 };
@@ -35,9 +35,9 @@ https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_json_2018-
 ```
 {
   'substringHash': {
-    '%': 0,
-    '1': 1,
-    '2': 1,
+    '21': 0,
+    '1%': 1,
+    '2%': 1,
     'aba': 1,
     'abap': 1,
     'abapp': 1,
@@ -77,7 +77,7 @@ https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_json_2018-
 <!-- CSpell: enable -->
 
 
-### Process
+### Behind the scenes.
 
 
 1. Create a map food descriptions `{id: description, ...}` from the original database.  Parse descriptions as necessary.

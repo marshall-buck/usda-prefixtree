@@ -66,9 +66,8 @@ void main() {
 /* cSpell:disable */
 const Map<String, dynamic> autoCompleteHashTable = {
   'substringHash': {
-    '%': 0,
-    '1': 1,
-    '2': 1,
+    '2%': 0,
+    '21': 1,
     'aba': 1,
     'abap': 1,
     'abapp': 1,

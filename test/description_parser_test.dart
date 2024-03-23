@@ -178,11 +178,19 @@ void main() {
       });
     });
 
-    group('getLongestDescription()--', () {
+    group('getLongestDescriptionRecord()--', () {
       test('returns length of longest string', () {
-        final res = DescriptionParser.getLongestDescription(
+        final res = DescriptionParser.getLongestDescriptionRecord(
             descriptions: mockDescriptionRecords);
-        expect(res, 91);
+        final d = DeepCollectionEquality();
+        final expected = (
+          91,
+          (
+            111114,
+            "Apples, raw, red delicious, with skin (Includes foods for USDA's Food Distribution Program)"
+          )
+        );
+        expect(d.equals(res, expected), true);
       });
     });
     group('createRepeatedPhraseFrequencyMap()', () {

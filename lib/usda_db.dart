@@ -18,10 +18,12 @@ import 'package:usda_db_creation/word_index.dart';
 /// Returns the length of the longest description.
 ///
 /// [dbParser] The [DBParser] object containing the original foods list.
-int getLongestDescriptionLength({required final DBParser dbParser}) {
+DescriptionRecord? getLongestDescriptionLength(
+    {required final DBParser dbParser}) {
   final descriptions = DescriptionParser.createOriginalDescriptionRecords(
       originalFoodsList: dbParser.originalFoodsList);
-  return DescriptionParser.getLongestDescription(descriptions: descriptions);
+  return DescriptionParser.getLongestDescriptionRecord(
+      descriptions: descriptions);
 }
 
 /// Creates the necessary database files based on the provided [DBParser] object.

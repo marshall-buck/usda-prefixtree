@@ -29,7 +29,7 @@ void main() {
 
         final sub = Substrings(mockWordIndexMap);
         final res = await sub.createDataStructure(dbParser: dbParser);
-        print(res);
+        // print(res);
         final deep = DeepCollectionEquality();
 
         expect(deep.equals(res, mockUnHashedSubstrings), true);

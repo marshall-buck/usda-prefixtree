@@ -199,12 +199,21 @@ class DescriptionParser implements DataStructure {
   }
 
   /// Helper Method to get the longest description in a list of [DescriptionRecord]s.
-  static int getLongestDescription(
-      {required final List<DescriptionRecord> descriptions}) {
-    return descriptions.fold(
-        0,
-        (final maxLength, final record) =>
-            maxLength > record.$2.length ? maxLength : record.$2.length);
+  static (int, DescriptionRecord?) getLongestDescriptionRecord({
+    required final List<DescriptionRecord> descriptions,
+  }) {
+    DescriptionRecord? longestRecord;
+    int maxLength = 0;
+
+    for (final DescriptionRecord currentRecord in descriptions) {
+      final int currentLength = currentRecord.$2.length;
+      if (currentLength > maxLength) {
+        maxLength = currentLength;
+        longestRecord = currentRecord;
+      }
+    }
+
+    return (maxLength, longestRecord);
   }
 
   /// Helper method to create a frequency map of repeated phrases in a list of strings.

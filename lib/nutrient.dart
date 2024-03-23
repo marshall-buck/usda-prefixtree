@@ -205,6 +205,6 @@ class Nutrient with _$Nutrient {
     1410: {"name": "21:5", "unit": "g"},
     1411: {"name": "22:4", "unit": "g"},
     1412: {"name": "18:1-11 t (18:1t n-7)", "unit": "g"},
-    2000: {"name": "Totlal Sugars", "unit": "g"}
+    2000: {"name": "Total Sugars", "unit": "g"}
   };
 }
