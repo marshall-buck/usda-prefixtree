@@ -19,6 +19,8 @@ void main() async {
   await runner.createDBFiles(
       dbParser: dbParser, fileService: fileService, extras: true);
 
+  print(runner.getLongestDescription(dbParser: dbParser));
+  print(runner.getShortestDescription(dbParser: dbParser));
   final endTime = DateTime.now();
   final duration = endTime.difference(startTime);
   print('Time taken: ${duration.inMilliseconds} milliseconds');

@@ -216,6 +216,24 @@ class DescriptionParser implements DataStructure {
     return (maxLength, longestRecord);
   }
 
+  /// Helper Method to get the shortest description in a list of [DescriptionRecord]s.
+  static (num, DescriptionRecord?) getShortestDescriptionRecord({
+    required final List<DescriptionRecord> descriptions,
+  }) {
+    DescriptionRecord? shortestRecord;
+    num maxLength = double.infinity;
+
+    for (final DescriptionRecord currentRecord in descriptions) {
+      final num currentLength = currentRecord.$2.length;
+      if (currentLength < maxLength) {
+        maxLength = currentLength;
+        shortestRecord = currentRecord;
+      }
+    }
+
+    return (maxLength, shortestRecord);
+  }
+
   /// Helper method to create a frequency map of repeated phrases in a list of strings.
   ///
   /// Parameters:
