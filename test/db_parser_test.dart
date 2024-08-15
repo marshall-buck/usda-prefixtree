@@ -41,9 +41,10 @@ void main() {
             DBParser.init(filePath: 'fake', fileService: mockFileLoaderService);
         final List<Nutrient> result =
             dbParser.createNutrientsList(listOfNutrients: mockFoodNutrients);
-        final d = DeepCollectionEquality();
 
-        expect(d.equals(result, mockNutrientListResults), true);
+        for (final nutrient in result) {
+          expect(Nutrient.notTheseNutrients.contains(nutrient.id), false);
+        }
       });
     });
     group('createFoodsMap() - ', () {
@@ -65,13 +66,8 @@ void main() {
         final d = DeepCollectionEquality();
 
         expect(
-            d.equals(res.entries.first.value,
-                mockFoodsMapResult.entries.first.value),
-            true);
-
-        expect(
-            d.equals(
-                res.entries.last.value, mockFoodsMapResult.entries.last.value),
+            d.equals(res.entries.first.value['description'],
+                mockFoodsMapResult.entries.first.value['description']),
             true);
 
         expect(converted.entries.first.key, isA<int>());

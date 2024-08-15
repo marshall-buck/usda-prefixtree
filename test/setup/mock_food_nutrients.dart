@@ -3,7 +3,7 @@ import 'package:usda_db_creation/nutrient.dart';
 const mockFoodNutrients = [
   {
     "type": "FoodNutrient",
-    "id": 1283674,
+    "id": 1283688,
     "nutrient": {
       "id": 1003,
       "number": "203",
@@ -13,20 +13,21 @@ const mockFoodNutrients = [
     },
     "dataPoints": 1,
     "foodNutrientDerivation": {
-      "code": "MA",
+      "code": "MC",
       "description":
-          "Manufacturer supplied(industry or trade association), Analytical data, incomplete documentation",
+          "Manufacturer supplied; Calculated by manufacturer or unknown if analytical or calculated",
       "foodNutrientSource": {
-        "id": 9,
-        "code": "12",
-        "description": "Manufacturer's analytical; partial documentation"
+        "id": 7,
+        "code": "9",
+        "description":
+            "Calculated by manufacturer, not adjusted or rounded for NLEA"
       }
     },
-    "amount": 5.88
+    "amount": 4.34
   },
   {
     "type": "FoodNutrient",
-    "id": 1283675,
+    "id": 1283689,
     "nutrient": {
       "id": 1007,
       "number": "207",
@@ -36,20 +37,21 @@ const mockFoodNutrients = [
     },
     "dataPoints": 1,
     "foodNutrientDerivation": {
-      "code": "MA",
+      "code": "MC",
       "description":
-          "Manufacturer supplied(industry or trade association), Analytical data, incomplete documentation",
+          "Manufacturer supplied; Calculated by manufacturer or unknown if analytical or calculated",
       "foodNutrientSource": {
-        "id": 9,
-        "code": "12",
-        "description": "Manufacturer's analytical; partial documentation"
+        "id": 7,
+        "code": "9",
+        "description":
+            "Calculated by manufacturer, not adjusted or rounded for NLEA"
       }
     },
-    "amount": 3.50
+    "amount": 3.08
   },
   {
     "type": "FoodNutrient",
-    "id": 1283676,
+    "id": 1283690,
     "nutrient": {
       "id": 1062,
       "number": "268",
@@ -59,19 +61,21 @@ const mockFoodNutrients = [
     },
     "dataPoints": 0,
     "foodNutrientDerivation": {
-      "code": "NC",
-      "description": "Calculated",
+      "code": "MC",
+      "description":
+          "Manufacturer supplied; Calculated by manufacturer or unknown if analytical or calculated",
       "foodNutrientSource": {
-        "id": 2,
-        "code": "4",
-        "description": "Calculated or imputed"
+        "id": 7,
+        "code": "9",
+        "description":
+            "Calculated by manufacturer, not adjusted or rounded for NLEA"
       }
     },
-    "amount": 1.29E+3
+    "amount": 1.38E+3
   },
   {
     "type": "FoodNutrient",
-    "id": 1283677,
+    "id": 1283691,
     "nutrient": {
       "id": 1079,
       "number": "291",
@@ -81,20 +85,21 @@ const mockFoodNutrients = [
     },
     "dataPoints": 1,
     "foodNutrientDerivation": {
-      "code": "MA",
+      "code": "MC",
       "description":
-          "Manufacturer supplied(industry or trade association), Analytical data, incomplete documentation",
+          "Manufacturer supplied; Calculated by manufacturer or unknown if analytical or calculated",
       "foodNutrientSource": {
-        "id": 9,
-        "code": "12",
-        "description": "Manufacturer's analytical; partial documentation"
+        "id": 7,
+        "code": "9",
+        "description":
+            "Calculated by manufacturer, not adjusted or rounded for NLEA"
       }
     },
-    "amount": 1.20
+    "amount": 1.40
   },
   {
     "type": "FoodNutrient",
-    "id": 1283678,
+    "id": 1283692,
     "nutrient": {
       "id": 1089,
       "number": "303",
@@ -104,20 +109,21 @@ const mockFoodNutrients = [
     },
     "dataPoints": 1,
     "foodNutrientDerivation": {
-      "code": "MA",
+      "code": "MC",
       "description":
-          "Manufacturer supplied(industry or trade association), Analytical data, incomplete documentation",
+          "Manufacturer supplied; Calculated by manufacturer or unknown if analytical or calculated",
       "foodNutrientSource": {
-        "id": 9,
-        "code": "12",
-        "description": "Manufacturer's analytical; partial documentation"
+        "id": 7,
+        "code": "9",
+        "description":
+            "Calculated by manufacturer, not adjusted or rounded for NLEA"
       }
     },
-    "amount": 2.12
+    "amount": 1.93
   },
   {
     "type": "FoodNutrient",
-    "id": 1283679,
+    "id": 1283693,
     "nutrient": {
       "id": 1093,
       "number": "307",
@@ -127,20 +133,92 @@ const mockFoodNutrients = [
     },
     "dataPoints": 1,
     "foodNutrientDerivation": {
-      "code": "MA",
+      "code": "MC",
       "description":
-          "Manufacturer supplied(industry or trade association), Analytical data, incomplete documentation",
+          "Manufacturer supplied; Calculated by manufacturer or unknown if analytical or calculated",
       "foodNutrientSource": {
-        "id": 9,
-        "code": "12",
-        "description": "Manufacturer's analytical; partial documentation"
+        "id": 7,
+        "code": "9",
+        "description":
+            "Calculated by manufacturer, not adjusted or rounded for NLEA"
       }
     },
-    "amount": 1.06E+3
+    "amount": 780
   },
   {
     "type": "FoodNutrient",
-    "id": 1283680,
+    "id": 1283694,
+    "nutrient": {
+      "id": 1104,
+      "number": "318",
+      "name": "Vitamin A, IU",
+      "rank": 7500,
+      "unitName": "IU"
+    },
+    "dataPoints": 1,
+    "foodNutrientDerivation": {
+      "code": "MC",
+      "description":
+          "Manufacturer supplied; Calculated by manufacturer or unknown if analytical or calculated",
+      "foodNutrientSource": {
+        "id": 7,
+        "code": "9",
+        "description":
+            "Calculated by manufacturer, not adjusted or rounded for NLEA"
+      }
+    },
+    "amount": 1.00
+  },
+  {
+    "type": "FoodNutrient",
+    "id": 1283695,
+    "nutrient": {
+      "id": 1106,
+      "number": "320",
+      "name": "Vitamin A, RAE",
+      "rank": 7420,
+      "unitName": "µg"
+    },
+    "dataPoints": 0,
+    "foodNutrientDerivation": {
+      "code": "NR",
+      "description":
+          "Nutrient that is based on other nutrient/s; value used directly, ex. Nut.#204 from Nut.#298",
+      "foodNutrientSource": {
+        "id": 2,
+        "code": "4",
+        "description": "Calculated or imputed"
+      }
+    },
+    "amount": 0.000
+  },
+  {
+    "type": "FoodNutrient",
+    "id": 1283696,
+    "nutrient": {
+      "id": 1162,
+      "number": "401",
+      "name": "Vitamin C, total ascorbic acid",
+      "rank": 6300,
+      "unitName": "mg"
+    },
+    "dataPoints": 1,
+    "foodNutrientDerivation": {
+      "code": "MC",
+      "description":
+          "Manufacturer supplied; Calculated by manufacturer or unknown if analytical or calculated",
+      "foodNutrientSource": {
+        "id": 7,
+        "code": "9",
+        "description":
+            "Calculated by manufacturer, not adjusted or rounded for NLEA"
+      }
+    },
+    "amount": 0.100
+  },
+  {
+    "type": "FoodNutrient",
+    "id": 1283697,
     "nutrient": {
       "id": 1253,
       "number": "601",
@@ -150,20 +228,21 @@ const mockFoodNutrients = [
     },
     "dataPoints": 1,
     "foodNutrientDerivation": {
-      "code": "MA",
+      "code": "MC",
       "description":
-          "Manufacturer supplied(industry or trade association), Analytical data, incomplete documentation",
+          "Manufacturer supplied; Calculated by manufacturer or unknown if analytical or calculated",
       "foodNutrientSource": {
-        "id": 9,
-        "code": "12",
-        "description": "Manufacturer's analytical; partial documentation"
+        "id": 7,
+        "code": "9",
+        "description":
+            "Calculated by manufacturer, not adjusted or rounded for NLEA"
       }
     },
     "amount": 0.000
   },
   {
     "type": "FoodNutrient",
-    "id": 1283681,
+    "id": 1283698,
     "nutrient": {
       "id": 1257,
       "number": "605",
@@ -173,20 +252,21 @@ const mockFoodNutrients = [
     },
     "dataPoints": 1,
     "foodNutrientDerivation": {
-      "code": "MA",
+      "code": "MC",
       "description":
-          "Manufacturer supplied(industry or trade association), Analytical data, incomplete documentation",
+          "Manufacturer supplied; Calculated by manufacturer or unknown if analytical or calculated",
       "foodNutrientSource": {
-        "id": 9,
-        "code": "12",
-        "description": "Manufacturer's analytical; partial documentation"
+        "id": 7,
+        "code": "9",
+        "description":
+            "Calculated by manufacturer, not adjusted or rounded for NLEA"
       }
     },
-    "amount": 4.41
+    "amount": 4.29
   },
   {
     "type": "FoodNutrient",
-    "id": 1283682,
+    "id": 1283699,
     "nutrient": {
       "id": 1258,
       "number": "606",
@@ -196,20 +276,21 @@ const mockFoodNutrients = [
     },
     "dataPoints": 1,
     "foodNutrientDerivation": {
-      "code": "MA",
+      "code": "MC",
       "description":
-          "Manufacturer supplied(industry or trade association), Analytical data, incomplete documentation",
+          "Manufacturer supplied; Calculated by manufacturer or unknown if analytical or calculated",
       "foodNutrientSource": {
-        "id": 9,
-        "code": "12",
-        "description": "Manufacturer's analytical; partial documentation"
+        "id": 7,
+        "code": "9",
+        "description":
+            "Calculated by manufacturer, not adjusted or rounded for NLEA"
       }
     },
-    "amount": 2.94
+    "amount": 3.25
   },
   {
     "type": "FoodNutrient",
-    "id": 1283683,
+    "id": 1283700,
     "nutrient": {
       "id": 1004,
       "number": "204",
@@ -219,20 +300,21 @@ const mockFoodNutrients = [
     },
     "dataPoints": 1,
     "foodNutrientDerivation": {
-      "code": "MA",
+      "code": "MC",
       "description":
-          "Manufacturer supplied(industry or trade association), Analytical data, incomplete documentation",
+          "Manufacturer supplied; Calculated by manufacturer or unknown if analytical or calculated",
       "foodNutrientSource": {
-        "id": 9,
-        "code": "12",
-        "description": "Manufacturer's analytical; partial documentation"
+        "id": 7,
+        "code": "9",
+        "description":
+            "Calculated by manufacturer, not adjusted or rounded for NLEA"
       }
     },
-    "amount": 13.2
+    "amount": 11.3
   },
   {
     "type": "FoodNutrient",
-    "id": 1283684,
+    "id": 1283701,
     "nutrient": {
       "id": 1005,
       "number": "205",
@@ -240,21 +322,23 @@ const mockFoodNutrients = [
       "rank": 1110,
       "unitName": "g"
     },
-    "dataPoints": 0,
+    "dataPoints": 1,
     "foodNutrientDerivation": {
-      "code": "NC",
-      "description": "Calculated",
+      "code": "MC",
+      "description":
+          "Manufacturer supplied; Calculated by manufacturer or unknown if analytical or calculated",
       "foodNutrientSource": {
-        "id": 2,
-        "code": "4",
-        "description": "Calculated or imputed"
+        "id": 7,
+        "code": "9",
+        "description":
+            "Calculated by manufacturer, not adjusted or rounded for NLEA"
       }
     },
-    "amount": 41.2
+    "amount": 53.4
   },
   {
     "type": "FoodNutrient",
-    "id": 1283685,
+    "id": 1283702,
     "nutrient": {
       "id": 1008,
       "number": "208",
@@ -262,21 +346,23 @@ const mockFoodNutrients = [
       "rank": 300,
       "unitName": "kcal"
     },
-    "dataPoints": 0,
+    "dataPoints": 1,
     "foodNutrientDerivation": {
-      "code": "NC",
-      "description": "Calculated",
+      "code": "MC",
+      "description":
+          "Manufacturer supplied; Calculated by manufacturer or unknown if analytical or calculated",
       "foodNutrientSource": {
-        "id": 2,
-        "code": "4",
-        "description": "Calculated or imputed"
+        "id": 7,
+        "code": "9",
+        "description":
+            "Calculated by manufacturer, not adjusted or rounded for NLEA"
       }
     },
-    "amount": 307
+    "amount": 330
   },
   {
     "type": "FoodNutrient",
-    "id": 1283686,
+    "id": 1283703,
     "nutrient": {
       "id": 1051,
       "number": "255",
@@ -286,20 +372,21 @@ const mockFoodNutrients = [
     },
     "dataPoints": 1,
     "foodNutrientDerivation": {
-      "code": "MA",
+      "code": "MC",
       "description":
-          "Manufacturer supplied(industry or trade association), Analytical data, incomplete documentation",
+          "Manufacturer supplied; Calculated by manufacturer or unknown if analytical or calculated",
       "foodNutrientSource": {
-        "id": 9,
-        "code": "12",
-        "description": "Manufacturer's analytical; partial documentation"
+        "id": 7,
+        "code": "9",
+        "description":
+            "Calculated by manufacturer, not adjusted or rounded for NLEA"
       }
     },
-    "amount": 35.5
+    "amount": 27.9
   },
   {
     "type": "FoodNutrient",
-    "id": 1283687,
+    "id": 1283704,
     "nutrient": {
       "id": 2000,
       "number": "269",
@@ -309,46 +396,40 @@ const mockFoodNutrients = [
     },
     "dataPoints": 1,
     "foodNutrientDerivation": {
-      "code": "MA",
+      "code": "MC",
       "description":
-          "Manufacturer supplied(industry or trade association), Analytical data, incomplete documentation",
+          "Manufacturer supplied; Calculated by manufacturer or unknown if analytical or calculated",
       "foodNutrientSource": {
-        "id": 9,
-        "code": "12",
-        "description": "Manufacturer's analytical; partial documentation"
+        "id": 7,
+        "code": "9",
+        "description":
+            "Calculated by manufacturer, not adjusted or rounded for NLEA"
       }
     },
-    "amount": 5.88
+    "amount": 21.3
+  },
+  {
+    "type": "FoodNutrient",
+    "id": 1283705,
+    "nutrient": {
+      "id": 1087,
+      "number": "301",
+      "name": "Calcium, Ca",
+      "rank": 5300,
+      "unitName": "mg"
+    },
+    "dataPoints": 1,
+    "foodNutrientDerivation": {
+      "code": "MC",
+      "description":
+          "Manufacturer supplied; Calculated by manufacturer or unknown if analytical or calculated",
+      "foodNutrientSource": {
+        "id": 7,
+        "code": "9",
+        "description":
+            "Calculated by manufacturer, not adjusted or rounded for NLEA"
+      }
+    },
+    "amount": 28.0
   }
-];
-
-const mockNutrientListResults = [
-  Nutrient(
-    id: 1003,
-    amount: 5.88,
-  ),
-  Nutrient(
-    id: 1079,
-    amount: 1.2,
-  ),
-  Nutrient(
-    id: 1258,
-    amount: 2.94,
-  ),
-  Nutrient(
-    id: 1004,
-    amount: 13.2,
-  ),
-  Nutrient(
-    id: 1005,
-    amount: 41.2,
-  ),
-  Nutrient(
-    id: 1008,
-    amount: 307,
-  ),
-  Nutrient(
-    id: 2000,
-    amount: 5.88,
-  )
 ];
