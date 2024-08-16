@@ -20,7 +20,9 @@ mixin _$FoodModel {
   String get description => throw _privateConstructorUsedError;
   List<Nutrient> get nutrients => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FoodModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $FoodModelCopyWith<FoodModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -43,6 +45,8 @@ class _$FoodModelCopyWithImpl<$Res, $Val extends FoodModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of FoodModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -86,6 +90,8 @@ class __$$FoodModelImplCopyWithImpl<$Res>
       _$FoodModelImpl _value, $Res Function(_$FoodModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of FoodModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -153,7 +159,9 @@ class _$FoodModelImpl extends _FoodModel {
   int get hashCode => Object.hash(runtimeType, id, description,
       const DeepCollectionEquality().hash(_nutrients));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FoodModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FoodModelImplCopyWith<_$FoodModelImpl> get copyWith =>
@@ -173,8 +181,11 @@ abstract class _FoodModel extends FoodModel {
   String get description;
   @override
   List<Nutrient> get nutrients;
+
+  /// Create a copy of FoodModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FoodModelImplCopyWith<_$FoodModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
