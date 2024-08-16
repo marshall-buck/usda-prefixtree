@@ -116,14 +116,14 @@ class DBParser {
     return nutrients;
   }
 
-  /// Checks if nutrient is in [Nutrient.notTheseNutrients].
+  /// Checks if nutrient is in [Nutrient.keepTheseNutrients].
   ///
   /// Parameters:
   /// [nutrientId] - the id of the nutrient to be included.
   ///
   /// Returns [bool].
   bool _findNutrient(final int nutrientId) {
-    return !Nutrient.notTheseNutrients.contains(nutrientId);
+    return Nutrient.keepTheseNutrients.contains(nutrientId);
   }
 
   /// Creates a set of id's from the nutrients in hte original database.

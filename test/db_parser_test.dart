@@ -43,7 +43,7 @@ void main() {
             dbParser.createNutrientsList(listOfNutrients: mockFoodNutrients);
 
         for (final nutrient in result) {
-          expect(Nutrient.notTheseNutrients.contains(nutrient.id), false);
+          expect(Nutrient.keepTheseNutrients.contains(nutrient.id), true);
         }
       });
     });
