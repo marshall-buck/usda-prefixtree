@@ -57,7 +57,7 @@ class DBParser {
 
   /// Method to create the map that wil be used for the foods database.
   /// Returns:
-  /// { id: { description, descriptionLength,  nutrients }, ... }
+  /// { id: { description,  nutrients }, ... }
   Map<String, dynamic> createFoodsMapDB(
       {required final List<dynamic> getFoodsList,
       required final Map<int, String> finalDescriptionRecordsMap}) {
@@ -110,7 +110,9 @@ class DBParser {
         amount: amount,
       );
 
-      nutrients.add(nutrient);
+      if (nutrient.amount > 0 && nutrient.id != 9999) {
+        nutrients.add(nutrient);
+      }
     }
 
     return nutrients;

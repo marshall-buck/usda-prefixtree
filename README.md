@@ -1,4 +1,4 @@
-<!-- TODO: redo -->
+<!-- TODO: Don't Include 0 amount nutrients -->
 
 # A dart library made to create a json database and autocomplete lookup, from the USDA SR Legacy database json download file.
 

@@ -44,6 +44,8 @@ void main() {
 
         for (final nutrient in result) {
           expect(Nutrient.keepTheseNutrients.contains(nutrient.id), true);
+          expect(nutrient.amount, greaterThan(0));
+          expect(nutrient.id, isNot(9999));
         }
       });
     });
@@ -62,13 +64,13 @@ void main() {
             finalDescriptionRecordsMap: mockDescriptionMap);
 
         final converted = res.deepConvertMapKeyToInt();
+        final nutrients = converted.entries.first.value['nutrients'];
 
-        final d = DeepCollectionEquality();
-
-        expect(
-            d.equals(res.entries.first.value['description'],
-                mockFoodsMapResult.entries.first.value['description']),
-            true);
+        print(converted.entries.first.value['nutrients']);
+        for (final nutrient in nutrients) {
+          expect(nutrient['amount'], greaterThan(0));
+          expect(nutrient['id'], isNot(9999));
+        }
 
         expect(converted.entries.first.key, isA<int>());
       });

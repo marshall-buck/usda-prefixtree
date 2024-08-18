@@ -1,5 +1,3 @@
-import 'package:usda_db_creation/nutrient.dart';
-
 const mockFoodNutrients = [
   {
     "type": "FoodNutrient",
