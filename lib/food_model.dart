@@ -1,40 +1,38 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:usda_db_creation/nutrient.dart';
+import 'package:equatable/equatable.dart';
 
-part 'food_model.freezed.dart';
+class FoodModel extends Equatable {
+  final dynamic id;
+  final String description;
+  final Map<String, num> nutrientsMap;
 
-@freezed
-class FoodModel with _$FoodModel {
-  const factory FoodModel(
-      {required final int id,
-      required final String description,
-      required final List<Nutrient> nutrients}) = _FoodModel;
-
-  const FoodModel._();
+  const FoodModel(
+      {required this.id,
+      required this.description,
+      required this.nutrientsMap});
 
   Map<String, dynamic> toJson() {
-    final nutrientList = nutrients.map((e) => e.toJson()).toList();
-
     return {
       id.toString(): {
         'description': description,
-        'nutrients': nutrientList,
+        'nutrients': nutrientsMap,
       }
     };
   }
 
-  factory FoodModel.fromJson(final Map<int, dynamic> json) {
-    final foodJson = json.values.first;
-    final nutrientsJson = foodJson['nutrients'] as List<dynamic>;
+  // factory FoodModel.fromJson(final Map<int, dynamic> json) {
+  //   final foodJson = json.values.first;
+  //   final nutrientsJson = foodJson['nutrients'] as List<dynamic>;
 
-    final nutrients = nutrientsJson
-        .map((e) => Nutrient.fromJson(e as Map<String, dynamic>))
-        .toList();
+  //   final nutrients = nutrientsJson
+  //       .map((e) => Nutrient.fromJson(e as MapEntry<String, dynamic>))
+  //       .toList();
 
-    return FoodModel(
-      id: json.keys.first,
-      description: foodJson['description'],
-      nutrients: nutrients,
-    );
-  }
+  //   return FoodModel(
+  //     id: json.keys.first,
+  //     description: foodJson['description'],
+  //     nutrients: nutrients,
+  //   );
+  // }
+  @override
+  List<Object?> get props => [id, description, nutrientsMap];
 }

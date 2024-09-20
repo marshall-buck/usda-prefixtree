@@ -73,10 +73,12 @@ class DBParser {
 
       final foodNutrients = food['foodNutrients'];
 
-      final nutrientsList = createNutrientsList(listOfNutrients: foodNutrients);
+      final nutrientsList = createNutrientsMap(listOfNutrients: foodNutrients);
 
       final foodModel = FoodModel(
-          id: foodId, description: foodDescription, nutrients: nutrientsList);
+          id: foodId,
+          description: foodDescription,
+          nutrientsMap: nutrientsList);
 
       final Map<String, dynamic> foodModelJson = foodModel.toJson();
 
@@ -91,12 +93,12 @@ class DBParser {
   /// Parameters:
   /// [listOfNutrients] - the list of nutrients from a food item.
   ///
-  /// Returns:
-  /// [List] of [Nutrient] objects.
-  List<Nutrient> createNutrientsList({
+  /// Returns: Map<String, num> where each key is a nutrient id and each
+  /// value is the amount.
+  Map<String, num> createNutrientsMap({
     required final List<dynamic> listOfNutrients,
   }) {
-    final List<Nutrient> nutrients = [];
+    final Map<String, num> nutrientsMap = {};
 
     for (int i = 0; i < listOfNutrients.length; i++) {
       final Map<String, dynamic> originalNutrient = listOfNutrients[i];
@@ -104,6 +106,13 @@ class DBParser {
       final int nutrientId = originalNutrient['nutrient']['id'] ?? 9999;
       if (!_findNutrient(nutrientId)) continue;
 
+      final String unit = originalNutrient['nutrient']['unitName'];
+      final String originalNutrientUnit =
+          Nutrient.originalNutrientTableEdit[nutrientId]!['unit']!;
+      if (unit.toLowerCase() != originalNutrientUnit.toLowerCase()) {
+        throw Exception(
+            'unit mismatch id: $nutrientId unit: $unit \n  originalNutrient: $originalNutrient');
+      }
       final num amount = originalNutrient['amount'] ?? 0.0;
       final nutrient = Nutrient(
         id: nutrientId,
@@ -111,11 +120,11 @@ class DBParser {
       );
 
       if (nutrient.amount > 0 && nutrient.id != 9999) {
-        nutrients.add(nutrient);
+        nutrientsMap[nutrient.id.toString()] = nutrient.amount;
       }
     }
 
-    return nutrients;
+    return nutrientsMap;
   }
 
   /// Checks if nutrient is in [Nutrient.keepTheseNutrients].

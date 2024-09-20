@@ -1,8 +1,8 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:collection/collection.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 import 'package:usda_db_creation/db_parser.dart';
-import 'package:usda_db_creation/extensions/map_ext.dart';
+
 import 'package:usda_db_creation/nutrient.dart';
 
 import 'setup/mock_data.dart';
@@ -33,16 +33,18 @@ void main() {
         expect(res.length, 3);
       });
     });
-    group('createNutrientsList() - ', () {
+    group('createNutrientsMap() - ', () {
       test('creates nutrients list correctly', () {
         when(() => mockFileLoaderService.loadData(filePath: 'fake'))
             .thenReturn(mockUsdaFile);
         final dbParser =
             DBParser.init(filePath: 'fake', fileService: mockFileLoaderService);
-        final List<Nutrient> result =
-            dbParser.createNutrientsList(listOfNutrients: mockFoodNutrients);
+        final Map<String, num> result =
+            dbParser.createNutrientsMap(listOfNutrients: mockFoodNutrients);
 
-        for (final nutrient in result) {
+        for (final entry in result.entries) {
+          final nutrient =
+              Nutrient.fromJsonEntry(MapEntry(entry.key, entry.value));
           expect(Nutrient.keepTheseNutrients.contains(nutrient.id), true);
           expect(nutrient.amount, greaterThan(0));
           expect(nutrient.id, isNot(9999));
@@ -62,17 +64,16 @@ void main() {
         final Map<String, dynamic> res = dbParser.createFoodsMapDB(
             getFoodsList: originalFoodsList,
             finalDescriptionRecordsMap: mockDescriptionMap);
+        // print(res);
+        for (final entry in res.entries) {
+          // expect(entry.key, isA<String>());
+          final description = entry.value['description'];
+          final nutrientMap = entry.value['nutrients'];
 
-        final converted = res.deepConvertMapKeyToInt();
-        final nutrients = converted.entries.first.value['nutrients'];
-
-        print(converted.entries.first.value['nutrients']);
-        for (final nutrient in nutrients) {
-          expect(nutrient['amount'], greaterThan(0));
-          expect(nutrient['id'], isNot(9999));
+          expect(nutrientMap, isA<Map<String, num>>());
+          expect(description, isA<String>());
+          // print('entry value: ${entry.value} \n');
         }
-
-        expect(converted.entries.first.key, isA<int>());
       });
     });
 

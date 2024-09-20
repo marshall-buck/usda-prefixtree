@@ -1,64 +1,50 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'dart:convert';
+
 import 'package:test/test.dart';
 import 'package:usda_db_creation/nutrient.dart';
 
-import 'setup/mock_data.dart';
+// import 'setup/mock_data.dart';
 
 void main() {
   group('Nutrient class tests', () {
-    group('toJson()', () {
-      test('convertToJson works correctly', () {
-        final nutrient = Nutrient(id: 1004, amount: 10);
+    group('toEntry()', () {
+      test('Matches MapEntry<int, num>', () {
+        final nutrient = Nutrient(id: 1004, amount: .55);
 
-        final json = nutrient.toJson();
-
-        final expectation = {
-          'id': 1004,
-          'amount': 10,
-        };
-
-        final d = DeepCollectionEquality();
-        expect(d.equals(json, expectation), true);
+        final entry = nutrient.toEntry();
+        expect(entry, isA<MapEntry<int, num>>());
+      });
+      test('Map equals entry', () {
+        final nutrient = Nutrient(id: 1004, amount: .55);
+        final entry = nutrient.toEntry();
+        expect(entry.key, 1004);
+        expect(entry.value, .55);
       });
     });
-    group('fromJson()', () {
-      test('fromJson works correctly with double', () {
-        final json = {
-          'id': 1004,
-          'amount': 0.1,
-        };
+    group('toJson', () {
+      test('Map entry will covert to json string without errors', () {
+        final nutrient = Nutrient(id: 1004, amount: .55);
+        final nutrient1 = Nutrient(id: 1005, amount: 10);
+        final nutrientsMap = {};
+        nutrientsMap.addEntries([nutrient.toJson(), nutrient1.toJson()]);
 
-        final res = Nutrient.fromJson(json);
-        expect(res.id, 1004);
-        expect(res.name, 'Total Fat');
-        expect(res.amount, 0.1);
-        expect(res.unit, 'g');
-      });
-      test('fromJson works correctly with int', () {
-        final json = {
-          'id': 1004,
-          'amount': 10,
-        };
-
-        final res = Nutrient.fromJson(json);
-        expect(res.id, 1004);
-        expect(res.name, 'Total Fat');
-        expect(res.amount, 10);
-        expect(res.unit, 'g');
+        final jsonString = jsonEncode(nutrientsMap);
+        expect(jsonString, isA<String>());
       });
     });
+    group('fromJsonEntry', () {
+      test('Map entry will covert jsonEntry to Nutrient  ', () {
+        final jsonEntries = {'1004': 0.55, '1005': 10}.entries;
+        final e1 = jsonEntries.first;
+        final e2 = jsonEntries.last;
 
-    group('createNutrientInfoMap()', () {
-      test('createNutrientInfoMap', () {
-        final expected = {
-          "1003": {"name": "Protein", "unit": "g"},
-        };
-
-        final res = Nutrient.createNutrientInfoMap(csvLines: mockCsvLines);
-
-        final d = DeepCollectionEquality();
-        expect(d.equals(res, expected), true);
-        expect(res.entries.first.key.runtimeType, String);
+        final nutrient = Nutrient.fromJsonEntry(e1);
+        final nutrient1 = Nutrient.fromJsonEntry(e2);
+        expect(nutrient.id, 1004);
+        expect(nutrient.amount, 0.55);
+        expect(nutrient1, isA<Nutrient>());
+        expect(nutrient1.id, 1005);
+        expect(nutrient1.amount, 10);
       });
     });
   });

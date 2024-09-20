@@ -1,58 +1,58 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:usda_db_creation/global_const.dart';
+import 'package:equatable/equatable.dart';
 
-part 'nutrient.freezed.dart';
+class Nutrient extends Equatable {
+  const Nutrient({
+    required this.id,
+    // required this.name,
+    required this.amount,
+    //required this.unit
+  });
 
-@freezed
-class Nutrient with _$Nutrient {
-  const factory Nutrient({
-    required final int id,
-    final String? name,
-    required final num amount,
-    final String? unit,
-  }) = _Nutrient;
-  const Nutrient._();
+  final int id;
+  // final String name;
+  final num amount;
+  // final String unit;
 
-  /// Converts Nutrient object to JSON.
-  ///
-  /// {id: 1004, amount: 0.5}
-  Map<String, num> toJson() {
-    return {'id': id, 'amount': amount};
-  }
+  /// Where the key is the id and the value is the amount
+  /// {'1004': 0.5}
+  MapEntry<int, num> toEntry() => MapEntry(id, amount);
 
-  /// Maps JSON to Nutrient object.
-  factory Nutrient.fromJson(final Map<String, dynamic> json) {
+  @override
+  List<Object?> get props => [id, amount];
+
+  factory Nutrient.fromJsonEntry(MapEntry<String, num> json) {
     return Nutrient(
-      id: json['id'],
-      name: originalNutrientTableEdit[json['id']]?['name'],
-      amount: json['amount'],
-      unit: originalNutrientTableEdit[json['id']]?['unit'],
+      id: int.parse(json.key),
+      amount: json.value,
     );
   }
+
+  /// Converts an entry to be encoded to Json
+  MapEntry<String, num> toJson() => MapEntry(id.toString(), amount);
 
   /// Given the string form a csv file, iterate and create the nutrient info map
   ///
   /// Returns:{ {"1004" : {"name": "Total Fat", "unit": "g"}, ...}
 
-  static Map<String, dynamic> createNutrientInfoMap(
-      {required List<List<String>> csvLines}) {
-    final Map<String, dynamic> nutrientsMap = {};
+  // static Map<String, dynamic> createNutrientInfoMap(
+  //     {required List<List<String>> csvLines}) {
+  //   final Map<String, dynamic> nutrientsMap = {};
 
-    for (int i = 1; i < csvLines.length; i++) {
-      final line = csvLines[i];
+  //   for (int i = 1; i < csvLines.length; i++) {
+  //     final line = csvLines[i];
 
-      final key = line[0];
-      if (!nutrientIds.contains(int.parse(key))) {
-        continue;
-      }
-      final name = line[1];
-      final unit = line[2].toLowerCase();
+  //     final key = line[0];
+  //     if (!nutrientIds.contains(int.parse(key))) {
+  //       continue;
+  //     }
+  //     final name = line[1];
+  //     final unit = line[2].toLowerCase();
 
-      nutrientsMap[key] = {"name": name, "unit": unit};
-    }
+  //     nutrientsMap[key] = {"name": name, "unit": unit};
+  //   }
 
-    return nutrientsMap;
-  }
+  //   return nutrientsMap;
+  // }
 
   static const keepTheseNutrients = [
     1003,
@@ -151,6 +151,7 @@ class Nutrient with _$Nutrient {
   ];
 /*CSpell:disable*/
   /// Some names have been changed to be more user friendly.
+  /// Not used anywehrer just here for reference.
   static const originalNutrientTableEdit = {
     1003: {"name": "Protein", "unit": "g"},
     1004: {"name": "Total Fat", "unit": "g"},
@@ -177,22 +178,22 @@ class Nutrient with _$Nutrient {
     1093: {"name": "Sodium, Na", "unit": "mg"},
     1095: {"name": "Zinc, Zn", "unit": "mg"},
     1098: {"name": "Copper, Cu", "unit": "mg"},
-    1099: {"name": "Fluoride, F", "unit": "ug"},
+    1099: {"name": "Fluoride, F", "unit": "µg"},
     1101: {"name": "Manganese, Mn", "unit": "mg"},
-    1103: {"name": "Selenium, Se", "unit": "ug"},
+    1103: {"name": "Selenium, Se", "unit": "µg"},
     1104: {"name": "Vitamin A, IU", "unit": "iu"},
-    1105: {"name": "Retinol", "unit": "ug"},
-    1106: {"name": "Vitamin A, RAE", "unit": "ug"},
-    1107: {"name": "Carotene, beta", "unit": "ug"},
-    1108: {"name": "Carotene, alpha", "unit": "ug"},
+    1105: {"name": "Retinol", "unit": "µg"},
+    1106: {"name": "Vitamin A, RAE", "unit": "µg"},
+    1107: {"name": "Carotene, beta", "unit": "µg"},
+    1108: {"name": "Carotene, alpha", "unit": "µg"},
     1109: {"name": "Vitamin E (alpha-tocopherol)", "unit": "mg"},
     1110: {"name": "Vitamin D (D2 + D3), International Units", "unit": "iu"},
-    1111: {"name": "Vitamin D2 (ergocalciferol)", "unit": "ug"},
-    1112: {"name": "Vitamin D3 (cholecalciferol)", "unit": "ug"},
-    1114: {"name": "Vitamin D (D2 + D3)", "unit": "ug"},
-    1120: {"name": "Cryptoxanthin, beta", "unit": "ug"},
-    1122: {"name": "Lycopene", "unit": "ug"},
-    1123: {"name": "Lutein + zeaxanthin", "unit": "ug"},
+    1111: {"name": "Vitamin D2 (ergocalciferol)", "unit": "µg"},
+    1112: {"name": "Vitamin D3 (cholecalciferol)", "unit": "µg"},
+    1114: {"name": "Vitamin D (D2 + D3)", "unit": "µg"},
+    1120: {"name": "Cryptoxanthin, beta", "unit": "µg"},
+    1122: {"name": "Lycopene", "unit": "µg"},
+    1123: {"name": "Lutein + zeaxanthin", "unit": "µg"},
     1125: {"name": "Tocopherol, beta", "unit": "mg"},
     1126: {"name": "Tocopherol, gamma", "unit": "mg"},
     1127: {"name": "Tocopherol, delta", "unit": "mg"},
@@ -206,15 +207,15 @@ class Nutrient with _$Nutrient {
     1167: {"name": "Niacin", "unit": "mg"},
     1170: {"name": "Pantothenic acid", "unit": "mg"},
     1175: {"name": "Vitamin B-6", "unit": "mg"},
-    1177: {"name": "Folate, total", "unit": "ug"},
-    1178: {"name": "Vitamin B-12", "unit": "ug"},
+    1177: {"name": "Folate, total", "unit": "µg"},
+    1178: {"name": "Vitamin B-12", "unit": "µg"},
     1180: {"name": "Choline, total", "unit": "mg"},
-    1183: {"name": "Vitamin K (Menaquinone-4)", "unit": "ug"},
-    1184: {"name": "Vitamin K (Dihydrophylloquinone)", "unit": "ug"},
-    1185: {"name": "Vitamin K (phylloquinone)", "unit": "ug"},
-    1186: {"name": "Folic acid", "unit": "ug"},
-    1187: {"name": "Folate, food", "unit": "ug"},
-    1190: {"name": "Folate, DFE", "unit": "ug"},
+    1183: {"name": "Vitamin K (Menaquinone-4)", "unit": "µg"},
+    1184: {"name": "Vitamin K (Dihydrophylloquinone)", "unit": "µg"},
+    1185: {"name": "Vitamin K (phylloquinone)", "unit": "µg"},
+    1186: {"name": "Folic acid", "unit": "µg"},
+    1187: {"name": "Folate, food", "unit": "µg"},
+    1190: {"name": "Folate, DFE", "unit": "µg"},
     1198: {"name": "Betaine", "unit": "mg"},
     1210: {"name": "Tryptophan", "unit": "g"},
     1211: {"name": "Threonine", "unit": "g"},
@@ -236,7 +237,7 @@ class Nutrient with _$Nutrient {
     1227: {"name": "Serine", "unit": "g"},
     1228: {"name": "Hydroxyproline", "unit": "g"},
     1242: {"name": "Vitamin E, added", "unit": "mg"},
-    1246: {"name": "Vitamin B-12, added", "unit": "ug"},
+    1246: {"name": "Vitamin B-12, added", "unit": "µg"},
     1253: {"name": "Cholesterol", "unit": "mg"},
     1257: {"name": "Fatty acids, total trans", "unit": "g"},
     1258: {"name": "Fatty acids, total saturated", "unit": "g"},

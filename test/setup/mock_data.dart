@@ -1,5 +1,4 @@
 import 'package:usda_db_creation/food_model.dart';
-import 'package:usda_db_creation/nutrient.dart';
 
 const mockDescriptionTxtFile = '''
 (167512, Pillsbury Golden Layer Buttermilk Biscuits, (Artificial Flavor,) refrigerated dough)
@@ -15,42 +14,28 @@ const mockDescriptionMap = {
       'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry, 2% milk',
 };
 
-const mockProtein = Nutrient(id: 1004, name: 'Protein', amount: 10, unit: 'g');
+const nutrientMap = {'1004': 10, '1003': 5, '1005': 10, '1008': 80, '1258': 10};
 
-const mockTotalFat =
-    Nutrient(id: 1003, name: 'Total Fat', amount: 5, unit: 'mg');
+// const mockProtein = Nutrient(id: 1004, amount: 10);
 
-const mockTotalCarbs =
-    Nutrient(id: 1005, name: 'Total Carbs', amount: 10, unit: 'g');
+// const mockTotalFat = Nutrient(id: 1003, amount: 5);
 
-const mockCalories =
-    Nutrient(id: 1008, name: 'Calories', amount: 80, unit: 'g');
+// const mockTotalCarbs = Nutrient(id: 1005, amount: 10);
 
-const mockSaturatedFat =
-    Nutrient(id: 1258, name: 'Saturated Fat', amount: 10, unit: 'g');
+// const mockCalories = Nutrient(id: 1008, amount: 80);
+
+// const mockSaturatedFat = Nutrient(id: 1258, amount: 10);
 
 const mockFoodItem = FoodModel(
     id: 111111,
     description:
         'Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough',
-    nutrients: [
-      mockProtein,
-      mockTotalFat,
-      mockTotalCarbs,
-      mockCalories,
-      mockSaturatedFat
-    ]);
+    nutrientsMap: nutrientMap);
 const Map<int, dynamic> mockFoodJson = {
   111111: {
     'description':
         'Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough',
-    'nutrients': [
-      {'id': 1004, 'name': 'Protein', 'amount': 10, 'unit': 'g'},
-      {'id': 1003, 'name': 'Total Fat', 'amount': 5, 'unit': 'mg'},
-      {'id': 1005, 'name': 'Total Carbs', 'amount': 10, 'unit': 'g'},
-      {'id': 1008, 'name': 'Calories', 'amount': 80, 'unit': 'g'},
-      {'id': 1258, 'name': 'Saturated Fat', 'amount': 10, 'unit': 'g'},
-    ]
+    'nutrients': {'1004': 10, '1003': 5, '1005': 10, '1008': 80, '1258': 10}
   }
 };
 
@@ -152,18 +137,22 @@ const Map<String, List<int>> mockWordIndexMap = {
 const Map<String, List<int>> mockUnHashedSubstrings = {
   '2%': [3],
   '21': [3, 4],
+  'ab': [3, 4],
   'aba': [3, 4],
   'abap': [3, 4],
   'abapp': [3, 4],
   'abappl': [3, 4],
   'abapple': [3, 4],
+  'ap': [1, 2, 3, 4],
   'app': [1, 2, 3, 4],
   'appl': [1, 2, 3, 4],
   'apple': [1, 2, 3, 4],
+  'ba': [3, 4],
   'bap': [3, 4],
   'bapp': [3, 4],
   'bappl': [3, 4],
   'bapple': [3, 4],
+  'cr': [3, 4],
   'cra': [3, 4],
   'crab': [3, 4],
   'craba': [3, 4],
@@ -171,9 +160,13 @@ const Map<String, List<int>> mockUnHashedSubstrings = {
   'crabapp': [3, 4],
   'crabappl': [3, 4],
   'crabapple': [3, 4],
+  'le': [1, 2, 3, 4],
+  'pl': [1, 2, 3, 4],
   'ple': [1, 2, 3, 4],
+  'pp': [1, 2, 3, 4],
   'ppl': [1, 2, 3, 4],
   'pple': [1, 2, 3, 4],
+  'ra': [3, 4],
   'rab': [3, 4],
   'raba': [3, 4],
   'rabap': [3, 4],

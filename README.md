@@ -9,7 +9,7 @@ https://fdc.nal.usda.gov/download-datasets.html
 https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_json_2018-04.zip
 
 
-
+ and not a list
 #### The intended output is 2 json files.
 1.  The foods and nutritional information. I
    - The key is the food items id.
@@ -24,9 +24,15 @@ https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_json_2018-
       {'id': 1005, 'amount': 10 },
       {'id': 1008, 'amount': 80 },
       {'id': 1258, 'amount': 10 }, ...
+
     ]
+    //TODO: Change the nutrients property of the food model to a map
+    {1004: 10, 1003: 5, 1005: 10, 1008: .589, 1258: 10,...}
   }, ...
 };
+
+
+
 ```
 1.  A lookup hash table of indexed words to search.
   - Each substringHash.value is a lookup to the indexHash.key.

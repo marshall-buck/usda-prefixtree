@@ -35,7 +35,7 @@ class Substrings implements DataStructure {
   Substrings(this.wordIndexMap);
 
   /// Minimum number of characters to use for the substring.
-  int minLength = 3;
+  int minLength = 2;
 
   /// Creates substrings from the given [wordIndex] and returns a map of
   /// substrings with a minimum of [minLength] length to a list of corresponding index's.
