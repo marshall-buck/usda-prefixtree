@@ -13,21 +13,15 @@ https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_json_2018-
 #### The intended output is 2 json files.
 1.  The foods and nutritional information. I
    - The key is the food items id.
+   - the nutrients map is structured so that the key is the id of the nutrient and the value is the amount.
    ```
 {
   '111111': {
     'description':
         'Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough',
-    'nutrients': [
-      {'id': 1004, 'amount': 10 },
-      {'id': 1003, 'amount': 5},
-      {'id': 1005, 'amount': 10 },
-      {'id': 1008, 'amount': 80 },
-      {'id': 1258, 'amount': 10 }, ...
+    'nutrients': {1004: 10, 1003: 5, 1005: 10, 1008: .589, 1258: 10,...}
 
-    ]
-    //TODO: Change the nutrients property of the food model to a map
-    {1004: 10, 1003: 5, 1005: 10, 1008: .589, 1258: 10,...}
+
   }, ...
 };
 
@@ -49,30 +43,8 @@ https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_json_2018-
     'abapp': 1,
     'abappl': 1,
     'abapple': 1,
-    'app': 2,
-    'appl': 2,
-    'apple': 2,
-    'bap': 1,
-    'bapp': 1,
-    'bappl': 1,
-    'bapple': 1,
-    'cra': 1,
-    'crab': 1,
-    'craba': 1,
-    'crabap': 1,
-    'crabapp': 1,
-    'crabappl': 1,
-    'crabapple': 1,
-    'ple': 2,
-    'ppl': 2,
-    'pple': 2,
-    'rab': 1,
-    'raba': 1,
-    'rabap': 1,
-    'rabapp': 1,
-    'rabappl': 1,
-    'rabapple': 1,
-  },
+    'app': 2, ...
+  }
   'indexHash': {
     '0': [3],
     '1': [3, 4],
@@ -185,13 +157,7 @@ https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_json_2018-
   111111: {
     'description':
         'Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough',
-    'nutrients': [
-      {'id': 1004, 'name': 'Protein', 'amount': 10, 'unit': 'g'},
-      {'id': 1003, 'name': 'Total Fat', 'amount': 5, 'unit': 'mg'},
-      {'id': 1005, 'name': 'Total Carbs', 'amount': 10, 'unit': 'g'},
-      {'id': 1008, 'name': 'Calories', 'amount': 80, 'unit': 'g'},
-      {'id': 1258, 'name': 'Saturated Fat', 'amount': 10, 'unit': 'g'},
-    ]
+    'nutrients': 'nutrients': {1004: 10, 1003: 5, 1005: 10, 1008: .589, 1258: 10,...}
   }, ...
 };
 ```
@@ -200,4 +166,4 @@ https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_json_2018-
 
 
 
-dart run build_runner build --delete-conflicting-outputs
+

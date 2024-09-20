@@ -34,12 +34,11 @@ void main() {
 
         final d = DeepCollectionEquality();
 
-        // expect(
-        //     d.equals(
-        //         res!.substringHash, autoCompleteHashTable['substringHash']),
-        //     true);
-        // expect(
-        //     d.equals(res.indexHash, autoCompleteHashTable['indexHash']), true);
+        expect(
+            d.equals(res.substringHash, autoCompleteHashTable['substringHash']),
+            true);
+        expect(
+            d.equals(res.indexHash, autoCompleteHashTable['indexHash']), true);
       });
     });
   });
