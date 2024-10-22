@@ -16,16 +16,6 @@ const mockDescriptionMap = {
 
 const nutrientMap = {'1004': 10, '1003': 5, '1005': 10, '1008': 80, '1258': 10};
 
-// const mockProtein = Nutrient(id: 1004, amount: 10);
-
-// const mockTotalFat = Nutrient(id: 1003, amount: 5);
-
-// const mockTotalCarbs = Nutrient(id: 1005, amount: 10);
-
-// const mockCalories = Nutrient(id: 1008, amount: 80);
-
-// const mockSaturatedFat = Nutrient(id: 1258, amount: 10);
-
 const mockFoodItem = FoodModel(
     id: 111111,
     description:

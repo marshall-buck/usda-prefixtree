@@ -17,7 +17,7 @@ void main() async {
   final dbParser = DBParser.init(
       filePath: fileService.fileNameOriginalDBFile, fileService: fileService);
   await runner.createDBFiles(
-      dbParser: dbParser, fileService: fileService, extras: false);
+      dbParser: dbParser, fileService: fileService, extras: true);
 
   print(runner.getLongestDescription(dbParser: dbParser));
   print(runner.getShortestDescription(dbParser: dbParser));

@@ -1,9 +1,7 @@
-// const keepTheseNutrients = [1003, 1004, 1005, 1008, 1079, 1258, 2000];
-
 const unwantedPhrases = [
   "(Includes foods for USDA's Food Distribution Program)",
-  "separable lean and fat, ",
-  "separable lean only, "
+  // "separable lean and fat, ",
+  // "separable lean only, "
 ];
 
 const excludedCategories = ["Restaurant Foods", "Fast Foods", "Beverages"];
@@ -11,7 +9,6 @@ const excludedCategories = ["Restaurant Foods", "Fast Foods", "Beverages"];
 const List<String> stopWords = [
   "about",
   "above",
-  "added",
   "after",
   "again",
   "against",
@@ -93,7 +90,6 @@ const List<String> stopWords = [
   "through",
   "to",
   "too",
-  "trimmed",
   "under",
   "until",
   "up",
@@ -109,9 +105,9 @@ const List<String> stopWords = [
   "who",
   "will",
   "with",
-  "without",
   "you",
-  "your"
+  "your",
+  "USDA's"
 ];
 
 const Set<int> nutrientIds = {
